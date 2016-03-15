@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="queryCommon" extends="default"	namespace="/">
+
+		<action name="queryCommonList" class="com.huge.ihos.hr.query.webapp.action.QueryCommonPagedAction" method="queryCommonList">
+			<result name="input">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonList.jsp</result>
+		</action>
+		<!-- 查看更多 -->
+		<action name="queryCommonCheckList" class="com.huge.ihos.hr.query.webapp.action.QueryCommonPagedAction" method="queryCommonList">
+			<result name="input">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonCheckList.jsp</result>
+		</action>
+		<action name="queryCommonGridList" class="com.huge.ihos.hr.query.webapp.action.QueryCommonPagedAction"		method="queryCommonGridList">
+			<result type="json">
+				<param name="includeProperties">queryCommons.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="queryCommonGridEdit" class="com.huge.ihos.hr.query.webapp.action.QueryCommonPagedAction"			method="queryCommonGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editQueryCommon" class="com.huge.ihos.hr.query.webapp.action.QueryCommonPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonForm.jsp</result>
+		</action>
+		<!-- 预览 -->
+		<action name="previewQueryCommon" class="com.huge.ihos.hr.query.webapp.action.QueryCommonPagedAction"			method="previewQueryCommon">
+			<result name="success">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonDetailForm.jsp</result>
+		</action>
+		<!-- called when clicking save on the edit form -->
+		<action name="saveQueryCommon" class="com.huge.ihos.hr.query.webapp.action.QueryCommonPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

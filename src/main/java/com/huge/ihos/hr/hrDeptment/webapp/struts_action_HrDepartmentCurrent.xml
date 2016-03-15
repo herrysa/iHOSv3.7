@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="hrDepartmentCurrent" extends="default"	namespace="/">
+
+		<action name="hrDepartmentCurrentList" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="hrDepartmentCurrentList">
+			<result name="input">/WEB-INF/pages/hr/hrDepartmentSnap/hrDepartmentCurrentList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrDepartmentSnap/hrDepartmentCurrentList.jsp</result>
+		</action>
+		<action name="setPlanCountList" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="setPlanCountList">
+			<result name="input">/WEB-INF/pages/hr/hrDepartmentSnap/setPlanCount.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrDepartmentSnap/setPlanCount.jsp</result>
+		</action>
+		<action name="hrDepartmentNewList" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="hrDepartmentNewList">
+			<result name="input">/WEB-INF/pages/hr/hrDepartmentSnap/newDept/hrDepartmentNewList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrDepartmentSnap/newDept/hrDepartmentNewList.jsp</result>
+		</action>
+		<action name="hrDepartmentCurrentGridList" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction"	method="hrDepartmentCurrentGridList">
+			<result type="json">
+				<param name="includeProperties">hrDepartmentCurrents.*,records,total,page,hrDepartmentCurrentAll.*,userdata.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+			<action name="setPlanCountGridList" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction"	method="setPlanCountGridList">
+			<result type="json">
+				<param name="includeProperties">hrDepartmentCurrents.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="makeHrDeptTree" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="makeHrDeptTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">hrDeptTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkAddDeptForDept" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="checkAddDeptForDept">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getOrgDeptTreeSelect" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="getOrgDeptTreeSelect">
+			<result name="success"  type="json">
+				<param name="includeProperties">nodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkDelDept" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="checkDelDept">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkEnableDept" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="checkEnableDept">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkHrDeptCanBeEdit" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="checkHrDeptCanBeEdit">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="planCountSave" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction" method="planCountSave">
+			<result name="success" type="json">
+            </result>
+		</action>
+		<action name="outPutExcelForPlanList" class="com.huge.ihos.hr.hrDeptment.webapp.action.HrDepartmentCurrentPagedAction"		method="outPutExcelForPlanList">
+		<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+		</result>
+		</action>
+	</package>
+
+</struts>

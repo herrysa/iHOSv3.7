@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<freeform>
+	<Properties bgColor="#ffffff">
+		<Expresses>
+			<copy />
+		</Expresses>
+		<Validations>
+			<copy />
+		</Validations>
+	</Properties>
+	<Fonts>
+		<Font height="-13" />
+	</Fonts>
+	<Objects>
+		<TableLayout width="95%" y="42" x="5">
+			<Col width=".1" />
+			<Col width="90" />
+			<Col width="6" />
+			<Col width="190" />
+			<Col width="30" />
+			<Col width="90" />
+			<Col width="6" />
+			<Col width="190" />
+			<Col width=".1" />
+			<repeat>
+				<tr height="24">
+					<td />
+					<td>
+						<input width="3" />
+					</td>
+					<td />
+					<td />
+					<td />
+					<td>
+						<input width="3" />
+					</td>
+				</tr>
+				<tr height="4" />
+			</repeat>
+		</TableLayout>
+		<groupEx width="99%" text=" 请输入(下面的内容是动态生成的) " y2=".bottom+8"
+			y1="5" x1="5" />
+		<input width="80" y=".bottom" x="36%" type="button" Text="确认"
+			id="gzContent_edit_ok" />
+		<input width="80" y=".top" x=".right+10" type="button" Text="取消"
+			id="gzContent_edit_cancel" />
+		<input width="80" y=".top" x=".right+10" type="button" Text="下一行"
+			id="gzContent_edit_nextRow" />
+	</Objects>
+	<DropLists>
+		<copy />
+	</DropLists>
+</freeform>

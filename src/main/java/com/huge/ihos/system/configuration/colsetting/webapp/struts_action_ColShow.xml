@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="colShow" extends="default"	namespace="/">
+
+		<action name="colShowList" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction" method="colShowListPre">
+			<result name="input">/WEB-INF/pages/system/configuration/colsetting/colShow/colShowList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/colsetting/colShow/colShowList.jsp</result>
+		</action>
+		<!-- 格式页面 -->
+		<action name="colShowTemplForm" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction" method="colShowTemplForm">
+			<result name="input">/WEB-INF/pages/system/configuration/colsetting/colShow/colShowTemplForm.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/colsetting/colShow/colShowTemplForm.jsp</result>
+		</action>
+		<action name="colShowTepmls" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction" method="colShowListPre">
+			<result type="json">
+				<param name="includeProperties">templtShowList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="colShowGridList" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"		method="colShowGridList">
+			<result type="json">
+				<param name="includeProperties">colShows.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="colShowGridEdit" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="colShowGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editColShow" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/colsetting/colShow/colShowForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/colsetting/colShow/colShowForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveColShow" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveColShowTemplForGz" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="saveColShowTemplForGz">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="delColShowTemplForGz" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="delColShowTemplForGz">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="highSearch" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="highSearch">
+			<result name="success">/WEB-INF/pages/system/configuration/colsetting/colShow/highSearch.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/colsetting/colShow/highSearch.jsp</result>
+		</action>
+		<action name="saveColShowTempl" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="saveColShowTempl">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getColShowByTempl" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="getColShowByTempl">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,colShows.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getColShowByEntity" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="getColShowByEntity">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,colShows.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="delColShowTempl" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColShowPagedAction"			method="delColShowTempl">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,colShows.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

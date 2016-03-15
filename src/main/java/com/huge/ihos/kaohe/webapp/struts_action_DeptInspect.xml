@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="deptInspect" extends="default"	namespace="/">
+
+		<action name="deptInspectList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="deptInspectListPre">
+			<result name="input">/WEB-INF/pages/balanceCard/deptInspectList.jsp</result>
+			<result name="success">/WEB-INF/pages/balanceCard/deptInspectList.jsp</result>
+		</action>
+		<action name="deptInspectDetailList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction">
+			<result name="input">/WEB-INF/pages/balanceCard/deptInspectDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/balanceCard/deptInspectDetailList.jsp</result>
+		</action>
+		<action name="deptInspectGridList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"		method="deptInspectGridList">
+			<result type="json">
+				<param name="includeProperties">deptInspects.*,records,total,page</param>
+				<param name="excludeProperties">deptInspects.*\.inspectTempl,deptInspects.*\.kpiItem,inspectBSCs.*\.inspectBSC</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deptInspectGridEdit" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"			method="deptInspectGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDeptInspect" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/balanceCard/deptInspectForm.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/deptInspectForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<!-- <action name="saveDeptInspect" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action> -->
+		
+		<action name="saveDeptInspect" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"			method="saveDeptInspects">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="creatInspect" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"			method="creatInspect">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="deptInspectMainGridList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"		method="deptInspectMainGridList">
+			<result type="json">
+				<param name="includeProperties">inspectTempls.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="getScoreInspectBSC" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="getScoreInspectBSC">
+			<result name="itemScore">/WEB-INF/pages/balanceCard/deptInspecScore.jsp</result>
+			<result name="deptScore">/WEB-INF/pages/balanceCard/deptInspecDeptScore.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/deptInspecScore.jsp</result>
+		</action>
+
+		<action name="getScoreTempl" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="getScoreTempl">
+			<result type="json">
+				<param name="includeProperties">deptinspectScores.*,records,total,page</param>
+				<param name="excludeProperties">>deptinspectScores.*\.inspectBSC.inspectTempl,deptinspectScores.*\.inspectBSC.kpiItem</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="deptInspectScoreDetailList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="deptInspectScoreDetailPre">
+			<result name="success">/WEB-INF/pages/balanceCard/deptInspecScoreDetail.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/deptInspecScoreDetail.jsp</result>
+		</action>
+
+		<!-- <action name="deptInspectScoreDetailList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="getScoreTempl">
+			<result type="json">
+				<param name="includeProperties">inspectBSCs.*,records,total,page</param>
+				<param name="excludeProperties">>inspectBSCs.*\.inspectTempl,inspectBSCs.*\.kpiItem</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action> -->
+		
+		<action name="submitDeptInspect" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="submitDeptInspect">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="denyDeptInspect" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="denyDeptInspect">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 考评科室负责人审核 -->
+		<action name="getScoreInspectBSCCheck" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="getScoreInspectBSC">
+			<result name="itemScore">/WEB-INF/pages/balanceCard/deptInspecScoreCheck.jsp</result>
+			<result name="deptScore">/WEB-INF/pages/balanceCard/deptInspecDeptScoreCheck.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/deptInspecScoreCheck.jsp</result>
+		</action>
+		<action name="deptInspectScoreCheckDetailList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="deptInspectScoreDetailPre">
+			<result name="success">/WEB-INF/pages/balanceCard/deptInspecScoreCheckDetail.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/deptInspecScoreCheckDetail.jsp</result>
+		</action>
+		<!-- 职能科室打分状态查询 -->
+		<action name="inspectDeptScoreState" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="inspectDeptScoreStateList">
+			<result name="success">/WEB-INF/pages/balanceCard/inspectDeptScoreState.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/inspectDeptScoreState.jsp</result>
+		</action>
+		
+		<!-- 考核办审核 -->
+		<action name="targetDeptScoreState" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="targetDeptScoreState">
+			<result name="success">/WEB-INF/pages/balanceCard/targetDeptScoreState.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/targetDeptScoreState.jsp</result>
+		</action>
+		
+		<action name="getInspectDeptScoreStateList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"		method="inspectDeptScoreState">
+			<result type="json">
+				<param name="includeProperties">inspectDeptScoreState.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="getTargetDeptScoreStateList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction"		method="targetDeptScoreStateList">
+			<result type="json">
+				<param name="includeProperties">inspectDeptScoreState.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="showInspectBSC" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="showInspectBSC">
+			<result name="success">/WEB-INF/pages/balanceCard/showInspectBSC.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/showInspectBSC.jsp</result>
+		</action>
+		
+		<action name="saveAuditRemark" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="saveAuditRemark">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveCheckRemrk" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="saveCheckRemrk">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveAuditRemrk" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="saveAuditRemrk">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="showInspectDeptDetail" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction">
+			<result name="success">/WEB-INF/pages/balanceCard/inspecDeptScoreStateDetail.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/inspecDeptScoreStateDetail.jsp</result>
+		</action>
+		
+		<action name="deptInspectScoreReadDetailList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction">
+			<result name="success">/WEB-INF/pages/balanceCard/inspecDeptScoreStateDetail_D.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/inspecDeptScoreStateDetail_D.jsp</result>
+		</action>
+		
+		<action name="showInspectDeptHis" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="showInspectDeptHis">
+			<result name="itemScore">/WEB-INF/pages/balanceCard/inspecDeptScoreHis.jsp</result>
+			<result name="deptScore">/WEB-INF/pages/balanceCard/inspecDeptScoreDeptHis.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/inspecDeptScoreHis.jsp</result>
+		</action>
+		
+		<action name="deptInspectHisDetailList" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="deptInspectScoreDetailPre">
+			<result name="success">/WEB-INF/pages/balanceCard/inspecDeptScoreHisDetail.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/inspecDeptScoreHisDetail.jsp</result>
+		</action>
+		
+		<action name="creatBSCExcel" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="creatBSCExcel">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="submitDeptScoreInspect" class="com.huge.ihos.kaohe.webapp.action.DeptInspectPagedAction" method="submitDeptScoreInspect">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+	</package>
+
+</struts>

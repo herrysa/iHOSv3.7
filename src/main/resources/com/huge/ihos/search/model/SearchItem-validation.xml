@@ -1,0 +1,34 @@
+    <!DOCTYPE validators PUBLIC
+    "-//Apache Struts//XWork Validator 1.0.3//EN"
+    "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="searchItem.searchItemId">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="searchItem.caption">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="searchItem.field">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="searchItem.htmlField">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="searchItem.oorder">
+		<field-validator type="required">
+			<message key="errors.required" />
+		</field-validator>
+		<field-validator type="regex">
+        <param name="expression">([0-9]){0,3}</param>
+        <message>只能为整数</message>
+        </field-validator>
+	</field>
+</validators> 

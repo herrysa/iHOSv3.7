@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzAccountPlanFliter" extends="default"	namespace="/">
+
+		<action name="gzAccountPlanFliterList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanFliterPagedAction">
+			<result name="input">/WEB-INF/pages/gzAccountPlanFliter/gzAccountPlanFliterList.jsp</result>
+			<result name="success">/WEB-INF/pages/gzAccountPlanFliter/gzAccountPlanFliterList.jsp</result>
+		</action>
+		<action name="gzAccountPlanFliterGridList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanFliterPagedAction"		method="gzAccountPlanFliterGridList">
+			<result type="json">
+				<param name="includeProperties">gzAccountPlanFliters.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzAccountPlanFliterGridEdit" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanFliterPagedAction"			method="gzAccountPlanFliterGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzAccountPlanFliter" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanFliterPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gzAccountPlanFliter/gzAccountPlanFliterForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gzAccountPlanFliter/gzAccountPlanFliterForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzAccountPlanFliter" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanFliterPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

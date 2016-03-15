@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<id> 支模</id>
+	<name>支模</name>
+	<TID>硂,D</TID>
+</record>
+<record>
+	<id>硂</id>
+	<name>硂</name>
+	<TID>D,F</TID>
+</record>
+<record>
+	<id>D</id>
+	<name>D</name>
+	<TID>F,K</TID>
+</record>
+
+<record>
+	<id>F</id>
+	<name>F</name>
+	<TID>K,I</TID>
+</record>
+
+<record>
+	<id>K</id>
+	<name>K</name>
+	<TID>I,M</TID>
+</record>
+<record>
+	<id>I</id>
+	<name>I</name>
+	<TID>M,N</TID>
+</record>
+
+<record>
+	<id>M</id>
+	<name>M</name>
+	<TID>N</TID>
+</record>
+
+<record>
+	<id>N</id>
+	<name>N</name>
+	<TID></TID>
+</record>
+</data>

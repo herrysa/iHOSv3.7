@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<pid></pid>
+	<id>A*</id>
+	<name>A*</name>
+	<TID></TID>
+</record>
+<record>
+	<pid>A*</pid>
+	<id>A.1</id>
+	<name>A.1</name>
+	<TID>A.2</TID>
+</record>
+<record>
+	<pid>A*</pid>
+	<id>A.2</id>
+	<name>A.2</name>
+	<TID>A.3</TID>
+</record>
+<record>
+	<pid>A*</pid>
+	<id>A.3</id>
+	<name>A.3</name>
+	<TID>A.4.3</TID>
+</record>
+
+<record>
+	<pid>A*</pid>
+	<id>A.4*</id>
+	<name>A.4*</name>
+	<TID></TID>
+</record>
+<record>
+	<pid>A.4*</pid>
+	<id>A.4.1</id>
+	<name>A.4.1</name>
+	<TID>A.4.3</TID>
+</record>
+<record>
+	<pid>A.4*</pid>
+	<id>A.4.2</id>
+	<name>A.4.2</name>
+	<TID>A.4.3</TID>
+</record>
+<record>
+	<pid>A.4*</pid>
+	<id>A.4.3</id>
+	<name>A.4.3</name>
+	<TID></TID>
+</record>
+
+
+<record>
+	<pid></pid>
+	<id>B*</id>
+	<name>B*</name>
+	<TID></TID>
+</record>
+<record>
+	<pid>B*</pid>
+	<id>B.1</id>
+	<name>B.1</name>
+	<TID>B.2</TID>
+</record>
+<record>
+	<pid>B*</pid>
+	<id>B.2</id>
+	<name>B.2</name>
+	<TID></TID>
+</record>
+<record>
+	<pid>B*</pid>
+	<id>B.3</id>
+	<name>B.3</name>
+	<TID>B.2</TID>
+</record>
+</data>

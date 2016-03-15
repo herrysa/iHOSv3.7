@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzAccountDefine" extends="default"	namespace="/">
+
+		<action name="gzAccountDefineList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountDefinePagedAction">
+			<result name="input">/WEB-INF/pages/gzAccountDefine/gzAccountDefineList.jsp</result>
+			<result name="success">/WEB-INF/pages/gzAccountDefine/gzAccountDefineList.jsp</result>
+		</action>
+		<action name="gzAccountDefineGridList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountDefinePagedAction"		method="gzAccountDefineGridList">
+			<result type="json">
+				<param name="includeProperties">gzAccountDefines.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzAccountDefineGridEdit" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountDefinePagedAction"			method="gzAccountDefineGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzAccountDefine" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountDefinePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gzAccountDefine/gzAccountDefineForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gzAccountDefine/gzAccountDefineForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzAccountDefine" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountDefinePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="devtest" extends="struts-default,json-default" namespace="/devtest">
+		
+		<action name="pinYinCodeTest">
+			<result name="input">/WEB-INF/pages/testPages/pinYinSelectAutoCompletorTest.jsp</result>
+			<result name="success">/WEB-INF/pages/testPages/pinYinSelectAutoCompletorTest.jsp</result>
+		</action>
+		
+		
+<!-- 		<action name="dictionaryPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction" method="dictionaryPinYinSelect">
+            <result type="json">
+                <param name="includeProperties">dicList.*,fdcMap.*</param>
+            </result>
+        </action>
+		<action name="deptPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction" method="deptPinYinSelect">
+            <result type="json">
+                <param name="includeProperties">deptList.*</param>
+            </result>
+        </action>
+        		<action name="personPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction" method="personPinYinSelect">
+            <result type="json">
+                <param name="includeProperties">personList.*</param>
+            </result>
+        </action> -->
+	</package>
+
+</struts>

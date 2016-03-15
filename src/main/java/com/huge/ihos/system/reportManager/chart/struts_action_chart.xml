@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="chart" extends="default" namespace="/">
+     <!--MccKeyAction-START-->
+     
+        <!--                           CHARTSSTART                           -->
+        
+        <action name="xuanTu"  class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="xuanCharts">
+			<result name="input">/WEB-INF/pages/${resultPage}.jsp</result>
+			<result name="chart_success">/WEB-INF/pages/${resultPage}.jsp</result>
+			 <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <!--                             QUICKSELECTSTART                               -->
+		<!-- <action name="quickDeptSelect" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="quickDeptSelect">
+            <result name="success" type="json">
+                <param name="includeProperties">deptString</param>
+                <param name="ignoreHierarchy">false</param>
+            </result>
+         </action>
+		<action name="quickKeySelect" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="quickKeySelect">
+            <result name="success" type="json">
+                <param name="includeProperties">deptKeyStr</param>
+                <param name="ignoreHierarchy">false</param>
+            </result>
+         </action> -->
+        <!--                             QUICKSELECTEND                               -->
+
+        <action name="mccKeyList"  class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/chart/mccKeyList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/chart/mccKeyList.jsp</result>
+		</action>
+
+		<action name="mccKeyGridList" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="mccKeyGridList">
+			<result type="json">
+				<param name="includeProperties">mccKeys.*,records,total,page,sumData,userdata</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="graphicsDisplay">
+        	<result name="input">/WEB-INF/pages/system/reportManager/chart/graphicsDisplay.jsp</result>
+			<result name="gra_success">/WEB-INF/pages/system/reportManager/chart/graphicsDisplay.jsp</result>
+		</action>
+		
+        <action name="graphicsDisplayForm"  class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="graphicsDisplay">
+        	<result name="edit_error">/WEB-INF/pages/system/reportManager/chart/graphicsDisplay.jsp</result>
+			<result name="gra_success">/WEB-INF/pages/system/reportManager/chart/graphicsDisplay.jsp</result>
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="mccKeyGridEdit" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="mccKeyGridEdit">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editMccKey" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/chart/mccKeyForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/chart/mccKeyForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveMccKey" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+
+           <!--MccKeyDetailAction-START-->
+		
+		
+        <action name="mccKeyDetailList">
+			<result name="input">/WEB-INF/pages/system/reportManager/chart/mccKeyDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/chart/mccKeyDetailList.jsp</result>
+		</action>
+
+		<action name="mccKeyDetailGridJsonList" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyDetailAction" method="mccKeyDetailGridList">
+			<result type="json">
+				<param name="includeProperties">mccKeyDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="mccKeyDetailGridEdit" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyDetailAction" method="mccKeyDetailGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editMccKeyDetail" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyDetailAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/chart/mccKeyDetailForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/chart/mccKeyDetailForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveMccKeyDetail" class="com.huge.ihos.system.reportManager.chart.webapp.action.MccKeyDetailAction" method="save">
+             <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--MccKeyDetailAction-END-->
+
+        <action name="showChart" class="com.huge.ihos.system.reportManager.chart.webapp.action.ChartAction">
+            <result name="success">
+                /WEB-INF/pages/system/reportManager/chart/baseChartS.jsp
+            </result>
+        </action>
+
+        
+	</package>
+
+</struts>

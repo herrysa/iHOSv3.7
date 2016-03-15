@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="statisticsItem" extends="default"	namespace="/">
+
+		<action name="statisticsItemList" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsItem/statisticsItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsItem/statisticsItemList.jsp</result>
+		</action>
+		<action name="statisticsItemCheckList" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsItem/statisticsItemCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsItem/statisticsItemCheckList.jsp</result>
+		</action>
+		<action name="statisticsSingleChart" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="statisticsSingleChart">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleChart.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleChart.jsp</result>
+		</action>
+		<action name="statisticsMultiChart" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="statisticsMultiChart">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsMultiChart.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsMultiChart.jsp</result>
+		</action>
+		<action name="previewStatisticsItem" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="previewStatisticsItem">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleChartCheck.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleChartCheck.jsp</result>
+		</action>
+		<action name="statisticsSingleField" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="singleFieldList">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleField.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleField.jsp</result>
+		</action>
+		<!-- 修改单统计项过滤条件 -->
+		<action name="editSingleChartFilter" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="editSingleChartFilter">
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleChartFilterForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleChartFilterForm.jsp</result>
+		</action>
+		<!-- 修改二维统计过滤条件 -->
+		<action name="editMultiChartFilter" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="editMultiChartFilter">
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsMultiChartFilterForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsMultiChartFilterForm.jsp</result>
+		</action>
+		<!-- 修改单项统计过滤条件 -->
+		<action name="editStatisticsSingleField" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="editStatisticsSingleField">
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleFieldFilterForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsChart/statisticsSingleFieldFilterForm.jsp</result>
+		</action>
+		<action name="statisticsItemGridList" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction"		method="statisticsItemGridList">
+			<result type="json">
+				<param name="includeProperties">statisticsItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="statisticsItemGridEdit" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction"			method="statisticsItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editStatisticsItem" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsItem/statisticsItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsItem/statisticsItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveStatisticsItem" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<!-- tree load -->
+		<action name="makeStatisticsItemTree"	class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="makeStatisticsItemTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">statisticsItemTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getSingleFieldTableList"	class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction" method="getSingleFieldTableList">
+			<result name="success"  type="json">
+				<param name="includeProperties">bdInfos.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="exportExcelForSatatiticsItem" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsItemPagedAction"		method="exportExcelForSatatiticsItem">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

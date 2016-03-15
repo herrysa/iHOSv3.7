@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="asyncHrData" extends="default"	namespace="/">
+		<action name="asyncData" class="com.huge.ihos.hr.asyncHrData.webapp.action.AsyncHrDataAction">
+			<result name="success">/WEB-INF/pages/hr/asyncHrData/asyncData.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/asyncHrData/asyncData.jsp</result>
+		</action>
+		<action name="asyncHrData" class="com.huge.ihos.hr.asyncHrData.webapp.action.AsyncHrDataAction">
+			<result name="success">/WEB-INF/pages/hr/asyncHrData/asyncHrData.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/asyncHrData/asyncHrData.jsp</result>
+		</action>
+		<action name="asyncToHrData" class="com.huge.ihos.hr.asyncHrData.webapp.action.AsyncHrDataAction">
+			<result name="success">/WEB-INF/pages/hr/asyncHrData/asyncToHrData.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/asyncHrData/asyncToHrData.jsp</result>
+		</action>
+		<action name="confirmAsyncHrData" class="com.huge.ihos.hr.asyncHrData.webapp.action.AsyncHrDataAction" method="confirmAsyncHrData">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="confirmAsyncToHrData" class="com.huge.ihos.hr.asyncHrData.webapp.action.AsyncHrDataAction" method="confirmAsyncToHrData">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="syncHrDataList" class="com.huge.ihos.hr.asyncHrData.webapp.action.syncHrDataPagedAction"  method="syncHrDataList">
+			<result name="input">/WEB-INF/pages/hr/asyncHrData/syncHrData/syncHrDataList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/asyncHrData/syncHrData/syncHrDataList.jsp</result>
+		</action>
+		<action name="syncHrDataGridList" class="com.huge.ihos.hr.asyncHrData.webapp.action.syncHrDataPagedAction"		method="syncHrDataGridList">
+			<result type="json">
+				<param name="includeProperties">syncHrDatas.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="syncHrDataGridEdit" class="com.huge.ihos.hr.asyncHrData.webapp.action.syncHrDataPagedAction"			method="syncHrDataGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSyncHrData" class="com.huge.ihos.hr.asyncHrData.webapp.action.syncHrDataPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/asyncHrData/syncHrData/syncHrDataForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/asyncHrData/syncHrData/syncHrDataForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savesyncHrData" class="com.huge.ihos.hr.asyncHrData.webapp.action.syncHrDataPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

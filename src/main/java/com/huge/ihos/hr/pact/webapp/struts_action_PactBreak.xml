@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="pactBreak" extends="default"	namespace="/">
+
+		<action name="pactBreakList" class="com.huge.ihos.hr.pact.webapp.action.PactBreakPagedAction" method="pactBreakList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactBreak/pactBreakList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactBreak/pactBreakList.jsp</result>
+		</action>
+		<action name="pactBreakGridList" class="com.huge.ihos.hr.pact.webapp.action.PactBreakPagedAction"		method="pactBreakGridList">
+			<result type="json">
+				<param name="includeProperties">pactBreaks.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="pactBreakGridEdit" class="com.huge.ihos.hr.pact.webapp.action.PactBreakPagedAction"			method="pactBreakGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPactBreak" class="com.huge.ihos.hr.pact.webapp.action.PactBreakPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/pact/pactBreak/pactBreakForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/pact/pactBreak/pactBreakForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePactBreak" class="com.huge.ihos.hr.pact.webapp.action.PactBreakPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,addFrom,pactIds</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="cascadeUpdatePersonByBreakPact" class="com.huge.ihos.hr.pact.webapp.action.PactBreakPagedAction"	method="cascadeUpdatePersonByBreakPact">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

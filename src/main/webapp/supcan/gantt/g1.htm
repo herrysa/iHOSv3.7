@@ -1,0 +1,188 @@
+<html>
+<head><title>1.时间刻度: 基本功能</Title>
+<meta http-equiv="content-type" content="text/html; charset=GB2312">
+<link rel="stylesheet" href="../res/temp1.css" type="text/css">
+<script type='text/javascript' src='../binary/dynaloadNG.js?86'></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+  AF.func("Build", "g1.xml");
+  AF.func("Load", "g1_data.xml");
+  AF.func("BuildDiagram", "");
+  AF.func("Expand", "");
+  var tiers = AF.func("GetTiers", "");
+ 
+  //cellWidth
+  var inWidth = document.getElementById("inWidth");
+  inWidth.value = AF.func("GetTierInfo",  "cellWidth");
+
+  //WD
+  var selWD = document.getElementById("selWD");
+  selWD.value = AF.func("GetGanttInfo", "FirstDayOfWeek");
+
+  //HRows
+  var inHRows = document.getElementById("inHRows");
+  inHRows.value = AF.func("GetGanttInfo", "HorzGridRows");
+
+  //支持的 unit
+  var selUnit = document.getElementById("selUnit");
+  var s = AF.func("GetSupportUnits", "");
+  var arr = s.split(/\,/);
+  for(i=0; i<arr.length; i++) selUnit.options.add(new Option(arr[i], arr[i]));
+
+  //支持的 datemacro
+  var selDateMacro = document.getElementById("selDateMacro");
+  s = AF.func("GetSupportDateFormats", "");
+  arr = s.split(/\r?\n/);
+  for(i=0; i<arr.length; i++) selDateMacro.options.add(new Option(arr[i], i));
+
+  //构建 Tier
+  var selTier = document.getElementById("selTier");
+  for(i=0; i<tiers; i++) selTier.options.add(new Option(i,i));
+  selTier.selectedIndex = i-1;
+
+  RefreshTierInfo( );
+ }
+
+ //刷新当前 Tier 的信息
+ function RefreshTierInfo( )
+ {
+  var selTier = document.getElementById("selTier");
+  var selUnit = document.getElementById("selUnit");
+  var selAlign = document.getElementById("selAlign");
+  var inFormat = document.getElementById("inFormat");
+  var inCount = document.getElementById("inCount");
+  var inHeight = document.getElementById("inHeight");
+  var tierIndex = selTier.selectedIndex;
+  
+  selUnit.value = AF.func("GetTierInfo", "Unit \r\n" + tierIndex);
+  selAlign.value = AF.func("GetTierInfo", "align \r\n" + tierIndex);
+  inFormat.value = AF.func("GetTierInfo", "Format \r\n" + tierIndex);
+  inCount.value = AF.func("GetTierInfo", "Count \r\n" + tierIndex);
+  inHeight.value = AF.func("GetTierInfo", "Height \r\n" + tierIndex);
+ }
+
+ //更改 CellWidth
+ function OnChangeCellWidth( )
+ {
+  var inWidth = document.getElementById("inWidth");
+  AF.func("SetTierInfo", "cellWidth \r\n" + inWidth.value);
+ }
+ //更改 WD
+ function OnSelWD( v )
+ {
+  AF.func("SetGanttInfo", "FirstDayOfWeek \r\n" + v);
+ }
+ //更改 HRows
+ function OnChangeHorzRows( )
+ {
+  var inHRows = document.getElementById("inHRows");
+  AF.func("SetGanttInfo", "HorzGridRows \r\n" + inHRows.value);
+ }
+ //更改 Tier 高度
+ function OnChangeHeight( )
+ {
+  var inHeight = document.getElementById("inHeight");
+  var selTier = document.getElementById("selTier");
+  var tierIndex = selTier.selectedIndex;
+  AF.func("SetTierInfo", "height \r\n" + inHeight.value+ "\r\n" + tierIndex);
+ }
+ //更改 Tier Count
+ function OnChangeCount( )
+ {
+  var inCount = document.getElementById("inCount");
+  var selTier = document.getElementById("selTier");
+  var tierIndex = selTier.selectedIndex;
+  AF.func("SetTierInfo", "Count \r\n" + inCount.value+ "\r\n" + tierIndex);
+ }
+ //更改 Tier 日期显示
+ function OnChangeFormat( )
+ {
+  var inFormat = document.getElementById("inFormat");
+  var selTier = document.getElementById("selTier");
+  var tierIndex = selTier.selectedIndex;
+  AF.func("SetTierInfo", "format \r\n" + inFormat.value+ "\r\n" + tierIndex);
+ }
+ //更改 Align
+ function OnSelAlign(v)
+ {
+  var selAlign = document.getElementById("selAlign");
+  var selTier = document.getElementById("selTier");
+  var tierIndex = selTier.selectedIndex;
+  AF.func("SetTierInfo", "align \r\n" + v+ "\r\n" + tierIndex);
+ }
+ //更改 Unit
+ function OnChangeUnit( )
+ {
+  var selTier = document.getElementById("selTier");
+  var inFormat = document.getElementById("inFormat");
+  var selUnit = document.getElementById("selUnit");
+  var tierIndex = selTier.selectedIndex;
+  AF.func("SetTierInfo", "unit \r\n" + selUnit.value + "\r\n" + tierIndex);
+  inFormat.value = AF.func("GetTierInfo", "format \r\n" + tierIndex);
+ }
+
+ //当前 Tier 变化
+ function OnSelTier( n )
+ {
+   RefreshTierInfo( );
+ }
+ 
+ //删除
+ function OnDeleteTier( )
+ {
+  var inDeleteTier = document.getElementById("inDeleteTier");
+  var sTier = inDeleteTier.value;
+  AF.func("deleteTier", sTier);
+ }
+</script>
+</head>
+
+<body topmargin=4 vlink=#0000ff link=#0000ff>
+<a href="index.htm">&lt;&lt;Back</a> 1.时间刻度: 基本功能
+<center>
+<br>
+<table width=97% border=0>
+<tr>
+	<td align="center">选择要操作的时间刻度层(Tier, 0表示顶层)：<select id="selTier" onchange="OnSelTier(this.value)"/></td>
+</tr>
+</table>
+<table width=97% cellpadding=4 cellspacing=0 border=1 align="center" style="border:#bbbbbb solid 1px">
+<tr>
+	<td>刻度单位：<select id="selUnit" onchange="OnChangeUnit( )"/></td>
+	<td>数量：<input id="inCount" size="1"/><input type="button" OnClick="OnChangeCount( )" value=" 更改 "/></td>
+	<td>层高：<input id="inHeight" size="4"/><input type="button" OnClick="OnChangeHeight( )" value=" 更改 "/></td>
+</tr>
+<tr>
+	<td colspan="2">文字表达：<input id="inFormat" size="30"/><input type="button" OnClick="OnChangeFormat( )" value=" 更改 "/>，&nbsp;&nbsp;注：可包含如下格式掩码：<select id="selDateMacro" /></td>
+	<td>对齐：<select id="selAlign" onchange="OnSelAlign(this.value)"><option value="left">left</option><option value="center">center</option><option value="right">right</option></select></td>
+</tr>
+</table>
+<br>
+<div style="position:relative;width:97%">
+	<script>insertGantt('AF', '', '250px')</script>
+</div>
+<br>
+<table width=97% cellpadding=4 cellspacing=0 border=1 align="center" style="border:#bbbbbb solid 1px">
+<tr>
+	<td>底层每单位宽度：<input id="inWidth" size="2"/><input type="button" OnClick="OnChangeCellWidth( )" value=" 更改 "/></td>
+	<td>每周的第一天：<select id="selWD" onchange="OnSelWD(this.value)"><option value="1">周日</option><option value="2">周一</option><option value="3">周二</option><option value="4">周三</option><option value="5">周四</option><option value="6">周五</option><option value="7">周六</option></select></td>
+	<td>每隔多少行画一水平线：<input id="inHRows" size="2"/><input type="button" OnClick="OnChangeHorzRows( )" value=" 更改 "/></td>
+</tr>
+</table>
+<br><br>
+<b>操作Tier</b><br>
+<table width=97% cellpadding=4 cellspacing=0 border=1 align="center" style="border:#bbbbbb solid 1px">
+<tr>
+	<td>删除 Tier：<input id="inDeleteTier" size="2"/><input type="button" OnClick="OnDeleteTier( )" value=" 删除 "/></td>
+	<td></td>
+	<td></td>
+</tr>
+</table>
+<br>
+查看<a href="g1.xml" target=_blank>XML模版</a> 和 <a href="g1_data.xml" target=_blank>XML数据</a>
+<br>
+</center>
+</body>
+<script type='text/javascript' src='res/nstd.js'></script>
+</html>

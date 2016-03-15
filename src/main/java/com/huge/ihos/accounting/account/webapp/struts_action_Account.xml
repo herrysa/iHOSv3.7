@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="account" extends="default"	namespace="/">
+
+		<action name="accountList" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="accountListPrepare">
+			<result name="input">/WEB-INF/pages/account/accountList.jsp</result>
+			<result name="success">/WEB-INF/pages/account/accountList.jsp</result>
+		</action>
+		<action name="accountTree" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="accountListPrepare">
+			<result name="input">/WEB-INF/pages/account/accountTree.jsp</result>
+			<result name="success">/WEB-INF/pages/account/accountTree.jsp</result>
+		</action>
+		<action name="accountGridList" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"		method="accountGridList">
+			<result type="json">
+				<param name="includeProperties">accounts.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="accountGridEdit" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"			method="accountGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getAccountByNumber" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"			method="getAccountByNumber">
+			<result name="success" type="json">
+                 <param name="includeProperties">acct.*</param>
+                 <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkAcctcode" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"			method="checkAcctcode">
+			<result name="success" type="json">
+                 <param name="includeProperties">hasFather</param>
+                 <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editAccount" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/account/accountForm.jsp</result>
+			<result name="input">/WEB-INF/pages/account/accountForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveAccount" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="makeAccountTree" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="makeAccountTree">
+		    <result name="success" type="json">
+                <param name="includeProperties">ztreeList.*</param>
+                <param name="noCache">true</param>
+            </result>
+		</action>
+		<action name="makeAccountTreeWithCode" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="makeAccountTreeWithCode">
+		    <result name="success" type="json">
+                <param name="includeProperties">nodes.*</param>
+                <param name="noCache">true</param>
+            </result>
+		</action>
+		<action name="initAccount" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="initAccount">
+		    <result name="success" type="json">
+		   		 <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

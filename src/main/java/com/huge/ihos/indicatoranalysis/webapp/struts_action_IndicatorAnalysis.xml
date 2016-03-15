@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="indicatorAnalysis" extends="default"	namespace="/">
+
+		<action name="indicatorAnalysisList" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction" method="indicatorAnalysisList">
+			<result name="grid">/WEB-INF/pages/indicatoranalysis/indicatorAnalysis/indicatorAnalysisList.jsp</result>
+			<result name="graph">/WEB-INF/pages/indicatoranalysis/indicatorAnalysis/indicatorAnalysisGraph.jsp</result>
+		</action>
+		<action name="indicatorAnalysisGridList" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction"		method="indicatorAnalysisGridList">
+			<result type="json">
+				<param name="includeProperties">indicatorAnalysiss.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="initIndicatorValue" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction" method="initIndicatorValue">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="executeIndicatorSp" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction" method="executeIndicatorSp">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="calculateIndicatorValue" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction" method="calculateIndicatorValue">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="switchGraphAndGrid" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction" method="switchGraphAndGrid">
+			<result name="graph">/WEB-INF/pages/indicatoranalysis/indicatorAnalysis/indicatorAnalysisGraph.jsp</result>
+			<result name="grid">/WEB-INF/pages/indicatoranalysis/indicatorAnalysis/indicatorAnalysisList.jsp</result>
+		</action>
+		<action name="showAnalysisGraph" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction" method="getIndicatorForGraph">
+		    <result name="success" type="json">
+		        <param name="includeProperties">indicatorAnalysisList.*</param>
+                <param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+		    </result>
+		</action>
+		<action name="downloadAnalysisGraph" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorAnalysisPagedAction" method="downloadAnalysisGraph">
+			<result name="success" type="json">
+                <param name="includeProperties">message</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

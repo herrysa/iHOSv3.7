@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="hrPersonSnap" extends="default"	namespace="/">
+		<action name="hrPersonSnapList" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction">
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrPersonSnapList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrPersonSnapList.jsp</result>
+		</action>
+		<action name="hrPersonSnapGridEdit" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction"			method="hrPersonSnapGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editHrPersonSnap" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrPersonSnapForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrPersonSnapForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveHrPersonSnap" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,deptId,personNode.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when clicking save on the edit form -->
+		<action name="hrPersonHistoryList" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="hrPersonHistoryList">
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrPersonHistoryList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrPersonHistoryList.jsp</result>
+		</action>
+		<action name="hrPersonHistoryGridList" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction"	method="hrPersonHistoryGridList">
+			<result type="json">
+				<param name="includeProperties">hrPersonSnaps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 批量修改 -->
+		 <action name="hrPersonBatchEdit" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrPersonBatchEdit.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrPersonBatchEdit.jsp</result>
+		</action>
+		<!-- 排序 -->
+		<action name="hrPersonSort" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrPersonSortForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrPersonSortForm.jsp</result>
+		</action>
+		<!-- HrPerson's image upload and delete -->
+		<action name="uploadHrPersonImageFile" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="uploadImageFile"/>
+  		<action name="deleteHrPersonImageFile" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="deleteImageFile"/>
+		<!-- excel下载 -->
+		<action name="outPutExcelForHrPersonSnap" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction"		method="outPutExcelForHrPersonSnap">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- excel导入 -->
+		 <action name="hrPersonExcelImport" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrExcelImport.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrExcelImport.jsp</result>
+		</action>
+		<!-- excel导入 -->
+		<action name="importHrPersonFromExcel" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="importHrPersonFromExcel"> 
+			<result name="success" type="json">
+				<param name="contentType">text/plain</param>
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,dialogId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+			<action name="makeHrPersonSnapTree" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="makeHrPersonSnapTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">hrPersonHisTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getHrPersonSnapBySnapId" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="getHrPersonSnapBySnapId">
+			<result name="success"  type="json">
+				<param name="includeProperties">hrPersonSnap.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="checkHrPersonCanBeEdited" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction"  method="checkHrPersonCanBeEdited">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,canBeEdited</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+	</package>
+
+</struts>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="businessType" extends="default"	namespace="/">
+
+		<action name="businessTypeList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="businessTypeList">
+			<result name="input">/WEB-INF/pages/pz/businessType/businessTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/pz/businessType/businessTypeList.jsp</result>
+		</action>
+		<action name="businessTypeGridList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"		method="businessTypeGridList">
+			<result type="json">
+				<param name="includeProperties">businessTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="businessTypeGridEdit" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="businessTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBusinessType" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/pz/businessType/businessTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBusinessType" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,treeNode.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="makeBusinessTypeTree" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="makeBusinessTypeTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">businessTypeTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="saveBusinessTypeSn" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="saveBusinessTypeSn">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="checkBusinessTypeDel" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="checkBusinessTypeDel">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="checkBusinessTypeAdd" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="checkBusinessTypeAdd">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="businessAccountMap" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"	method="businessAccountMap"	>
+			<result name="success">/WEB-INF/pages/pz/businessType/businessTypeMap.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessTypeMap.jsp</result>
+		</action>
+		
+		<action name="businessAccountParam" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="businessAccountParam">
+			<result name="success">/WEB-INF/pages/pz/businessType/businessAccountParam.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessAccountParam.jsp</result>
+		</action>
+		
+		<action name="saveAccountParam" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="saveAccountParam">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="businessAccountMapGrid" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="businessAccountMapGrid">
+			<result name="success"  type="json">
+				<param name="includeProperties">colInfo.*,rowInfo.*,colSql.*,colParam.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="reloadPzMapData" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="reloadPzMapData">
+			<result type="json">
+				<param name="includeProperties">rowInfo.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="getPzMapSearchContent" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="getPzMapSearchContent">
+			<result name="success"  type="json">
+				<param name="includeProperties">searchContents</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="initPzMapData" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="initPzMapData">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="saveBusinessAccountMap" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction"			method="saveBusinessAccountMap">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="businessAccountMain" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" >
+			<result name="success">/WEB-INF/pages/pz/businessType/businessAccountMain.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessAccountMain.jsp</result>
+		</action>
+		
+		
+		<action name="businessAccountList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="businessAccountList">
+			<result name="success">/WEB-INF/pages/pz/businessType/businessAccountList.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessAccountList.jsp</result>
+		</action>
+		
+		<action name="businessAccountCheck" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" >
+			<result name="success">/WEB-INF/pages/pz/businessType/businessAccountCheck.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessAccountCheck.jsp</result>
+		</action>
+		
+		<action name="autoPzPage" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" >
+			<result name="success">/WEB-INF/pages/pz/businessType/autoPzPage.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/autoPzPage.jsp</result>
+		</action>
+
+		<action name="pzMapBatchEdit" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction">
+			<result name="success">/WEB-INF/pages/pz/businessType/pzMapBatchEdit.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/pzMapBatchEdit.jsp</result>
+		</action>
+		
+		<action name="getPzMapBatchEditList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="getPzMapBatchEditList">
+			<result type="json">
+				<param name="includeProperties">pzMapBatchEditCols.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="makeAcctTree" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypePagedAction" method="makeAcctTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">acctTreeDatas.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

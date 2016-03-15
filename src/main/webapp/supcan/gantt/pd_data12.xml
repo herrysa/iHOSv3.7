@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<id>A</id>
+	<name>A</name>
+	<TID>B,C,D</TID>
+</record>
+<record>
+	<id>C</id>
+	<name>C</name>
+	<TID>H,E,G</TID>
+</record>
+
+<record>
+	<id>D</id>
+	<name>D</name>
+	<TID>G</TID>
+</record>
+<record>
+	<id>B</id>
+	<name>B</name>
+	<TID>H</TID>
+</record>
+
+<record>
+	<id>E</id>
+	<name>E</name>
+	<TID>I</TID>
+</record>
+<record>
+	<id>G</id>
+	<name>G</name>
+	<TID>I,J</TID>
+</record>
+<record>
+	<id>H</id>
+	<name>H</name>
+	<TID>K</TID>
+</record>
+
+<record>
+	<id>I</id>
+	<name>I</name>
+	<TID>K</TID>
+</record>
+<record>
+	<id>J</id>
+	<name>J</name>
+	<TID>K</TID>
+</record>
+<record>
+	<id>K</id>
+	<name>K</name>
+	<TID></TID>
+</record>
+
+</data>

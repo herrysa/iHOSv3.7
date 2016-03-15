@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="jjUpdata" extends="default"	namespace="/">
+
+		<action name="jjUpdataList" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction" method="getDefColumnInfo">
+			<result name="input">/WEB-INF/pages/jjUpdata/jjUpdataList.jsp</result>
+			<result name="success">/WEB-INF/pages/jjUpdata/jjUpdataList.jsp</result>
+		</action>
+		<action name="jjUpdataGridList" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction"		method="jjUpdataGridList">
+			<result type="json">
+				<param name="includeProperties">jjUpdatas.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="jjUpdataGridEdit" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction"			method="jjUpdataGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="beforeAddJjUpdata" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction"	method="beforeAddJjUpdata">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editJjUpdata" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/jjUpdata/jjUpdataForm.jsp</result>
+			<result name="input">/WEB-INF/pages/jjUpdata/jjUpdataForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveJjUpdata" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveDefColumnData" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction"			method="saveDefColumnData">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="confirmAll" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction"			method="confirmAll">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="personJjAndDeptTree" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction" method="personJjAndDeptTree">
+            <result name="success" type="json">
+                <param name="includeProperties">nodes.*</param>
+                   <param name="noCache">true</param>
+            </result>
+        </action>
+        <!-- 继承之前检查是否已经初始化 -->
+		<action name="beforeInheritJjUpdata" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction" method="beforeInheritJjUpdata">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                <param name="noCache">true</param>
+                <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!-- 转向继承页面 -->
+		<action name="jjUpdataInheritance" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction" method="jjUpdataInheritance">
+            <result name="success">/WEB-INF/pages/jjUpdata/jjUpdataInheritance.jsp</result>
+			<result name="input">/WEB-INF/pages/jjUpdata/jjUpdataInheritance.jsp</result>
+        </action>
+        <!-- 执行继承过程 -->
+		<action name="inheritJjUpdata" class="com.huge.ihos.update.webapp.action.JjUpdataPagedAction" method="inheritJjUpdata">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                <param name="noCache">true</param>
+                <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+	</package>
+
+</struts>

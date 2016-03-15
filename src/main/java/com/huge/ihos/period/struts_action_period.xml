@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="period" extends="default" namespace="/">
+
+       <!--PeriodAction-START-->
+        <action name="periodList">
+			<result name="input">/WEB-INF/pages/period/periodList.jsp</result>
+			<result name="success">/WEB-INF/pages/period/periodList.jsp</result>
+		</action>
+
+		<action name="periodGridList" class="com.huge.ihos.period.webapp.action.PeriodAction" method="periodGridList">
+			<result type="json">
+				<param name="includeProperties">periods.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="periodGridEdit" class="com.huge.ihos.period.webapp.action.PeriodAction" method="periodGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editPeriod" class="com.huge.ihos.period.webapp.action.PeriodAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/period/periodForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/period/periodForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="savePeriod" class="com.huge.ihos.period.webapp.action.PeriodAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="setCurrentPeriod" class="com.huge.ihos.period.webapp.action.PeriodAction" method="setCurrentPeriod">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,currentPeriod</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="openDataPeriod" class="com.huge.ihos.period.webapp.action.PeriodAction" method="openDataPeriod">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="closeDataPeriod" class="com.huge.ihos.period.webapp.action.PeriodAction" method="closeDataPeriod">
+            <!-- <result name="success" type="redirectAction">periodList</result> -->
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="allPeriodSelect" class="com.huge.ihos.period.webapp.action.PeriodAction" method="allPeriodListSelect">
+             <result type="json">
+                <param name="includeProperties">allPeriodList.*</param>
+            </result>
+        </action>
+        <action name="getPeriodByBusinessDate" class="com.huge.ihos.period.webapp.action.PeriodAction" method="getPeriodByBusinessDate">
+             <result type="json">
+                <param name="includeProperties">currentPeriod</param>
+            </result>
+        </action>
+        <!--PeriodAction-END-->
+	</package>
+
+</struts>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="specialSource" extends="default"	namespace="/">
+
+		<action name="specialSourceList" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction" method="specialSourceList">
+			<result name="input">/WEB-INF/pages/inout/specialSourceList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/specialSourceList.jsp</result>
+		</action>
+		<action name="specialSourceGridList" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction"		method="specialSourceGridList">
+			<result type="json">
+				<param name="includeProperties">specialSources.*,records,total,page,sumData,userdata.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="specialSourceGridEdit" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction"			method="specialSourceGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSpecialSource" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/inout/specialSourceForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/specialSourceForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSpecialSource" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getCBStatus" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction" method="getCBStatus">
+	            <result name="success" type="json">
+	            	<param name="includeProperties">statuCB</param>
+	                <param name="ignoreHierarchy">false</param>
+	            </result>
+	     </action>
+		<action name="changeSpecialItemList" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction" method="changeSpecialItemList">
+	            <result name="success" type="json">
+	            	<param name="includeProperties">specialItemStr</param>
+	                <param name="ignoreHierarchy">false</param>
+	            </result>
+	     </action>
+		<action name="selectItemType" class="com.huge.ihos.inout.webapp.action.SpecialSourcePagedAction" method="selectItemType">
+	            <result name="success" type="json">
+	            	<param name="includeProperties">itemType</param>
+	                <param name="ignoreHierarchy">false</param>
+	            </result>
+	     </action>
+	</package>
+
+</struts>

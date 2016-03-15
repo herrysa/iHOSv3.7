@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="trainNeed" extends="default"	namespace="/">
+
+		<action name="trainNeedList" class="com.huge.ihos.hr.trainNeed.webapp.action.TrainNeedPagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainClass/trainNeedList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainClass/trainNeedList.jsp</result>
+		</action>
+		<action name="trainNeedGridList" class="com.huge.ihos.hr.trainNeed.webapp.action.TrainNeedPagedAction"		method="trainNeedGridList">
+			<result type="json">
+				<param name="includeProperties">trainNeeds.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="trainNeedGridEdit" class="com.huge.ihos.hr.trainNeed.webapp.action.TrainNeedPagedAction"			method="trainNeedGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTrainNeed" class="com.huge.ihos.hr.trainNeed.webapp.action.TrainNeedPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/train/trainClass/trainNeedForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainClass/trainNeedForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTrainNeed" class="com.huge.ihos.hr.trainNeed.webapp.action.TrainNeedPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

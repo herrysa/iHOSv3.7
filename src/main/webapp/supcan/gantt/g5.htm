@@ -1,0 +1,48 @@
+<html>
+<head><title>5.连接线</Title>
+<meta http-equiv="content-type" content="text/html; charset=GB2312">
+<link rel="stylesheet" href="../res/temp1.css" type="text/css">
+<script type='text/javascript' src='../binary/dynaloadNG.js?86'></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+	if(id == 'AF1') {
+	  AF1.func("Build", "g2.xml \r\n rowHeight=30");
+	  AF1.func("Load", "g1_data.xml");
+	  AF1.func("LoadLine", "g1_data_line1.xml");
+	  AF1.func("Expand", "");
+	  AF1.func("SetGanttBarInfo", "\r\n dragAble \r\n true");
+	  AF1.func("BuildDiagram", "");
+	}
+	else if(id == 'AF2') {
+	  AF2.func("Build", "g2.xml \r\n rowHeight=30");
+	  AF2.func("Load", "g1_data.xml");
+	  AF2.func("LoadLine", "g1_data_line2.xml");
+	  AF2.func("Expand", "");
+	  AF2.func("SetGanttBarInfo", "\r\n dragAble \r\n true");
+	  AF2.func("BuildDiagram", "");
+	}
+ }
+</script>
+</head>
+
+<body topmargin=4 leftmargin=10 vlink=#0000ff link=#0000ff>
+<a href="index.htm">&lt;&lt;Back</a> 5.连接线<br>
+<br>
+这是<a href="g2.xml" target=_blank>XML模版</a>，这是上面的控件加载的线条描述的 <a href="g1_data_line1.xml" target=_blank>XML数据</a>；这是下面的控件加载的线条描述的 <a href="g1_data_line2.xml" target=_blank>XML数据</a><br>
+<br>
+<center>
+<div style="position:relative;width:97%">
+	<script>insertGantt('AF1', '', '380px')</script>
+</div>
+<br>
+<div style="position:relative;width:97%">
+	<script>insertGantt('AF2', '', '380px')</script>
+</div>
+</center>
+
+<br>
+
+</body>
+<script type='text/javascript' src='res/nstd.js'></script>
+</html>

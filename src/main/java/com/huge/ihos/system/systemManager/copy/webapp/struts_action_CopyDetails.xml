@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="copyDetails" extends="default"	namespace="/">
+
+		<action name="copyMainInfo" class="com.huge.ihos.system.systemManager.copy.webapp.action.CopyDetailsPagedAction" >
+			<result name="success">/WEB-INF/pages/system/systemManager/copy/copyDetails.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/copy/copyDetails.jsp</result>
+		</action>
+		<action name="showMainInfoDetails" class="com.huge.ihos.system.systemManager.copy.webapp.action.CopyDetailsPagedAction" method="showMainInfoDetails">
+			<result name="success">/WEB-INF/pages/system/systemManager/copy/mainInfo.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/copy/mainInfo.jsp</result>
+		</action>
+		<action name="showNormalInfoDetails" class="com.huge.ihos.system.systemManager.copy.webapp.action.CopyDetailsPagedAction" method="showNormalInfoDetails">
+			<result name="success">/WEB-INF/pages/system/systemManager/copy/normalInfo.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/copy/normalInfo.jsp</result>
+		</action>
+		<action name="showVoucherControlDetails" class="com.huge.ihos.system.systemManager.copy.webapp.action.CopyDetailsPagedAction" method="showVoucherControlDetails">
+			<result name="success">/WEB-INF/pages/system/systemManager/copy/voucherControl.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/copy/voucherControl.jsp</result>
+		</action>
+		<action name="showBudgetControlDetails" class="com.huge.ihos.system.systemManager.copy.webapp.action.CopyDetailsPagedAction" method="showBudgetControlDetails">
+			<result name="success">/WEB-INF/pages/system/systemManager/copy/budgetControl.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/copy/budgetControl.jsp</result>
+		</action>
+		<action name="showAuditControlDetails" class="com.huge.ihos.system.systemManager.copy.webapp.action.CopyDetailsPagedAction" method="showAuditControlDetails">
+			<result name="success">/WEB-INF/pages/system/systemManager/copy/auditControl.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/copy/auditControl.jsp</result>
+		</action>
+	</package>
+</struts>

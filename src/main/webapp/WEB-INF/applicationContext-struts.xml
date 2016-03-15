@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="true">
+
+    <bean id="adminInterceptor" class="com.huge.webapp.interceptor.UserRoleAuthorizationInterceptor">
+        <property name="authorizedRoles" value="ROLE_ADMIN"/>
+    </bean>
+    
+    <bean id="signupAction" class="com.huge.ihos.system.systemManager.security.webapp.action.SignupAction" scope="prototype">
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="templateName" value="accountCreated.vm"/>
+    </bean>
+    
+    <bean id="userAction" class="com.huge.ihos.system.systemManager.user.webapp.action.UserAction" scope="prototype">
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="templateName" value="accountCreated.vm"/>
+    </bean>
+    
+    <bean id="passwordHintAction" class="com.huge.ihos.system.systemManager.security.webapp.action.PasswordHintAction" scope="prototype">
+        <property name="userManager" ref="userManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+    </bean>
+    
+   <!--  <bean id="personAction" class="com.huge.webapp.action.PersonAction" scope="prototype">
+    	<property name="personManager" ref="personManager"></property>
+    </bean>
+    
+    <bean id="dictionaryAction" class="com.huge.webapp.action.DictionaryAction" scope="prototype">
+    	<property name="dictionaryManager" ref="dictionaryManager"></property>
+    	<property name="pagerFactory" ref="pagerFactory"></property>
+    </bean>
+    
+    <bean id="checkPeriodAction" class="com.huge.webapp.action.PeriodAction">
+        <property name="checkPeriodManager" ref="checkPeriodManager"></property>
+    	<property name="pagerFactory" ref="pagerFactory"></property>
+    </bean>
+    
+    <bean id="dataSourceTypeAction" class="com.huge.webapp.action.DataSourceTypeAction" scope="prototype">
+        <property name="dataSourceTypeManager" ref="dataSourceTypeManager"/>
+        <property name="pagerFactory" ref="pagerFactory"/>
+    </bean>
+    
+    <bean id="dataSourceDefineAction" class="com.huge.webapp.action.DataSourceDefineAction" scope="prototype">
+        <property name="dataSourceDefineManager" ref="dataSourceDefineManager"/>
+        <property name="pagerFactory" ref="pagerFactory"/>
+    </bean>   
+    <bean id="dataCollectionTaskDefineAction" class="com.huge.webapp.action.DataCollectionTaskDefineAction" scope="prototype">
+        <property name="dataCollectionTaskDefineManager" ref="dataCollectionTaskDefineManager"/>
+       <property name="dataSourceDefineManager" ref="dataSourceDefineManager"/>
+        <property name="pagerFactory" ref="pagerFactory"/>
+    </bean>
+      -->
+</beans>

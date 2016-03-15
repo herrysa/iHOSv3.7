@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="sysTableStructure" extends="default"	namespace="/">
+
+		<action name="sysTableStructureList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction">
+			<result name="input">/WEB-INF/pages/hr/sysTable/sysTableStructure/sysTableStructureList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableStructure/sysTableStructureList.jsp</result>
+		</action>
+		<action name="sysTableStructureGridList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction"		method="sysTableStructureGridList">
+			<result type="json">
+				<param name="includeProperties">sysTableStructures.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="sysTableStructureGridEdit" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction"			method="sysTableStructureGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSysTableStructure" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableStructure/sysTableStructureForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/sysTable/sysTableStructure/sysTableStructureForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSysTableStructure" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getTableStructureList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction" method="getTableStructureList">
+   			<result name="success" type="json">
+                 <param name="includeProperties">sysTableStructures.*</param>
+                 <param name="noCache">true</param>
+    			 <param name="ignoreHierarchy">false</param>
+            </result>
+ 		 </action>
+ 		 <action name="getDataByTableCode" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction" method="getDataByTableCode">
+   			<result name="success" type="json">
+                 <param name="includeProperties">sysTableStructureDatas.*</param>
+                 <param name="noCache">true</param>
+    			 <param name="ignoreHierarchy">false</param>
+            </result>
+ 		 </action>
+ 		 
+ 		 <action name="editSysTableData" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction"			method="editSysTableData">
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableStructure/sysTableDataChange.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/sysTable/sysTableStructure/sysTableDataChange.jsp</result>
+		</action>
+		
+		<action name="saveSysTableData" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction"			method="saveSysTableData">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+ 		 
+ 		 <action name="showSubSet" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction">
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableStructure/hrSubSet.jsp</result>
+		 </action>
+		 <action name="getTableColumnInfo" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction" method="getTableColumnInfo">
+   			<result name="success" type="json">
+                 <param name="includeProperties">sysTableStructures.*,isView,tableKind</param>
+                 <param name="noCache">true</param>
+    			 <param name="ignoreHierarchy">false</param>
+            </result>
+ 		 </action>
+ 		 <action name="subSetList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction" method="subSetList">
+			<result type="json">
+				<param name="includeProperties">subSets.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 附属信息下拉列表模式 -->
+		 <action name="getFiledDataList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableStructurePagedAction" method="getFiledDataList">
+   			<result name="success" type="json">
+                 <param name="includeProperties">filedDataByCode.*</param>
+                 <param name="noCache">true</param>
+    			 <param name="ignoreHierarchy">false</param>
+            </result>
+ 		 </action>
+	</package>
+
+</struts>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="menuButton" extends="default"	namespace="/">
+
+		<action name="menuButtonList" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuButtonPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/menu/menuButton/menuButtonList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/menu/menuButton/menuButtonList.jsp</result>
+		</action>
+		<action name="menuButtonGridList" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuButtonPagedAction"		method="menuButtonGridList">
+			<result type="json">
+				<param name="includeProperties">menuButtons.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="menuButtonGridEdit" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuButtonPagedAction"			method="menuButtonGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editMenuButton" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuButtonPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/menu/menuButton/menuButtonForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/menu/menuButton/menuButtonForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveMenuButton" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuButtonPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="makeMenuTreeForMenuButton" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuButtonPagedAction"	method="makeMenuTree">
+			<result name="success" type="json">
+                <param name="includeProperties">menuNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

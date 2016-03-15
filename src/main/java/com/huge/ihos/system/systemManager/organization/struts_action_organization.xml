@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="organization" extends="default" namespace="/">
+
+        <action name="personList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="personList">
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/personList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/personList.jsp</result>
+		</action>
+
+		<action name="personGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="personGridList">
+			<result type="json">
+				<param name="includeProperties">persons.*,records,total,page,personAll.*</param>
+				<param name="excludeProperties">persons.*\.department.parentDept,
+				persons.*\.department.personCount,persons.*\.department.personCountD,
+				persons.*\.department.personCountP,persons.*\.department.personCountDP,
+				persons.*\.department.personCountWithOutDisabled
+				</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+				
+			</result>
+		</action>
+		<action name="gzPersonGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="gzPersonGridList">
+			<result type="json">
+				<param name="includeProperties">persons.*,records,total,page,personAll.*,userdata.*</param>
+				<param name="excludeProperties">persons.*\.department.parentDept,
+				persons.*\.department.personCount,persons.*\.department.personCountD,
+				persons.*\.department.personCountP,persons.*\.department.personCountDP,
+				persons.*\.department.personCountWithOutDisabled
+				</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqPersonGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="kqPersonGridList">
+			<result type="json">
+				<param name="includeProperties">persons.*,records,total,page,personAll.*,userdata.*</param>
+				<param name="excludeProperties">persons.*\.department.parentDept,
+				persons.*\.department.personCount,persons.*\.department.personCountD,
+				persons.*\.department.personCountP,persons.*\.department.personCountDP,
+				persons.*\.department.personCountWithOutDisabled
+				</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="personGridEdit" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="personGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editPerson" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/systemManager/organization/personForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/organization/personForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="savePerson" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,deptTreeNode.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+         <action name="makeDepartmentPersonTree" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="makeDepartmentPersonTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">personTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		  <!--  更新月度职工表 -->
+        <action name="updateMonthPersonList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="updateMonthPersonList">
+ 	        <result name="success">/WEB-INF/pages/system/systemManager/organization/updateMonthPersonForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/organization/updateMonthPersonForm.jsp</result>
+ 	    </action>
+ 	    <action name="updateMonthPerson" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="updateMonthPerson">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+ <!--DepartmentAction-START-->
+
+
+		
+        <action name="departmentList" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="departmentList">
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/departmentList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/departmentList.jsp</result>
+		</action>
+
+		<action name="departmentGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="departmentGridList">
+			<result type="json">
+				<param name="includeProperties">departments.*,records,total,page,departmentAll.*</param>
+				
+				<param name="excludeProperties">departments.*\.parentDept.parentDept,
+				departments.*\.personCount,departments.*\.personCountD,
+				departments.*\.personCountP,departments.*\.personCountDP,
+				departments.*\.personCountWithOutDisabled</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		
+		<action name="departmentGridEdit" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="departmentGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!-- 检查部门合理性 -->
+        <action name="checkDeptRationality" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="checkDeptRationality">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDepartment" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/systemManager/organization/departmentForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/organization/departmentForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDepartment" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="save">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,deptTreeNode.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        <action name="makeDepartmentTree" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="makeDepartmentTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">deptTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="checkDepartmentName" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="checkDepartmentName">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="departmentSupcanList" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction"		method="departmentSupcanList">
+			<result type="json">
+				<param name="includeProperties"></param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="getDeptById" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="getDeptById">
+			<result type="json">
+				<param name="includeProperties">department.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+        <!--DepartmentAction-END-->
+
+     
+        
+
+        <!--DeptTypeAction-START-->
+		
+	
+		
+        <action name="deptTypeList">
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/deptTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/deptTypeList.jsp</result>
+		</action>
+
+		<action name="deptTypeGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.DeptTypeAction" method="deptTypeGridList">
+			<result type="json">
+				<param name="includeProperties">deptTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="deptTypeGridEdit" class="com.huge.ihos.system.systemManager.organization.webapp.action.DeptTypeAction" method="deptTypeGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDeptType" class="com.huge.ihos.system.systemManager.organization.webapp.action.DeptTypeAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/systemManager/organization/deptTypeForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/organization/deptTypeForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDeptType" class="com.huge.ihos.system.systemManager.organization.webapp.action.DeptTypeAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="deptTypeSelect" class="com.huge.ihos.system.systemManager.organization.webapp.action.DeptTypeAction" method="deptTypeAllList">
+        <result type="json">
+                <param name="includeProperties">allPeriodSelect.*</param>
+            </result>
+        </action>
+        
+        <!--DeptTypeAction-END-->
+        <!--KhDeptTypeAction-START-->
+		
+	
+		
+        <action name="khDeptTypeList">
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/khDeptTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/khDeptTypeList.jsp</result>
+		</action>
+
+		<action name="khDeptTypeGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.KhDeptTypeAction" method="khDeptTypeGridList">
+			<result type="json">
+				<param name="includeProperties">khDeptTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="khDeptTypeGridEdit" class="com.huge.ihos.system.systemManager.organization.webapp.action.KhDeptTypeAction" method="khDeptTypeGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editKhDeptType" class="com.huge.ihos.system.systemManager.organization.webapp.action.KhDeptTypeAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/systemManager/organization/khDeptTypeForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/organization/khDeptTypeForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveKhDeptType" class="com.huge.ihos.system.systemManager.organization.webapp.action.KhDeptTypeAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="khDeptTypeSelect" class="com.huge.ihos.system.systemManager.organization.webapp.action.KhDeptTypeAction" method="khDeptTypeAllList">
+        <result type="json">
+                <param name="includeProperties">allPeriodSelect.*</param>
+            </result>
+        </action>
+        
+        <!--DeptTypeAction-END-->
+
+        
+		<action name="displayDepartmentZTree">
+		<result>/WEB-INF/pages/system/systemManager/organization/departmentZTree.jsp</result>
+		</action>
+		<action name="displayJsDepartmentTree">
+		<result>/WEB-INF/pages/system/systemManager/organization/departmentTree.jsp</result>
+		</action>
+		<action name="displayJsDepartmentTreeJson" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="departmentTree">
+		<result type="json"><param name="includeProperties">ztreejson</param></result>
+		</action>
+		 <action name="displayDepartmentTree" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="departmentTree">
+<!-- 			<result name="input">/WEB-INF/pages/departmentTree.jsp</result> -->
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/departmentTree.jsp
+			<!-- <param name="includeProperties">departTreeList.*</param>  -->
+			</result>
+		</action>
+		<action name="backUpPerson" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="backUpPerson">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+		<action name="personAndDeptTree" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonAction" method="personAndDeptTree">
+            <result name="success" type="json">
+                <param name="includeProperties">nodes.*</param>
+                   <param name="noCache">true</param>
+            </result>
+        </action>
+	</package>
+
+</struts>

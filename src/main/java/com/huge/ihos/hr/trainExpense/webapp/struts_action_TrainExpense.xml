@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="trainExpense" extends="default"	namespace="/">
+
+		<action name="trainExpenseList" class="com.huge.ihos.hr.trainExpense.webapp.action.TrainExpensePagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainExpense/trainExpenseList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainExpense/trainExpenseList.jsp</result>
+		</action>
+		<action name="trainExpenseGridList" class="com.huge.ihos.hr.trainExpense.webapp.action.TrainExpensePagedAction"		method="trainExpenseGridList">
+			<result type="json">
+				<param name="includeProperties">trainExpenses.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="trainExpenseGridEdit" class="com.huge.ihos.hr.trainExpense.webapp.action.TrainExpensePagedAction"			method="trainExpenseGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTrainExpense" class="com.huge.ihos.hr.trainExpense.webapp.action.TrainExpensePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/train/trainExpense/trainExpenseForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainExpense/trainExpenseForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTrainExpense" class="com.huge.ihos.hr.trainExpense.webapp.action.TrainExpensePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

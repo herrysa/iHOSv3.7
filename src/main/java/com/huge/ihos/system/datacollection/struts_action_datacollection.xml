@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="datacollection" extends="default" namespace="/">
+
+        <!--DataSourceTypeAction-START-->
+        <action name="dataSourceTypeList">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataSourceTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataSourceTypeList.jsp</result>
+		</action>
+
+		<action name="dataSourceTypeGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceTypeAction" method="dataSourceTypeGridList">
+			<result type="json">
+				<param name="includeProperties">dataSourceTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="dataSourceTypeGridEdit" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceTypeAction" method="dataSourceTypeGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="dataSourceTypeSelectList" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceTypeAction" method="dataSourceTypeSelectList">
+            <result type="json">
+                <param name="includeProperties">gridOperationMessage,dataSourceTypeSelectList.*</param>
+            </result>
+        </action>
+        
+        
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDataSourceType" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceTypeAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/dataSourceTypeForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/dataSourceTypeForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDataSourceType" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceTypeAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--DataSourceTypeAction-END-->
+
+        <!--DataSourceDefineAction-START-->
+	
+        <action name="dataSourceDefineList">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataSourceDefineList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataSourceDefineList.jsp</result>
+		</action>
+
+		<action name="dataSourceDefineGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="dataSourceDefineGridList">
+			<result type="json">
+				<param name="includeProperties">dataSourceDefines.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="dataSourceDefineGridEdit" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="dataSourceDefineGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        <action name="dataSourceDefineSelectList" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="allDataSourceDefine">
+            <result type="json">
+                <param name="includeProperties">dataSourceDefineSelectList.*</param>
+            </result>
+        </action>
+        
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDataSourceDefine" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/dataSourceDefineForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/dataSourceDefineForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDataSourceDefine" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        <action name="deleteDataSourceDefine" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="delete">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+         <action name="testDataSourceDefine" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="connectionTest">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+           
+         </action>
+           <action name="urlTemplateGlance" class="com.huge.ihos.system.datacollection.webapp.action.DataSourceDefineAction" method="urlGlance">
+             <result name="success">/WEB-INF/pages/system/datacollection/dataSourceDefineForm.jsp</result>
+            <result name="input" type="json">
+                <param name="includeProperties">gridOperationMessage</param>
+                <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+         </action>
+        <!--DataSourceDefineAction-END-->
+
+        <!--DataCollectionTaskDefineAction-START-->
+	        <action name="dataCollectionTaskDefineList">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskDefineList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataCollectionTaskDefineList.jsp</result>
+		</action>
+
+		<action name="dataCollectionTaskDefineGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskDefineAction" method="dataCollectionTaskDefineGridList">
+			<result type="json">
+				<param name="includeProperties">dataCollectionTaskDefines.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="dataCollectionTaskDefineGridEdit" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskDefineAction" method="dataCollectionTaskDefineGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDataCollectionTaskDefine" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskDefineAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/dataCollectionTaskDefineForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskDefineForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDataCollectionTaskDefine" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskDefineAction" method="save">
+            <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskDefineForm.jsp</result>
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="copyDataCollectionTaskDefine" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskDefineAction" method="copy">
+        	<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--DataCollectionTaskDefineAction-END-->
+
+        <!--DataCollectionTaskStepAction-START-->
+        <action name="dataCollectionTaskStepList">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskStepList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataCollectionTaskStepList.jsp</result>
+		</action>
+
+		<action name="dataCollectionTaskStepGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepAction" method="dataCollectionTaskStepGridList">
+			<result type="json">
+				<param name="includeProperties">dataCollectionTaskSteps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="dataCollectionTaskStepGridEdit" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepAction" method="dataCollectionTaskStepGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDataCollectionTaskStep" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/dataCollectionTaskStepForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskStepForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDataCollectionTaskStep" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepAction" method="save">
+            <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskStepForm.jsp</result>
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--DataCollectionTaskStepAction-END-->
+
+        <!--DataCollectionTaskAction-START-->
+        <action name="dataCollectionTaskMain">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataCollectionMain.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataCollectionMain.jsp</result>
+		</action>
+		
+        <action name="dataCollectionTaskList">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataCollectionTaskList.jsp</result>
+		</action>
+
+		<action name="dataCollectionTaskGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="dataCollectionTaskGridList">
+			<result type="json">
+				<param name="includeProperties">dataCollectionTasks.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="dataCollectionTaskGridEdit" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="dataCollectionTaskGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDataCollectionTask" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/dataCollectionTaskForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDataCollectionTask" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="save">
+            <result name="success">/WEB-INF/pages/system/datacollection/dataCollectionTaskForm.jsp</result>
+            <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionTaskForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefresh.jsp</result>
+        </action>
+        <action name="showPeriodSum" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionPeriodAction" method="showPeriodSum">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/dataCollectionPeriodTab.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionPeriodTab.jsp</result>
+ 	    </action>
+        <action name="createPeriodTask" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionPeriodAction" method="createPeriodTask">
+ 	       <!--  <result name="success" type="redirectAction">dataCollectionTaskMain</result> -->
+ 	       <result name="success" type="json">
+ 	           <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                    <param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+ 	         <result name="error" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+ 	    </action>
+        <action name="clearPeriodTask" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionPeriodAction" method="clearPeriodTask">
+ 	        <result name="success" type="redirectAction">dataCollectionTaskMain</result>
+ 	    </action> 	    
+ 	    <action name="closeDataCollectionPeriod" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionPeriodAction" method="closeDataCollectionPeriod">
+ 	        <result name="success" type="redirectAction">dataCollectionTaskMain</result>
+ 	       <result name="error" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+ 	    </action>
+ 	    
+ 	    <action name="dataCollectionCompleteTaskList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="dataCollectionCompleteTaskList">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataCollectionCompleteTaskList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataCollectionCompleteTaskList.jsp</result>
+		</action>
+
+		<action name="dataCollectionCompleteTaskGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="dataCollectionTaskGridCompleteList">
+			<result type="json">
+				<param name="includeProperties">dataCollectionTasks.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="dataCollectionRemainTaskList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="dataCollectionRemainTaskList">
+			<result name="input">/WEB-INF/pages/system/datacollection/dataCollectionRemainTaskList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/dataCollectionRemainTaskList.jsp</result>
+		</action>
+
+		<action name="dataCollectionRemainTaskGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="dataCollectionTaskGridRemainList">
+			<result type="json">
+				<param name="includeProperties">dataCollectionTasks.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+ 	      <action name="execDataCollectionTask" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="execTask">
+ 	        <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+ 	    </action>
+ 	    <action name="execDataCollectionTasks" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="execTasks">
+ 	        <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+ 	    </action>
+ 	      <action name="showTaskInterLog" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="showTaskInterLog">
+ 	        <result name="success" type="redirectAction">interLoggerList</result>
+ 	    </action>
+ 	    
+ 	    
+ 	    
+        <action name="dataCollectionTaskSelectFile" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskUpLoadAction">
+            <result name="input">/WEB-INF/pages/system/datacollection/dataCollectionUploadForm.jsp</result>
+            <result name="success" type="json">
+                <param name="contentType">text/plain</param>
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <interceptor-ref name="fileUpload">
+                    <param name="maximumSize">10485760</param> 
+                </interceptor-ref>
+                <interceptor-ref name="defaultStackForUpLoad"/>
+        </action>
+        
+        <action name="dataCollectionTaskStepExecuteGridList" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepExecuteAction" method="dataCollectionTaskStepExecuteGridList">
+        	<result type="json">
+				<param name="includeProperties">dataCollectionTaskStepExecutes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+        </action>
+ 	    
+ 	    <action name="disabledStepExecute" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepExecuteAction" method="disabledStepExecute">
+            <result type="json">
+                <param name="includeProperties">jsonStatus,jsonMessages</param>
+            </result>
+        </action>
+        <action name="enabledStepExecute" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepExecuteAction" method="enabledStepExecute">
+            <result type="json">
+                <param name="includeProperties">jsonStatus,jsonMessages</param>
+            </result>
+        </action> 
+        
+        <action name="getStepExecuteIsUsedId" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepExecuteAction" method="getStepExecuteIsUsed">
+            <result type="json">
+                <param name="includeProperties">isUsedString</param>
+            </result>
+        </action>  
+ 	    
+ 	    
+<!--  	    <action name="dataCollectionTaskSelectFile" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskUpLoadAction" method="edit">
+            <interceptor-ref name="fileUploadStack"/>
+            <result name="input">/WEB-INF/pages/system/datacollectionUploadForm.jsp</result>
+           <result name="success">/WEB-INF/pages/system/datacollectionUploadForm.jsp</result>
+        </action>
+        <action name="dataCollectionTaskUploadFile" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskUpLoadAction" method="upload">
+            <interceptor-ref name="fileUploadStack"/>
+            <result name="input">/WEB-INF/pages/system/datacollectionUploadForm.jsp</result>
+           <result name="success" >/WEB-INF/pages/popupresult/SuccessRefresh.jsp</result>
+        </action> -->
+        
+ <!--        <action name="dataCollectionTaskUploadFile" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskUpLoadAction" method="upload">
+            <interceptor-ref name="fileUploadStack"/>
+            <result name="input">/WEB-INF/pages/uploadForm.jsp</result>
+           <result name="success" type="redirectAction">dataCollectionTaskMain</result>
+        </action> -->
+ 	    
+        <!--DataCollectionTaskAction-END-->
+
+        <action name="editTaskStepExec" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepExecuteAction" method="editTaskStepExec">
+            <result name="success">/WEB-INF/pages/system/datacollection/taskStepExecForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/taskStepExecForm.jsp</result>
+        </action> 
+           <action name="saveTaskStepExec" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepExecuteAction" method="saveTaskStepExec">
+            <result name="input">/WEB-INF/pages/system/datacollection/taskStepExecForm.jsp</result>
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="deleteTaskStepExec" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskStepExecuteAction" method="deleteTaskStepExec">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        
+        
+          <action name="disabledTaskExecute" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="disableTask">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="enabledTaskExecute" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="enableTask">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action> 
+         <action name="editTaskExec" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="editTaskExec">
+            <result name="success">/WEB-INF/pages/system/datacollection/taskExecForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/taskExecForm.jsp</result>
+        </action> 
+           <action name="saveTaskExec" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="saveTaskExec">
+            <result name="input">/WEB-INF/pages/system/datacollection/taskStepExecForm.jsp</result>
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+           <action name="deleteTaskExec" class="com.huge.ihos.system.datacollection.webapp.action.DataCollectionTaskAction" method="deleteTaskExec">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        
+        
+	</package>
+
+</struts>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="role" extends="default"	namespace="/">
+
+		<!--  show roleList -->
+        <action name="roleList" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction">
+            <result name="success">/WEB-INF/pages/system/systemManager/security/RoleList.jsp</result>
+            <result name="input">/WEB-INF/pages/system/systemManager/security/RoleList.jsp</result>
+        </action>
+        
+        <action name="roleGridList" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction" method="roleGridList">
+			<result type="json">
+				<param name="includeProperties">roles.*,records,total,page</param>
+				<param name="excludeProperties">roles.*\.privileges,roles.*\.users,roles.*\.menus,roles.*\.searchDataPrivileges</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+				
+			</result>
+		</action>
+		   
+		<action name="editRole" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/systemManager/security/roleForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/security/roleForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveRole" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction" method="save">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+       	<action name="menuTreeWithCheckAjax" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction" method="initTreeWithCheckJsonString">
+            <result name="success">/WEB-INF/pages/system/systemManager/security/roleForm.jsp</result>
+            <result name="input">/WEB-INF/pages/system/systemManager/security/roleForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefresh.jsp</result>
+        </action>
+        
+        <action name="roleGridEdit" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction" method="roleGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+		
+		<action name="roleMenuGridList" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction"	method="roleMenuGridList">
+			<result type="json">
+				<param name="includeProperties">menus.*,records,total,page</param>
+
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="roleUserGridList" class="com.huge.ihos.system.systemManager.role.webapp.action.RoleAction"	method="roleUserGridList">
+			<result type="json">
+				<param name="includeProperties">users.*,records,total,page</param>
+				<param name="excludeProperties">users.*\.person,users.*\.roles,users.*\.menus,users.*\.rootMenus,users.*\.systemVariable</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		
+		
+	</package>
+</struts>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="businessTypeParam" extends="default"	namespace="/">
+
+		<action name="businessTypeParamList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeParamPagedAction">
+			<result name="input">/WEB-INF/pages/pz/businessType/businessTypeParam/businessTypeParamList.jsp</result>
+			<result name="success">/WEB-INF/pages/pz/businessType/businessTypeParam/businessTypeParamList.jsp</result>
+		</action>
+		<action name="businessTypeParamGridList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeParamPagedAction"		method="businessTypeParamGridList">
+			<result type="json">
+				<param name="includeProperties">businessTypeParams.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result> 
+		</action>
+		<action name="businessTypeParamGridEdit" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeParamPagedAction"			method="businessTypeParamGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBusinessTypeParam" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeParamPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/pz/businessType/businessTypeParam/businessTypeParamForm.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessTypeParam/businessTypeParamForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBusinessTypeParam" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeParamPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

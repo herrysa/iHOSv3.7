@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="personType" extends="default"	namespace="/">
+
+		<action name="personTypeList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonTypePagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/personTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/personTypeList.jsp</result>
+		</action>
+		<action name="personTypeGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonTypePagedAction"		method="personTypeGridList">
+			<result type="json">
+				<param name="includeProperties">personTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="personTypeGridEdit" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonTypePagedAction"			method="personTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPersonType" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/personTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/personTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePersonType" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,parentId,personType.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- tree load -->
+		<action name="makePersonTypeTree"	class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonTypePagedAction" method="makePersonTypeTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">personTypeTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="personTypeSupcanList" class="com.huge.ihos.system.systemManager.organization.webapp.action.PersonTypePagedAction"		method="personTypeSupcanList">
+			<result type="json">
+				<param name="includeProperties"></param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

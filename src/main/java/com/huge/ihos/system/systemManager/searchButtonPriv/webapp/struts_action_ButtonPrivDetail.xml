@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="buttonPrivDetail" extends="default"	namespace="/">
+
+		<action name="buttonPrivDetailList" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivDetailPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/menuButton/searchButtoPrivDetail/searchButtoPrivDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/menuButton/searchButtoPrivDetail/searchButtoPrivDetailList.jsp</result>
+		</action>
+		<action name="buttonPrivDetailGridList" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivDetailPagedAction"		method="buttonPrivDetailGridList">
+			<result type="json">
+				<param name="includeProperties">buttonPrivDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="buttonPrivDetailGridEdit" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivDetailPagedAction"			method="buttonPrivDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editButtonPrivDetail" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/menuButton/searchButtoPrivDetail/searchButtoPrivDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/menuButton/searchButtoPrivDetail/searchButtoPrivDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveButtonPrivDetail" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

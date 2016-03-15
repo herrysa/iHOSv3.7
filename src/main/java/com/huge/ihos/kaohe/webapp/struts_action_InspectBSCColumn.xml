@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="inspectBSCColumn" extends="default"	namespace="/">
+
+		<action name="saveColumnSet" class="com.huge.ihos.kaohe.webapp.action.InspectBSCColumnPagedAction" method="saveColumnSet">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getColumnInfo" class="com.huge.ihos.kaohe.webapp.action.InspectBSCColumnPagedAction" method="getColumnInfo">
+			<result name="input">/WEB-INF/pages/balanceCard/BSCColumnSetting.jsp</result>
+			<result name="success">/WEB-INF/pages/balanceCard/BSCColumnSetting.jsp</result>
+		</action>
+		<action name="inspectBSCColumnList" class="com.huge.ihos.kaohe.webapp.action.InspectBSCColumnPagedAction">
+			<result name="input">/WEB-INF/pages/inspectBSCColumn/inspectBSCColumnList.jsp</result>
+			<result name="success">/WEB-INF/pages/inspectBSCColumn/inspectBSCColumnList.jsp</result>
+		</action>
+		<action name="inspectBSCColumnGridList" class="com.huge.ihos.kaohe.webapp.action.InspectBSCColumnPagedAction"		method="inspectBSCColumnGridList">
+			<result type="json">
+				<param name="includeProperties">inspectBSCColumns.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="inspectBSCColumnGridEdit" class="com.huge.ihos.kaohe.webapp.action.InspectBSCColumnPagedAction"			method="inspectBSCColumnGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInspectBSCColumn" class="com.huge.ihos.kaohe.webapp.action.InspectBSCColumnPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/inspectBSCColumn/inspectBSCColumnForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inspectBSCColumn/inspectBSCColumnForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInspectBSCColumn" class="com.huge.ihos.kaohe.webapp.action.InspectBSCColumnPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

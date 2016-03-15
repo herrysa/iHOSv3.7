@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzItemFormula" extends="default"	namespace="/">
+
+		<action name="gzItemFormulaList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItemFormula/gzItemFormulaList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItemFormula/gzItemFormulaList.jsp</result>
+		</action>
+		<action name="gzItemFormulaGridList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction"		method="gzItemFormulaGridList">
+			<result type="json">
+				<param name="includeProperties">gzItemFormulas.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzItemFormulaGridEdit" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction"			method="gzItemFormulaGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzItemFormula" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/gzItemFormula/gzItemFormulaForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzItemFormula/gzItemFormulaForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzItemFormula" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzItemForFormulaGridList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction"		method="gzItemGridList">
+			<result type="json">
+				<param name="includeProperties">gzItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 公式明细 -->
+		<action name="gzItemSetFormula" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItem/gzItemSetFormulaList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItem/gzItemSetFormulaList.jsp</result>
+		</action>
+		<!-- 公式明细 -->
+		<action name="gzItemFormulaDetailList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItemFormula/gzItemFormulaDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItemFormula/gzItemFormulaDetailList.jsp</result>
+		</action>
+		<action name="getGzItemNodesForFormula" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction"		method="getGzItemNodesForFormula">
+			<result type="json">
+				<param name="includeProperties">gzItemNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkGzItemCheckList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItemFormula/gzItemCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItemFormula/gzItemCheckList.jsp</result>
+		</action>
+		<action name="gzItemFormulaNameCheck" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction"			method="gzItemFormulaNameCheck">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 函数说明 -->
+		<action name="gzItemFuncsList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItemFormula/gzItemFuncsList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItemFormula/gzItemFuncsList.jsp</result>
+		</action>
+	</package>
+
+</struts>

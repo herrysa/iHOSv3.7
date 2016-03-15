@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="excelTemplate" extends="default"	namespace="/">
+
+		<action name="excelTemplateList" class="com.huge.ihos.system.excelTemplate.webapp.action.ExcelTemplatePagedAction">
+			<result name="input">/WEB-INF/pages/system/excelTemplate/excelTemplateList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/excelTemplate/excelTemplateList.jsp</result>
+		</action>
+		<action name="excelTemplateGridList" class="com.huge.ihos.system.excelTemplate.webapp.action.ExcelTemplatePagedAction"		method="excelTemplateGridList">
+			<result type="json">
+				<param name="includeProperties">excelTemplates.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="excelTemplateGridEdit" class="com.huge.ihos.system.excelTemplate.webapp.action.ExcelTemplatePagedAction"			method="excelTemplateGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editExcelTemplate" class="com.huge.ihos.system.excelTemplate.webapp.action.ExcelTemplatePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/excelTemplate/excelTemplateForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/excelTemplate/excelTemplateForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveExcelTemplate" class="com.huge.ihos.system.excelTemplate.webapp.action.ExcelTemplatePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="uploadExcelTemplate" class="com.huge.ihos.system.excelTemplate.webapp.action.ExcelTemplatePagedAction" method="uploadExcelTemplate">
+		<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,fileNewName,fileOldName,fileOldPath</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+	            </result>
+		</action>
+		<!-- 检查模版是否存在 -->
+		<action name="excelTemplateExist" class="com.huge.ihos.system.excelTemplate.webapp.action.ExcelTemplatePagedAction"			method="excelTemplateExist">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,type</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

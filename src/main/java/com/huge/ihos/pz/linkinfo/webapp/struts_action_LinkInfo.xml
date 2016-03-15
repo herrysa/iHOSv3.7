@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="linkInfo" extends="default"	namespace="/">
+
+		<action name="linkInfoList" class="com.huge.ihos.pz.linkinfo.webapp.action.LinkInfoPagedAction"		method="linkInfoList">
+			<result name="input">/WEB-INF/pages/pz/linkInfo/linkInfoList.jsp</result>
+			<result name="success">/WEB-INF/pages/pz/linkInfo/linkInfoList.jsp</result>
+		</action>
+		<action name="linkInfoGridList" class="com.huge.ihos.pz.linkinfo.webapp.action.LinkInfoPagedAction"		method="linkInfoGridList">
+			<result type="json">
+				<param name="includeProperties">linkInfoes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="linkInfoGridEdit" class="com.huge.ihos.pz.linkinfo.webapp.action.LinkInfoPagedAction"			method="linkInfoGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editLinkInfo" class="com.huge.ihos.pz.linkinfo.webapp.action.LinkInfoPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/pz/linkInfo/linkInfoForm.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/linkInfo/linkInfoForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveLinkInfo" class="com.huge.ihos.pz.linkinfo.webapp.action.LinkInfoPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveLinkInfoMessage" class="com.huge.ihos.pz.linkinfo.webapp.action.LinkInfoPagedAction"		method="saveLinkInfoMessage">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="specialItem" extends="default"	namespace="/">
+
+		<action name="specialItemList" class="com.huge.ihos.inout.webapp.action.SpecialItemPagedAction">
+			<result name="input">/WEB-INF/pages/inout/specialItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/specialItemList.jsp</result>
+		</action>
+		<action name="specialItemGridList" class="com.huge.ihos.inout.webapp.action.SpecialItemPagedAction"		method="specialItemGridList">
+			<result type="json">
+				<param name="includeProperties">specialItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="specialItemGridEdit" class="com.huge.ihos.inout.webapp.action.SpecialItemPagedAction"			method="specialItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSpecialItem" class="com.huge.ihos.inout.webapp.action.SpecialItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/inout/specialItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/specialItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSpecialItem" class="com.huge.ihos.inout.webapp.action.SpecialItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

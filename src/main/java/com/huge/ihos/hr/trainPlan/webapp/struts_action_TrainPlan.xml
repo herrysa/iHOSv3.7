@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="trainPlan" extends="default"	namespace="/">
+
+		<action name="trainPlanList" class="com.huge.ihos.hr.trainPlan.webapp.action.TrainPlanPagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainPlan/trainPlanList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainPlan/trainPlanList.jsp</result>
+		</action>
+		<action name="trainPlanGridList" class="com.huge.ihos.hr.trainPlan.webapp.action.TrainPlanPagedAction"		method="trainPlanGridList">
+			<result type="json">
+				<param name="includeProperties">trainPlans.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="trainPlanGridEdit" class="com.huge.ihos.hr.trainPlan.webapp.action.TrainPlanPagedAction"			method="trainPlanGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTrainPlan" class="com.huge.ihos.hr.trainPlan.webapp.action.TrainPlanPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/train/trainPlan/trainPlanForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainPlan/trainPlanForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTrainPlan" class="com.huge.ihos.hr.trainPlan.webapp.action.TrainPlanPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

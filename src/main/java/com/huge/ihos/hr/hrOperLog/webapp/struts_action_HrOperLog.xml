@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="hrOperLog" extends="default"	namespace="/">
+
+		<action name="hrOperLogList" class="com.huge.ihos.hr.hrOperLog.webapp.action.HrOperLogPagedAction">
+			<result name="input">/WEB-INF/pages/hr/hrOperLog/hrOperLogList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrOperLog/hrOperLogList.jsp</result>
+		</action>
+		<action name="hrOperLogGridList" class="com.huge.ihos.hr.hrOperLog.webapp.action.HrOperLogPagedAction"		method="hrOperLogGridList">
+			<result type="json">
+				<param name="includeProperties">hrOperLogs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="hrOperLogGridEdit" class="com.huge.ihos.hr.hrOperLog.webapp.action.HrOperLogPagedAction"			method="hrOperLogGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+</struts>

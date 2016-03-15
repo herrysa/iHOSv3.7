@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Supcan Freeform -->
+<freeform>
+	<Properties>
+		<backGround bgColor="#E5EAFF,#FAFFFF" />
+	</Properties>
+	<Fonts>
+		<Font faceName="微软雅黑" charSet="134" height="-13" />
+	</Fonts>
+
+	<Objects>
+		<TableLayout width="100%">
+			<col width="10" />
+			<col width="200" />
+			<col width="10" />
+			<col width="200" />
+			<col width="10" />
+			<col width="200" />
+			<col width="10" />
+			<col width="40" />
+			<col width="10" />
+			<col width="40" />
+			<tr height="10" />
+			<tr height="21">
+				<td />
+				<td>
+					<Input width="" id="gzContentGrid_search_deptName" type="Edit"
+						leftText="部门名称:" />
+				</td>
+				<td />
+				<td>
+					<Input id="gzContentGrid_search_personName" type="Edit"
+						leftText="人员姓名:" />
+				</td>
+				<td />
+				<td>
+					<Input id="gzContentGrid_search_personTypeName" droplistID="personTypeList"
+						type="Droptreelist" leftText="人员类别:" />
+				</td>
+				<td />
+				<td>
+					<Input id="gzContentGrid_search_load" type="Button" text="查询" />
+				</td>
+				<td />
+				<td>
+					<Input id="gzContentGrid_search_cancel" type="Button" text="关闭" />
+				</td>
+				<td />
+				<td />
+			</tr>
+			<tr height="10" />
+		</TableLayout>
+		<rect id="rc1" x="0" y="0" width="100%" height="100%" color="#7f9db9" />
+	</Objects>
+	<Droplists>
+		<DropList id="personTypeList" DisplayCol="name" DataCol="id" treelist="supcanXML?supcanXMLPath=gz/gzContent/personTypeList.xml">
+		</DropList>
+	</Droplists>
+</freeform>

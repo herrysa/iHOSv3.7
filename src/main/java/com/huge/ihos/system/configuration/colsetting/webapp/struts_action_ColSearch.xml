@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="colSearch" extends="default"	namespace="/">
+
+		<action name="colSearchList" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColSearchPagedAction" method="colSearchListPre">
+			<result name="input">/WEB-INF/pages/system/configuration/colsetting/colSearch/colSearchList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/colsetting/colSearch/colSearchList.jsp</result>
+		</action>
+		<action name="colSearchGridList" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColSearchPagedAction"		method="colSearchGridList">
+			<result type="json">
+				<param name="includeProperties">colSearches.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="colSearchGridEdit" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColSearchPagedAction"			method="colSearchGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editColSearch" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColSearchPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/colsetting/colSearch/colSearchForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/colsetting/colSearch/colSearchForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveColSearch" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColSearchPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveColSearchTempl" class="com.huge.ihos.system.configuration.colsetting.webapp.action.ColSearchPagedAction"			method="saveColSearchTempl">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

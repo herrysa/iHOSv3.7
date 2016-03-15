@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="security" extends="default"	namespace="/">
+		<action name="signup" class="signupAction">
+			<result name="cancel" type="redirect">/</result>
+			<result name="input">/WEB-INF/pages/signup.jsp</result>
+			<result name="success" type="chain">saveSignup</result>
+		</action>
+
+		<action name="saveSignup" class="signupAction" method="save">
+			<result name="input">/WEB-INF/pages/signup.jsp</result>
+			<result name="success" type="redirectAction">/mainMenu</result>
+		</action>
+
+		<action name="passwordHint" class="passwordHintAction">
+			<result name="input">/</result>
+			<result name="success">/</result>
+		</action>
+
+        <action name="ModifyPwdForm">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/ModifyPwdForm.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/ModifyPwdForm.jsp</result>
+		</action>
+        <action name="ModifyPwdFormSave"  class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction" method="modifyPwd">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<action name="userGridList" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction" method="userGridList">
+			<result type="json">
+				<param name="includeProperties">users.*,records,total,page</param>
+				<param name="excludeProperties">users.*\.person,users.*\.roles,users.*\.menus,users.*\.authorities,users.*\.roleList</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+        <!--  called when a record is clicked on the grid -->
+        <action name="ieditUser" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/systemManager/security/UserForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/security/UserForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="isaveUser" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+		
+        <action name="getPrivileges" class="com.huge.ihos.system.systemManager.security.webapp.action.PrivilegeAction" method="getPrivileges">
+            <result name="success">
+            	WEB-INF/pages/system/systemManager/security/roleMenuTree.jsp
+            </result>
+        </action>
+        
+        
+  		<action name="userGridEdit" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction" method="userGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+
+        <action name="checkRepeatName" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction" method="checkRepeatName">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+ 
+       <action name="roleDataPrivilegeList" class="com.huge.ihos.system.systemManager.security.webapp.action.RoleDataPrivilegeAction"
+			method="RoleDataPrivilegeList">
+			<result type="json">
+				<param name="includeProperties">searchEntityClusters.*,records,total,page</param>
+
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		  <action name="roleDataPrivilegeGridEdit" class="com.huge.ihos.system.systemManager.security.webapp.action.RoleDataPrivilegeAction"	method="searchEntityClusterGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		 <action name="editRoleDataPrivilege" class="com.huge.ihos.system.systemManager.security.webapp.action.RoleDataPrivilegeAction"	method="edit">
+		 <result name="success">/WEB-INF/pages/system/systemManager/security/roleDataPrivilegeForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/systemManager/security/roleDataPrivilegeForm.jsp</result>
+		</action>
+		
+		  <action name="saveDataPrivilegeGridEdit" class="com.huge.ihos.system.systemManager.security.webapp.action.RoleDataPrivilegeAction"	method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+
+		<action name="roleSearchEntityClusterList">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/roleSearchEntityClusterList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/roleSearchEntityClusterList.jsp</result>
+		</action>
+		
+		<action name="roleMenusList">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/roleMenusList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/roleMenusList.jsp</result>
+		</action>
+		
+		<action name="userMenuGridList" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="userMenuGridList">
+			<result type="json">
+				<param name="includeProperties">menus.*,records,total,page</param>
+
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="userMenusList">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/userMenusList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/userMenusList.jsp</result>
+		</action>
+		
+		<action name="userRolesList">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/userRolesList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/userRolesList.jsp</result>
+		</action>
+		
+		<action name="roleUsersList">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/roleUsersList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/roleUsersList.jsp</result>
+		</action>
+		
+		
+		<action name="userRoleGridList" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="userRoleGridList">
+			<result type="json">
+				<param name="includeProperties">roleList.*,records,total,page</param>
+				<param name="excludeProperties">roleList.*\.searchDataPrivileges,roleList.*\.users,roles.*\.menus,roleList.*\.rootMenus</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="userSearchEntityClusterList">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/userSearchEntityClusterList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/userSearchEntityClusterList.jsp</result>
+		</action>
+		
+		<action name="userRoleDataPrivilegeList" class="com.huge.ihos.system.systemManager.security.webapp.action.RoleDataPrivilegeAction"
+			method="UserRoleDataPrivilegeList">
+			<result type="json">
+				<param name="includeProperties">searchEntityClusters.*,records,total,page</param>
+
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="roleBaseInfo">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/roleBaseInfo.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/roleBaseInfo.jsp</result>
+		</action>
+		
+		<action name="userBaseInfo">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/userBaseInfo.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/userBaseInfo.jsp</result>
+		</action>
+		
+		<action name="OnlineUsers" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction" method="OnlineUsers">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/onlineUserList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/onlineUserList.jsp</result>
+		</action>
+		
+		<action name="getOnlineUserList" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="getOnlineUserList">
+			<result type="json">
+				<param name="includeProperties">users.*,records,total,page</param>
+				<param name="excludeProperties">users.*\.roles,users.*\.person</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		 <action name="tichuUserById" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="logoutUser">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="userIsTimeout" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="userIsTimeout">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="alreadyTichu" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="alreadyTichu">
+		</action>
+		
+		<action name="initPassword" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="initPassword">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="initSystemVariable" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="initSystemVariable">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/systemVariable.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/systemVariable.jsp</result>
+		</action>
+		<action name="setSystemVariable" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="setSystemVariable">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,systemVariable.*</param>
+                 <param name="excludeProperties">systemVariable.*\.loginUser,systemVariable.*\.loginPerson</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="chargeSystemVariable" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="chargeSystemVariable">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,systemVariable.*</param>
+                <param name="excludeProperties">systemVariable.*\.loginUser,systemVariable.*\.loginPerson</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="findOrgModel" class="com.huge.ihos.system.systemManager.security.webapp.action.IHosUserAction"	method="findOrgModel">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,orgModel,copyModel</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

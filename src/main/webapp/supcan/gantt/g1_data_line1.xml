@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="GBK"?>
+<root>
+<lineStyles>
+	<style id="." width="1"/>
+	<style id="style1" color="red" arrow="SolidLarge"/>
+	<style id="style2" color="#009999" arrow="SolidLarge"/>
+	<style id="style3" roundRadius="8" width="2"/>
+</lineStyles>
+<items>
+	<record>
+		<From>100</From>
+		<To>10002</To>
+		<Type>SS</Type>
+		<class>style3</class>
+	</record>
+	<record>
+		<From>100</From>
+		<To>10001</To>
+		<Type>SS</Type>
+		<class>style3</class>
+	</record>
+	<record>
+		<From>10001</From>
+		<To>10002</To>
+	</record>
+	<record>
+		<From>10003</From>
+		<To>10002</To>
+		<Type>SF</Type>
+	</record>
+	<record>
+		<From>10004</From>
+		<To>10003</To>
+		<Type>FF</Type>
+	</record>
+	<record>
+		<From>200</From>
+		<To>20001</To>
+		<Type>SS</Type>
+		<class>style2</class>
+	</record>
+	<record>
+		<From>200</From>
+		<To>20002</To>
+		<Type>SS</Type>
+		<class>style2</class>
+	</record>
+	<record>
+		<From>2000201</From>
+		<To>20002</To>
+		<Type>FF</Type>
+		<class>style1</class>
+	</record>
+	<record>
+		<From>2000201</From>
+		<To>2000202</To>
+		<Type>SF</Type>
+		<class>style1</class>
+	</record>
+</items>
+</root>

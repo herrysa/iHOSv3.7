@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kqDayDataDetail" extends="default"	namespace="/">
+
+		<action name="kqDayDataDetailList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqDayDataDetailPagedAction">
+			<result name="input">/WEB-INF/pages/kqDayDataDetail/kqDayDataDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/kqDayDataDetail/kqDayDataDetailList.jsp</result>
+		</action>
+		<action name="kqDayDataDetailGridList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqDayDataDetailPagedAction"		method="kqDayDataDetailGridList">
+			<result type="json">
+				<param name="includeProperties">kqDayDataDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqDayDataDetailGridEdit" class="com.huge.ihos.kq.kqUpData.webapp.action.KqDayDataDetailPagedAction"			method="kqDayDataDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKqDayDataDetail" class="com.huge.ihos.kq.kqUpData.webapp.action.KqDayDataDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kqDayDataDetail/kqDayDataDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kqDayDataDetail/kqDayDataDetailForm.jsp</result>
+		</action>
+		<action name="kqDayDataDeatilAdd" class="com.huge.ihos.kq.kqUpData.webapp.action.KqDayDataDetailPagedAction">
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqDayDataDetail/kqDayDataDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqDayDataDetail/kqDayDataDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKqDayDataDetail" class="com.huge.ihos.kq.kqUpData.webapp.action.KqDayDataDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

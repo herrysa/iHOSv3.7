@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bank" extends="default"	namespace="/">
+
+		<action name="bankList" class="com.huge.ihos.system.repository.bank.webapp.action.BankPagedAction">
+			<result name="input">/WEB-INF/pages/system/repository/bank/bankList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/repository/bank/bankList.jsp</result>
+		</action>
+		<action name="bankGridList" class="com.huge.ihos.system.repository.bank.webapp.action.BankPagedAction"		method="bankGridList">
+			<result type="json">
+				<param name="includeProperties">banks.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bankGridEdit" class="com.huge.ihos.system.repository.bank.webapp.action.BankPagedAction"			method="bankGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBank" class="com.huge.ihos.system.repository.bank.webapp.action.BankPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/repository/bank/bankForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/repository/bank/bankForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBank" class="com.huge.ihos.system.repository.bank.webapp.action.BankPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

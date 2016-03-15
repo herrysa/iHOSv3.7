@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--By Supcan TreeList -->
+<TreeList>
+	<Properties curselmode="excel" editAble="true" rowHeight="27" Title="库存表" bgcolor="#eefdff" alternateColor="#ccffcc"/>
+	<Fonts>
+		<Font faceName="Verdana" height="-12"/>
+	</Fonts>
+	<Cols>
+		<Col name="productID"   width="80" align="center">产品ID</Col>
+		<Col name="productname" width="180" maxchars="10">产品名称</Col>
+		<Col name="ProductDate" width="130" datatype="date" min="2010.1.1" max="2010.03.31">生产日期</Col>
+		<Col name="CheckDate"   width="210" datatype="datetime">质检时间</Col>
+		<Col name="passed"      width="90" datatype="bool" edittype="checkbox">通过质检</Col>
+		<Col name="price"       width="110" datatype="double" decimal="2" editmask="+#,###.00">定价</Col>
+		<Col name="stock"       width="100" datatype="int" editmask="#,###">库存箱数</Col>
+	</Cols>
+</TreeList>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="userDataPrivilege" extends="default"	namespace="/">
+
+		<action name="userDataPrivilegeList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.UserDataPrivilegePagedAction">
+			<result name="input">/WEB-INF/pages/userDataPrivilege/userDataPrivilegeList.jsp</result>
+			<result name="success">/WEB-INF/pages/userDataPrivilege/userDataPrivilegeList.jsp</result>
+		</action>
+		<action name="userDataPrivilegeGridList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.UserDataPrivilegePagedAction"		method="userDataPrivilegeGridList">
+			<result type="json">
+				<param name="includeProperties">userDataPrivileges.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="userDataPrivilegeGridEdit" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.UserDataPrivilegePagedAction"			method="userDataPrivilegeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editUserDataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.UserDataPrivilegePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/userDataPrivilege/userDataPrivilegeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/userDataPrivilege/userDataPrivilegeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveUserDataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.UserDataPrivilegePagedAction"			method="saveUserDataPrivilege">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

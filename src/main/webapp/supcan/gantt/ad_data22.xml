@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<pid></pid>
+	<id>A</id>
+	<name>任务A</name>
+	<ES>2014.03.5</ES>
+	<EF>2014.03.15</EF>
+	<TID>M</TID>
+</record>
+<record>
+	<pid></pid>
+	<id>B</id>
+	<name>任务B</name>
+	<ES>2014.03.5</ES>
+	<EF>2014.03.15</EF>
+	<TID>M,N</TID>
+</record>
+<record>
+	<pid></pid>
+	<id>C</id>
+	<name>任务C</name>
+	<ES>2014.03.5</ES>
+	<EF>2014.03.15</EF>
+	<TID>M,N</TID>
+</record>
+<record>
+	<pid></pid>
+	<id>D</id>
+	<name>任务D</name>
+	<ES>2014.03.5</ES>
+	<EF>2014.03.15</EF>
+	<TID>N</TID>
+</record>
+
+<record>
+	<pid></pid>
+	<id>M</id>
+	<name>任务M</name>
+	<ES>2014.03.16</ES>
+	<EF>2014.03.26</EF>
+	<TID></TID>
+</record>
+<record>
+	<pid></pid>
+	<id>N</id>
+	<name>N</name>
+	<ES>2014.03.16</ES>
+	<EF>2014.03.26</EF>
+	<TID></TID>
+</record>
+</data>

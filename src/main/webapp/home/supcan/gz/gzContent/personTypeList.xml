@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TreeList>
+<Properties dataURL="personTypeSupcanList" isTree="true" curSelMode="rows"></Properties>
+<Cols>
+	<col name="pName" width="50">父级名称</col>
+	<Col name="id" isHide="true">id</Col>
+	<Col name="code" width="100" isHide="true">编码</Col>
+	<Col name="name" width="100">名称</Col>
+</Cols>
+</TreeList>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="queryCommonDetail" extends="default"	namespace="/">
+
+		<action name="queryCommonDetailList" class="com.huge.ihos.hr.query.webapp.action.QueryCommonDetailPagedAction">
+			<result name="input">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonDetailList.jsp</result>
+		</action>
+		<action name="queryCommonDetailGridList" class="com.huge.ihos.hr.query.webapp.action.QueryCommonDetailPagedAction"		method="queryCommonDetailGridList">
+			<result type="json">
+				<param name="includeProperties">queryCommonDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="queryCommonDetailGridEdit" class="com.huge.ihos.hr.query.webapp.action.QueryCommonDetailPagedAction"			method="queryCommonDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editQueryCommonDetail" class="com.huge.ihos.hr.query.webapp.action.QueryCommonDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/queryCommon/queryCommonDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveQueryCommonDetail" class="com.huge.ihos.hr.query.webapp.action.QueryCommonDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

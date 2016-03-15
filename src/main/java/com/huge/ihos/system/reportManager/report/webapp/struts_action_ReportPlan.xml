@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="reportPlan" extends="default"	namespace="/">
+		<!-- 点击报表菜单 -->
+		<action name="reportPlanList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction" method="reportPlanList">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanForm.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanForm.jsp</result>
+		</action>
+		<!-- 上报数据 -->
+		<action name="reportPlanGridList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"		method="reportPlanGridList">
+			<result type="json">
+				<param name="includeProperties">reportPlanContents.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 反转数据 -->
+		<action name="reportReverseGridList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"		method="reportReverseGridList">
+			<result type="json">
+				<param name="includeProperties">reportPlanContents.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="reportPlanGridEdit" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"			method="reportPlanGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editReportPlan" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/reportPlan/reportPlanForm.jsp</result>
+			<result name="input">/WEB-INF/pages/reportPlan/reportPlanForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveReportPlan" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 报表列集合 -->
+		<action name="reportPlanColumnInfo" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"			method="reportPlanColumnInfo">
+			<result name="success" type="json">
+                <param name="includeProperties">reportItems.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 方案切换 -->
+		<action name="getSelectedReportPlan" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"			method="getSelectedReportPlan">
+			<result name="success" type="json">
+                <param name="includeProperties">reportPlans.*,reportPlanFilters.*,reportPlanItems.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 类别切换 -->
+		<action name="reportPlanTypeChange" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"		method="reportPlanTypeChange">
+			<result type="json">
+				<param name="includeProperties">reportPlans.*,reportItems.*,message,modelStatusStr,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 排序 -->
+		<action name="sortReportPlanItems" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanSortForm.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanSortForm.jsp</result>
+		</action>
+		<!-- 高级设置 -->
+		<action name="reportPlanSet" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction" method="reportPlanSet">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanSetForm.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanSetForm.jsp</result>
+		</action>
+		<!-- 帐表显示 -->
+		<action name="reportPlanShow" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction" method="reportPlanShow">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanShow.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/reportPlan/reportPlanShow.jsp</result>
+		</action>
+		<!-- 保存格式 -->
+		<action name="saveReportPlanCustomLayout" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction"			method="saveReportPlanCustomLayout">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='gbk'?>
+<Chart  fillAngle='45'  upperLimit='12'  majorTMNumber='5' majorTMHeight='10' showGaugeBorder='1' gaugeOuterRadius='250'
+ gaugeOriginX='350' gaugeOriginY='300'  formatNumberScale='1' numberSuffix='万亿' numberPrefix='' displayValueDistance='30' 
+ ecimalPrecision='2'  pivotRadius='17'   pivotBorderThickness='5' pivotFillMix='ffffff,330000'>
+	<colorRange>
+		<color minValue='0' maxValue='4' code='399E38'/> 
+		<color minValue='4' maxValue='8' code='E48739'/>
+		<color minValue='8' maxValue='12' code='B41527'/>
+	</colorRange>
+		<dials>
+		<dial value='8' borderAlpha='0' bgColor='330000' baseWidth='28' topWidth='1' radius='250'/>
+	</dials>
+
+</Chart>

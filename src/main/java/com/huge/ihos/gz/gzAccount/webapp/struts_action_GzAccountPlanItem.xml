@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzAccountPlanItem" extends="default"	namespace="/">
+
+		<action name="gzAccountPlanItemList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanItemPagedAction">
+			<result name="input">/WEB-INF/pages/gzAccountPlanItem/gzAccountPlanItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/gzAccountPlanItem/gzAccountPlanItemList.jsp</result>
+		</action>
+		<action name="gzAccountPlanItemGridList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanItemPagedAction"		method="gzAccountPlanItemGridList">
+			<result type="json">
+				<param name="includeProperties">gzAccountPlanItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzAccountPlanItemGridEdit" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanItemPagedAction"			method="gzAccountPlanItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzAccountPlanItem" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/gzAccountPlan/gzAccountPlanItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzAccountPlan/gzAccountPlanItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzAccountPlanItem" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzAccountPlanItemForm" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanItemPagedAction"			method="saveGzAccountPlanItemForm">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

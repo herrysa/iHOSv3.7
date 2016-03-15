@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="periodYear" extends="default"	namespace="/">
+
+		<action name="periodSubjectList" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/period/periodSubject/periodSubjectList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/period/periodSubject/periodSubjectList.jsp</result>
+		</action>
+		<action name="periodSubjectGridList" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"		method="periodYearGridList">
+			<result type="json">
+				<param name="includeProperties">periodYears.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="periodSubjectGridEdit" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"			method="periodYearGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPeriodSubject" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"			method="edit">
+			<result name="success" type="json">
+                <param name="includeProperties">planId,periodYear,beginDate,endDate,periodNum</param>
+                <param name="noCache">true</param>
+            </result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<!-- <action name="savePeriodSubject" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action> -->
+		<action name="getPeriodSub" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"			method="getPeriodYear1">
+			<result name="success" type="json">
+                <param name="includeProperties">periodId,periodYear,periodNum,beginDate,endDate</param>
+                <param name="noCache">true</param>
+            </result>
+		</action>
+		<action name="savePeriodSubject" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"			method="savePeriodYear">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="delPeriodSubject" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"			method="delPeriodYear">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkPeriodYearCode" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodYearPagedAction"			method="checkPeriodYearCode">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,exists</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

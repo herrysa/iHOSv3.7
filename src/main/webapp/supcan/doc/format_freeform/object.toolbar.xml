@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Toolbar" meaning="工具条的属性" number="0-n"  example="5.事件、按钮、菜单、工具条集中演示">
+<element name="menuId" meaning="绑定的主菜单项">
+	<category>外观</category>
+	<value>即 &amp;lt;menus&amp;gt; 资源中的某个 &amp;lt;menu&amp;gt; 的id</value>
+</element>
+<element name="fontIndex" meaning="按钮文字的字体">
+	<category>外观</category>
+	<value>数字，指向在&lt;Fonts&gt;中定义的字体的顺序号，从0开始计数</value>
+	<default>0</default>
+</element>
+<element name="isTransparent" meaning="是否采用透明背景">
+	<category>外观</category>
+	<datatype>bool</datatype>
+	<memo>true 表示透明, 不绘制背景(直接显示上下文背景), 否则采用操作系统的工具条(ReBar)背景</memo>
+	<default>false</default>
+</element>
+</elements>
+
+</root>

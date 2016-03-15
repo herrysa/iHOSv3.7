@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="menu" extends="default" namespace="/">
+
+
+		<!--MenuAction-START -->
+
+		<action name="menuList" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/menu/menuList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/menu/menuList.jsp</result>
+		</action>
+
+
+
+
+		<!-- called when a record is clicked on the grid -->
+		<action name="editMenu" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/menu/menuForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/menu/menuForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveMenu" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+
+		<!--MenuAction-END -->
+
+		<action name="menuTreetree">
+			<!-- <result name="input">/WEB-INF/pages/system/systemManager/menu/menuTree.jsp</result> -->
+			<result name="success">/WEB-INF/pages/system/systemManager/menu/menuTree.jsp</result>
+		</action>
+		<action name="menuTreeAjax" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuTreeAction"
+			method="initTreeJsonString">
+			<result>/WEB-INF/pages/system/systemManager/menu/menuTree.jsp</result>
+		</action>
+		<action name="menuClicked" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuTreeAction"
+			method="menuClicked">
+			<result name="success" type="redirectAction">${targetUrl}</result>
+		</action>
+
+	</package>
+	<package name="menu_json" extends="json-default">
+		<action name="menuDoubleSelect"
+			class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuDoubleSelectAction"
+			method="menuDoubleSelect">
+
+			<result type="json">
+				<param name="includeProperties">subSystems.*,subMenus.*</param>
+				<param name="excludeProperties">subSystems.*\.parent,subSystems.*\.subSystem,subMenus.*\.parent,subMenus.*\.subSystem</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="menuGridEdit" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="menuGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="menuGridList" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="menuGridList">
+			<result type="json">
+				<param name="includeProperties">menus.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getAllRootMenu" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="getAllRootMenu">
+			<result type="json">
+				<param name="includeProperties">rootMenusString</param>
+			</result>
+		</action>
+		
+		<action name="moduleFlag" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction" method="moduleFlag">
+            <result name="success">
+            	WEB-INF/pages/menu/moduleFlagTree.jsp
+            </result>
+        </action>
+        
+        <action name="saveModuleFlag" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="saveModuleFlag">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        <action name="allMenuTree" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="allMenuTree">
+            <result name="success" type="json">
+                <param name="includeProperties">menuTreeListString</param>
+            </result>
+        </action>
+		
+	</package>
+</struts>

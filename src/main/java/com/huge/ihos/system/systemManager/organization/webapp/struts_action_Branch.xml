@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="branch" extends="default"	namespace="/">
+
+		<action name="branchList" class="com.huge.ihos.system.systemManager.organization.webapp.action.BranchPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/branchList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/branchList.jsp</result>
+		</action>
+		<action name="branchGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.BranchPagedAction"		method="branchGridList">
+			<result type="json">
+				<param name="includeProperties">branches.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="branchGridEdit" class="com.huge.ihos.system.systemManager.organization.webapp.action.BranchPagedAction"			method="branchGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBranch" class="com.huge.ihos.system.systemManager.organization.webapp.action.BranchPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/branchForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/branchForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBranch" class="com.huge.ihos.system.systemManager.organization.webapp.action.BranchPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="makeBranchTree" class="com.huge.ihos.system.systemManager.organization.webapp.action.BranchPagedAction"		 method="makeBranchTree">
+			<result name="success" type="json">
+				<param name="includeProperties">ztreeList.*</param>
+                <param name="noCache">true</param>
+			</result>
+		</action>
+		<action name="checkBranchCanBeAdded" class="com.huge.ihos.system.systemManager.organization.webapp.action.BranchPagedAction"  method="checkBranchCanBeAdded">
+			<result name="success" type="json">
+				<param name="includeProperties">canBeAdded</param>
+				<param name="noCache">true</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

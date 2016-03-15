@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bulletin" extends="default"	namespace="/">
+
+		<action name="bulletinList" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction">
+			<result name="input">/WEB-INF/pages/system/oa/bulletin/bulletinList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/oa/bulletin/bulletinList.jsp</result>
+		</action>
+		<action name="userBulletinList" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction">
+			<result name="input">/WEB-INF/pages/system/oa/bulletin/userBulletinList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/oa/bulletin/userBulletinList.jsp</result>
+		</action>
+		<action name="bulletinGridList" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"		method="bulletinGridList">
+			<result type="json">
+				<param name="includeProperties">bulletins.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bulletinGridEdit" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"			method="bulletinGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBulletin" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/oa/bulletin/bulletinForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/oa/bulletin/bulletinForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBulletin" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"			method="save">
+			<result name="success" type="json">
+				<param name="contentType">text/plain</param>
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="showBulletin" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"			method="showBulletin">
+			<result name="success">/WEB-INF/pages/system/oa/bulletin/showBulletin.jsp</result>
+			<result name="input">/WEB-INF/pages/system/oa/bulletin/showBulletin.jsp</result>
+		</action>
+		
+		<action name="dowloadAppendix" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"			method="dowloadAppendix">
+		</action>
+
+	</package>
+
+</struts>

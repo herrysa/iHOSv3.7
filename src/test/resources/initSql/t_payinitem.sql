@@ -1,0 +1,15 @@
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0101', '', 0, '挂号收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0102', '', 0, '诊察收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0103', '', 0, '检查收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0104', '', 0, '化验收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0105', '', 0, '治疗收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0106', '', 0, '手术收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0107', '', 0, '卫生材料收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0109', '', 0, '药品收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('010901', '', 0, '西药收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('010902', '', 0, '中成药收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('010903', '', 0, '中草药收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0110', '', 0, '床位收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0111', '', 0, '护理收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0112', '', 0, '药事服务费收入', '');
+INSERT INTO t_payinitem (payinItemId, cnCode, disabled, payinItem, remark) VALUES ('0113', '', 0, '其他收入', '');

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="upItem" extends="default"	namespace="/">
+
+		<action name="upItemList" class="com.huge.ihos.formula.webapp.action.UpItemPagedAction" method="upItemList">
+			<result name="input">/WEB-INF/pages/upItem/upItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/upItem/upItemList.jsp</result>
+		</action>
+		<action name="upItemGridList" class="com.huge.ihos.formula.webapp.action.UpItemPagedAction"		method="upItemGridList">
+			<result type="json">
+				<param name="includeProperties">upItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="upItemGridEdit" class="com.huge.ihos.formula.webapp.action.UpItemPagedAction"			method="upItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editUpItem" class="com.huge.ihos.formula.webapp.action.UpItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/upItem/upItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/upItem/upItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveUpItem" class="com.huge.ihos.formula.webapp.action.UpItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

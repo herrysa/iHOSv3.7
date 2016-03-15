@@ -1,0 +1,114 @@
+<html>
+<head><title>6.双代号网络图</Title>
+<meta http-equiv="content-type" content="text/html; charset=GB2312">
+<link rel="stylesheet" href="../res/temp1.css" type="text/css">
+<script type='text/javascript' src='../binary/dynaloadNG.js?86'></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+  AF.func("Build", "AD/ad.xml");
+  AF.func("Load", "AD/ad_data01.xml");
+  AF.func("LoadLine", "AD/ad_data01-line.xml");
+  AF.func("Expand", "");
+  AF.func("BuildDiagram", "");
+ }
+ function OnSelData()
+ {
+  var obj=document.getElementById('Sel');
+  var index=obj.selectedIndex;
+  var url = obj.options[index].text;
+  url = "AD/" + url;
+  AF.func("Load", url + ".xml");
+  AF.func("LoadLine", url + "-line.xml");
+  AF.func("BuildDiagram", "");
+ }
+ function GotoData(n)
+ {
+  var obj=document.getElementById('Sel');
+  var index=obj.selectedIndex;
+  var url = obj.options[index].text;
+  if(n == 2) url += "-line";
+  url = "AD/" + url + ".xml";
+  window.open(url);
+ }
+ function OnSelHeight()
+ {
+  var obj=document.getElementById('SelHeight');
+  var index=obj.selectedIndex;
+  var sz = obj.options[index].text;
+  AF.func("SetAdInfo", "Zoom \r\n" + sz);
+ }
+ function OnSelDiameter()
+ {
+  var obj=document.getElementById('SelDiameter');
+  var index=obj.selectedIndex;
+  var sz = obj.options[index].text;
+  AF.func("SetAdInfo", "NodeDiameter \r\n" + sz);
+ }
+ function OnSelWave()
+ {
+  var obj=document.getElementById('SelWave');
+  var index=obj.selectedIndex;
+  var sz = obj.options[index].text;
+  AF.func("SetAdInfo", "WaveSize \r\n" + sz);
+ }
+ function OnSelKey()
+ {
+  var obj=document.getElementById('SelKey');
+  var index=obj.selectedIndex;
+  var tf = '0';
+  if(index > 0) tf = obj.options[index].text;
+  AF.func("SetAdInfo", "KeyPathTF \r\n" + tf);
+ }
+</script>
+</head>
+
+<body topmargin=4 leftmargin=5 vlink=#0000ff link=#0000ff>
+<a href="index.htm">&lt;&lt;Back</a> 6.双代号网络图<br>
+<br>
+<center>
+示例数据：<Select id="Sel" onchange="OnSelData()">
+	<option selected="selected">ad_data01</option>
+	<option>ad_data02</option>
+	<option>ad_data021</option>
+	<option>ad_data03</option>
+	<option>ad_data05</option>
+	<option>ad_data06</option>
+	<option>ad_data061</option>
+	<option>ad_data07</option>
+	<option>ad_data08</option>
+	<option>ad_data09</option>
+	<option>ad_data11</option>
+	<option>ad_data13</option>
+	<option>ad_data18</option>
+	<option>ad_data20</option>
+	<option>ad_data21</option>
+	<option>ad_data22</option>
+	<option>ad_data23</option>
+</Select>,
+&nbsp;高度比例：<Select id="SelHeight" onchange="OnSelHeight()">
+	<option>40</option><option>50</option><option>60</option><option>70</option><option selected="80">80</option><option>90</option><option>100</option><option>120</option>
+</Select>,
+&nbsp;节点(圆圈)直径：<Select id="SelDiameter" onchange="OnSelDiameter()">
+	<option>18</option><option>20</option><option>22</option><option>24</option><option selected="26">26</option><option>28</option><option>30</option><option>32</option>
+</Select>,
+&nbsp;波浪线大小：<Select id="SelWave" onchange="OnSelWave()">
+	<option>2</option><option>3</option><option>4</option><option>5</option><option selected="6">6</option><option>7</option><option>8</option><option>9</option>
+</Select>,
+&nbsp;关键路径总自由浮时：<Select id="SelKey" onchange="OnSelKey()">
+	<option selected="0">最长时间路径</option><option>2</option><option>3</option><option>4</option><option>5</option><option>7</option><option>9</option><option>11</option>
+</Select>,
+<br>
+<div style="position:relative;width:100%">
+	<script>insertGantt('AF', '', '500px')</script>
+</div>
+<br>
+这是上面的控件加载的描述的 <a href="AD/ad.xml" target=_blank>XML</a>；这是加载的 <a href="javaScript:" onClick="GotoData(1)">主表数据</a>；这是加载的 <a href="javaScript:" onClick="GotoData(2)">关系表数据</a><br>
+<br>
+</center>
+
+<br>
+
+</body>
+<script type='text/javascript' src='res/nstd.js'></script>
+</html>

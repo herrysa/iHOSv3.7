@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<pid></pid>
+	<id>A</id>
+	<name>A</name>
+	<ES>2014.03.2</ES>
+	<EF>2014.03.06</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>B</id>
+	<name>B</name>
+	<ES>2014.03.07</ES>
+	<EF>2014.03.11</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>C</id>
+	<name>C</name>
+	<ES>2014.03.12</ES>
+	<EF>2014.03.16</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>D</id>
+	<name>D</name>
+	<ES>2014.03.17</ES>
+	<EF>2014.03.21</EF>
+</record>
+
+<record>
+	<pid></pid>
+	<id>E</id>
+	<name>E</name>
+	<ES>2014.03.22</ES>
+	<EF>2014.03.26</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>F</id>
+	<name>F</name>
+	<ES>2014.03.27</ES>
+	<EF>2014.04.01</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>G</id>
+	<name>G</name>
+	<ES>2014.03.17</ES>
+	<EF>2014.03.21</EF>
+</record>
+
+<record>
+	<pid></pid>
+	<id>H</id>
+	<name>H</name>
+	<ES>2014.03.22</ES>
+	<EF>2014.03.26</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>I</id>
+	<name>I</name>
+	<ES>2014.03.27</ES>
+	<EF>2014.04.01</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>J</id>
+	<name>J</name>
+	<ES>2014.03.12</ES>
+	<EF>2014.03.16</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>K</id>
+	<name>K</name>
+	<ES>2014.03.17</ES>
+	<EF>2014.03.25</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>L</id>
+	<name>L</name>
+	<ES>2014.03.26</ES>
+	<EF>2014.04.02</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>M</id>
+	<name>M</name>
+	<ES>2014.03.17</ES>
+	<EF>2014.03.21</EF>
+</record>
+<record>
+	<pid></pid>
+	<id>N</id>
+	<name>N</name>
+	<ES>2014.03.26</ES>
+	<EF>2014.03.29</EF>
+</record>
+</data>

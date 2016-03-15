@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="recruitResume" extends="default"	namespace="/">
+
+		<action name="recruitResumeList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction">
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeList.jsp</result>
+		</action>
+		<action name="recruitResumeGridList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction"		method="recruitResumeGridList">
+			<result type="json">
+				<param name="includeProperties">recruitResumes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="recruitResumeGridEdit" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction"			method="recruitResumeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editRecruitResume" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveRecruitResume" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 人才库 -->
+		<action name="recruitResumeTalentPoolList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeTalentPoolList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeTalentPoolList.jsp</result>
+		</action>
+		<!-- 收藏夹 -->
+		<action name="recruitResumeFavoriteList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeFavoriteList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeFavoriteList.jsp</result>
+		</action>
+		<!-- 招聘需求中查看 -->
+		<action name="recruitResumeViewList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeViewList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeViewList.jsp</result>
+		</action>
+		<!-- 面试 -->
+		<action name="recruitResumeInterviewList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeInterviewList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeInterviewList.jsp</result>
+		</action>
+		<!-- 面试安排 -->
+		<action name="recruitResumeMessage" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction" method="edit">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeMessageForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeMessageForm.jsp</result>
+		</action>
+		<!-- 面试评测 -->
+		<action name="recruitResumeExamineList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeExamineList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeExamineList.jsp</result>
+		</action>
+		<!-- 面试评测结果 -->
+		<action name="recruitResumeExamineForm" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction" method="edit">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeExamineForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeExamineForm.jsp</result>
+		</action>
+		<!-- 录用 -->
+		<action name="recruitResumeEmployList" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeEmployList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeEmployList.jsp</result>
+		</action>
+		<!-- 录用方式 -->
+		<action name="recruitResumeEmployForm" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction" method="edit">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeEmployForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitResume/recruitResumeEmployForm.jsp</result>
+		</action>
+		<!-- HrPerson's image upload and delete -->
+		<action name="uploadRecruitResumeImageFile" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction" method="uploadImageFile"/>
+  		<action name="deleteRecruitResumeImageFile" class="com.huge.ihos.hr.recruitResume.webapp.action.RecruitResumePagedAction" method="deleteImageFile"/>
+	</package>
+
+</struts>

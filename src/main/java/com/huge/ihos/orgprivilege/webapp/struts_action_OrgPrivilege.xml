@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="orgPrivilege" extends="default"	namespace="/">
+
+		<action name="orgPrivilegeList" class="com.huge.ihos.orgprivilege.webapp.action.OrgPrivilegePagedAction">
+			<result name="input">/WEB-INF/pages/orgPrivilege/orgPrivilegeList.jsp</result>
+			<result name="success">/WEB-INF/pages/orgPrivilege/orgPrivilegeList.jsp</result>
+		</action>
+		<action name="orgPrivilegeGridList" class="com.huge.ihos.orgprivilege.webapp.action.OrgPrivilegePagedAction"		method="orgPrivilegeGridList">
+			<result type="json">
+				<param name="includeProperties">orgPrivileges.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="orgPrivilegeGridEdit" class="com.huge.ihos.orgprivilege.webapp.action.OrgPrivilegePagedAction"			method="orgPrivilegeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editOrgPrivilege" class="com.huge.ihos.orgprivilege.webapp.action.OrgPrivilegePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/orgPrivilege/orgPrivilegeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/orgPrivilege/orgPrivilegeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveOrgPrivilege" class="com.huge.ihos.orgprivilege.webapp.action.OrgPrivilegePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

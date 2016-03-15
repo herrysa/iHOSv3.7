@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<from>A</from>
+	<To>B</To>
+</record>
+<record>
+	<from>B</from>
+	<To>C,J</To>
+</record>
+<record>
+	<from>C</from>
+	<To>D,G</To>
+</record>
+<record>
+	<from>D</from>
+	<To>E,H</To>
+</record>
+<record>
+	<from>E</from>
+	<To>F,I</To>
+</record>
+<record>
+	<from>J</from>
+	<To>M,K</To>
+</record>
+<record>
+	<from>K</from>
+	<To>L,N</To>
+</record>
+</data>

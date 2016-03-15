@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="importDataDefineDetail" extends="default"	namespace="/">
+
+		<action name="importDataDefineDetailList" class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefineDetailPagedAction">
+			<result name="input">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataDefineDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataDefineDetailList.jsp</result>
+		</action>
+		<action name="importDataDefineDetailGridList" class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefineDetailPagedAction"		method="importDataDefineDetailGridList">
+			<result type="json">
+				<param name="includeProperties">importDataDefineDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="importDataDefineDetailGridEdit" class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefineDetailPagedAction"			method="importDataDefineDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editImportDataDefineDetail" class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefineDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataDefineDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataDefineDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveImportDataDefineDetail" class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefineDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveImportDataDefineDetails" class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefineDetailPagedAction"			method="saveAll">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,interfaceId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="GBK"?>  
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"       
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"       
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   
+    http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"       
+    version="2.0">     
+    <tlib-version>1.0</tlib-version>  
+    <short-name>fns</short-name>
+    <uri>http://java.sun.com/jsp/jstl/functionss</uri>
+    <function>  
+        <name>u_writeDP</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.String u_writeDP(java.lang.String)  
+        </function-signature>  
+    </function>  
+    <function>  
+        <name>u_readDP</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.String u_readDP(java.lang.String)  
+        </function-signature>  
+    </function>
+    <function>  
+        <name>u_writeDPSql</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.String u_writeDPSql(java.lang.String)  
+        </function-signature>  
+    </function>  
+    <function>  
+        <name>u_readDPSql</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.String u_readDPSql(java.lang.String)  
+        </function-signature>  
+    </function>
+    <function>  
+        <name>userDPSql</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.String userDPSql(java.lang.String,java.lang.String)  
+        </function-signature>  
+    </function>
+    <function>  
+        <name>getParamInSubSystem</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.String getGlobalParam(java.lang.String,java.lang.String)  
+        </function-signature>  
+    </function>
+    <function>  
+        <name>getParam</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.String getGlobalParam(java.lang.String)  
+        </function-signature>  
+    </function>
+    <function>  
+        <name>hasRole</name>  
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>  
+            java.lang.boolean hasRole(java.lang.String)  
+        </function-signature>  
+    </function>
+    <function>
+        <name>userContextParam</name>
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>
+            java.lang.String userContextParam(java.lang.String)  
+        </function-signature>
+    </function>
+    <function>
+        <name>getSubSystems</name>
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>
+            java.util.Set getSubSystems()  
+        </function-signature>
+    </function>
+    <function>
+        <name>getVariable</name>
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>
+            java.util.String getVariable(java.lang.String)  
+        </function-signature>
+    </function>
+    <function>
+        <name>getHerpType</name>
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>
+            java.util.String getHerpType()  
+        </function-signature>
+    </function>
+    <function>
+        <name>getHerpParam</name>
+        <function-class>com.huge.webapp.taglib.FnsTag</function-class>  
+        <function-signature>
+            java.lang.String getHerpParam(java.lang.String,java.lang.String)  
+        </function-signature>
+    </function>
+    
+</taglib>  

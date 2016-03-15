@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--By Supcan TreeList -->
+<TreeList>
+<Properties curselmode="rows" curSelBackColor="#426688aa">
+	<BackGround picture="../res/treelistsh.jpg" rotate="15" alpha="15"/>
+</Properties>
+<Cols>
+	<Col name="country" width="100">国家</Col>
+	<Col name="city"    width="230">城市</Col>
+</Cols>
+</TreeList>

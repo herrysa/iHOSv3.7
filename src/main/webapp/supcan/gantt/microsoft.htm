@@ -1,0 +1,110 @@
+<html>
+<head><title>8.从 MS Project 导入</Title>
+<meta http-equiv="content-type" content="text/html; charset=GB2312">
+<link rel="stylesheet" href="../res/temp1.css" type="text/css">
+<script type='text/javascript' src='../binary/dynaloadNG.js?86'></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+  sizeWin();
+  AF.func("Build", "PD/pd_id.xml");
+  AF.func("LoadThird", "Specification=msproject.xml \r\n real-msproject.xml");
+  AF.func("Expand", "");
+ }
+ function OnSelDisplay()
+ {
+  var obj=document.getElementById('Sel');
+  var index=obj.selectedIndex;
+  var disname;
+  if(index == 0) disname="Gantt";
+  if(index == 1) disname="PD";
+  if(index == 2) disname="AD";
+  AF.func("SetGanttInfo", "displayAs \r\n" + disname);
+ }
+ function OnSelShadow()
+ {
+  var obj=document.getElementById('SelShadow');
+  var index=obj.selectedIndex;
+  var shadowColor = "#000000";
+  if(index == 1) shadowColor = "#0088FF";
+  if(index == 2) shadowColor = "#FFFFFF";
+  AF.func("SetPDInfo", "ShadowColor \r\n" + shadowColor);
+ }
+ function OnSelLine()
+ {
+  var obj=document.getElementById('SelLine');
+  var index=obj.selectedIndex;
+  var LineStyle = ".";
+  if(index == 1) LineStyle = "Big";
+  AF.func("SetPDInfo", "LineStyleClass \r\n" + LineStyle);
+ }
+ function OnSelChars()
+ {
+  var obj=document.getElementById('SelChars');
+  var index=obj.selectedIndex;
+  if(index > 0) {
+   index = obj.options[index].text;
+  }
+  AF.func("SetADInfo", "MaxNameChars \r\n" + index);
+ }
+ function openother()
+ {
+  var url = document.getElementById("fname").value;
+  AF.func("LoadThird", "Specification=msproject.xml \r\n" + url);
+  AF.func("Expand", "");
+ }
+ function SetSolitary()
+ {
+  var b = document.getElementById("checkbox_sol").checked;
+  AF.func("SetADInfo","isDisplaySolitaryTask \r\n" + !b);
+ }
+ function SetUseSS()
+ {
+  var b = document.getElementById("checkbox_ss").checked;
+  AF.func("SetADInfo","isUseSS \r\n" + b);
+ }
+ function sizeWin()
+ {
+   var winHeight = document.body.clientHeight;
+   var div1 = document.getElementById("div1");
+   var top = div1.offsetTop;
+   div1.style.height = winHeight - top - 1;
+ }
+</script>
+</head>
+
+<body onresize="sizeWin()" topmargin=0 bottommargin=0 leftmargin=5 style="overflow-y:hidden" vlink=#0000ff link=#0000ff>
+<a href="index.htm">&lt;&lt;Back</a> 8.从 MS Project 导入<br>
+<center>
+切换成：<Select id="Sel" onchange="OnSelDisplay()">
+	<option>甘特图</option>
+	<option selected="selected">单代号网络图</option>
+	<option>双代号网络图</option>
+</Select>,  &nbsp;也打开其它文件:<input id="fname" type=edit size="90"/> <input type="button" value=" 打开 " onClick="openother()">
+<br>
+<b>单代号网络图</b>的阴影效果：<Select id="SelShadow" onchange="OnSelShadow()">
+	<option>黑色(默认)</option><option>蓝绿色</option><option>无阴影</option>
+</Select>, 
+&nbsp;连接线效果：<Select id="SelLine" onchange="OnSelLine()">
+	<option>细线</option><option>粗线</option>
+</Select>;  &nbsp; <b>双代号网络图</b>的某些属性: <input type="checkbox" id="checkbox_sol" onClick="SetSolitary()">仅显示有紧前紧后的任务</input>，文字最多显示字数：
+<Select id="SelChars" onchange="OnSelChars()">
+	<Option>默认(32)</Option>
+	<Option>4</Option>
+	<Option>6</Option>
+	<Option>8</Option>
+	<Option>10</Option>
+</Select>,  &nbsp;&nbsp;<input type="checkbox" id="checkbox_ss" onClick="SetUseSS()">启用 SS 关系</input>
+<br>
+<br>
+<div id="div1" style="position:relative;width:100%;height:700px">
+	<script>insertGantt('AF', '')</script>
+</div>
+<br>
+</center>
+
+<br>
+
+</body>
+<script type='text/javascript' src='res/nstd.js'></script>
+</html>

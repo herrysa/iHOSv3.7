@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="nursePostRate" extends="default"	namespace="/">
+
+		<action name="nursePostRateList" class="com.huge.ihos.nursescore.webapp.action.NursePostRatePagedAction">
+			<result name="input">/WEB-INF/pages/nursePostRate/nursePostRateList.jsp</result>
+			<result name="success">/WEB-INF/pages/nursePostRate/nursePostRateList.jsp</result>
+		</action>
+		<action name="nursePostRateGridList" class="com.huge.ihos.nursescore.webapp.action.NursePostRatePagedAction"		method="nursePostRateGridList">
+			<result type="json">
+				<param name="includeProperties">nursePostRates.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="nursePostRateGridEdit" class="com.huge.ihos.nursescore.webapp.action.NursePostRatePagedAction"			method="nursePostRateGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editNursePostRate" class="com.huge.ihos.nursescore.webapp.action.NursePostRatePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/nursePostRate/nursePostRateForm.jsp</result>
+			<result name="input">/WEB-INF/pages/nursePostRate/nursePostRateForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveNursePostRate" class="com.huge.ihos.nursescore.webapp.action.NursePostRatePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

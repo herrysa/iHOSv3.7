@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="incomeTaxRate" extends="default"	namespace="/">
+
+		<action name="incomeTaxRateList" class="com.huge.ihos.gz.incomeTaxRate.webapp.action.IncomeTaxRatePagedAction" method="incomeTaxRateList">
+			<result name="input">/WEB-INF/pages/gz/incomeTaxRate/incomeTaxRateList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/incomeTaxRate/incomeTaxRateList.jsp</result>
+		</action>
+		<action name="incomeTaxRateGridList" class="com.huge.ihos.gz.incomeTaxRate.webapp.action.IncomeTaxRatePagedAction"		method="incomeTaxRateGridList">
+			<result type="json">
+				<param name="includeProperties">incomeTaxRates.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="incomeTaxRateGridEdit" class="com.huge.ihos.gz.incomeTaxRate.webapp.action.IncomeTaxRatePagedAction"			method="incomeTaxRateGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editIncomeTaxRate" class="com.huge.ihos.gz.incomeTaxRate.webapp.action.IncomeTaxRatePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/incomeTaxRate/incomeTaxRateForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/incomeTaxRate/incomeTaxRateForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveIncomeTaxRate" class="com.huge.ihos.gz.incomeTaxRate.webapp.action.IncomeTaxRatePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

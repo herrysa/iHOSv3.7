@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="hrOrgSnap" extends="default"	namespace="/">
+
+		<action name="hrOrgSnapGridList" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgSnapPagedAction" method="hrOrgSnapGridList">
+			<result type="json">
+				<param name="includeProperties">hrOrgSnaps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="hrOrgSnapGridEdit" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgSnapPagedAction"	method="hrOrgSnapGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editHrOrgSnap" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgSnapPagedAction" method="edit">
+			<result name="success">/WEB-INF/pages/hr/hrOrg/hrOrgSnapForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrOrg/hrOrgSnapForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveHrOrgSnap" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgSnapPagedAction"	method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,parentOrgCode,hrOrgSnap.*</param>
+                <param name="excludeProperties">hrOrgSnaps.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

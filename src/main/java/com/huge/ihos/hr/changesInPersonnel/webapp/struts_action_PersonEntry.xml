@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="personEntry" extends="default"	namespace="/">
+
+		<action name="personEntryList" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.PersonEntryPagedAction" method="personEntryList">
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/personEntry/personEntryList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/personEntry/personEntryList.jsp</result>
+		</action>
+		<action name="personEntryGridList" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.PersonEntryPagedAction"		method="personEntryGridList">
+			<result type="json">
+				<param name="includeProperties">personEntries.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="personEntryGridEdit" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.PersonEntryPagedAction"			method="personEntryGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,treeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPersonEntry" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.PersonEntryPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/personEntry/personEntryForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/personEntry/personEntryForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePersonEntry" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.PersonEntryPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,id,pactCreate,personNode.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="personEntryDPList" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.PersonEntryPagedAction"			method="personEntryDPList">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/personEntry/personEntryDPList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/personEntry/personEntryDPList.jsp</result>
+		</action>
+	</package>
+
+</struts>

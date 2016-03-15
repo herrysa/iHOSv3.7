@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="formula" extends="default" namespace="/">
+
+    
+        <action name="formulaEntityList">
+			<result name="input">/WEB-INF/pages/formula/formulaEntityList.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/formulaEntityList.jsp</result>
+		</action>
+
+		<action name="formulaEntityGridList" class="com.huge.ihos.formula.webapp.action.FormulaEntityAction" method="formulaEntityGridList">
+			<result type="json">
+				<param name="includeProperties">formulaEntities.*,records,total,page</param>
+				<param name="excludeProperties">formulaEntities.*\.formulaFields</param>
+				 <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="formulaEntityGridEdit" class="com.huge.ihos.formula.webapp.action.FormulaEntityAction" method="formulaEntityGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+
+        <action name="editFormulaEntity" class="com.huge.ihos.formula.webapp.action.FormulaEntityAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/formula/formulaEntityForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/formulaEntityForm.jsp</result>
+ 	    </action>
+
+        <action name="saveFormulaEntity" class="com.huge.ihos.formula.webapp.action.FormulaEntityAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/formula/formulaEntityForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+        </action>
+
+        <!--FormulaFieldAction-START-->
+		
+		<!--
+		<action name="formulaFields" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="list">
+            <result>/WEB-INF/pages/formulaFieldList.jsp</result>
+        </action>
+        
+
+        <action name="editFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="edit">
+            <result>/WEB-INF/pages/formulaFieldForm.jsp</result>
+            <result name="error">/WEB-INF/pages/formulaFieldList.jsp</result>
+        </action>
+
+        <action name="saveFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="save">
+            <result name="input">/WEB-INF/pages/formulaFieldForm.jsp</result>
+            <result name="cancel" type="redirectAction">formulaFields</result>
+            <result name="delete" type="redirectAction">formulaFields</result>
+            <result name="success" type="redirectAction">formulaFields</result>
+        </action>
+        -->
+        
+
+		
+        <action name="formulaFieldList"  class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="formulaFieldGridPrepare">
+			<result name="input">/WEB-INF/pages/formula/formulaFieldList.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/formulaFieldList.jsp</result>
+		</action>
+
+		<action name="formulaFieldGridList" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="formulaFieldGridList">
+			<result type="json">
+				<param name="includeProperties">formulaFields.*,records,total,page</param>
+				<param name="excludeProperties">formulaFields.*\.formulaEntity.formulaFields</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="formulaFieldGridEdit" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="formulaFieldGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/formula/formulaFieldForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/formulaFieldForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/formula/formulaFieldForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+            <!--  <result name="edit_success_preview">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result> -->
+              <!-- <result name="edit_success_preview" type="redirectAction">editFormulaField?popup=true&amp;formulaFieldId=${formulaFieldId}</result> -->
+        </action>
+        <action name="saveAndPreviewFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="saveAndPreview">
+            <result name="success">/WEB-INF/pages/formula/formulaFieldForm.jsp</result>
+            <result name="input">/WEB-INF/pages/formula/formulaFieldForm.jsp</result>
+            <!-- <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result> -->
+            <!--  <result name="edit_success_preview">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result> -->
+              <result name="edit_success_preview" type="redirectAction">editFormulaField?popup=true&amp;formulaFieldId=${formulaFieldId}</result>
+        </action>
+        <action name="initFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="initFormulaField">
+            <result type="json">
+                <param name="includeProperties">jsonStatus,jsonMessages</param>
+            </result>
+        </action>
+        
+        <action name="disabledFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="disabledFormulaField">
+            <result type="json">
+                <param name="includeProperties">jsonStatus,jsonMessages</param>
+            </result>
+        </action>
+        <action name="enabledFormulaField" class="com.huge.ihos.formula.webapp.action.FormulaFieldAction" method="enabledFormulaField">
+            <result type="json">
+                <param name="includeProperties">jsonStatus,jsonMessages</param>
+            </result>
+        </action>        
+        <!--FormulaFieldAction-END-->
+        
+        
+        
+
+        <!--AllotPrincipleAction-START-->
+		
+		<!--
+		<action name="allotPrinciples" class="com.huge.ihos.formula.webapp.action.AllotPrincipleAction" method="list">
+            <result>/WEB-INF/pages/allotPrincipleList.jsp</result>
+        </action>
+        
+
+        <action name="editAllotPrinciple" class="com.huge.ihos.formula.webapp.action.AllotPrincipleAction" method="edit">
+            <result>/WEB-INF/pages/allotPrincipleForm.jsp</result>
+            <result name="error">/WEB-INF/pages/allotPrincipleList.jsp</result>
+        </action>
+
+        <action name="saveAllotPrinciple" class="com.huge.ihos.formula.webapp.action.AllotPrincipleAction" method="save">
+            <result name="input">/WEB-INF/pages/allotPrincipleForm.jsp</result>
+            <result name="cancel" type="redirectAction">allotPrinciples</result>
+            <result name="delete" type="redirectAction">allotPrinciples</result>
+            <result name="success" type="redirectAction">allotPrinciples</result>
+        </action>
+        -->
+        
+
+		
+        <action name="allotPrincipleList">
+			<result name="input">/WEB-INF/pages/formula/allotPrincipleList.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/allotPrincipleList.jsp</result>
+		</action>
+
+		<action name="allotPrincipleGridList" class="com.huge.ihos.formula.webapp.action.AllotPrincipleAction" method="allotPrincipleGridList">
+			<result type="json">
+				<param name="includeProperties">allotPrinciples.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="allotPrincipleGridEdit" class="com.huge.ihos.formula.webapp.action.AllotPrincipleAction" method="allotPrincipleGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editAllotPrinciple" class="com.huge.ihos.formula.webapp.action.AllotPrincipleAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/formula/allotPrincipleForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/allotPrincipleForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveAllotPrinciple" class="com.huge.ihos.formula.webapp.action.AllotPrincipleAction" method="save">
+            <result name="input">/WEB-INF/pages/formula/allotPrincipleForm.jsp</result>
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--AllotPrincipleAction-END-->
+
+        <!--DeptSplitAction-START-->
+		
+		<!--
+		<action name="deptSplits" class="com.huge.ihos.formula.webapp.action.DeptSplitAction" method="list">
+            <result>/WEB-INF/pages/deptSplitList.jsp</result>
+        </action>
+        
+
+        <action name="editDeptSplit" class="com.huge.ihos.formula.webapp.action.DeptSplitAction" method="edit">
+            <result>/WEB-INF/pages/deptSplitForm.jsp</result>
+            <result name="error">/WEB-INF/pages/deptSplitList.jsp</result>
+        </action>
+
+        <action name="saveDeptSplit" class="com.huge.ihos.formula.webapp.action.DeptSplitAction" method="save">
+            <result name="input">/WEB-INF/pages/deptSplitForm.jsp</result>
+            <result name="cancel" type="redirectAction">deptSplits</result>
+            <result name="delete" type="redirectAction">deptSplits</result>
+            <result name="success" type="redirectAction">deptSplits</result>
+        </action>
+        -->
+        
+
+		
+        <action name="deptSplitList">
+			<result name="input">/WEB-INF/pages/formula/deptSplitList.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/deptSplitList.jsp</result>
+		</action>
+
+		<action name="deptSplitGridList" class="com.huge.ihos.formula.webapp.action.DeptSplitAction" method="deptSplitGridList">
+			<result type="json">
+				<param name="includeProperties">deptSplits.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="deptSplitGridEdit" class="com.huge.ihos.formula.webapp.action.DeptSplitAction" method="deptSplitGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDeptSplit" class="com.huge.ihos.formula.webapp.action.DeptSplitAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/formula/deptSplitForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/deptSplitForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDeptSplit" class="com.huge.ihos.formula.webapp.action.DeptSplitAction" method="save">
+            <result name="input">/WEB-INF/pages/formula/deptSplitForm.jsp</result>
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--DeptSplitAction-END-->
+
+        <!--AllotSetAction-START-->
+		
+		<!--
+		<action name="allotSets" class="com.huge.ihos.formula.webapp.action.AllotSetAction" method="list">
+            <result>/WEB-INF/pages/allotSetList.jsp</result>
+        </action>
+        
+
+        <action name="editAllotSet" class="com.huge.ihos.formula.webapp.action.AllotSetAction" method="edit">
+            <result>/WEB-INF/pages/allotSetForm.jsp</result>
+            <result name="error">/WEB-INF/pages/allotSetList.jsp</result>
+        </action>
+
+        <action name="saveAllotSet" class="com.huge.ihos.formula.webapp.action.AllotSetAction" method="save">
+            <result name="input">/WEB-INF/pages/allotSetForm.jsp</result>
+            <result name="cancel" type="redirectAction">allotSets</result>
+            <result name="delete" type="redirectAction">allotSets</result>
+            <result name="success" type="redirectAction">allotSets</result>
+        </action>
+        -->
+        
+
+		
+        <action name="allotSetList">
+			<result name="input">/WEB-INF/pages/formula/allotSetList.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/allotSetList.jsp</result>
+		</action>
+
+		<action name="allotSetGridList" class="com.huge.ihos.formula.webapp.action.AllotSetAction" method="allotSetGridList">
+			<result type="json">
+				<param name="includeProperties">allotSets.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="allotSetGridEdit" class="com.huge.ihos.formula.webapp.action.AllotSetAction" method="allotSetGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editAllotSet" class="com.huge.ihos.formula.webapp.action.AllotSetAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/formula/allotSetForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/allotSetForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveAllotSet" class="com.huge.ihos.formula.webapp.action.AllotSetAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--AllotSetAction-END-->
+
+        <!--AllotItemAction-START-->
+		
+		<!--
+		<action name="allotItems" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="list">
+            <result>/WEB-INF/pages/allotItemList.jsp</result>
+        </action>
+        
+
+        <action name="editAllotItem" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="edit">
+            <result>/WEB-INF/pages/allotItemForm.jsp</result>
+            <result name="error">/WEB-INF/pages/allotItemList.jsp</result>
+        </action>
+
+        <action name="saveAllotItem" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="save">
+            <result name="input">/WEB-INF/pages/allotItemForm.jsp</result>
+            <result name="cancel" type="redirectAction">allotItems</result>
+            <result name="delete" type="redirectAction">allotItems</result>
+            <result name="success" type="redirectAction">allotItems</result>
+        </action>
+        -->
+        
+
+		
+        <action name="allotItemList" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="allotItemList">
+			<result name="input">/WEB-INF/pages/formula/allotItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/allotItemList.jsp</result>
+		</action>
+
+		<action name="allotItemGridList" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="allotItemGridList">
+			<result type="json">
+				<param name="includeProperties">allotItems.*,records,total,page,userdata.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="allotItemGridEdit" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="allotItemGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editAllotItem" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/formula/allotItemForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/allotItemForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveAllotItem" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="save">
+            <result name="input">/WEB-INF/pages/formula/allotItemForm.jsp</result>
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+         <action name="eiditInheritanceAlloItem" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="eiditInheritanceAlloItem">
+ 	        <result name="success">/WEB-INF/pages/formula/inheritanceAllotItem.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/inheritanceAllotItem.jsp</result>
+ 	    </action>
+        
+        <action name="inheritanceAlloItem" class="com.huge.ihos.formula.webapp.action.AllotItemAction" method="inheritanceAlloItem">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        <!--AllotItemAction-END-->
+
+        <!--AllotItemDetailAction-START-->
+		
+		<!--
+		<action name="allotItemDetails" class="com.huge.ihos.formula.webapp.action.AllotItemDetailAction" method="list">
+            <result>/WEB-INF/pages/allotItemDetailList.jsp</result>
+        </action>
+        
+
+        <action name="editAllotItemDetail" class="com.huge.ihos.formula.webapp.action.AllotItemDetailAction" method="edit">
+            <result>/WEB-INF/pages/allotItemDetailForm.jsp</result>
+            <result name="error">/WEB-INF/pages/allotItemDetailList.jsp</result>
+        </action>
+
+        <action name="saveAllotItemDetail" class="com.huge.ihos.formula.webapp.action.AllotItemDetailAction" method="save">
+            <result name="input">/WEB-INF/pages/allotItemDetailForm.jsp</result>
+            <result name="cancel" type="redirectAction">allotItemDetails</result>
+            <result name="delete" type="redirectAction">allotItemDetails</result>
+            <result name="success" type="redirectAction">allotItemDetails</result>
+        </action>
+        -->
+        
+
+		
+        <action name="allotItemDetailList">
+			<result name="input">/WEB-INF/pages/formula/allotItemDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/allotItemDetailList.jsp</result>
+		</action>
+
+		<action name="allotItemDetailGridList" class="com.huge.ihos.formula.webapp.action.AllotItemDetailAction" method="allotItemDetailGridList">
+			<result type="json">
+				<param name="includeProperties">allotItemDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="allotItemDetailGridEdit" class="com.huge.ihos.formula.webapp.action.AllotItemDetailAction" method="allotItemDetailGridEdit">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editAllotItemDetail" class="com.huge.ihos.formula.webapp.action.AllotItemDetailAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/formula/allotItemDetailForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/formula/allotItemDetailForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveAllotItemDetail" class="com.huge.ihos.formula.webapp.action.AllotItemDetailAction" method="save">
+            <result name="input">/WEB-INF/pages/formula/allotItemDetailForm.jsp</result>
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <!--AllotItemDetailAction-END-->
+        
+        
+        <action name="allotFacade">
+			<result name="input">/WEB-INF/pages/formula/allotFacade.jsp</result>
+			<result name="success">/WEB-INF/pages/formula/allotFacade.jsp</result>
+		</action>
+        <action name="allotProcess"  class="com.huge.ihos.formula.webapp.action.AllotFacadeAction"  method="process">
+			<result type="json" name="success">
+			<param name="includeProperties">jsonStatus,jsonMessages</param>
+			</result>
+			<result type="json" name="error">
+			<param name="includeProperties">jsonStatus,jsonMessages</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

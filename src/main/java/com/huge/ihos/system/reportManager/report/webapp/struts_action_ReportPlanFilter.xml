@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="reportPlanFilter" extends="default"	namespace="/">
+
+		<action name="reportPlanFilterList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanFilterPagedAction">
+			<result name="input">/WEB-INF/pages/reportPlanFilter/reportPlanFilterList.jsp</result>
+			<result name="success">/WEB-INF/pages/reportPlanFilter/reportPlanFilterList.jsp</result>
+		</action>
+		<action name="reportPlanFilterGridList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanFilterPagedAction"		method="reportPlanFilterGridList">
+			<result type="json">
+				<param name="includeProperties">reportPlanFilters.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="reportPlanFilterGridEdit" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanFilterPagedAction"			method="reportPlanFilterGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editReportPlanFilter" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanFilterPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/reportPlanFilter/reportPlanFilterForm.jsp</result>
+			<result name="input">/WEB-INF/pages/reportPlanFilter/reportPlanFilterForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveReportPlanFilter" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanFilterPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

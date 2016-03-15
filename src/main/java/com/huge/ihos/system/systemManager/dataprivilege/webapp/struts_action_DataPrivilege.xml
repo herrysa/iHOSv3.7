@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="dataPrivilege" extends="default"	namespace="/">
+
+		<action name="dataPrivilegeList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.DataPrivilegePagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeList.jsp</result>
+		</action>
+		<action name="dataPrivilegeGridList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.DataPrivilegePagedAction"		method="dataPrivilegeGridList">
+			<result type="json">
+				<param name="includeProperties">dataPrivileges.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="dataPrivilegeGridEdit" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.DataPrivilegePagedAction"			method="dataPrivilegeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.DataPrivilegePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveDataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.DataPrivilegePagedAction"			method="saveDataPrivilege">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveRoleDataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.DataPrivilegePagedAction"			method="saveRoleDataPrivilege">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

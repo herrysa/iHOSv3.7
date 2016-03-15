@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="syVariable" extends="default"	namespace="/">
+
+		<action name="syVariableList" class="com.huge.ihos.system.configuration.syvariable.webapp.action.VariablePagedAction">
+			<result name="input">/WEB-INF/pages/system/configuration/syvariable/syVariableList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/syvariable/syVariableList.jsp</result>
+		</action>
+		<action name="syVariableGridList" class="com.huge.ihos.system.configuration.syvariable.webapp.action.VariablePagedAction"		method="syVariableGridList">
+			<result type="json">
+				<param name="includeProperties">syVariables.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="syVariableGridEdit" class="com.huge.ihos.system.configuration.syvariable.webapp.action.VariablePagedAction"			method="syVariableGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSyVariable" class="com.huge.ihos.system.configuration.syvariable.webapp.action.VariablePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/syvariable/syVariableForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/syvariable/syVariableForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSyVariable" class="com.huge.ihos.system.configuration.syvariable.webapp.action.VariablePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="saveSyVariableSn"  class="com.huge.ihos.system.configuration.syvariable.webapp.action.VariablePagedAction"		method="saveSyVariableSn">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

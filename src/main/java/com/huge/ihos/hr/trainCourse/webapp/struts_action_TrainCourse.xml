@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="trainCourse" extends="default"	namespace="/">
+
+		<action name="trainCourseList" class="com.huge.ihos.hr.trainCourse.webapp.action.TrainCoursePagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainCourse/trainCourseList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainCourse/trainCourseList.jsp</result>
+		</action>
+		<action name="trainCourseGridList" class="com.huge.ihos.hr.trainCourse.webapp.action.TrainCoursePagedAction"		method="trainCourseGridList">
+			<result type="json">
+				<param name="includeProperties">trainCourses.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="trainCourseGridEdit" class="com.huge.ihos.hr.trainCourse.webapp.action.TrainCoursePagedAction"			method="trainCourseGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTrainCourse" class="com.huge.ihos.hr.trainCourse.webapp.action.TrainCoursePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/train/trainCourse/trainCourseForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainCourse/trainCourseForm.jsp</result>
+		</action>
+		<action name="trainCourseCheckList" class="com.huge.ihos.hr.trainCourse.webapp.action.TrainCoursePagedAction"			method="trainCourseCheckList">
+			<result name="success">/WEB-INF/pages/hr/train/trainCourse/trainCourseCheckList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainCourse/trainCourseCheckList.jsp</result>
+		</action>
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTrainCourse" class="com.huge.ihos.hr.trainCourse.webapp.action.TrainCoursePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

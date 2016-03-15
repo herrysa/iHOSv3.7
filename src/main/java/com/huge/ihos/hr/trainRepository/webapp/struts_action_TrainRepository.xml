@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="trainRepository" extends="default"	namespace="/">
+
+		<action name="trainRepositoryList" class="com.huge.ihos.hr.trainRepository.webapp.action.TrainRepositoryPagedAction">
+			<result name="input">/WEB-INF/pages/hr/trainRepository/trainRepositoryList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/trainRepository/trainRepositoryList.jsp</result>
+		</action>
+		<action name="trainRepositoryGridList" class="com.huge.ihos.hr.trainRepository.webapp.action.TrainRepositoryPagedAction"		method="trainRepositoryGridList">
+			<result type="json">
+				<param name="includeProperties">trainRepositories.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="trainRepositoryGridEdit" class="com.huge.ihos.hr.trainRepository.webapp.action.TrainRepositoryPagedAction"			method="trainRepositoryGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTrainRepository" class="com.huge.ihos.hr.trainRepository.webapp.action.TrainRepositoryPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/trainRepository/trainRepositoryForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/trainRepository/trainRepositoryForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTrainRepository" class="com.huge.ihos.hr.trainRepository.webapp.action.TrainRepositoryPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="maptables" extends="default" namespace="/">
+	
+
+		<action name="autocomplete" class="com.huge.webapp.action.JqGridBaseAction" method="autocomplete">
+			<result type="json"/>
+		</action>
+		
+		<action name="excelOutPut" class="com.huge.webapp.action.BaseAction" method="excelOutPut"> 
+			<result name="success" type="redirectAction">exportSearch</result>
+		</action>	
+		
+	        <!--DeptmapAction-START-->
+		
+		<!--
+		<action name="deptmaps" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction" method="list">
+            <result>/WEB-INF/pages/deptmapList.jsp</result>
+        </action>
+        
+
+        <action name="editDeptmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction" method="edit">
+            <result>/WEB-INF/pages/deptmapForm.jsp</result>
+            <result name="error">/WEB-INF/pages/deptmapList.jsp</result>
+        </action>
+
+        <action name="saveDeptmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction" method="save">
+            <result name="input">/WEB-INF/pages/deptmapForm.jsp</result>
+            <result name="cancel" type="redirectAction">deptmaps</result>
+            <result name="delete" type="redirectAction">deptmaps</result>
+            <result name="success" type="redirectAction">deptmaps</result>
+        </action>
+        -->
+        
+
+		
+        <action name="deptmapList" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction"  >
+			<result name="input">/WEB-INF/pages/system/datacollection/maptables/deptmapList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/maptables/deptmapList.jsp</result>
+		</action>
+
+		<action name="deptmapGridList" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction" method="deptmapGridList">
+			<result type="json">
+				<param name="includeProperties">deptmaps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="deptmapGridEdit" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction" method="deptmapGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editDeptmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/maptables/deptmapForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/maptables/deptmapForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveDeptmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.DeptmapAction" method="save">
+            <result name="success">/WEB-INF/pages/system/datacollection/maptables/deptmapForm.jsp</result>
+            <result name="input">/WEB-INF/pages/system/datacollection/maptables/deptmapForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefresh.jsp</result>
+        </action>
+        
+        
+        <!--DeptmapAction-END-->
+   <!--MatetypeAction-START-->
+		
+		<!--
+		<action name="matetypes" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="list">
+            <result>/WEB-INF/pages/matetypeList.jsp</result>
+        </action>
+        
+
+        <action name="editMatetype" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="edit">
+            <result>/WEB-INF/pages/matetypeForm.jsp</result>
+            <result name="error">/WEB-INF/pages/matetypeList.jsp</result>
+        </action>
+
+        <action name="saveMatetype" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="save">
+            <result name="input">/WEB-INF/pages/matetypeForm.jsp</result>
+            <result name="cancel" type="redirectAction">matetypes</result>
+            <result name="delete" type="redirectAction">matetypes</result>
+            <result name="success" type="redirectAction">matetypes</result>
+        </action>
+        -->
+      
+
+		
+        <action name="matetypeList" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction">
+			<result name="input">/WEB-INF/pages/system/datacollection/maptables/matetypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/maptables/matetypeList.jsp</result>
+		</action>
+
+		<action name="matetypeGridList" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="matetypeGridList">
+			<result type="json">
+				<param name="includeProperties">matetypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="matetypeGridEdit" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="matetypeGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+
+		<action name="costitemJsonRpc" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="costitemJsonRpc">
+            <result type="json">
+                <param name="includeProperties">gridOperationMessage</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editMatetype" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/maptables/matetypeForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/maptables/matetypeForm.jsp</result>
+ 	    </action>
+        <action name="costitems-list" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" >
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/maptables/costitems-list.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveMatetype" class="com.huge.ihos.system.datacollection.maptables.webapp.action.MatetypeAction" method="save">
+            <result name="success">/WEB-INF/pages/system/datacollection/maptables/matetypeForm.jsp</result>
+            <result name="input">/WEB-INF/pages/system/datacollection/maptables/matetypeForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefresh.jsp</result>
+        </action>
+        
+        
+        <!--MatetypeAction-END-->
+        <!--AcctcostmapAction-START-->
+		
+		<!--
+		<action name="acctcostmaps" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" method="list">
+            <result>/WEB-INF/pages/acctcostmapList.jsp</result>
+        </action>
+        
+
+        <action name="editAcctcostmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" method="edit">
+            <result>/WEB-INF/pages/acctcostmapForm.jsp</result>
+            <result name="error">/WEB-INF/pages/acctcostmapList.jsp</result>
+        </action>
+
+        <action name="saveAcctcostmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" method="save">
+            <result name="input">/WEB-INF/pages/acctcostmapForm.jsp</result>
+            <result name="cancel" type="redirectAction">acctcostmaps</result>
+            <result name="delete" type="redirectAction">acctcostmaps</result>
+            <result name="success" type="redirectAction">acctcostmaps</result>
+        </action>
+        -->
+        
+
+		
+        <action name="acctcostmapList" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" >
+			<result name="input">/WEB-INF/pages/system/datacollection/maptables/acctcostmapList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/maptables/acctcostmapList.jsp</result>
+		</action>
+
+		<action name="acctcostmapGridList" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" method="acctcostmapGridList">
+			<result type="json">
+				<param name="includeProperties">acctcostmaps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="acctcostmapGridEdit" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" method="acctcostmapGridEdit">
+           <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editAcctcostmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/maptables/acctcostmapForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/maptables/acctcostmapForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveAcctcostmap" class="com.huge.ihos.system.datacollection.maptables.webapp.action.AcctcostmapAction" method="save">
+            <result name="success">/WEB-INF/pages/system/datacollection/maptables/acctcostmapForm.jsp</result>
+            <result name="input">/WEB-INF/pages/system/datacollection/maptables/acctcostmapForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefresh.jsp</result>
+        </action>
+        
+        
+        <!--AcctcostmapAction-END-->
+      
+	</package>
+
+</struts>

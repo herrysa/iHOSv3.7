@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kqUpItem" extends="default"	namespace="/">
+
+		<action name="kqUpItemList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction">
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqUpItem/kqUpItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqUpItem/kqUpItemList.jsp</result>
+		</action>
+		<action name="kqUpItemGridList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction"		method="kqUpItemGridList">
+			<result type="json">
+				<param name="includeProperties">kqUpItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqUpItemGridEdit" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction"			method="kqUpItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKqUpItem" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqUpItem/kqUpItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqUpItem/kqUpItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKqUpItem" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">itemId,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="kqUpDataColumnInfo" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction"			method="kqUpDataColumnInfo">
+			<result name="success" type="json">
+                <param name="includeProperties">kqUpItems.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="sortKqUpItem" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction">
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqUpItem/kqUpItemSortForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqUpItem/kqUpItemSortForm.jsp</result>
+		</action>
+		<action name="kqUpItemSort" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction"			method="kqUpItemSort">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,itemId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="resortKqUpItemSn" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction" method="resortKqUpItemSn">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="makeKqUpItemTree" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction" method="makeKqUpItemTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">itemNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkDelKqUpItem" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemPagedAction" method="checkDelKqUpItem">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

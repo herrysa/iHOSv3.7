@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--By Supcan TreeList -->
+<TreeList>
+	<Properties dataURL="departmentSupcanList">
+	</Properties>
+	<Cols>
+		<Col name="departmentId"  width="70" align="center" isHide="true">部门Id</Col>
+		<Col name="name" width="100">部门名称</Col>
+		<Col name="deptCode" width="100">部门编码</Col>
+		<Col name="cnCode" width="50">助记码</Col>
+		<Col name="parentDept" width="100">上级部门</Col>
+		<Col name="orgCode" width="80">单位编码</Col>
+		<Col name="orgName" width="80">单位名称</Col>
+	</Cols>
+</TreeList>

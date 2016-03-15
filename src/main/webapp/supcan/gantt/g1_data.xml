@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<pid></pid>
+	<id>100</id>
+	<name>项目1</name>
+	<ES>2014.03.11</ES>
+	<EF>2014.04.02</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st1</Style>
+</record>
+<record>
+	<pid>100</pid>
+	<id>10001</id>
+	<name>任务1</name>
+	<ES>2014.03.11</ES>
+	<EF>2014.3.22</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+<record>
+	<pid>100</pid>
+	<id>10002</id>
+	<name>任务2</name>
+	<ES>2014.03.22</ES>
+	<EF>2014.03.30</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+<record>
+	<pid>100</pid>
+	<id>10003</id>
+	<name>任务3</name>
+	<ES>2014.03.31</ES>
+	<EF>2014.04.21</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+<record>
+	<pid>100</pid>
+	<id>10004</id>
+	<name>任务3</name>
+	<ES>2014.4.1</ES>
+	<EF>2014.4.22</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+
+
+<record>
+	<pid></pid>
+	<id>200</id>
+	<name>施工项目2</name>
+	<ES>2014.04.1</ES>
+	<EF>2014.4.20</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st1</Style>
+</record>
+<record>
+	<pid>200</pid>
+	<id>20001</id>
+	<name>任务1</name>
+	<ES>2014.04.1</ES>
+	<EF>2014.4.10</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+<record>
+	<pid>200</pid>
+	<id>20002</id>
+	<name>任务2</name>
+	<ES>2014.04.10</ES>
+	<EF>2014.4.20</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+<record>
+	<pid>20002</pid>
+	<id>2000201</id>
+	<name>任务2之1</name>
+	<ES>2014.04.10</ES>
+	<EF>2014.4.21</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+<record>
+	<pid>20002</pid>
+	<id>2000202</id>
+	<name>任务2之2</name>
+	<ES>2014.04.12</ES>
+	<EF>2014.4.20</EF>
+	<duration></duration>
+	<PercentComplete></PercentComplete>
+	<Style>st2</Style>
+</record>
+</data>

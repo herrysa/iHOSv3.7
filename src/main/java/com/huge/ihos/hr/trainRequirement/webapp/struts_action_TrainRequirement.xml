@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="trainRequirement" extends="default"	namespace="/">
+
+		<action name="trainRequirementList" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementList.jsp</result>
+		</action>
+		<action name="trainRequirementCheckList" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementCheckList.jsp</result>
+		</action>
+		<action name="trainRequirementGridList" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction"		method="trainRequirementGridList">
+			<result type="json">
+				<param name="includeProperties">trainRequirements.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="trainRequirementGridEdit" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction"			method="trainRequirementGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTrainRequirement" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTrainRequirement" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<!-- called when a record is clicked on the grid -->
+		<action name="analysisTrainRequirement" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction"	>
+			<result name="success">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementAnalysis.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainRequirement/trainRequirementAnalysis.jsp</result>
+		</action>
+		<!-- 统计分析 -->
+		<action name="trainRequirementAnalysisGridList" class="com.huge.ihos.hr.trainRequirement.webapp.action.TrainRequirementPagedAction"		method="trainRequirementAnalysisGridList">
+			<result type="json">
+				<param name="includeProperties">trainRequirementAnalysiss.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

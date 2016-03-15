@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="inspectTempl" extends="default"	namespace="/">
+
+		<action name="inspectTemplList" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction">
+			<result name="input">/WEB-INF/pages/balanceCard/inspectTemplList.jsp</result>
+			<result name="success">/WEB-INF/pages/balanceCard/inspectTemplList.jsp</result>
+		</action>
+		<action name="inspectTemplGridList" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction"		method="inspectTemplGridList">
+			<result type="json">
+				<param name="includeProperties">inspectTempls.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="inspectTemplGridEdit" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction"			method="inspectTemplGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInspectTempl" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/balanceCard/inspectTemplForm.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/inspectTemplForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInspectTempl" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="enableOrDisableTempl" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction"	method="enableOrDisableTempl">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="getInspectTemplInfo" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction"			method="getInspectTemplInfo">
+			<result name="success" type="json">
+				<param name="root">inspectTempl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="hasDeptInspect" class="com.huge.ihos.kaohe.webapp.action.InspectTemplPagedAction"			method="hasDeptInspect">
+		</action>
+
+	</package>
+
+</struts>

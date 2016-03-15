@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="generalHoliday" extends="default"	namespace="/">
+
+		<action name="generalHolidayList" class="com.huge.ihos.kq.generalHoliday.webapp.action.GeneralHolidayPagedAction">
+			<result name="input">/WEB-INF/pages/kq/generalHoliday/generalHolidayList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/generalHoliday/generalHolidayList.jsp</result>
+		</action>
+		<action name="generalHolidayGridList" class="com.huge.ihos.kq.generalHoliday.webapp.action.GeneralHolidayPagedAction"		method="generalHolidayGridList">
+			<result type="json">
+				<param name="includeProperties">generalHolidays.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="generalHolidayGridEdit" class="com.huge.ihos.kq.generalHoliday.webapp.action.GeneralHolidayPagedAction"			method="generalHolidayGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGeneralHoliday" class="com.huge.ihos.kq.generalHoliday.webapp.action.GeneralHolidayPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kq/generalHoliday/generalHolidayForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/generalHoliday/generalHolidayForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGeneralHoliday" class="com.huge.ihos.kq.generalHoliday.webapp.action.GeneralHolidayPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

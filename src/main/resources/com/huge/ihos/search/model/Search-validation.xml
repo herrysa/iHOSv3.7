@@ -1,0 +1,82 @@
+    <!DOCTYPE validators PUBLIC
+    "-//Apache Struts//XWork Validator 1.0.3//EN"
+    "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+
+	<field name="search.searchId">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+		<field-validator type="regex">
+			<param name="trim">true</param>
+			<param name="expression">([0-9]|[a-z]|[A-Z]){0,30}</param>
+			<message>主键只能为数字或字母,长度不超过30个字符</message>
+		</field-validator>
+	</field>
+    <field name="search.searchName">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="search.myKey">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="search.title">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="search.pageSize">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="regex">
+        <param name="expression">([0-9]){0,3}</param>
+        <message>只能为整数</message>
+        </field-validator>
+    </field>
+
+
+    <field name="search.mysql">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+
+<!--     <field name="search.ds">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="search.entityName">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="search.formAction">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="search.formName">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="search.groupBy">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+
+
+    <field name="search.orderBy">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field> -->
+
+
+</validators> 

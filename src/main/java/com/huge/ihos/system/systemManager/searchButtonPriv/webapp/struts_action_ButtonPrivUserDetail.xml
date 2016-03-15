@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="buttonPrivUserDetail" extends="default"	namespace="/">
+
+		<action name="buttonPrivUserDetailList" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivUserDetailPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPrivUserDetail/searchButtonPrivUserDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPrivUserDetail/searchButtonPrivUserDetailList.jsp</result>
+		</action>
+		<action name="buttonPrivUserDetailGridList" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivUserDetailPagedAction"		method="buttonPrivUserDetailGridList">
+			<result type="json">
+				<param name="includeProperties">buttonPrivUserDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="buttonPrivUserDetailGridEdit" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivUserDetailPagedAction"			method="buttonPrivUserDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editButtonPrivUserDetail" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivUserDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPrivUserDetail/searchButtonPrivUserDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPrivUserDetail/searchButtonPrivUserDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveButtonPrivUserDetail" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivUserDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

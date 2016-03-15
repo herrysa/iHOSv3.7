@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kqMonthData" extends="default"	namespace="/">
+
+		<action name="kqMonthDataList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction" method="kqMonthDataList">
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataList.jsp</result>
+		</action>
+		<action name="kqMonthDataGridList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"		method="kqMonthDataGridList">
+			<result type="json">
+				<param name="includeProperties">kqMonthDataSets.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqMonthDataGridEdit" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="kqMonthDataGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKqMonthData" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKqMonthData" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 初始化 -->
+		<action name="refreshKqMonthData" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="refreshKqMonthData">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="summaryKqDayData" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="summaryKqDayData">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="kqMonthDataPersonAdd" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction">
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataPersonForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataPersonForm.jsp</result>
+		</action>
+		<action name="kqMonthDataPersonGridList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="kqMonthDataPersonGridList">
+			<result name="success" type="json">
+                <param name="includeProperties">monthPersons.*\.personId,monthPersons.*\.name,
+                monthPersons.*\.personCode,monthPersons.*\.department.name,monthPersons.*\.kqType,
+                monthPersons.*\.sex,monthPersons.*\.status,monthPersons.*\.postType,
+                monthPersons.*\.jobTitle,monthPersons.*\.ratio,monthPersons.*\.idNumber,
+                monthPersons.*\.disable,monthPersons.*\.jjmark,</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getMDKqItems" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="getMDKqItems">
+			<result name="success" type="json">
+                <param name="includeProperties">kqItems.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 日上报表列 -->
+		<action name="kqMonthDataColumnInfo" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"			method="kqMonthDataColumnInfo">
+			<result name="success" type="json">
+                <param name="includeProperties">kqUpItems.*,curCheckStatus,curDayDataCheckStatus,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="batchEditKqMonthData" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction">
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataBatchEdit.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqMonthData/kqMonthDataBatchEdit.jsp</result>
+		</action>
+		<!-- 人事部门审核 -->
+		<action name="kqDeptCheckList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction" method="kqDeptCheckList">
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqDeptCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqDeptCheckList.jsp</result>
+		</action>
+		<action name="kqDeptCheckGridList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction"		method="kqDeptCheckGridList">
+			<result type="json">
+				<param name="includeProperties">kqDeptChecks.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqDeptChecked" class="com.huge.ihos.kq.kqUpData.webapp.action.KqMonthDataPagedAction" method="kqDeptChecked">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

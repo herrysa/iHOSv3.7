@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="funcDefine" extends="default"	namespace="/">
+
+		<action name="funcDefineList" class="com.huge.ihos.system.configuration.funcDefine.webapp.action.FuncDefinePagedAction">
+			<result name="input">/WEB-INF/pages/system/configuration/funcDefine/funcDefineList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/funcDefine/funcDefineList.jsp</result>
+		</action>
+		<action name="funcDefineGridList" class="com.huge.ihos.system.configuration.funcDefine.webapp.action.FuncDefinePagedAction"		method="funcDefineGridList">
+			<result type="json">
+				<param name="includeProperties">funcDefines.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="funcDefineGridEdit" class="com.huge.ihos.system.configuration.funcDefine.webapp.action.FuncDefinePagedAction"			method="funcDefineGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editFuncDefine" class="com.huge.ihos.system.configuration.funcDefine.webapp.action.FuncDefinePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/funcDefine/funcDefineForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/funcDefine/funcDefineForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveFuncDefine" class="com.huge.ihos.system.configuration.funcDefine.webapp.action.FuncDefinePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		
+		<action name="checkFuncSame" class="com.huge.ihos.system.configuration.funcDefine.webapp.action.FuncDefinePagedAction"           method="checkFuncSame">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

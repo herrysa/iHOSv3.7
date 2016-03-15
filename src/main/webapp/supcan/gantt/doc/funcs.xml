@@ -1,0 +1,184 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="时间刻度">
+	<function name="GetSupportUnits">
+		<usage>取得所支持的日历单位</usage>
+		<return>串 "year,halfyear,season,month,bme,week,day,hour", 注："bme" 表示 "旬"</return>
+	</function>
+	<function name="GetSupportDateFormats">
+		<usage>取得所支持的日期格式</usage>
+		<return>如下串: &lt;pre&gt;
+%x - 日期的普遍写法, 如 2014/03/22
+%xd - 日期的普遍写法, 如 2014.03.22
+%xm - 日期的普遍写法, 如 2014-03-22
+%xE - 日期的普遍写法(英文), 如 03/22/2014
+%c - 日期和时间, 如 2014/03/22 19:30:00
+%cd - 日期和时间, 如 2014.03.22 19:30:00
+%cm - 日期和时间, 如 2014-03-22 19:30:00
+%cE - 日期和时间(英文), 如 03/22/2014 07:00:00 AM
+%X - 时间, 如 19:30:00
+%XE - 时间(英文), 如 07:00:00 AM
+%Y - 4位数的年, 如 2014
+%y - 2位数的年, 如 14
+%k - 半年，1至2)
+%kk - 半年, 如 上半年, 下半年
+%kkE - 半年(英语), 如 1st, 2nd
+%q - 季度, 1至4
+%Q - 季度, 为一,二,三,四
+%QE - 季度(英文), 为1st,2nd,3rd,4th
+%m - 月份, 1至12
+%mm - 月份, 01至12
+%B - 月份的全称, 如 三月
+%BE - 月份的全称(英文), 如 March
+%b - 月份的简称, 如 一, 二
+%bE - 月份的简称(英文), 如 Mar
+%bme - 旬, 为1,2,3
+%bmed - 旬, 为1, 11, 21
+%BME - 旬, 为上旬, 中旬, 下旬
+%BMEE - 旬, 为B, M, E
+%A - 星期的全称, 如星期六
+%AE - 星期的全称(英文), 如 Saturday
+%a - 星期的缩写(一, 二...日)
+%aE - 星期的缩写(英文), 如 Sat
+%w - 数字表示的星期, 1至7 (1是星期天)
+%d - 月中的某日, 1至31
+%dd - 月中的某日, 01至31
+%du - 离项目开始的天数, 1, 2, 3...
+%dU - 离项目结束的天数, 90, 89, 88...
+%H - 小时(24小时制，00至23)
+%I - 小时(12小时制，01至12)
+%M - 分钟(00至59)
+%S - 秒钟(00至59)
+%j - 相对于1月1日的日期差(001至366)
+%p - 上午/下午
+%pE - 上午/下午(英文), 如AM,PM
+%Z - 和GMT(或UTC)时区的时差&lt;/pre&gt;</return>
+	</function>
+	<function name="GetGanttInfo">
+		<usage>取得属性</usage>
+		<para>属性名，有:&lt;br&gt;
+&lt;b&gt;FirstDayOfWeek&lt;/b&gt; - 每周的第一天, 将返回 1 至 7 的数字，默认值是 2, 注意：1 表示星期天&lt;br&gt;
+&lt;b&gt;HorzGridRows&lt;/b&gt; - 每隔多少行画一条水平细线, 默认是 4&lt;br&gt;
+&lt;b&gt;HorzGridColor&lt;/b&gt; - 细线的颜色, 默认是 #ededed&lt;br&gt;
+&lt;b&gt;TimeScaleDragMode&lt;/b&gt; - 刻度区域的鼠标拖拽方式, 有 changeUnit/changeCount/normal/none, 分别表示改变单位/改变数量/改变宽度/不支持拖拽 , 默认是normal&lt;br&gt;
+</para>
+		<return>和参数相关的内容</return>
+	</function>
+	<function name="SetGanttInfo">
+		<usage>设置属性</usage>
+		<para>属性名，请参见 GetGanttInfo</para>
+		<para>属性的值，请参见 GetGanttInfo</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+	<function name="GetSegs">
+		<usage>取得刻度的总 段(Segment) 数</usage>
+		<return>数字</return>
+	</function>
+	<function name="SetCurrentSeg">
+		<usage>切换当前 段(Segment) </usage>
+		<para>段的序号，从0开始计数</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+	<function name="GetCurrentSeg">
+		<usage>取得当前段(Segment)</usage>
+		<return>段的序号，从0开始计数</return>
+	</function>
+	<function name="DeleteSeg">
+		<usage>删除某个段</usage>
+		<para>段的序号</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+	<function name="GetTiers">
+		<usage>取得总 层(Tier) 数</usage>
+		<para>可选，段的序号，默认(即空串)是当前段</para>
+		<return>数字</return>
+	</function>
+	<function name="DeleteTier">
+		<usage>删除当前段下的某个层</usage>
+		<para>层的序号</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+	<function name="GetTierInfo">
+		<usage>取得当前段下某个层的属性</usage>
+		<para>属性名，有unit/count/height/format/tip/align/cellwidth, 含义请参见XML文档规范 TimeScale \ Segments \ Segment \ Tier 下的内容</para>
+		<para>可选，层的序号，如果忽略则表示最底层</para>
+		<return>属性对应的值</return>
+	</function>
+	<function name="SetTierInfo">
+		<usage>设置当前段下某个层的属性</usage>
+		<para>属性名，见 GetTierInfo 函数</para>
+		<para>值</para>
+		<para>可选，层的序号，如果忽略则表示最底层</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+</category>
+
+<category name="横道">
+	<function name="GetGanttBarInfo">
+		<usage>取得横道属性</usage>
+		<para>属性名，有 hasmid/size/offset/brush/color .... 等近20种，请参见XML文档规范 GanttBar \ Styles \ Style 下的内容</para>
+		<memo>另外的一个特例：id 号为空，属性名为 dragAble，表示取 dragAble 的值</memo>
+		<return>和参数相关的内容</return>
+	</function>
+	<function name="SetGanttBarInfo">
+		<usage>设置横道属性</usage>
+		<para>属性名，请参见 GetGanttBarInfo</para>
+		<para>属性的值，请参见 GetGanttBarInfo</para>
+		<memo>另外的一个特例：id 号为空，属性名为 dragAble，表示设置 dragAble 的值</memo>
+		<return>1/0 - 成功/失败</return>
+	</function>
+
+</category>
+
+<category name="双代号网络图">
+	<function name="GetADInfo">
+		<usage>取得网络图属性</usage>
+		<para>属性名，请参见XML文档规范 AD 的内容</para>
+		<return>和参数相关的内容</return>
+	</function>
+	<function name="SetADInfo">
+		<usage>设置网络图属性</usage>
+		<para>属性名，请参见 GetADInfo</para>
+		<para>属性的值，请参见 GetADInfo</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+</category>
+<category name="单代号网络图">
+	<function name="GetPDInfo">
+		<usage>取得网络图属性</usage>
+		<para>属性名，请参见XML文档规范 PD 的内容</para>
+		<return>和参数相关的内容</return>
+	</function>
+	<function name="SetPDInfo">
+		<usage>设置网络图属性</usage>
+		<para>属性名，请参见 GetPDInfo</para>
+		<para>属性的值，请参见 GetPDInfo</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+</category>
+
+
+<category name="其它">
+	<function name="LoadLine">
+		<usage>加载关系线数据</usage>
+		<para>URL或XML大串</para>
+		<memo>XML格式请参见文档《XML数据规范》</memo>
+		<return>1/0 - 成功/失败</return>
+	</function>
+	<function name="BuildDiagram">
+		<usage>创建网络图</usage>
+		<memo>执行了 Load、LoadLine 后，必须执行 BuildDiagram 才能显示出几种图</memo>
+		<return>无</return>
+	</function>
+
+	<function name="LoadThird">
+		<usage>加载第三方的数据</usage>
+		<para>格式为Specification=[?]&lt;br&gt;
+&lt;b&gt;Specification&lt;/b&gt; - 第三方种类，固定的串，目前是 “MSProject.XML”, 今后根据支持范围扩展会逐步增加；&lt;br&gt;
+</para>
+		<para>URL，或全路径名，如果是XML/JSON串，则可以是XML/JSON大串</para>
+		<memo>LoadThird 后不必再执行 BuildDiagram</memo>
+		<return>1/0 - 成功/失败</return>
+	</function>
+</category>
+</functions>

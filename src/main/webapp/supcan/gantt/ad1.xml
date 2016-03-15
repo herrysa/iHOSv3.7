@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="gbk"?>
+<!-- By Supcan TreeList  -->
+<TreeList>
+<Properties Title="项目任务表" isShowTreeLine="0" isShowGridTreeNode="1"
+	TreeNodeButton="../treelist/lit.zip#tree1.bmp, ../treelist/lit.zip#tree2.bmp"
+	isTree="true" treeformat="byPid" rowHeight="30"></Properties>
+<Fonts>
+	<Font/>
+	<Font faceName="Consolas"/>
+</Fonts>
+<Cols>
+	<Col name="pid" isHide="absHide">PID</Col>
+	<Col name="id" isHide="1" width="150">代码</Col>
+	<Col name="name" width="120" displayMask="=data+ ' ('+id+')'">任务名称</Col>
+	<Col name="ES" width="80" datatype="date">开始日期</Col>
+	<Col name="EF" width="80" datatype="date">结束日期</Col>
+	<Col name="TID" width="120">紧后</Col>
+	<Col name="TF" width="60">总浮时</Col>
+</Cols>
+<Gantt displayAs="AD" HorzGridRows="4" horzGridColor="#ededed">
+	<TimeScale dragMode="normal">
+		<Segments>
+			<Segment from="2014.1.1" to="2014.12.31">
+				<Tier height="20" unit="month" count="1" align="left" fontindex="0" />
+				<Tier height="20" unit="day" count="1" format="%d" cellWidth="22" cellMinWidth="5" />
+			</Segment>
+		</Segments>
+	</TimeScale>
+	<Fields>
+		<SF>ES, EF</SF>
+		<SF visible="false">LS, LF</SF>
+		<SF visible="false">AS, AF</SF>
+		<Tight>TID</Tight>
+		<TF>TF</TF>
+	</Fields>
+	<AD wavesize="6">
+	</AD>
+</Gantt>
+</TreeList>

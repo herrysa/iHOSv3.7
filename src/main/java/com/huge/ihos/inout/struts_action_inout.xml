@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="inout" extends="default" namespace="/">
+
+
+
+		<!--CostUseAction-START -->
+
+		<!-- <action name="costUses" class="com.huge.ihos.inout.webapp.action.CostUseAction" 
+			method="list"> <result>/WEB-INF/pages/costUseList.jsp</result> </action> 
+			<action name="editCostUse" class="com.huge.ihos.inout.webapp.action.CostUseAction" 
+			method="edit"> <result>/WEB-INF/pages/costUseForm.jsp</result> <result name="error">/WEB-INF/pages/costUseList.jsp</result> 
+			</action> <action name="saveCostUse" class="com.huge.ihos.inout.webapp.action.CostUseAction" 
+			method="save"> <result name="input">/WEB-INF/pages/costUseForm.jsp</result> 
+			<result name="cancel" type="redirectAction">costUses</result> <result name="delete" 
+			type="redirectAction">costUses</result> <result name="success" type="redirectAction">costUses</result> 
+			</action> -->
+
+
+
+		<action name="costUseList" class="com.huge.ihos.inout.webapp.action.CostUseAction">
+			<result name="input">/WEB-INF/pages/inout/costUseList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/costUseList.jsp</result>
+		</action>
+
+		<action name="costUseGridList" class="com.huge.ihos.inout.webapp.action.CostUseAction"
+			method="costUseGridList">
+			<result type="json">
+				<param name="includeProperties">costUses.*,records,total,page,gridOperationMessage</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="costUseGridEdit" class="com.huge.ihos.inout.webapp.action.CostUseAction"
+			method="costUseGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editCostUse" class="com.huge.ihos.inout.webapp.action.CostUseAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/inout/costUseForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/costUseForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveCostUse" class="com.huge.ihos.inout.webapp.action.CostUseAction"
+			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="allCostUseSelect" class="com.huge.ihos.inout.webapp.action.CostUseAction"
+			method="allCostUseListSelect">
+			<result type="json">
+				<param name="includeProperties">allCostUseList.*</param>
+			</result>
+		</action>
+
+		<!--CostUseAction-END -->
+
+		<!--PayinItemAction-START -->
+
+		<!-- <action name="payinItems" class="com.huge.ihos.inout.webapp.action.PayinItemAction" 
+			method="list"> <result>/WEB-INF/pages/payinItemList.jsp</result> </action> 
+			<action name="editPayinItem" class="com.huge.ihos.inout.webapp.action.PayinItemAction" 
+			method="edit"> <result>/WEB-INF/pages/payinItemForm.jsp</result> <result 
+			name="error">/WEB-INF/pages/payinItemList.jsp</result> </action> <action 
+			name="savePayinItem" class="com.huge.ihos.inout.webapp.action.PayinItemAction" 
+			method="save"> <result name="input">/WEB-INF/pages/payinItemForm.jsp</result> 
+			<result name="cancel" type="redirectAction">payinItems</result> <result name="delete" 
+			type="redirectAction">payinItems</result> <result name="success" type="redirectAction">payinItems</result> 
+			</action> -->
+
+
+
+		<action name="payinItemList">
+			<result name="input">/WEB-INF/pages/inout/payinItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/payinItemList.jsp</result>
+		</action>
+
+		<action name="payinItemGridList"
+			class="com.huge.ihos.inout.webapp.action.PayinItemAction" method="payinItemGridList">
+			<result type="json">
+				<param name="includeProperties">payinItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="payinItemGridEdit"
+			class="com.huge.ihos.inout.webapp.action.PayinItemAction" method="payinItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPayinItem"
+			class="com.huge.ihos.inout.webapp.action.PayinItemAction" method="edit">
+			<result name="success">/WEB-INF/pages/inout/payinItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/payinItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePayinItem"
+			class="com.huge.ihos.inout.webapp.action.PayinItemAction" method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+
+		<!--PayinItemAction-END -->
+
+
+
+
+
+		<!--ChargeTypeAction-START -->
+
+		<!-- <action name="chargeTypes" class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" 
+			method="list"> <result>/WEB-INF/pages/chargeTypeList.jsp</result> </action> 
+			<action name="editChargeType" class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" 
+			method="edit"> <result>/WEB-INF/pages/chargeTypeForm.jsp</result> <result 
+			name="error">/WEB-INF/pages/chargeTypeList.jsp</result> </action> <action 
+			name="saveChargeType" class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" 
+			method="save"> <result name="input">/WEB-INF/pages/chargeTypeForm.jsp</result> 
+			<result name="cancel" type="redirectAction">chargeTypes</result> <result 
+			name="delete" type="redirectAction">chargeTypes</result> <result name="success" 
+			type="redirectAction">chargeTypes</result> </action> -->
+
+
+
+		<action name="chargeTypeList" class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" >
+			<result name="input">/WEB-INF/pages/inout/chargeTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/chargeTypeList.jsp</result>
+		</action>
+
+		<action name="chargeTypeGridList"
+			class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" method="chargeTypeGridList">
+			<result type="json">
+				<param name="includeProperties">chargeTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="chargeTypeGridEdit"
+			class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" method="chargeTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editChargeType"
+			class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" method="edit">
+			<result name="success">/WEB-INF/pages/inout/chargeTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/chargeTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveChargeType"
+			class="com.huge.ihos.inout.webapp.action.ChargeTypeAction" method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<action name="allPayinItemList"
+			class="com.huge.ihos.inout.webapp.action.PayinItemAction" method="allPayinItemListSelect">
+			<result type="json">
+				<param name="includeProperties">gridOperationMessage,payinItemSelectList.*</param>
+			</result>
+		</action>
+		<action name="allChargeTypeListSelect"
+			class="com.huge.ihos.inout.webapp.action.ChargeTypeSelectListAction"
+			method="allChargeTypeSelectList">
+			<result type="json">
+				<param name="includeProperties">allChargeTypeList.*</param>
+			</result>
+		</action>
+		<!--ChargeTypeAction-END -->
+
+
+
+		<!--CostItemAction-START -->
+
+		<!-- <action name="costItems" class="com.huge.ihos.inout.webapp.action.CostItemAction" 
+			method="list"> <result>/WEB-INF/pages/costItemList.jsp</result> </action> 
+			<action name="editCostItem" class="com.huge.ihos.inout.webapp.action.CostItemAction" 
+			method="edit"> <result>/WEB-INF/pages/costItemForm.jsp</result> <result name="error">/WEB-INF/pages/costItemList.jsp</result> 
+			</action> <action name="saveCostItem" class="com.huge.ihos.inout.webapp.action.CostItemAction" 
+			method="save"> <result name="input">/WEB-INF/pages/costItemForm.jsp</result> 
+			<result name="cancel" type="redirectAction">costItems</result> <result name="delete" 
+			type="redirectAction">costItems</result> <result name="success" type="redirectAction">costItems</result> 
+			</action> -->
+
+
+
+		<action name="costItemList" class="com.huge.ihos.inout.webapp.action.CostItemAction">
+			<result name="input">/WEB-INF/pages/inout/costItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/costItemList.jsp</result>
+		</action>
+
+		<action name="costItemGridList" class="com.huge.ihos.inout.webapp.action.CostItemAction"
+			method="costItemGridList">
+			<result type="json">
+				<param name="includeProperties">costItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="costItemGridEdit" class="com.huge.ihos.inout.webapp.action.CostItemAction"
+			method="costItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editCostItem" class="com.huge.ihos.inout.webapp.action.CostItemAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/inout/costItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/costItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveCostItem" class="com.huge.ihos.inout.webapp.action.CostItemAction"
+			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="allCostItemSelect"
+			class="com.huge.ihos.inout.webapp.action.CostItemSelectListAction"
+			method="allCostItemListSelect">
+			<result type="json">
+				<param name="includeProperties">allCostItemList.*</param>
+			</result>
+		</action>
+
+		<!--CostItemAction-END -->
+
+		<!--ChargeItemAction-START -->
+
+		<!-- <action name="chargeItems" class="com.huge.ihos.inout.webapp.action.ChargeItemAction" 
+			method="list"> <result>/WEB-INF/pages/chargeItemList.jsp</result> </action> 
+			<action name="editChargeItem" class="com.huge.ihos.inout.webapp.action.ChargeItemAction" 
+			method="edit"> <result>/WEB-INF/pages/chargeItemForm.jsp</result> <result 
+			name="error">/WEB-INF/pages/chargeItemList.jsp</result> </action> <action 
+			name="saveChargeItem" class="com.huge.ihos.inout.webapp.action.ChargeItemAction" 
+			method="save"> <result name="input">/WEB-INF/pages/chargeItemForm.jsp</result> 
+			<result name="cancel" type="redirectAction">chargeItems</result> <result 
+			name="delete" type="redirectAction">chargeItems</result> <result name="success" 
+			type="redirectAction">chargeItems</result> </action> -->
+
+
+
+		<action name="chargeItemList">
+			<result name="input">/WEB-INF/pages/inout/chargeItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/chargeItemList.jsp</result>
+		</action>
+
+		<action name="chargeItemGridList"
+			class="com.huge.ihos.inout.webapp.action.ChargeItemAction" method="chargeItemGridList">
+			<result type="json">
+				<param name="includeProperties">chargeItems.*,records,total,page</param>
+				<param name="excludeProperties">chargeItems.*\.chargeType.parent,chargeItems.*\.chargeType.payinItem</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="chargeItemGridEdit"
+			class="com.huge.ihos.inout.webapp.action.ChargeItemAction" method="chargeItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editChargeItem"
+			class="com.huge.ihos.inout.webapp.action.ChargeItemAction" method="edit">
+			<result name="success">/WEB-INF/pages/inout/chargeItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/chargeItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveChargeItem"
+			class="com.huge.ihos.inout.webapp.action.ChargeItemAction" method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+
+		<!--ChargeItemAction-END -->
+
+		<!--SourcepayinAction-START -->
+
+		<!-- <action name="sourcepayins" class="com.huge.ihos.inout.webapp.action.SourcepayinAction" 
+			method="list"> <result>/WEB-INF/pages/sourcepayinList.jsp</result> </action> 
+			<action name="editSourcepayin" class="com.huge.ihos.inout.webapp.action.SourcepayinAction" 
+			method="edit"> <result>/WEB-INF/pages/sourcepayinForm.jsp</result> <result 
+			name="error">/WEB-INF/pages/sourcepayinList.jsp</result> </action> <action 
+			name="saveSourcepayin" class="com.huge.ihos.inout.webapp.action.SourcepayinAction" 
+			method="save"> <result name="input">/WEB-INF/pages/sourcepayinForm.jsp</result> 
+			<result name="cancel" type="redirectAction">sourcepayins</result> <result 
+			name="delete" type="redirectAction">sourcepayins</result> <result name="success" 
+			type="redirectAction">sourcepayins</result> </action> -->
+
+
+		<action name="sourcepayinList" class="com.huge.ihos.inout.webapp.action.SourcepayinAction" method="sourcepayinList" >
+			<result name="input">/WEB-INF/pages/inout/sourcepayinList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/sourcepayinList.jsp</result>
+		</action>
+
+		<action name="sourcepayinGridList"
+			class="com.huge.ihos.inout.webapp.action.SourcepayinAction" method="sourcepayinGridList">
+			<result type="json">
+				<param name="includeProperties">sourcepayins.*,records,total,page,sumData,userdata.*</param>
+				<!-- <param name="excludeProperties">sourcepayins.*\.hlDept.parentDept,sourcepayins.*\.zxDept.parentDept,sourcepayins.*\.kdDept.parentDept,sourcepayins.*\.jzDept.parentDept</param> -->
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="sourcepayinGridEdit"
+			class="com.huge.ihos.inout.webapp.action.SourcepayinAction" method="sourcepayinGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSourcepayin"
+			class="com.huge.ihos.inout.webapp.action.SourcepayinAction" method="edit">
+			<result name="success">/WEB-INF/pages/inout/sourcepayinForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/sourcepayinForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSourcepayin"
+			class="com.huge.ihos.inout.webapp.action.SourcepayinAction" method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,sourcePayinId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+			<!-- <result name="continueNew" type="redirectAction">editSourcepayin?popup=true
+			</result> -->
+		</action>
+		<action name="allChargeItemListSelect"
+			class="com.huge.ihos.inout.webapp.action.SourcepayinAction" method="chargeItemByTypeSelect">
+			<result type="json">
+				<param name="includeProperties">allChargeItemByTypeList.*</param>
+			</result>
+		</action>
+
+		<!--SourcepayinAction-END -->
+
+		<!--SourcecostAction-START -->
+
+		<!-- <action name="sourcecosts" class="com.huge.ihos.inout.webapp.action.SourcecostAction" 
+			method="list"> <result>/WEB-INF/pages/sourcecostList.jsp</result> </action> 
+			<action name="editSourcecost" class="com.huge.ihos.inout.webapp.action.SourcecostAction" 
+			method="edit"> <result>/WEB-INF/pages/sourcecostForm.jsp</result> <result 
+			name="error">/WEB-INF/pages/sourcecostList.jsp</result> </action> <action 
+			name="saveSourcecost" class="com.huge.ihos.inout.webapp.action.SourcecostAction" 
+			method="save"> <result name="input">/WEB-INF/pages/sourcecostForm.jsp</result> 
+			<result name="cancel" type="redirectAction">sourcecosts</result> <result 
+			name="delete" type="redirectAction">sourcecosts</result> <result name="success" 
+			type="redirectAction">sourcecosts</result> </action> -->
+
+
+
+		<action name="sourcecostList" class="com.huge.ihos.inout.webapp.action.SourcecostAction" method="sourcecostList" >
+			<result name="input">/WEB-INF/pages/inout/sourcecostList.jsp</result>
+			<result name="success">/WEB-INF/pages/inout/sourcecostList.jsp</result>
+		</action>
+
+		<action name="sourcecostGridList"
+			class="com.huge.ihos.inout.webapp.action.SourcecostAction" method="sourcecostGridList">
+			<result type="json">
+				<param name="includeProperties">sourcecosts.*,records,total,page,userdata.*</param>
+				<param name="excludeProperties">sourcecosts.*\.deptartment.parentDept,sourcecosts.*\.costItemId.parent,sourcecosts.*\.operator.department</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="sourcecostGridEdit"
+			class="com.huge.ihos.inout.webapp.action.SourcecostAction" method="sourcecostGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSourcecost"
+			class="com.huge.ihos.inout.webapp.action.SourcecostAction" method="edit">
+			<result name="success">/WEB-INF/pages/inout/sourcecostForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inout/sourcecostForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSourcecost"
+			class="com.huge.ihos.inout.webapp.action.SourcecostAction" method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+			<result name="continueNew" type="redirectAction">editSourcecost?popup=true
+			</result>
+			<result name="input">/WEB-INF/pages/inout/sourcecostForm.jsp</result>
+			<result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp
+			</result>
+		</action>
+
+
+		<!--SourcecostAction-END -->
+	</package>
+
+</struts>

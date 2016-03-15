@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="recruitPlan" extends="default"	namespace="/">
+
+		<action name="recruitPlanList" class="com.huge.ihos.hr.recruitPlan.webapp.action.RecruitPlanPagedAction">
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitPlan/recruitPlanList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitPlan/recruitPlanList.jsp</result>
+		</action>
+		<action name="recruitPlanGridList" class="com.huge.ihos.hr.recruitPlan.webapp.action.RecruitPlanPagedAction"		method="recruitPlanGridList">
+			<result type="json">
+				<param name="includeProperties">recruitPlans.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="recruitPlanGridEdit" class="com.huge.ihos.hr.recruitPlan.webapp.action.RecruitPlanPagedAction"			method="recruitPlanGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editRecruitPlan" class="com.huge.ihos.hr.recruitPlan.webapp.action.RecruitPlanPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitPlan/recruitPlanForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitPlan/recruitPlanForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveRecruitPlan" class="com.huge.ihos.hr.recruitPlan.webapp.action.RecruitPlanPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 招聘岗位 -->
+		<action name="recruitPlanReleasedList" class="com.huge.ihos.hr.recruitPlan.webapp.action.RecruitPlanPagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitPlan/recruitPlanReleasedList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitPlan/recruitPlanReleasedList.jsp</result>
+		</action>
+		<!-- 发布检验 -->
+		<action name="recruitPlanPublishCheck" class="com.huge.ihos.hr.recruitPlan.webapp.action.RecruitPlanPagedAction"			method="recruitPlanPublishCheck">
+			<result name="success" type="json">
+                <param name="includeProperties">checkResult</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

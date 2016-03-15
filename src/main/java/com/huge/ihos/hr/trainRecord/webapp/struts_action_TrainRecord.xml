@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="trainRecord" extends="default"	namespace="/">
+
+		<action name="trainRecordList" class="com.huge.ihos.hr.trainRecord.webapp.action.TrainRecordPagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainRecord/trainRecordList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainRecord/trainRecordList.jsp</result>
+		</action>
+		<action name="trainRecordGridList" class="com.huge.ihos.hr.trainRecord.webapp.action.TrainRecordPagedAction"		method="trainRecordGridList">
+			<result type="json">
+				<param name="includeProperties">trainRecords.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="trainRecordGridEdit" class="com.huge.ihos.hr.trainRecord.webapp.action.TrainRecordPagedAction"			method="trainRecordGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTrainRecord" class="com.huge.ihos.hr.trainRecord.webapp.action.TrainRecordPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/train/trainRecord/trainRecordForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainRecord/trainRecordForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTrainRecord" class="com.huge.ihos.hr.trainRecord.webapp.action.TrainRecordPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

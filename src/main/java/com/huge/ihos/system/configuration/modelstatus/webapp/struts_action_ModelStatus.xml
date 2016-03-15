@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="modelStatus" extends="default"	namespace="/">
+
+		<action name="modelStatusList" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction">
+			<result name="input">/WEB-INF/pages/system/configuration/modelStatus/modelStatusList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/modelStatusList.jsp</result>
+		</action>
+		<action name="modelStatusGridList" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"		method="modelStatusGridList">
+			<result type="json">
+				<param name="includeProperties">modelStatuss.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="modelStatusGridEdit" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"			method="modelStatusGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editModelStatus" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/modelStatusForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/modelStatus/modelStatusForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveModelStatus" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="startPeriod" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="startPeriod">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="closePeriod" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="closePeriod">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,checkperiod,showPeriod,allClosed</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="antiPeriod" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="antiPeriod">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,checkperiod,showPeriod,antiPeriods.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getAllClosingPeriods" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="getAllClosingPeriods">
+			<result name="success" type="json">
+                <param name="includeProperties">closingPeriods.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getAllAntiPeriods" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="getAllAntiPeriods">
+			<result name="success" type="json">
+                <param name="includeProperties">antiPeriods.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="initPeriodTypeData" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="initPeriodTypeData">
+			<result name="success" type="json">
+                <param name="includeProperties">currentYear,monthList.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="checkPeriodTypeIsStarted" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="checkPeriodTypeIsStarted">
+			<result name="success" type="json">
+                <param name="includeProperties">hasInitialized.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getModelStatusGeneralData" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"	method="getModelStatusGeneralData">
+			<result name="success" type="json">
+                <param name="includeProperties">generalDatas.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="modelStatus" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction" method="modelStatusLoad">
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/modelStatus.jsp</result>
+		</action>
+		<!-- 概况 -->
+		<action name="modelStatusGeneral" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction">
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/modelStatusGeneral.jsp</result>
+		</action>
+		<!-- 启用 -->
+		<action name="modelStatusInit" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction" method="modelStatusInit">
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/modelStatusInit.jsp</result>
+		</action>
+		<!-- 结账 -->
+		<action name="modelStatusCloseCount" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction">
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/modelStatusCloseCount.jsp</result>
+		</action>
+		<!-- 反结账 -->
+		<action name="modelStatusAntiCount" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction">
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/modelStatusAntiCount.jsp</result>
+		</action>
+		<!-- 子系统期间状态 -->
+		<action name="allSystemPeriodStatus" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction" method="allSystemPeriodStatus">
+			<result name="input">/WEB-INF/pages/system/configuration/modelStatus/allSystemPeriodStatus.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/modelStatus/allSystemPeriodStatus.jsp</result>
+		</action>
+		<action name="allSystemPeriodStatusGridList" class="com.huge.ihos.system.configuration.modelstatus.webapp.action.ModelStatusPagedAction"		method="allSystemPeriodStatusGridList">
+			<result type="json">
+				<param name="includeProperties">allSystemPeriodStatuss.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

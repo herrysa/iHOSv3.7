@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="operateLog" extends="default"	namespace="/">
+
+		<action name="operateLogList" class="com.huge.ihos.system.systemManager.operateLog.webapp.action.OperateLogPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/operateLog/operateLogList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/operateLog/operateLogList.jsp</result>
+		</action>
+		<action name="operateLogGridList" class="com.huge.ihos.system.systemManager.operateLog.webapp.action.OperateLogPagedAction"		method="operateLogGridList">
+			<result type="json">
+				<param name="includeProperties">operateLogs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="operateLogGridEdit" class="com.huge.ihos.system.systemManager.operateLog.webapp.action.OperateLogPagedAction"			method="operateLogGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editOperateLog" class="com.huge.ihos.system.systemManager.operateLog.webapp.action.OperateLogPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/operateLog/operateLogForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/operateLog/operateLogForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveOperateLog" class="com.huge.ihos.system.systemManager.operateLog.webapp.action.OperateLogPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="deleteAndBackupPage">
+			<result name="success">/WEB-INF/pages/system/systemManager/operateLog/deleteAndBackup.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/operateLog/deleteAndBackup.jsp</result>
+		</action>
+		
+		<action name="backupOperateLog" class="com.huge.ihos.system.systemManager.operateLog.webapp.action.OperateLogPagedAction" method="backupOperateLog">
+			<result name="success">/WEB-INF/pages/system/systemManager/operateLog/deleteAndBackup.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/operateLog/deleteAndBackup.jsp</result>
+		</action>
+		
+		<action name="deleteOperateLog" class="com.huge.ihos.system.systemManager.operateLog.webapp.action.OperateLogPagedAction" method="deleteOperateLog">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

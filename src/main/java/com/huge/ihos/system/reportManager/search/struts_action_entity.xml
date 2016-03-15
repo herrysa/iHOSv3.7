@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="searchentity" extends="default" namespace="/">
+		<action name="searchEntityList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/entityList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/entityList.jsp</result>
+		</action>
+
+		<action name="searchEntityGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityAction"
+			method="searchEntityGridList">
+			<result type="json">
+				<param name="includeProperties">searchEntities.*,records,total,page</param>
+
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="searchEntityGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityAction"
+			method="searchEntityGridEdit">
+		<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+       <!--  called when a record is clicked on the grid -->
+        <action name="editSearchEntity" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/entityForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/entityForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveSearchEntity" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        <action name="searchEntityClusterGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityClusterAction"
+			method="searchEntityClusterGridList">
+			<result type="json">
+				<param name="includeProperties">searchEntityClusters.*,records,total,page</param>
+
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+        
+        <action name="editSearchEntityCluster" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityClusterAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/entityClusterForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/entityClusterForm.jsp</result>
+ 	    </action>
+        
+        <action name="saveSearchEntityCluster" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityClusterAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        <action name="searchEntityClusterGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchEntityClusterAction"
+			method="searchEntityClusterGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

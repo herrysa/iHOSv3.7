@@ -1,0 +1,39 @@
+<html>
+<head><title>2.时间刻度: 多时间段</Title>
+<meta http-equiv="content-type" content="text/html; charset=GB2312">
+<link rel="stylesheet" href="../res/temp1.css" type="text/css">
+<script type='text/javascript' src='../binary/dynaloadNG.js?86'></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+  AF.func("Build", "g2.xml");
+  AF.func("Load", "g1_data.xml");
+  AF.func("Expand", "");
+  AF.func("BuildDiagram", "");
+ }
+</script>
+</head>
+
+<body topmargin=4 vlink=#0000ff link=#0000ff>
+<a href="index.htm">&lt;&lt;Back</a> 2.时间刻度: 多时间段
+<center>
+<br>
+<table width=97% cellpadding=4 cellspacing=0 border=1 align="center" style="border:#bbbbbb solid 1px">
+<tr>
+	<td>刻度单位：<select id="selUnit" onchange="OnChangeUnit( )"/></td>
+	<td>数量：<input id="inCount" size="1"/><input type="button" OnClick="OnChangeCount( )" value=" 更改 "/></td>
+	<td>层高：<input id="inHeight" size="4"/><input type="button" OnClick="OnChangeHeight( )" value=" 更改 "/></td>
+</tr>
+</table>
+<br>
+<div style="position:relative;width:97%">
+	<script>insertGantt('AF', '', '250px')</script>
+</div>
+<br>
+<br>
+查看<a href="g2.xml" target=_blank>XML</a>
+
+</center>
+</body>
+<script type='text/javascript' src='res/nstd.js'></script>
+</html>

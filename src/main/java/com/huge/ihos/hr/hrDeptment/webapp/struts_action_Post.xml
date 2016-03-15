@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="post" extends="default"	namespace="/">
+
+		<action name="postList" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction" method="postList">
+			<result name="input">/WEB-INF/pages/hr/post/postList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/post/postList.jsp</result>
+		</action>
+		<action name="postGridList" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"		method="postGridList">
+			<result type="json">
+				<param name="includeProperties">posts.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="postGridEdit" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"			method="postGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPost" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/post/postForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/post/postForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePost" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,post.*,deptId,deptName</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkPostName" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"	method="checkPostName">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkPostRemovable" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"	method="checkPostRemovable">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkPostIsUsing" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"	method="checkPostIsUsing">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getPostForRecruitNeed" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"	method="getPostForRecruitNeed">
+			<result name="success" type="json">
+                <param name="includeProperties">nodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 部门及子部门的岗位名称 -->
+		<action name="getPostForDept" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"	method="getPostForDept">
+			<result name="success" type="json">
+                <param name="includeProperties">nodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 单位下的岗位名称 -->
+		<action name="getPostForOrg" class="com.huge.ihos.hr.hrDeptment.webapp.action.PostPagedAction"	method="getPostForOrg">
+			<result name="success" type="json">
+                <param name="includeProperties">nodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

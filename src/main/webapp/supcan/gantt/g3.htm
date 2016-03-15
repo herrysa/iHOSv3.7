@@ -1,0 +1,81 @@
+<html>
+<head><title>3.横道图外观</Title>
+<meta http-equiv="content-type" content="text/html; charset=GB2312">
+<link rel="stylesheet" href="../res/temp1.css" type="text/css">
+<script type='text/javascript' src='../binary/dynaloadNG.js?86'></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+  AF.func("Build", "g3.xml");
+  AF.func("Load", "g1_data.xml");
+  AF.func("Expand", "");
+  AF.func("BuildDiagram", "");
+ }
+ function OnStyle(n)
+ {
+  if(n == 1) {
+   AF.func("SetGanttBarInfo", "st1\r\n FillColor \r\n #FF0000");
+  }
+  else if(n == 2) {
+   AF.func("SetGanttBarInfo", "st1\r\n StartFillColor \r\n #FFFFFF");
+   AF.func("SetGanttBarInfo", "st1\r\n EndFillColor \r\n #888888");
+  }
+  else if(n == 3) {
+   AF.func("SetGanttBarInfo", "st1\r\n StartSize \r\n 0.9");
+   AF.func("SetGanttBarInfo", "st1\r\n EndSize \r\n 0.4");
+  }
+  else if(n == 4) {
+   AF.func("SetGanttBarInfo", "st1\r\n StartSize \r\n 0.9");
+   AF.func("SetGanttBarInfo", "st1\r\n EndSize \r\n 0.9");
+   AF.func("SetGanttBarInfo", "st1\r\n StartShape \r\n TriangleDown");
+   AF.func("SetGanttBarInfo", "st1\r\n EndShape \r\n ArrowUp");
+  }
+  else if(n == 5) {
+   AF.func("SetGanttBarInfo", "st2\r\n Brush \r\n Solid");
+   AF.func("SetGanttBarInfo", "st2\r\n FillColor \r\n #FFFF00");
+  }
+  else if(n == 6) {
+   AF.func("SetGanttBarInfo", "st2\r\n Brush \r\n Chess");
+  }
+  else if(n == 7) {
+   AF.func("SetGanttBarInfo", "st2\r\n Color \r\n 0");
+   AF.func("SetGanttBarInfo", "st2\r\n Brush \r\n Vertical");
+  }
+  else if(n == 8) {
+   AF.func("SetGanttBarInfo", "st2\r\n StartShape \r\n flag");
+   AF.func("SetGanttBarInfo", "st2\r\n StartFillColor \r\n red");
+   AF.func("SetGanttBarInfo", "st2\r\n StartColor \r\n black");
+   AF.func("SetGanttBarInfo", "st2\r\n StartSize \r\n 0.99");
+  }
+ }
+</script>
+</head>
+
+<body topmargin=4 vlink=#0000ff link=#0000ff>
+<a href="index.htm">&lt;&lt;Back</a> 3.横道图外观
+<center>
+<br>
+<table width=97% cellpadding=4 cellspacing=0 border=1 align="center" style="border:#bbbbbb solid 1px">
+<tr>
+	<td><input type="button" OnClick="OnStyle(1 )" value=" 外观1 "/></td>
+	<td><input type="button" OnClick="OnStyle(2 )" value=" 外观2 "/></td>
+	<td><input type="button" OnClick="OnStyle(3 )" value=" 外观3 "/></td>
+	<td><input type="button" OnClick="OnStyle(4 )" value=" 外观4 "/></td>
+	<td><input type="button" OnClick="OnStyle(5 )" value=" 外观5 "/></td>
+	<td><input type="button" OnClick="OnStyle(6 )" value=" 外观6 "/></td>
+	<td><input type="button" OnClick="OnStyle(7 )" value=" 外观7 "/></td>
+	<td><input type="button" OnClick="OnStyle(8 )" value=" 外观8 "/></td>
+</tr>
+</table>
+<br>
+<div style="position:relative;width:97%">
+	<script>insertGantt('AF', '', '330px')</script>
+</div>
+<br>
+<br>
+查看<a href="g3.xml" target=_blank>XML</a>， 查看<a href="g1_data.xml" target=_blank>数据</a>
+
+</center>
+</body>
+<script type='text/javascript' src='res/nstd.js'></script>
+</html>

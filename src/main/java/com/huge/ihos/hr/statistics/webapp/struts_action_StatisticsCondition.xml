@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="statisticsCondition" extends="default"	namespace="/">
+
+		<action name="statisticsConditionList" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsConditionPagedAction">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsCondition/statisticsConditionList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsCondition/statisticsConditionList.jsp</result>
+		</action>
+		<action name="statisticsConditionGridList" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsConditionPagedAction"		method="statisticsConditionGridList">
+			<result type="json">
+				<param name="includeProperties">statisticsConditions.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="statisticsConditionGridEdit" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsConditionPagedAction"			method="statisticsConditionGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editStatisticsCondition" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsConditionPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsCondition/statisticsConditionForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsCondition/statisticsConditionForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveStatisticsCondition" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsConditionPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 统计条件名称唯一性检查 -->
+        <action name="checkStatisticsConditionName" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsConditionPagedAction"	method="checkStatisticsConditionName">
+  			 <result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                  <param name="noCache">true</param>
+     			<param name="ignoreHierarchy">false</param>
+            </result>
+ 		 </action>
+	</package>
+
+</struts>

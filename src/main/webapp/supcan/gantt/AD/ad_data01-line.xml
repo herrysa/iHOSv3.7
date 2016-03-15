@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<From>B</From>
+	<To>C</To>
+</record>
+<record>
+	<From>C</From>
+	<To>D</To>
+</record>
+<record>
+	<From>D</From>
+	<To>E</To>
+</record>
+</data>

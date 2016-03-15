@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="privilegeClass" extends="default"	namespace="/">
+
+		<action name="privilegeClassList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeClass/privilegeClassList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeClass/privilegeClassList.jsp</result>
+		</action>
+		<action name="dataPrivilegeClassOnMenu" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeClass/privilegeClassOnMenu.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeClass/privilegeClassOnMenu.jsp</result>
+		</action>
+		<action name="privilegeClassGridList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"		method="privilegeClassGridList">
+			<result type="json">
+				<param name="includeProperties">privilegeClasses.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="privilegeClassGridEdit" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"			method="privilegeClassGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPrivilegeClass" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeClass/privilegeClassForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeClass/privilegeClassForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePrivilegeClass" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,privilegeClassTreeNode.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<!-- <action name="dataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"			>
+			<result name="success">/WEB-INF/pages/privilegeClass/privilegeMain.jsp</result>
+			<result name="input">/WEB-INF/pages/privilegeClass/privilegeMain.jsp</result>
+		</action> -->
+
+		<action name="dataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction">
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeMain.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/privilegeMain.jsp</result>
+		</action>
+		
+		<action name="dealDataPrivilege" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"		method="dealDataPrivilege"	>
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilege.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilege.jsp</result>
+		</action>
+		
+		<action name="makeDataPrivilegeClassTree" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"			method="makeDataPrivilegeClassTree">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,dataPrivilegeClassNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="dataPrivilegeItemList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"		method="dataPrivilegeItemList">
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeItemList.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeItemList.jsp</result>
+		</action>
+		
+		<action name="dataPrivilegeItemGridList" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"		method="dataPrivilegeItemGridList">
+			<result type="json">
+				<param name="includeProperties">dataPrivilegeItems.*,records,total,page,userdata.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="dataPrivilegeItemCard" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"		method="dataPrivilegeItemCard">
+			<result name="success">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeItemCard.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/dataPrivilege/dataPrivilegeItemCard.jsp</result>
+		</action>
+		<action name="makePrivilegeClassTree" class="com.huge.ihos.system.systemManager.dataprivilege.webapp.action.PrivilegeClassPagedAction"		method="makePrivilegeClassTree">
+			<result type="json">
+				<param name="includeProperties">nodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+	</package>
+
+</struts>

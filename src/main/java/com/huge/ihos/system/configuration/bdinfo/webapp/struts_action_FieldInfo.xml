@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="fieldInfo" extends="default"	namespace="/">
+
+		<action name="fieldInfoList" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction">
+			<result name="input">/WEB-INF/pages/system/configuration/bdInfo/fieldInfoList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/bdInfo/fieldInfoList.jsp</result>
+		</action>
+		<action name="fieldInfoGridList" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction"		method="fieldInfoGridList">
+			<result type="json">
+				<param name="includeProperties">fieldInfoes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="fieldInfoGridEdit" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction"			method="fieldInfoGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editFieldInfo" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/bdInfo/fieldInfoForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/bdInfo/fieldInfoForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveFieldInfo" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 批量修改 -->
+		 <action name="batchEditList" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction">
+			<result name="success">/WEB-INF/pages/system/configuration/bdInfo/batchEdit.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/bdInfo/batchEdit.jsp</result>
+		</action>
+		<action name="batchEditFieldInfoGridList" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction"		method="batchEditFieldInfoGridList">
+			<result type="json">
+				<param name="includeProperties">fieldInfoes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="batchEditSave" class="com.huge.ihos.system.configuration.bdinfo.webapp.action.FieldInfoPagedAction"			method="batchEditSave">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

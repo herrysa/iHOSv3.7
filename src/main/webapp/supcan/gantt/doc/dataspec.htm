@@ -1,0 +1,85 @@
+<HTML>
+<head><title>XML数据规范</title>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+<br><br><br>
+　　<font style='font-size:15pt'>XML数据规范</font><hr color=#2266ee size=1>
+　　通常需要加载2张表：主表和关系表，分别用函数 Load 和 LoadLine 加载。<br>
+　　甘特图如果不需要画关系线，则不需要执行 LoadLine，其余情况都需要加载2张表。<br>
+　　当数据加载后，最终都必须执行 BuildDiagram 函数，以绘制出图形。<br>
+<h3>一.主表</h3>
+　　主表用 Load 函数加载，沿用树列表(TreeList)的功能和规范，在此就不作介绍。<br>
+<br>
+<h3>二.关系表</h3>
+　　关系表用 LoadLine 函数加载，数据格式典型如下：<br>
+<pre class='xml'>
+&lt;table&gt;
+　　&lt;record&gt;
+　　　　&lt;From&gt;100&lt;/From&gt;
+　　　　&lt;To&gt;10002&lt;/To&gt;
+　　　　&lt;Type&gt;SS&lt;/Type&gt;
+　　　　&lt;class&gt;style3&lt;/class&gt;
+　　&lt;/record&gt;
+　　&lt;record&gt;
+　　　　&lt;From&gt;100&lt;/From&gt;
+　　　　&lt;To&gt;10001&lt;/To&gt;
+　　　　&lt;Type&gt;SS&lt;/Type&gt;
+　　　　&lt;class&gt;style3&lt;/class&gt;
+　　&lt;/record&gt;
+　　&lt;record&gt;
+　　　　&lt;From&gt;10001&lt;/From&gt;
+　　　　&lt;To&gt;10002&lt;/To&gt;
+　　　　&lt;Type&gt;FS&lt;/Type&gt;
+　　　　&lt;class&gt;.&lt;/class&gt;
+　　&lt;/record&gt;
+&lt;/table&gt;</pre>
+　　规则为：<br>
+<b>规则1</b>.From、To表示起点和终点的 id 值, 2者都必不可少；<br>
+<b>规则2</b>.也允许用一条记录表示一对多的关系：一个From、多个To，以短号分隔，例如:<br>
+<pre class='xml'>
+&lt;table&gt;
+　　&lt;record&gt;
+　　　　&lt;From&gt;100&lt;/From&gt;
+　　　　&lt;To&gt;10002, 10003, 10004&lt;/To&gt;
+　　　　&lt;Type&gt;SS&lt;/Type&gt;
+　　　　&lt;class&gt;style3&lt;/class&gt;
+　　&lt;/record&gt;
+&lt;/table&gt;</pre>
+<b>规则3</b>.Type是类型，有 SF/FS/FF/SS 四种;<br>
+<b>规则4</b>.FS的Type可以省略，例如：<br>
+<pre class='xml'>
+&lt;table&gt;
+　　&lt;record&gt;
+　　　　&lt;From&gt;100&lt;/From&gt;
+　　　　&lt;To&gt;10002&lt;/To&gt;
+　　&lt;/record&gt;
+&lt;/table&gt;</pre>
+我们将它默认为FS的.<br>
+<br>
+<b>规则5</b>.class是连接线的形状，对应的 &lt;LineStyle&gt; 的ID;<br>
+<b>规则6</b>.class允许省略，表示对应 &lt;LineStyle&gt; 中的默认值(ID为小数点的);<br>
+<br>
+<b>规则7</b>.数据也允许以这种格式的XML：<br>
+<pre class='xml'>
+&lt;items&gt;
+　　&lt;item From="100" To="10002" class="style3"&gt;SS&lt;/item&gt;
+　　&lt;item From="100" To="10001" class="style3"&gt;SS&lt;/item&gt;
+　　&lt;item From="10001" To="10002"&gt;FS&lt;/item&gt;
+　　&lt;item From="10004" To="10003"&gt;FF&lt;/item&gt;
+　　&lt;item From="2000201" To="2000202" class="style1"&gt;SF&lt;/item&gt;
+&lt;/items&gt;</pre>
+<br>
+　　此外，也允许直接夹带 Styles 节点，定义连接线的形状，例如：
+<pre class='xml'>
+&lt;lineStyles&gt;
+　　&lt;style id="." width="1"/&gt;
+　　&lt;style id="style1" color="red" arrow="SolidLarge"/&gt;
+　　&lt;style id="style2" color="#009999" arrow="SolidLarge"/&gt;
+　　&lt;style id="style3" roundRadius="8" width="2"/&gt;
+&lt;/lineStyles&gt;</pre>
+
+<br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

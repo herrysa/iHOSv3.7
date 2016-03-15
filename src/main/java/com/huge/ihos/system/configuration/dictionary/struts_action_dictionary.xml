@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+		<package name="dictionary" extends="default" namespace="/">
+		
+		<action name="saveDictionary" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryAction" method="save">
+			<result name="input">/WEB-INF/pages/system/configuration/dictionary/dictionaryForm.jsp</result>
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+			<result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshMasterGrid.jsp</result>
+		</action>
+		<action name="editDictionary" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryAction" method="edit">
+			<result name="input">/WEB-INF/pages/system/configuration/dictionary/dictionaryForm.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/dictionary/dictionaryForm.jsp</result>
+		</action>
+		<action name="dictionaryList">
+			<result name="input">/WEB-INF/pages/system/configuration/dictionary/dictionaryList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/dictionary/dictionaryList.jsp</result>
+		</action>
+		<action name="dictionaryListJson" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryAction"
+			method="dictionaryList">
+			<result type="json">
+				<param name="includeProperties">dictionaries.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="dictionaryEditJson" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryAction" method="dictionaryEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <action name="saveDictionaryItem" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryItemAction" method="save">
+			<result name="input">/WEB-INF/pages/system/configuration/dictionary/dictionaryItemForm.jsp</result>
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+			<result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+		</action>
+        <action name="editDictionaryItem" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryItemAction" method="edit">
+			<result name="input">/WEB-INF/pages/system/configuration/dictionary/dictionaryItemForm.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/dictionary/dictionaryItemForm.jsp</result>
+		</action>
+		<action name="dictionaryItemListJson" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryItemAction"
+			method="dictionaryItemList">
+			<result type="json">
+				<param name="includeProperties">dictionaryItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="dictionaryItemEditJson" class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryItemAction" method="dictionaryItemEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+		<action name="dictionaryItemCellEditJson"
+			class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryItemEditinlineAction" method="cellEdit">
+			<result type="json">
+				<param name="includeProperties">gridOperationMessage</param>
+			</result>
+		</action>
+		<action name="dictionaryItemSelectList"
+			class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryItemAction" method="searchDictionaryItemsListByCode">
+			<result type="json">
+				<param name="includeProperties">gridOperationMessage,dictionaryItemsSelectList.*</param>
+			</result>
+		</action>
+		
+		<action name="searchSelectBooleanList"
+			class="com.huge.ihos.system.configuration.dictionary.webapp.action.DictionaryItemAction" method="searchDictionaryItemsListByCode" >
+			<result type="json">
+			<param name="includeProperties">dictionaryItemsSelectList.*</param>
+			</result>
+			<result name="success">/common/searchSelectBoolean.jsp</result>
+		</action>
+			
+		
+	</package>
+</struts>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="byLaw" extends="default"	namespace="/">
+
+		<action name="byLawList" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction">
+			<result name="input">/WEB-INF/pages/system/oa/byLaw/byLawList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/oa/byLaw/byLawList.jsp</result>
+		</action>
+		<action name="userByLawList" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction">
+			<result name="input">/WEB-INF/pages/system/oa/byLaw/userByLawList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/oa/byLaw/userByLawList.jsp</result>
+		</action>
+		<action name="byLawGridList" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"		method="byLawGridList">
+			<result type="json">
+				<param name="includeProperties">byLaws.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="byLawGridEdit" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"			method="byLawGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editByLaw" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/oa/byLaw/byLawForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/oa/byLaw/byLawForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveByLaw" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"			method="save">
+			<result name="success" type="json">
+				<param name="contentType">text/plain</param>
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="showByLaw" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"			method="showByLaw">
+			<result name="success">/WEB-INF/pages/system/oa/byLaw/showByLaw.jsp</result>
+			<result name="input">/WEB-INF/pages/system/oa/byLaw/showByLaw.jsp</result>
+		</action>
+		
+		<action name="byLaw_dowloadAppendix" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"			method="dowloadAppendix">
+		</action>
+
+	</package>
+
+</struts>

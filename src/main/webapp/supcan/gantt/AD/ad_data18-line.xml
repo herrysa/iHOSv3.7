@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<from>start</from>
+	<To>A,B,C</To>
+</record>
+<record>
+	<from>A</from>
+	<To>D</To>
+</record>
+<record>
+	<from>B</from>
+	<To>H,D,E</To>
+</record>
+<record>
+	<from>C</from>
+	<To>G,D,F</To>
+</record>
+<record>
+	<from>D</from>
+	<To>I</To>
+</record>
+<record>
+	<from>E</from>
+	<To>end</To>
+</record>
+<record>
+	<from>F</from>
+	<To>end</To>
+</record>
+<record>
+	<from>G</from>
+	<To>I</To>
+</record>
+<record>
+	<from>H</from>
+	<To>I</To>
+</record>
+<record>
+	<from>I</from>
+	<To>end</To>
+</record>
+</data>

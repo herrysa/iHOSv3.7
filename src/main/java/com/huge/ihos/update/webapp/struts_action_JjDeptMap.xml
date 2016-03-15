@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="jjDeptMap" extends="default"	namespace="/">
+
+		<action name="jjDeptMapList" class="com.huge.ihos.update.webapp.action.JjDeptMapPagedAction">
+			<result name="input">/WEB-INF/pages/jjAllot/jjDeptMapList.jsp</result>
+			<result name="success">/WEB-INF/pages/jjAllot/jjDeptMapList.jsp</result>
+		</action>
+		<action name="jjDeptMapGridList" class="com.huge.ihos.update.webapp.action.JjDeptMapPagedAction"		method="jjDeptMapGridList">
+			<result type="json">
+				<param name="includeProperties">jjDeptMaps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="jjDeptMapGridEdit" class="com.huge.ihos.update.webapp.action.JjDeptMapPagedAction"			method="jjDeptMapGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editJjDeptMap" class="com.huge.ihos.update.webapp.action.JjDeptMapPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/jjAllot/jjDeptMapForm.jsp</result>
+			<result name="input">/WEB-INF/pages/jjAllot/jjDeptMapForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveJjDeptMap" class="com.huge.ihos.update.webapp.action.JjDeptMapPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

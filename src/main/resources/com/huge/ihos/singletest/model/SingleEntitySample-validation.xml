@@ -1,0 +1,35 @@
+    <!DOCTYPE validators PUBLIC
+    "-//Apache Struts//XWork Validator 1.0.3//EN"
+    "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+    <field name="singleEntitySample.bigDecimalField">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="singleEntitySample.dateField">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="singleEntitySample.doubleField">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="singleEntitySample.floatField">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="singleEntitySample.intField">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="singleEntitySample.stringField">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+</validators> 

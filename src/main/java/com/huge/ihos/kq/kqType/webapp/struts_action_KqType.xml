@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kqType" extends="default"	namespace="/">
+
+		<action name="kqTypeList" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction" method="kqTypeList">
+			<result name="input">/WEB-INF/pages/kq/kqType/kqTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqType/kqTypeList.jsp</result>
+		</action>
+		<action name="kqTypeGridList" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"		method="kqTypeGridList">
+			<result type="json">
+				<param name="includeProperties">kqTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqTypeGridEdit" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="kqTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKqType" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kq/kqType/kqTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqType/kqTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKqType" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 检查工资类别是否能够删除 -->
+		<action name="checkKqTypeDel" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="checkKqTypeDel">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 人员信息维护 -->
+		<action name="kqPersonList" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction" method="kqPersonList">
+			<result name="input">/WEB-INF/pages/kq/kqPerson/kqPersonList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqPerson/kqPersonList.jsp</result>
+		</action>
+		 <action name="editKqPerson" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction" method="editKqPerson">
+ 	        <result name="success">/WEB-INF/pages/kq/kqPerson/kqPersonForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/kq/kqPerson/kqPersonForm.jsp</result>
+ 	    </action>
+		<!-- 考勤结账/反结账 -->
+		<action name="kqModelStatus" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction">
+			<result name="input">/WEB-INF/pages/kq/kqModelStatus/kqModelStatus.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqModelStatus/kqModelStatus.jsp</result>
+		</action>
+		<action name="kqCloseCount" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction" method="kqCloseCount">
+			<result name="input">/WEB-INF/pages/kq/kqModelStatus/kqCloseCount.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqModelStatus/kqCloseCount.jsp</result>
+		</action>
+		<action name="kqAntiCount" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction" method="kqAntiCount">
+			<result name="input">/WEB-INF/pages/kq/kqModelStatus/kqAntiCount.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqModelStatus/kqAntiCount.jsp</result>
+		</action>
+		<action name="kqCloseCountGridList" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"		method="kqCloseCountGridList">
+			<result type="json">
+				<param name="includeProperties">kqModelStatusList.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqAntiCountGridList" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"		method="kqAntiCountGridList">
+			<result type="json">
+				<param name="includeProperties">kqModelStatusList.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqModelStatusNextPeriodCheck" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="kqModelStatusNextPeriodCheck">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,nextPeriod,oper</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="kqRefreshCount" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="kqRefreshCount">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="kqModelStatusClose" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="kqModelStatusClose">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="kqModelStatusAnti" class="com.huge.ihos.kq.kqType.webapp.action.KqTypePagedAction"			method="kqModelStatusAnti">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

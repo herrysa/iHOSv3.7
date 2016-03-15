@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+    <http auto-config="true"  access-denied-page="/denied.jsp" lowercase-comparisons="false">
+    	<intercept-url pattern="/iHOS" filters="none"/>
+     	<intercept-url pattern="/login" filters="none"/> 
+     	<intercept-url pattern="/login.jsp*" filters="none"/> 
+     	<intercept-url pattern="/expired-login.jsp*" filters="none"/> 
+        <intercept-url pattern="/images/**" filters="none"/>
+        <intercept-url pattern="/styles/**" filters="none"/>
+        <intercept-url pattern="/scripts/**" filters="none"/>
+        <intercept-url pattern="/js/**" filters="none"/>
+        <intercept-url pattern="/json/**" filters="none"/>
+        <intercept-url pattern="/admin/**" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/passwordHint*" access="ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/signup*" access="ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/mainMenu.action" access= "IS_AUTHENTICATED_FULLY"/>
+        <!-- <intercept-url pattern="/menuTreeAjax.action" access= "IS_AUTHENTICATED_ANONYMOUSLY, IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_REMEMBERED"/> -->
+        <!-- <intercept-url pattern="/**/*.action*" access="ROLE_ADMIN,ROLE_USER"/> -->
+        <!-- <form-login login-page="/login" authentication-failure-url="/login?error=true" default-target-url="/popWindow.jsp" always-use-default-target="true" login-processing-url="/j_security_check" authentication-success-handler-ref="loginHandler" authentication-failure-handler-ref="loginHandler"/> -->
+        <form-login  login-page="/login" authentication-failure-url="/login?error=true" always-use-default-target="true" login-processing-url="/j_security_check" authentication-success-handler-ref="loginHandler" authentication-failure-handler-ref="loginHandler"/>
+        <logout logout-url="/j_security_logout"  success-handler-ref="loginHandler"/>
+        <!-- <remember-me user-service-ref="userDao"/> -->
+        <session-management invalid-session-url="/session-timeout.jsp" >
+            <concurrency-control max-sessions="1" expired-url="/expired-login.jsp"/>
+        </session-management>
+        <custom-filter ref="MetadataSourceControlFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+    </http>
+
+    <!-- 一个自定义的filter，必须包含authenticationManager,accessDecisionManager,securityMetadataSource三个属性，
+        我们的所有控制将在这三个类中实现，解释详见具体配置  -->
+    <beans:bean id="MetadataSourceControlFilter" class="com.huge.ihos.system.systemManager.security.FilterSecurityInterceptor">
+        <beans:property name="authenticationManager" ref="AuthenticationManager" />
+        <beans:property name="accessDecisionManager" ref="AccessDecisionManager" />
+        <beans:property name="securityMetadataSource" ref="SecurityMetadataSource" />
+    </beans:bean>
+    
+    <!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色访问     -->
+    <beans:bean id="SecurityMetadataSource" name="SecurityMetadataSource"  init-method="loadResourceDefine"  class="com.huge.ihos.system.systemManager.security.SecurityMetadataSourceManager">
+        <beans:property name="roleDao" ref="roleDao" />
+        <beans:property name="userDao" ref="userDao" />
+        <beans:property name="menuManager" ref="menuManager" />
+    </beans:bean>
+	
+    <authentication-manager alias="AuthenticationManager">
+        <authentication-provider user-service-ref="userDao">
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <!-- Override the default password-encoder (SHA) by uncommenting the following and changing the class -->
+    <!-- <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/> -->
+	
+	
+    <global-method-security>
+        <protect-pointcut expression="execution(* *..service.UserManager.getUsers(..))" access="ROLE_ADMIN"/>
+        <protect-pointcut expression="execution(* *..service.UserManager.removeUser(..))" access="ROLE_ADMIN"/>
+    </global-method-security>
+</beans:beans>
+

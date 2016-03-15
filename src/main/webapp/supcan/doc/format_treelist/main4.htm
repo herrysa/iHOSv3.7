@@ -1,0 +1,74 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+<script type="text/javascript" src="../proptable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("droplists.droplist.xml?90");
+  genproptable('Tag161', xmlDoc, "");
+ }
+</script>
+</head>
+
+<body onload="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag16"/>
+<br>
+<b>DropLists</b>　　<img src='document.bmp' title='请参见演示页: 9.各种下拉、10.可编辑下拉、28.过滤: 关联下拉'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:下拉框字典资源；数量:0 - 1;</td></tr>
+</table>
+<br>
+
+<div id="Tag161"></div>
+备注3:自定义按钮的语法为  DropdownButton="属性=值; 属性=值; ... 属性=值" 这样的串，属性和值的规范如下：<br>
+<table width=90% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td>属性</td><td>含义</td><td>值</td></tr>
+<tr><td>Skin 或<br>buttonSkin</td><td>按钮样式</td><td><b>windows</b> - 操作系统外观(默认);<br><b>flat</b> - 平坦、无边框</td></tr>
+<tr><td>ShowText</td><td>中间的文字串, 常用于分页显示时的某些提示<br><img src='dtbutton.jpg'></td><td>可以包含宏, 例如："共@Pages页, @totRows行", 宏在显示时会被替换成真实的值, 可用宏的含义如下：<br>
+<b>@Pages</b> - 总页数;<br>
+<b>@Page</b> - 当前页;<br>
+<b>@totalRows</b> - 总行数;<br>
+<b>@startRow</b> - 当前页的开始行;<br>
+<b>@endRow</b> - 当前页的结束行;</td></tr>
+<tr><td>button1.ID</td><td>第一个按钮的功能ID</td><td>每个按钮都必须有唯一的ID号，为整数，分为内部ID和自定义ID, 所谓内部ID，表示硕正已经在内部实现了功能的按钮，ID号功能如下：<br>
+　　<b>65534</b> - "清理"按钮<br>
+　　<b>65533</b> - "关闭"按钮<br>
+　　<b>65532</b> - "确认"按钮<br>
+　　<b>65531</b> - "前页"按钮(用于分页的下拉)<br>
+　　<b>65530</b> - "后页"按钮(用于分页的下拉)<br>
+自定义功能，ID范围为 1 到 65520, 点击后将触发 “Clicked”事件</td></tr>
+<tr><td>button1.Text 或 button1.Title</td><td>按钮上的文字</td><td>文字串</td></tr>
+<tr><td>button1.img 或<br>button1.image</td><td>按钮上的图标</td><td>图标的URL,  也可以使用如下几个内置的、固定写法的图标：<br>
+<b>!Bmp/Clear.bmp</b> - 默认的"清理"按钮上的图标<br>
+<b>!Bmp/Close.bmp</b> - 默认的"关闭"按钮上的图标<br>
+<b>!Bmp/Ok.bmp</b> - 默认的"确认"按钮上的图标<br>
+<b>!Bmp/Prior.bmp</b> - 默认的"前页"按钮上的图标<br>
+<b>!Bmp/Next.bmp</b> - 默认的"后页"按钮上的图标<br></td>
+</tr>
+<tr><td>button1.Tip</td><td>按钮上的Tip文字</td><td>文字串</td></tr>
+<tr><td>button1.width</td><td>指定按钮的宽度</td><td>像素数，如果不指定宽度，将采用实际宽度</td></tr>
+<tr><td>button1.minWidth</td><td>指定按钮的最小宽度, 以便可以动态缩放</td><td>像素数</td></tr>
+<tr><td>button1.align</td><td>按钮的排列对齐方式</td><td>可以是 left 或 right</td></tr>
+<tr><td colspan=3>如果有多个自定义按钮，则按照 "button2."、"button3." 这样的前缀命名. <img src='document.bmp' title='请参见演示页: 20.分页的下拉'></td></tr>
+</table>
+<br>
+<br>
+
+<div id="Tag1611"/>
+<b>item</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgColor=#e4e4e4><td colspan=4>含义:下拉框字典条目；数量:1 - n；内容：该条目的显示串</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>key</td><td>条目键值</td><td>串</td><td>无</td></tr>
+</table>
+备注：如果已经定义了dataURL属性，就没必要再定义item元素了，dataURL优先级高于item元素;<br>
+<br>
+
+<script type='text/javascript' src='../dev/nstd.js'></script>
+</body></html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="dept_Tree" extends="struts-default,json-default" namespace="/">
+		<action name="displayDepartmentZTree">
+		<result>/WEB-INF/pages/departmentZTree.jsp</result>
+		</action>
+		<action name="displayJsDepartmentTree">
+		<result>/WEB-INF/pages/departmentTree.jsp</result>
+		</action>
+		<action name="displayJsDepartmentTreeJson" class="com.huge.webapp.action.DepartmentAction" method="departmentTree">
+		<result type="json"><param name="includeProperties">ztreejson</param></result>
+		</action>
+		 <action name="displayDepartmentTree" class="com.huge.webapp.action.DepartmentAction" method="departmentTree">
+<!-- 			<result name="input">/WEB-INF/pages/departmentTree.jsp</result> -->
+			<result name="success">/WEB-INF/pages/departmentTree.jsp
+			<!-- <param name="includeProperties">departTreeList.*</param>  -->
+			</result>
+		</action>
+		
+	<!-- <action name="departmentTree" class="com.huge.webapp.action.DepartmentAction" method="departmentTree">
+			<result type="json" name="success">
+			<param name="root">departTreeList</param>
+			
+				<param name="includeProperties">departTreeList.*</param> 
+			</result>
+			
+		</action> -->
+	</package>
+
+</struts>

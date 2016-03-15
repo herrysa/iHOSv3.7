@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="sysPostMove" extends="default"	namespace="/">
+
+		<action name="sysPostMoveList" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPostMovePagedAction" method="sysPostMoveList">
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPostMove/sysPostMoveList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPostMove/sysPostMoveList.jsp</result>
+		</action>
+		<action name="sysPostMoveGridList" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPostMovePagedAction"		method="sysPostMoveGridList">
+			<result type="json">
+				<param name="includeProperties">sysPostMoves.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="sysPostMoveGridEdit" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPostMovePagedAction"			method="sysPostMoveGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,pactExist</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSysPostMove" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPostMovePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPostMove/sysPostMoveForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPostMove/sysPostMoveForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSysPostMove" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPostMovePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,id,pactExist</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

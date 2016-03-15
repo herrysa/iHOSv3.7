@@ -1,0 +1,38 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+<script type="text/javascript" src="../proptable.js"></script>
+</head>
+
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag0"/><br>
+<b>前言</b><br>
+<b>1.XML描述</b><br>
+　　进度控件(Gantt)的外观由XML文件控制，格式简练，程序员也可以在服务器端动态生成XML、甚至可以用 Notepad 直接编辑。<br>
+　　进度控件左侧是硕正树列表(Treelist)，进度控件直接集成了 Treelist，XML也就顺便写在一起了，这样也可以提高性能：<br>
+<img src='gantt1.png'>
+<br><br>
+<b>2.基本概念</b><br>
+　　进度控件几个基本概念：时间刻度(TimeScale)、段(Segment)与层(Tier)、横道(GanttBar)等，如图：<br>
+<img src='gantt2.png'><br>
+　　这些内容在XML中都能找到其相应的元素。
+<br><br>
+
+<div id="Tag1"/><br>
+<b>Gantt</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:进度控件入口；数量: 1</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>HorzGridRows</td><td>每隔 n 行画一条水平线</td><td>数字, 0表示不需要画线</td><td>4</td></tr>
+<tr><td>HorzGridColor</td><td>该水平线的颜色</td><td>ARGB颜色, 前2位(即"A")表示透明度(透明度也是从 00 到 FF)</td><td>#10000000</td></tr>
+<tr><td>displayAs</td><td>显示为甘特图、 双代号网络图、 单代号网络图</td><td>Gantt / AD / PD</td><td>Gantt</td></tr>
+</table>
+<br>
+
+<br><br><br><br><br><br>
+</body></html>

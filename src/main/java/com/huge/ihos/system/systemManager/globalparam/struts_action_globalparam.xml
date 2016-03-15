@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="globalparam" extends="default" namespace="/">
+
+		<!--CostItemAction-START -->
+
+		<!-- <action name="costItems" class="com.huge.ihos.inout.webapp.action.CostItemAction" 
+			method="list"> <result>/WEB-INF/pages/costItemList.jsp</result> </action> 
+			<action name="editCostItem" class="com.huge.ihos.inout.webapp.action.CostItemAction" 
+			method="edit"> <result>/WEB-INF/pages/costItemForm.jsp</result> <result name="error">/WEB-INF/pages/costItemList.jsp</result> 
+			</action> <action name="saveCostItem" class="com.huge.ihos.inout.webapp.action.CostItemAction" 
+			method="save"> <result name="input">/WEB-INF/pages/costItemForm.jsp</result> 
+			<result name="cancel" type="redirectAction">costItems</result> <result name="delete" 
+			type="redirectAction">costItems</result> <result name="success" type="redirectAction">costItems</result> 
+			</action> -->
+
+
+		<action name="globalparamList" class="com.huge.ihos.system.systemManager.globalparam.webapp.action.GlobalParamAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/globalParam/globalParamList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/globalParam/globalParamList.jsp</result>
+		</action>
+
+		<action name="globalparamGridList" class="com.huge.ihos.system.systemManager.globalparam.webapp.action.GlobalParamAction"
+			method="globalparamGridList">
+			<result type="json">
+				<param name="includeProperties">globalParams.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="globalparamGridEdit" class="com.huge.ihos.system.systemManager.globalparam.webapp.action.GlobalParamAction"
+			method="globalparamGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGlobalparam" class="com.huge.ihos.system.systemManager.globalparam.webapp.action.GlobalParamAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/globalParam/globalParamForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/globalParam/globalParamForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGlobalparam" class="com.huge.ihos.system.systemManager.globalparam.webapp.action.GlobalParamAction"
+			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="globalParamCard" class="com.huge.ihos.system.systemManager.globalparam.webapp.action.GlobalParamAction"
+			method="globalParamCard">
+			<result name="success">/WEB-INF/pages/system/systemManager/globalParam/globalParamDetails.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/globalParam/globalParamDetails.jsp</result>
+		</action>
+		<!-- <action name="allCostItemSelect"
+			class="com.huge.ihos.inout.webapp.action.CostItemSelectListAction"
+			method="allCostItemListSelect">
+			<result type="json">
+				<param name="includeProperties">allCostItemList.*</param>
+			</result>
+		</action> -->
+
+		<!--CostItemAction-END -->
+
+		
+	</package>
+
+</struts>

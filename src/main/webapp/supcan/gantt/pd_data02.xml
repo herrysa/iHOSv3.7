@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<id>A</id>
+	<name>A*项目</name>
+	<TID></TID>
+</record>
+<record>
+	<id>A.1</id>
+	<name>A.1工序</name>
+	<TID>A.2</TID>
+</record>
+<record>
+	<id>A.2</id>
+	<name>A.2工序</name>
+	<TID>A.3</TID>
+</record>
+<record>
+	<id>A.3</id>
+	<name>A.3</name>
+	<TID>A.4.3</TID>
+</record>
+
+<record>
+	<id>A.4</id>
+	<name>A.4*</name>
+	<TID></TID>
+</record>
+<record>
+	<id>A.4.1</id>
+	<name>A.4.1</name>
+	<TID>A.4.3</TID>
+</record>
+<record>
+	<id>A.4.2</id>
+	<name>A.4.2</name>
+	<TID>A.4.3</TID>
+</record>
+<record>
+	<id>A.4.3</id>
+	<name>A.4.3</name>
+	<TID></TID>
+</record>
+
+
+<record>
+	<id>B</id>
+	<name>B*</name>
+	<TID></TID>
+</record>
+<record>
+	<id>B.1</id>
+	<name>B.1</name>
+	<TID>B.2</TID>
+</record>
+<record>
+	<id>B.2</id>
+	<name>B.2</name>
+	<TID></TID>
+</record>
+<record>
+	<id>B.3</id>
+	<name>B.3</name>
+	<TID>B.2</TID>
+</record>
+</data>

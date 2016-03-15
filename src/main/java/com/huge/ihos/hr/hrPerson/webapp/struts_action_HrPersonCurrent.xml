@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="hrPersonCurrent" extends="default"	namespace="/">
+
+		<action name="hrPersonCurrentList" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonCurrentPagedAction" method="hrPersonCurrentList">
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrPersonCurrentList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrPersonCurrentList.jsp</result>
+		</action>
+		<action name="hrPersonCurrentGridList" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonCurrentPagedAction" method="hrPersonCurrentGridList">
+			<result type="json">
+				<param name="includeProperties">hrPersonCurrents.*,records,total,page,userdata.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="makeHrPersonTree" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonCurrentPagedAction" method="makeHrPersonTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">hrPersonTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getPersonTreeSelect" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonCurrentPagedAction" method="getPersonTreeSelect">
+			<result name="success"  type="json">
+				<param name="includeProperties">nodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getHrPersonForDept" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonCurrentPagedAction" method="getHrPersonForDept">
+			<result name="success"  type="json">
+				<param name="includeProperties">nodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkDelPerson" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonCurrentPagedAction" method="checkDelPerson">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 合同台账 -->
+		<action name="pactAccountList" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonCurrentPagedAction" method="pactAccountList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactAccount/pactAccountList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactAccount/pactAccountList.jsp</result>
+		</action>
+	</package>
+
+</struts>

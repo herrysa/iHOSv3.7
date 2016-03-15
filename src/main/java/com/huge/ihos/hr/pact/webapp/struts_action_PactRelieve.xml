@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="pactRelieve" extends="default"	namespace="/">
+
+		<action name="pactRelieveList" class="com.huge.ihos.hr.pact.webapp.action.PactRelievePagedAction" method="pactRelieveList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactRelieve/pactRelieveList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactRelieve/pactRelieveList.jsp</result>
+		</action>
+		<action name="pactRelieveGridList" class="com.huge.ihos.hr.pact.webapp.action.PactRelievePagedAction"		method="pactRelieveGridList">
+			<result type="json">
+				<param name="includeProperties">pactRelieves.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="pactRelieveGridEdit" class="com.huge.ihos.hr.pact.webapp.action.PactRelievePagedAction"			method="pactRelieveGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPactRelieve" class="com.huge.ihos.hr.pact.webapp.action.PactRelievePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/pact/pactRelieve/pactRelieveForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/pact/pactRelieve/pactRelieveForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePactRelieve" class="com.huge.ihos.hr.pact.webapp.action.PactRelievePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,addFrom,pactIds</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="cascadeUpdatePersonByRelievePact" class="com.huge.ihos.hr.pact.webapp.action.PactRelievePagedAction"	method="cascadeUpdatePersonByRelievePact">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

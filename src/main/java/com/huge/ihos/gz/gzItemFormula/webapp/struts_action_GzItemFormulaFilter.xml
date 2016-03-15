@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzItemFormulaFilter" extends="default"	namespace="/">
+
+		<action name="gzItemFormulaFilterList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaFilterPagedAction">
+			<result name="input">/WEB-INF/pages/gzItemFormulaFilter/gzItemFormulaFilterList.jsp</result>
+			<result name="success">/WEB-INF/pages/gzItemFormulaFilter/gzItemFormulaFilterList.jsp</result>
+		</action>
+		<action name="gzItemFormulaFilterGridList" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaFilterPagedAction"		method="gZItemFormulaFilterGridList">
+			<result type="json">
+				<param name="includeProperties">gzItemFormulaFilters.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzItemFormulaFilterGridEdit" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaFilterPagedAction"			method="gZItemFormulaFilterGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzItemFormulaFilter" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaFilterPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gZItemFormulaFilter/gZItemFormulaFilterForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gZItemFormulaFilter/gZItemFormulaFilterForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzItemFormulaFilter" class="com.huge.ihos.gz.gzItemFormula.webapp.action.GzItemFormulaFilterPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

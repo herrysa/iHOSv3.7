@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="jjUpdataDefColumn" extends="default"	namespace="/">
+
+		<action name="jjUpdataDefColumnList" class="com.huge.ihos.update.webapp.action.JjUpdataDefColumnPagedAction">
+			<result name="input">/WEB-INF/pages/jjUpdataDefColumn/jjUpdataDefColumnList.jsp</result>
+			<result name="success">/WEB-INF/pages/jjUpdataDefColumn/jjUpdataDefColumnList.jsp</result>
+		</action>
+		<action name="jjUpdataDefColumnGridList" class="com.huge.ihos.update.webapp.action.JjUpdataDefColumnPagedAction"		method="jjUpdataDefColumnGridList">
+			<result type="json">
+				<param name="includeProperties">jjUpdataDefColumns.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="jjUpdataDefColumnGridEdit" class="com.huge.ihos.update.webapp.action.JjUpdataDefColumnPagedAction"			method="jjUpdataDefColumnGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editJjUpdataDefColumn" class="com.huge.ihos.update.webapp.action.JjUpdataDefColumnPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/jjUpdataDefColumn/jjUpdataDefColumnForm.jsp</result>
+			<result name="input">/WEB-INF/pages/jjUpdataDefColumn/jjUpdataDefColumnForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveJjUpdataDefColumn" class="com.huge.ihos.update.webapp.action.JjUpdataDefColumnPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="initDefColumn" class="com.huge.ihos.update.webapp.action.JjUpdataDefColumnPagedAction"			method="init">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveDefColumn" class="com.huge.ihos.update.webapp.action.JjUpdataDefColumnPagedAction"			method="saveDefColumn">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

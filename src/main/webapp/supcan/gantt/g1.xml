@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="gbk"?>
+<!-- By Supcan TreeList  -->
+<TreeList>
+<Properties Title="项目任务表" isShowTreeLine="0" rowHeight="20" isShowGridTreeNode="1"
+	TreeNodeButton="../treelist/lit.zip#tree1.bmp, ../treelist/lit.zip#tree2.bmp"
+	isTree="true" treeformat="byPid"></Properties>
+<Fonts>
+	<Font/>
+	<Font faceName="Consolas"/>
+</Fonts>
+<Cols>
+	<Col name="pid" isHide="absHide">PID</Col>
+	<Col name="id" isHide="1" width="150">代码</Col>
+	<Col name="name" width="140">任务名称</Col>
+	<Col name="ES" width="100" datatype="date">开始日期</Col>
+	<Col name="EF" width="100" datatype="date">结束日期</Col>
+	<Col name="duration" width="40" dataType="int">工期</Col>
+	<Col name="PercentComplete" width="90" datatype="int">完成百分比</Col>
+</Cols>
+<Gantt HorzGridRows="4" horzGridColor="#ededed">
+	<TimeScale dragMode="normal">
+		<Segments>
+			<Segment from="2014.1.1" to="2014.12.31">
+				<Tier height="20" unit="month" count="1" align="left" fontindex="0" />
+				<Tier height="20" unit="week" count="1" format="%d" />
+				<Tier height="20" unit="day" count="1" format="%a" cellWidth="22" cellMinWidth="5" />
+			</Segment>
+		</Segments>
+	</TimeScale>
+	<Fields>
+		<SF>ES, EF</SF>
+		<SF visible="false">LS, LF</SF>
+		<SF visible="false">AS, AF</SF>
+	</Fields>
+</Gantt>
+</TreeList>

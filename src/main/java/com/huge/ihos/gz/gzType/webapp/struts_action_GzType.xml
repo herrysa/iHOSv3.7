@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzType" extends="default"	namespace="/">
+
+		<action name="gzTypeList" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction" method="gzTypeList">
+			<result name="input">/WEB-INF/pages/gz/gzType/gzTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzType/gzTypeList.jsp</result>
+		</action>
+		<action name="gzTypeGridList" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"		method="gzTypeGridList">
+			<result type="json">
+				<param name="includeProperties">gzTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzTypeGridEdit" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="gzTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzType" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/gzType/gzTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzType/gzTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzType" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkCodeExist" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="checkCodeExist">
+			<result name="success" type="json">
+                <param name="includeProperties">message</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 检查工资类别是否能够删除 -->
+		<action name="checkGzTypeDel" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="checkGzTypeDel">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 人员信息维护 -->
+		<action name="gzPersonList" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction" method="gzPersonList">
+			<result name="input">/WEB-INF/pages/gz/gzPerson/gzPersonList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzPerson/gzPersonList.jsp</result>
+		</action>
+		<action name="showGzPersonTab" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzPerson/gzPersonTab.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzPerson/gzPersonTab.jsp</result>
+		</action>
+		 <action name="editGzPerson" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction" method="editGzPerson">
+ 	        <result name="success">/WEB-INF/pages/gz/gzPerson/gzPersonForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/gz/gzPerson/gzPersonForm.jsp</result>
+ 	    </action>
+ 	    	<!-- 工资结账/反结账 -->
+		<action name="gzModelStatus" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzModelStatus/gzModelStatus.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzModelStatus/gzModelStatus.jsp</result>
+		</action>
+		<action name="gzCloseCount" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction" method="gzCloseCount">
+			<result name="input">/WEB-INF/pages/gz/gzModelStatus/gzCloseCount.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzModelStatus/gzCloseCount.jsp</result>
+		</action>
+		<action name="gzAntiCount" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction" method="gzAntiCount">
+			<result name="input">/WEB-INF/pages/gz/gzModelStatus/gzAntiCount.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzModelStatus/gzAntiCount.jsp</result>
+		</action>
+		<action name="gzCloseCountGridList" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"		method="gzCloseCountGridList">
+			<result type="json">
+				<param name="includeProperties">gzModelStatusList.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzAntiCountGridList" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"		method="gzAntiCountGridList">
+			<result type="json">
+				<param name="includeProperties">gzModelStatusList.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzModelStatusClose" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="gzModelStatusClose">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzModelStatusAnti" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="gzModelStatusAnti">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzModelStatusNextPeriod" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction" method="gzModelStatusNextPeriod">
+			<result name="input">/WEB-INF/pages/gz/gzModelStatus/gzNextPeriodForm.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzModelStatus/gzNextPeriodForm.jsp</result>
+		</action>
+		<action name="gzModelStatusNextPeriodCheck" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="gzModelStatusNextPeriodCheck">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,nextPeriod,oper</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzRefreshCount" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="gzRefreshCount">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 检查工资类别结账是否能够删除 -->
+		<action name="checkGzDelCount" class="com.huge.ihos.gz.gzType.webapp.action.GzTypePagedAction"			method="checkGzDelCount">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

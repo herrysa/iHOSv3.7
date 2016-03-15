@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="periodPlan" extends="default"	namespace="/">
+		<action name="periodPlanList" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodPlanPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/period/periodPlan/periodPlanList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/period/periodPlan/periodPlanList.jsp</result>
+		</action>
+		<action name="periodPlanGridList" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodPlanPagedAction"		method="periodPlanGridList">
+			<result type="json">
+				<param name="includeProperties">periodPlans.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="periodPlanGridEdit" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodPlanPagedAction"			method="periodPlanGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPeriodPlan" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodPlanPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/period/periodPlan/periodPlanForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/period/periodPlan/periodPlanForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePeriodPlan" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodPlanPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="makePeriodPlanTree" class="com.huge.ihos.system.systemManager.period.webapp.action.PeriodPlanPagedAction"			method="makePeriodPlanTree">
+			<result name="success" type="json">
+				<param name="includeProperties">ztreeList.*</param>
+                <param name="noCache">true</param>
+			</result>
+		</action>
+
+	</package>
+
+</struts>

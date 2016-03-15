@@ -1,0 +1,31 @@
+body{font-size:12px;}
+#top{width:900px;margin:0 auto;}
+#logo{width:300px;float:left;}
+#logo img{width:300px;}
+#top_nav{width:590px;margin-left:305px;}
+#top_nav img{float:right;}
+#top_nav div{height:29px;line-height:22px;width:55px;float:right;margin-left:2px;}
+.clear{clear:both;}
+#main_img{width:900px;margin:0 auto;margin-top:10px;}
+#main_img img{width:900px;}
+#main_box{width:900px;margin:0 auto;margin-top:10px;}
+#left_box{width:200px;float:left;}
+#right_box{width:650px;border-left:1px dashed #999999;margin-left:215px;padding-left:15px;}
+.title{height:25px;line-height:25px;background-color:#F6F1F6;font-size:14px;font-weight:bolder;}
+.login_box{margin-bottom:20px;}
+.login_box txt{width:150px;}
+.login_box span{margin-left:20px;}
+.login-item{margin-top:10px;}
+.btns{padding-left:40px;}
+.btns input{margin-left:30px;}
+.login_box ul{list-style:none;margin:0px;padding:0px;margin-top:10px;}
+.login_box ul li{margin:0px;padding:0px;margin-left:15px;height:20px;line-height:20px;}
+.cnt_title{border-bottom:1px dashed #999999;height:28px;}
+.cnt_title img{float:left;}
+.cnt_title div{height:27px;line-height:27px;width:55px;float:left;margin-left:2px;font-weight:bolder;}
+.cnt_m{float:left;}
+.cnt_date{float:right;color:#999999;}
+#right_box ul{margin:0px;padding:0px;margin-top:10px;padding-left:10px;}
+#right_box ul li{margin-left:15px;height:20px;line-height:20px;}
+.more{text-align:right;height:30px;line-height:30px;}
+#footer{width:900px;margin:0 auto;border-top:1px solid #999999;margin-top:20px;text-align:center;line-height:25px;}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="nurseShiftRate" extends="default"	namespace="/">
+
+		<action name="nurseShiftRateList" class="com.huge.ihos.nursescore.webapp.action.NurseShiftRatePagedAction">
+			<result name="input">/WEB-INF/pages/nurseShiftRate/nurseShiftRateList.jsp</result>
+			<result name="success">/WEB-INF/pages/nurseShiftRate/nurseShiftRateList.jsp</result>
+		</action>
+		<action name="nurseShiftRateGridList" class="com.huge.ihos.nursescore.webapp.action.NurseShiftRatePagedAction"		method="nurseShiftRateGridList">
+			<result type="json">
+				<param name="includeProperties">nurseShiftRates.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="nurseShiftRateGridEdit" class="com.huge.ihos.nursescore.webapp.action.NurseShiftRatePagedAction"			method="nurseShiftRateGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editNurseShiftRate" class="com.huge.ihos.nursescore.webapp.action.NurseShiftRatePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/nurseShiftRate/nurseShiftRateForm.jsp</result>
+			<result name="input">/WEB-INF/pages/nurseShiftRate/nurseShiftRateForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveNurseShiftRate" class="com.huge.ihos.nursescore.webapp.action.NurseShiftRatePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

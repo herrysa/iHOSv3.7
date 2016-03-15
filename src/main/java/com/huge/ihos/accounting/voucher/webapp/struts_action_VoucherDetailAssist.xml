@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="voucherDetailAssist" extends="default"	namespace="/">
+
+		<action name="voucherDetailAssistList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction">
+			<result name="input">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistList.jsp</result>
+			<result name="success">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistList.jsp</result>
+		</action>
+		<action name="voucherDetailAssistGridList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction"		method="voucherDetailAssistGridList">
+			<result type="json">
+				<param name="includeProperties">voucherDetailAssists.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="voucherDetailAssistGridEdit" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction"			method="voucherDetailAssistGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editVoucherDetailAssist" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistForm.jsp</result>
+			<result name="input">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveVoucherDetailAssist" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

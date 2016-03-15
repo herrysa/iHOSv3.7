@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<from>B</from>
+	<to>C,End</to>
+</record>
+<record>
+	<from>End</from>
+	<to></to>
+</record>
+<record>
+	<from>C</from>
+	<to>D,M</to>
+</record>
+<record>
+	<from>M</from>
+	<to>N,O,X</to>
+</record>
+<record>
+	<from>X</from>
+	<to>P</to>
+</record>
+<record>
+	<from>N</from>
+	<to>L</to>
+</record>
+<record>
+	<from>L</from>
+	<to>P</to>
+</record>
+<record>
+	<from>P</from>
+	<to>Z</to>
+</record>
+<record>
+	<from>O</from>
+	<to>Z</to>
+</record>
+<record>
+	<from>D</from>
+	<to>E</to>
+</record>
+<record>
+	<from>E</from>
+	<to>A,F,G</to>
+</record>
+<record>
+	<from>F</from>
+	<to>Z</to>
+</record>
+<record>
+	<from>A</from>
+	<to>Z</to>
+</record>
+<record>
+	<from>G</from>
+	<to>H</to>
+</record>
+<record>
+	<from>H</from>
+	<to>Z</to>
+</record>
+</data>

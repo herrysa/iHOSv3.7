@@ -1,0 +1,51 @@
+    <!DOCTYPE validators PUBLIC
+    "-//Apache Struts//XWork Validator 1.0.3//EN"
+    "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="person.department.departmentId">
+		<field-validator type="required">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="person.name">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="person.personId">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="person.name">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="person.personCode">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="person.postType">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+	<field name="person.status">
+		<field-validator type="requiredstring">
+			<message key="errors.required" />
+		</field-validator>
+	</field>
+
+
+
+	<!-- <s:textfield key="person.personId" required="true" /> <s:textfield 
+		key="person.name" required="true" maxlength="20" /> <s:textfield key="person.personCode" 
+		required="true" maxlength="20" /> <s:checkbox key="person.enabled" required="true" 
+		/> <s:select key="person.postType" required="true" maxlength="20" list="postTypeList" 
+		listKey="value" listValue="content" emptyOption="true"></s:select> <s:select 
+		key="person.status" required="true" maxlength="20" list="statusList" listKey="value" 
+		listValue="content" emptyOption="true"></s:select> <s:textfield key="person.department.departmentId" 
+		readonly="true" /> -->
+</validators> 

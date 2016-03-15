@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="attachment" extends="default"	namespace="/">
+
+		<action name="attachmentList" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction">
+			<result name="input">/WEB-INF/pages/hr/train/trainInformation/attachment/attachmentList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/train/trainInformation/attachment/attachmentList.jsp</result>
+		</action>
+		<action name="attachmentGridList" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction"		method="attachmentGridList">
+			<result type="json">
+				<param name="includeProperties">attachments.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="attachmentGridEdit" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction"			method="attachmentGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 检查附件是否存在 -->
+		<action name="attachmentFileExist" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction"			method="attachmentFileExist">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,type</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editAttachment" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/train/trainInformation/attachment/attachmentForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainInformation/attachment/attachmentForm.jsp</result>
+		</action>
+		
+		<!-- called when clicking save on the edit form -->
+		<action name="saveAttachment" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            </action>
+         <!-- 超链接查看附件 -->
+         <action name="showAttachment" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction"			method="show">
+			<result name="success">/WEB-INF/pages/hr/train/trainInformation/attachment/attachmentList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/train/trainInformation/attachment/attachmentList.jsp</result>
+		</action>
+		<!-- Attachment upload and delete -->
+		<action name="uploadAttachmentFile" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction" method="uploadAttachmentFile"/>
+  		<action name="deleteAttachmentFile" class="com.huge.ihos.hr.attachment.webapp.action.AttachmentPagedAction" method="deleteAttachmentFile"/>
+
+	</package>
+
+</struts>

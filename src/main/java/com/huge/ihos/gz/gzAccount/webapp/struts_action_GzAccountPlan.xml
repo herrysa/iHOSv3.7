@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzAccountPlan" extends="default"	namespace="/">
+		<action name="gzAccountReportByPlan" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction" method="gzAccountByPlan">
+			<result name="input">/WEB-INF/pages/gz/gzAccountPlan/gzAccountReport.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzAccountPlan/gzAccountReport.jsp</result>
+		</action>
+		<action name="gzAccountByPlan" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction" method="gzAccountByPlan">
+			<result name="input">/WEB-INF/pages/gz/gzAccountPlan/gzAccount.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzAccountPlan/gzAccount.jsp</result>
+		</action>
+		<action name="sortGzAccountPlan" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzAccountPlan/gzAccountSortForm.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzAccountPlan/gzAccountSortForm.jsp</result>
+		</action>
+		<action name="gzAccountByPlanItem" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction" method="gzAccountByPlanItem">
+			<result name="input">/WEB-INF/pages/gz/gzAccountPlan/gzAccountPlanItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzAccountPlan/gzAccountPlanItemList.jsp</result>
+		</action>
+		<action name="gzAccountGridList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"		method="gzAccountPlanGridList">
+			<result type="json">
+				<param name="includeProperties">columns,gzAccountContents.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzAccountPlanGridEdit" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="gzAccountPlanGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="gzAccount" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/gzAccountPlan/gzAccountPlanForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzAccountPlan/gzAccountPlanForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzAccountPlan" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">planId,planName,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="saveGzAccountPlanCustomLayout" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="saveGzAccountPlanCustomLayout">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="popGzAccountPlan" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="popGzAccountPlan">
+			<result name="success" type="json">
+                <param name="includeProperties"></param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="gzAccountColumnInfo" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="gzAccountColumnInfo">
+			<result name="success" type="json">
+                <param name="includeProperties">gzAccountPlanFilters.*,columns,gzItems.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getSelectedGzPlan" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="getSelectedGzPlan">
+			<result name="success" type="json">
+                <param name="includeProperties">gzAccountPlans.*,gzAccountPlanFilters.*,items.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getSetPlanId" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="getSetPlanId">
+			<result name="success" type="json">
+                <param name="includeProperties"></param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getGzitems" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"			method="getGzitems">
+			<result name="success" type="json">
+                <param name="includeProperties">gzItems3.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzAccountReverseGridList" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"		method="gzAccountReverseGridList">
+			<result type="json">
+				<param name="includeProperties">gzAccountContents.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzAccountPlanGztypeChange" class="com.huge.ihos.gz.gzAccount.webapp.action.GzAccountPlanPagedAction"		method="gzAccountPlanGztypeChange">
+			<result type="json">
+				<param name="includeProperties">issueType,gzAccountPlans.*,gzItems.*,message,statusCode,callbackType,navTabId,gzAccountPlanSysStr,modelStatusStr</param>
+<!-- 				<param name="excludeProperties">gzItems.*\.formulaList,gzItems.*\.gzType</param> -->
+					<param name="excludeProperties">gzItems.*\.formulaList,gzItems.*\.gzType</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

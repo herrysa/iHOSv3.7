@@ -1,0 +1,1 @@
+SET IDENTITY_INSERT t_datasourcetype ON

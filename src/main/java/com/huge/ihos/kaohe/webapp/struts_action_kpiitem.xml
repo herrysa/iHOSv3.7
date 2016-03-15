@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kpiItem" extends="default"	namespace="/">
+
+		<!-- <action name="kpiItemNestList"	class="org.sbbs.app.demo.webapp.action.DemoTreeNodePagedAction">
+			<result>/WEB-INF/pages/kpiItem/kpiItemNestList.jsp</result>
+		</action>
+		
+		
+		<action name="kpiItemNestGrid"	class="org.sbbs.app.demo.webapp.action.DemoTreeNodePagedAction" method="gridPageList">
+				<result name="success" type="json">
+				<param name="includeProperties">pageList.*,records,total,page</param>
+				<param name="excludeProperties">pageList.*\.parentNode,pageList.*\.childNodes,pageList.*\.parentNode.childNodes</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action> -->
+		<action name="kpiItemList"	class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction">
+			<result>/WEB-INF/pages/balanceCard/kpiItemList.jsp</result>
+		</action>
+		
+		
+		<action name="kpiItemGrid"	class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction" method="gridPageList">
+				<result name="success" type="json">
+				<param name="includeProperties">kpiItemlist.*,records,total,page</param>
+				<param name="excludeProperties">kpiItemlist.*\.parentNode,kpiItemlist.*\.childNodes,kpiItemlist.*\.parentNode.childNodes,kpiItemlist.*\.targetField,kpiItemlist.*\.actualField,kpiItemlist.*\.scoreField,kpiItemlist.*\.executeDept</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="rebuildKpiTree" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction" method="rebuildTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">gridId,message,msgType,returnCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deleteKpiItem" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction"			method="kpiItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKpiItem" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/balanceCard/kpiItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/balanceCard/kpiItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKpiItem" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- <action name="editDemoTreeNode" class="org.sbbs.app.demo.webapp.action.DemoTreeNodeEditAction" method="edit">
+			<result name="success">/WEB-INF/pages/kpiItem/kpiItemForm.jsp</result>
+			
+		</action>
+		<action name="saveDemoTreeNode" class="org.sbbs.app.demo.webapp.action.DemoTreeNodeEditAction" method="save">
+			<result name="success"  type="json">
+				<param name="includeProperties">gridId,message,msgType,returnCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deleteDemoTreeNode" class="org.sbbs.app.demo.webapp.action.DemoTreeNodeEditAction" method="delete">
+			<result name="success"  type="json">
+				<param name="includeProperties">gridId,message,msgType,returnCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="moveDemotreeNode" class="org.sbbs.app.demo.webapp.action.DemoTreeNodeEditAction" method="move">
+			<result name="success"  type="json">
+				<param name="includeProperties">gridId,message,msgType,returnCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action> -->
+		
+		
+		
+		<!-- <action name="selectTree" class="org.sbbs.app.demo.webapp.action.DemoTreeNodeEditAction" >
+			<result name="success">/WEB-INF/pages/kpiItem/selectTree.jsp</result>
+		</action>
+		<action name="demoTree" class="org.sbbs.app.demo.webapp.action.DemoTreeNodeEditAction" >
+			<result name="success">/WEB-INF/pages/kpiItem/kpiItemTree.jsp</result>
+		</action>
+		<action name="demoTreeJson" class="org.sbbs.app.demo.webapp.action.DemoTreeNodeEditAction" method="displayFullTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">fullTreeList.*</param>
+				<param name="excludeProperties">fullTreeList.*\.parentNode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action> -->
+
+		
+		<action name="kpiMain" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction" >
+			<result name="success">/WEB-INF/pages/balanceCard/kpiItemMain.jsp</result>
+		</action>
+
+		<action name="kpiItemTree"	class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction">
+			<result>/WEB-INF/pages/balanceCard/kpiItemTree.jsp</result>
+		</action>
+		
+		<action name="kpiItemTreeWithCheckAjax" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction" method="kpiItemTreeWithCheckAjax">
+        </action>
+
+
+		<action name="kpiTree" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction" >
+			<result name="success">/WEB-INF/pages/balanceCard/kpiTree.jsp</result>
+		</action>
+		
+		<action name="kpiTreeJson" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction" method="kpiTreeList">
+			<result name="success"  type="json">
+				<param name="includeProperties">monKpiTreeList.*,seasonKpiTreeList.*,halfKpiTreeList.*,yearKpiTreeList.*</param>
+				<param name="excludeProperties">
+				monKpiTreeList.*\.parentNode,monKpiTreeList.*\.targetField,monKpiTreeList.*\.actualField,monKpiTreeList.*\.scoreField,monKpiTreeList.*\.executeDept
+				,seasonKpiTreeList.*\.parentNode,seasonKpiTreeList.*\.targetField,seasonKpiTreeList.*\.actualField,seasonKpiTreeList.*\.scoreField,seasonKpiTreeList.*\.executeDept
+				,halfKpiTreeList.*\.parentNode,halfKpiTreeList.*\.targetField,halfKpiTreeList.*\.actualField,halfKpiTreeList.*\.scoreField,halfKpiTreeList.*\.executeDept
+				,yearKpiTreeList.*\.parentNode,yearKpiTreeList.*\.targetField,yearKpiTreeList.*\.actualField,yearKpiTreeList.*\.scoreField,yearKpiTreeList.*\.executeDept
+				
+				</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="refreshNode" class="com.huge.ihos.kaohe.webapp.action.KpiItemPagedAction" method="refreshNode">
+			<result name="success"  type="json">
+				<param name="includeProperties">parentAndChildList.*</param>
+				<param name="excludeProperties">
+				parentAndChildList.*\.parentNode,parentAndChildList.*\.targetField,parentAndChildList.*\.actualField,parentAndChildList.*\.scoreField,parentAndChildList.*\.executeDept
+				</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+	</package>
+
+</struts>

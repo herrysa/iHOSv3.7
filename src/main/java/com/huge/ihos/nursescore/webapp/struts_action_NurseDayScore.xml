@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="nurseDayScore" extends="default"	namespace="/">
+
+		<action name="nurseDayScoreList" class="com.huge.ihos.nursescore.webapp.action.NurseDayScorePagedAction" method="nurseDayScorePre">
+			<result name="input">/WEB-INF/pages/nurseDayScore/nurseDayScoreList.jsp</result>
+			<result name="success">/WEB-INF/pages/nurseDayScore/nurseDayScoreList.jsp</result>
+		</action>
+		<action name="nurseDayScoreGridList" class="com.huge.ihos.nursescore.webapp.action.NurseDayScorePagedAction"		method="nurseDayScoreGridList">
+			<result type="json">
+				<param name="includeProperties">nurseDayScores.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="nurseDayScoreGridEdit" class="com.huge.ihos.nursescore.webapp.action.NurseDayScorePagedAction"			method="nurseDayScoreGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editNurseDayScore" class="com.huge.ihos.nursescore.webapp.action.NurseDayScorePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/nurseDayScore/nurseDayScoreForm.jsp</result>
+			<result name="input">/WEB-INF/pages/nurseDayScore/nurseDayScoreForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveNurseDayScore" class="com.huge.ihos.nursescore.webapp.action.NurseDayScorePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="checkPeriod" class="com.huge.ihos.nursescore.webapp.action.NurseDayScorePagedAction"			method="checkPeriod">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="auditNurseDayScore" class="com.huge.ihos.nursescore.webapp.action.NurseDayScorePagedAction"			method="auditNurseDayScore">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

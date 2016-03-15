@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="statisticsType" extends="default"	namespace="/">
+
+		<action name="statisticsTypeList" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsTypePagedAction" method="statisticsTypeList">
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsType/statisticsTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsType/statisticsTypeList.jsp</result>
+		</action>
+		<action name="statisticsTypeGridList" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsTypePagedAction"		method="statisticsTypeGridList">
+			<result type="json">
+				<param name="includeProperties">statisticsTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="statisticsTypeGridEdit" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsTypePagedAction"			method="statisticsTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editStatisticsType" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/statistics/statisticsType/statisticsTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/statistics/statisticsType/statisticsTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveStatisticsType" class="com.huge.ihos.hr.statistics.webapp.action.StatisticsTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,parentId,statisticsType.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<!-- tree load -->
+		<action name="makeStatisticsTypeTree"	class="com.huge.ihos.hr.statistics.webapp.action.StatisticsTypePagedAction" method="makeStatisticsTypeTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">statisticsTypeTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+	</package>
+
+</struts>

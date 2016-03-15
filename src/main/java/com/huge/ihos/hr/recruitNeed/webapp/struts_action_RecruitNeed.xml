@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="recruitNeed" extends="default"	namespace="/">
+
+		<action name="recruitNeedList" class="com.huge.ihos.hr.recruitNeed.webapp.action.RecruitNeedPagedAction">
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitNeed/recruitNeedList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitNeed/recruitNeedList.jsp</result>
+		</action>
+		<action name="recruitNeedCheckList" class="com.huge.ihos.hr.recruitNeed.webapp.action.RecruitNeedPagedAction">
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitNeed/recruitNeedCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitNeed/recruitNeedCheckList.jsp</result>
+		</action>
+		<action name="recruitNeedGridList" class="com.huge.ihos.hr.recruitNeed.webapp.action.RecruitNeedPagedAction"		method="recruitNeedGridList">
+			<result type="json">
+				<param name="includeProperties">recruitNeeds.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="recruitNeedGridEdit" class="com.huge.ihos.hr.recruitNeed.webapp.action.RecruitNeedPagedAction"			method="recruitNeedGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editRecruitNeed" class="com.huge.ihos.hr.recruitNeed.webapp.action.RecruitNeedPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitNeed/recruitNeedForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitNeed/recruitNeedForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveRecruitNeed" class="com.huge.ihos.hr.recruitNeed.webapp.action.RecruitNeedPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 招聘需求 -->
+		<action name="viewRecruitNeed" class="com.huge.ihos.hr.recruitNeed.webapp.action.RecruitNeedPagedAction">
+			<result name="success">/WEB-INF/pages/hr/recruit/recruitNeed/viewRecruitNeedList.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/recruit/recruitNeed/viewRecruitNeedList.jsp</result>
+		</action>
+	</package>
+
+</struts>

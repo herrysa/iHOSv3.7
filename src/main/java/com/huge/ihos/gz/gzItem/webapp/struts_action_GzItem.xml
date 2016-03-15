@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzItem" extends="default"	namespace="/">
+		<action name="gzItemSetList" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItem/gzItemSetList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItem/gzItemSetList.jsp</result>
+		</action>
+		<action name="gzItemList" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItem/gzItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItem/gzItemList.jsp</result>
+		</action>
+		<action name="gzItemCheckList" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="gzItemCheckList">
+			<result name="input">/WEB-INF/pages/gz/gzItem/gzItemCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItem/gzItemCheckList.jsp</result>
+		</action>
+		<action name="gzItemGridList" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction"		method="gzItemGridList">
+			<result type="json">
+				<param name="includeProperties">gzItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzItemGridEdit" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction"			method="gzItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzItem" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/gzItem/gzItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzItem/gzItemForm.jsp</result>
+		</action>
+		<action name="sortGzItem" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction">
+			<result name="success">/WEB-INF/pages/gz/gzItem/gzItemSortForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzItem/gzItemSortForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzItem" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,itemId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 添加工资项(从指标库中) -->
+		<action name="addGzItem" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction"			method="addGzItem">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,itemId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzItemSort" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction"			method="gzItemSort">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,itemId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+         <action name="gzItemChangeSn" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction"	method="gzItemChangeSn">
+			<result name="success" type="json">
+            </result>
+		</action>
+		<action name="makeGzItemTree" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="makeGzItemTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">itemNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkDelGzItem" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="checkDelGzItem">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkAddGzItem" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="checkAddGzItem">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkGzItemName" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="checkGzItemName">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getCodeIsRepeat" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="getCodeIsRepeat">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="resortGzItemSn" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="resortSn">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 扣税项判断 -->
+		<action name="gzItemIsTaxExist" class="com.huge.ihos.gz.gzItem.webapp.action.GzItemPagedAction" method="gzItemIsTaxExist">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

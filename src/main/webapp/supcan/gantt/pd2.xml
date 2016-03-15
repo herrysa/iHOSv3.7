@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="gbk"?>
+<!-- By Supcan TreeList  -->
+<TreeList>
+<Properties Title="项目任务表" isShowTreeLine="0" isShowGridTreeNode="1"
+	TreeNodeButton="../treelist/lit.zip#tree1.bmp, ../treelist/lit.zip#tree2.bmp"
+	isTree="true" treeformat="byId;SeparateChar=." rowHeight="30">
+	<Expresses>
+		<Express>Dur=dateDifDays(ES,EF) + 1</Express>
+	</Expresses>
+</Properties>
+<Fonts>
+	<Font/>
+	<Font faceName="Consolas"/>
+</Fonts>
+<Cols>
+	<Col name="id" width="100">ID</Col>
+	<Col name="name" width="240">任务名称</Col>
+	<Col name="gxbs" width="60" datatype="int">工序标识</Col>
+	<Col name="Dur" width="60" datatype="int">工期</Col>
+	<Col name="ES" width="80" datatype="date">开始日期</Col>
+	<Col name="EF" width="80" datatype="date">结束日期</Col>
+	<Col name="TID" width="120">紧后</Col>
+	<Col name="Style" width="120">Style</Col>
+</Cols>
+<Gantt displayAs="PD" HorzGridRows="4" horzGridColor="#ededed">
+	<TimeScale dragMode="normal">
+		<Segments>
+			<Segment from="2014.1.1" to="2014.12.31">
+				<Tier height="20" unit="month" count="1" align="left" fontindex="0" />
+				<Tier height="20" unit="day" count="1" format="%d" cellWidth="22" cellMinWidth="1" />
+			</Segment>
+		</Segments>
+	</TimeScale>
+	<GanttBar>
+		<Styles>
+			<Style id="0" startShape="none" endShape="none" size="40%" Color="#000099" FillColor="#0000FF"/>
+			<Style id="1" startShape="houseDown" endShape="houseDown" StartColor="#000000" StartFillColor="#000000" EndColor="#000000" EndFillColor="#000000" startSize="60%" endSize="60%" startOffser="10%" endOffset="10%" hasMid="true" Brush="solid" size="40%" offset="-10%" Color="#000000" FillColor="#000000"/>
+		</Styles>
+	</GanttBar>
+	<Fields>
+		<SF>ES, EF</SF>
+		<SF visible="false">LS, LF</SF>
+		<SF visible="false">AS, AF</SF>
+		<Style>Style</Style>
+		<Tight>TID</Tight>
+		<Duration>Dur</Duration>
+		<ProjectId>gxbs</ProjectId>
+	</Fields>
+	<LineStyles>
+		<LineStyle id="."   Arrow="LargeSolid" color="#0033ff" roundRadius="8" />
+		<LineStyle id="Big" Arrow="LargeLine"  color="#00aa33" roundRadius="8" thick="2" />
+	</LineStyles>
+	<AD wavesize="6" Zoom="40" NodeDiameter="22" />
+	<PD shadowColor="#000000"/>
+</Gantt>
+</TreeList>

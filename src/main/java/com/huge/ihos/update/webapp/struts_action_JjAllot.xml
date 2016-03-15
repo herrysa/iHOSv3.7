@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="jjAllot" extends="default"	namespace="/">
+
+		<action name="jjAllotList" class="com.huge.ihos.update.webapp.action.JjAllotPagedAction" method="jjAllotList">
+			<result name="input">/WEB-INF/pages/jjAllot/jjAllotList.jsp</result>
+			<result name="success">/WEB-INF/pages/jjAllot/jjAllotList.jsp</result>
+		</action>
+		<action name="jjAllotMain">
+			<result name="input">/WEB-INF/pages/jjAllot/jjAllotMain.jsp</result>
+			<result name="success">/WEB-INF/pages/jjAllot/jjAllotMain.jsp</result>
+		</action>
+		<action name="jjAllotGridList" class="com.huge.ihos.update.webapp.action.JjAllotPagedAction"		method="jjAllotGridList">
+			<result type="json">
+				<param name="includeProperties">jjAllots.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="jjAllotGridEdit" class="com.huge.ihos.update.webapp.action.JjAllotPagedAction"			method="jjAllotGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editJjAllot" class="com.huge.ihos.update.webapp.action.JjAllotPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/jjAllot/jjAllotForm.jsp</result>
+			<result name="input" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveJjAllot" class="com.huge.ihos.update.webapp.action.JjAllotPagedAction"			method="save">
+		<result name="input">/WEB-INF/pages/jjAllot/jjAllotForm.jsp</result>
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="compareAmount" class="com.huge.ihos.update.webapp.action.JjAllotPagedAction" method="compareAmount">
+            <result name="success" type="json">
+                <param name="includeProperties">compareValue</param>
+                <param name="ignoreHierarchy">false</param>
+            </result>
+         </action>
+
+	</package>
+
+</struts>

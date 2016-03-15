@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="hrOrg" extends="default"	namespace="/">
+		<action name="hrOrgList" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgPagedAction" method="hrOrgList">
+			<result name="input">/WEB-INF/pages/hr/hrOrg/hrOrgList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrOrg/hrOrgList.jsp</result>
+		</action>
+		<action name="hrOrgGridList" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgPagedAction"	method="hrOrgGridList">
+			<result type="json">
+				<param name="includeProperties">hrOrgs.*,records,total,page,hrOrgAll.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="makeHrOrgTree" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgPagedAction" method="makeHrOrgTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">hrOrgTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkEnableHrOrg" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgPagedAction" method="checkEnableHrOrg">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkDisableHrOrg" class="com.huge.ihos.hr.hrOrg.webapp.action.HrOrgPagedAction" method="checkDisableHrOrg">
+			<result name="success"  type="json">
+				<param name="includeProperties">message,statusCode</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+</struts>

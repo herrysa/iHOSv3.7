@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="pinyin" extends="struts-default,json-default"
+		namespace="/pinyin">
+
+		<action name="dictionaryPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction"
+			method="dictionaryPinYinSelect">
+			<result type="json">
+				<param name="includeProperties">dicList.*,fdcMap.*</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deptPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction"
+			method="deptPinYinSelect">
+			<result type="json">
+				<param name="includeProperties">deptList.*</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="deptAllPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction"
+			method="deptAllPinYinSelect">
+			<result type="json">
+				<param name="includeProperties">deptAllList.*</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		
+		<action name="personPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction"
+			method="personPinYinSelect">
+			<result type="json">
+				<param name="includeProperties">personList.*</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+<!-- 		<action name="chargeTypePinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction"
+			method="chargeTypePinYinSelect">
+			<result type="json">
+				<param name="includeProperties">chargeTypeList.*</param>
+			</result>
+		</action> -->
+		<action name="chargeItemPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction"
+			method="chargeItemPinYinSelect">
+			<result type="json">
+				<param name="includeProperties">chargeItemList.*</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="costItemPinYinJson" class="com.huge.webapp.action.PinYinCodeSelectAction"
+			method="costItemPinYinSelect">
+			<result type="json">
+				<param name="includeProperties">costItemList.*</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+
+	</package>
+
+</struts>

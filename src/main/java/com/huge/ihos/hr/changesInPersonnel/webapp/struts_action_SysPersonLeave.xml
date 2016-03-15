@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="sysPersonLeave" extends="default"	namespace="/">
+
+		<action name="sysPersonLeaveList" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPersonLeavePagedAction" method="sysPersonLeaveList">
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPersonLeave/sysPersonLeaveList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPersonLeave/sysPersonLeaveList.jsp</result>
+		</action>
+		<action name="sysPersonLeaveGridList" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPersonLeavePagedAction"		method="sysPersonLeaveGridList">
+			<result type="json">
+				<param name="includeProperties">sysPersonLeaves.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="sysPersonLeaveGridEdit" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPersonLeavePagedAction"			method="sysPersonLeaveGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,pactExist</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSysPersonLeave" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPersonLeavePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPersonLeave/sysPersonLeaveForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/changesInPersonnel/sysPersonLeave/sysPersonLeaveForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSysPersonLeave" class="com.huge.ihos.hr.changesInPersonnel.webapp.action.SysPersonLeavePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,id,pactExist,personId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

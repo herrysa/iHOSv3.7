@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="GBK"?>
+<root>
+<lineStyles>
+	<style id="." width="1"/>
+	<style id="style3" roundRadius="10" width="2" color="red"/>
+</lineStyles>
+<items>
+	<item from="10001" to="10002">FS</item>
+	<item from="10002" to="10003">FS</item>
+	<item from="10003" to="10004">FS</item>
+	<item from="20002" to="2000201">FS</item>
+	<item from="2000201" to="2000202">FS</item>
+	<item from="100" to="10001" class="style3">SS</item>
+	<item from="100" to="200" class="style3">SS</item>
+	<item from="100" to="20002" class="style3">SS</item>
+</items>
+</root>

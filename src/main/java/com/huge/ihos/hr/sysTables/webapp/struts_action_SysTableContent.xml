@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="sysTableContent" extends="default"	namespace="/">
+
+		<action name="sysTableContentList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableContentPagedAction">
+			<result name="input">/WEB-INF/pages/hr/sysTable/sysTableContent/sysTableContentList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableContent/sysTableContentList.jsp</result>
+		</action>
+		<action name="sysTableContentGridList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableContentPagedAction"		method="sysTableContentGridList">
+			<result type="json">
+				<param name="includeProperties">sysTableContents.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="sysTableContentGridEdit" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableContentPagedAction"			method="sysTableContentGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSysTableContent" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableContentPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableContent/sysTableContentForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/sysTable/sysTableContent/sysTableContentForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSysTableContent" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableContentPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<action name="makeSysTableContentTree"	class="com.huge.ihos.hr.sysTables.webapp.action.SysTableContentPagedAction" method="makeSysTableContentTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">treeNodesList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="getTableContentList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableContentPagedAction" method="getTableContentList">
+   			<result name="success" type="json">
+                 <param name="includeProperties">sysTableContents.*</param>
+                 <param name="noCache">true</param>
+    			 <param name="ignoreHierarchy">false</param>
+            </result>
+ 		 </action>
+	</package>
+
+</struts>

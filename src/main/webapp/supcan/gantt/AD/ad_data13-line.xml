@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<From>A</From>
+	<To>H</To>
+</record>
+<record>
+	<From>B</From>
+	<To>H,N</To>
+</record>
+<record>
+	<From>C</From>
+	<To>H,N,P</To>
+</record>
+<record>
+	<From>D</From>
+	<To>N,P</To>
+</record>
+<record>
+	<From>E</From>
+	<To>P</To>
+</record>
+</data>

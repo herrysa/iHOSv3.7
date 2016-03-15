@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d{yyyy-MM-dd HH:mm:ss,SSS} %p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+	<!-- <appender name="FA" class="org.apache.log4j.FileAppender">
+
+		<param name="File" value="sample.log" />
+
+
+		<layout class="org.apache.log4j.PatternLayout">
+
+			<param name="ConversionPattern" value="%d{ HH:mm:ss,SSS} %p [%t] %c{1}.%M(%L) | %m%n"/>
+
+		</layout>
+
+	</appender>  -->
+  <logger name="net.sf.ehcache">
+        <level value="ERROR"/>
+    </logger>
+            <logger name="org.hibernate.cache">
+        <level value="ERROR"/>
+    </logger>
+  <!--  
+    Suppress success logging from InteractiveAuthenticationSuccessEvent
+    <logger name="org.springframework.security">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="org.apache">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="org.apache.velocity">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="org.dbunit">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="DEBUG"/>
+    </logger>
+  
+    <logger name="org.hibernate.SQL">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="DEBUG"/>
+    </logger>
+   
+    <logger name="com.huge">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="com.huge.tool">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="org.tuckey.web.filters.urlrewrite">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="com.opensymphony.xwork2">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="com.opensymphony.xwork2.validator">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="com.opensymphony.xwork2.ognl">
+        <level value="DEBUG"/>
+    </logger>
+        <logger name="org.springframework.cache">
+        <level value="DEBUG"/>
+    </logger>
+            <logger name="com.opensymphony.module.sitemesh.filter">
+        <level value="DEBUG"/>
+    </logger> -->
+  <logger name="org.springframework.security">
+        <level value="ERROR"/>
+    </logger>
+      <logger name="org.apache.velocity">
+        <level value="FATAL"/>
+    </logger>
+ <logger name="javax.el">
+        <level value="ERROR"/>
+    </logger>
+<!--     <logger name="org.hibernate.type">
+    <level value="trace"/>
+    </logger>
+       -->
+       
+      <logger name="com.huge.webapp.listener.CalcPageLoadingTimeFilter">
+        <level value="ERROR"/>
+    </logger>
+       
+     <logger name="org.springframework.jdbc">
+        <level value="ERROR"/>
+    </logger>       
+        <logger name="org.apache.struts2.json.annotations">
+        <level value="ERROR"/>
+    </logger>
+     <!--    <logger name="org.apache.struts2">
+        <level value="DEBUG"/>
+    </logger> -->
+        <logger name="com.huge">
+        <level value="INFO"/>
+    </logger>
+
+    <logger name="com.huge.webapp.listener">
+        <level value="ERROR"/>
+    </logger>
+    
+    <root>
+        <level value="ERROR"/>
+        <appender-ref ref="CONSOLE"/>
+        <!-- <appender-ref ref="FA"/> -->
+    </root>
+
+</log4j:configuration>

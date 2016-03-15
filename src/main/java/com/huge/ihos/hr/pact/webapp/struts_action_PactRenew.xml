@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="pactRenew" extends="default"	namespace="/">
+		<action name="pactRenew" class="com.huge.ihos.hr.pact.webapp.action.PactRenewPagedAction">
+			<result name="input">/WEB-INF/pages/hr/pact/pactRenew/pactRenew.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactRenew/pactRenew.jsp</result>
+		</action>
+		<action name="pactExpireList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="pactExpireList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactRenew/pactExpireList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactRenew/pactExpireList.jsp</result>
+		</action>
+		<action name="pactExpireGridList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="pactExpireGridList">
+			<result type="json">
+				<param name="includeProperties">pacts.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="pactRenewList" class="com.huge.ihos.hr.pact.webapp.action.PactRenewPagedAction" method="pactRenewList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactRenew/pactRenewList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactRenew/pactRenewList.jsp</result>
+		</action>
+		<action name="pactRenewGridList" class="com.huge.ihos.hr.pact.webapp.action.PactRenewPagedAction" method="pactRenewGridList">
+			<result type="json">
+				<param name="includeProperties">pactRenews.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="pactRenewGridEdit" class="com.huge.ihos.hr.pact.webapp.action.PactRenewPagedAction"	method="pactRenewGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPactRenew" class="com.huge.ihos.hr.pact.webapp.action.PactRenewPagedAction"	method="edit">
+			<result name="success">/WEB-INF/pages/hr/pact/pactRenew/pactRenewForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/pact/pactRenew/pactRenewForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePactRenew" class="com.huge.ihos.hr.pact.webapp.action.PactRenewPagedAction"	method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

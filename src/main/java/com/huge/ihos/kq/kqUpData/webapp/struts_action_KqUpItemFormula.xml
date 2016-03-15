@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kqUpItemFormula" extends="default"	namespace="/">
+		<!-- 公式明细 -->
+		<action name="kqUpItemFormulaList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction">
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqUpItemFormula/kqUpItemFormulaList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqUpItemFormula/kqUpItemFormulaList.jsp</result>
+		</action>
+		<action name="kqUpItemFormulaGridList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction"		method="kqUpItemFormulaGridList">
+			<result type="json">
+				<param name="includeProperties">kqUpItemFormulas.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqUpItemFormulaGridEdit" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction"			method="kqUpItemFormulaGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKqUpItemFormula" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqUpItemFormula/kqUpItemFormulaForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqUpItemFormula/kqUpItemFormulaForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKqUpItemFormula" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getKqUpItemNodesForFormula" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction"		method="getKqUpItemNodesForFormula">
+			<result type="json">
+				<param name="includeProperties">kqUpItemNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkKqUpItemCheckList" class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction">
+			<result name="input">/WEB-INF/pages/kq/kqUpData/kqUpItemFormula/kqUpItemCheckList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqUpData/kqUpItemFormula/kqUpItemCheckList.jsp</result>
+		</action>
+		<action name="getCurrentKqUpDataFormula"	class="com.huge.ihos.kq.kqUpData.webapp.action.KqUpItemFormulaPagedAction" method="getCurrentKqUpDataFormula">
+			<result name="success"  type="json">
+				<param name="includeProperties">jsonList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

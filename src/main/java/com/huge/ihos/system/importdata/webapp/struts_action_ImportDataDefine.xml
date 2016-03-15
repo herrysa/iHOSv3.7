@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="importDataDefine" extends="default" namespace="/">
+
+		<action name="importDataDefineList"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction">
+			<result name="input">/WEB-INF/pages/system/importData/importDataDefine/importDataDefineList.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/system/importData/importDataDefine/importDataDefineList.jsp
+			</result>
+		</action>
+		<action name="importDataDefineGridList"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="importDataDefineGridList">
+			<result type="json">
+				<param name="includeProperties">importDataDefines.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="importDataDefineGridEdit"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="importDataDefineGridEdit">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editImportDataDefine"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/system/importData/importDataDefine/importDataDefineForm.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/system/importData/importDataDefine/importDataDefineForm.jsp
+			</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveImportDataDefine"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="save">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="findAllImportDataDefine"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="findAll">
+			<result name="success">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataDefineDetailForm.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataDefineDetailForm.jsp
+			</result>
+		</action>
+
+		<action name="importExcelDataDefine"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="importExcelDataDefine">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkImportDataFile"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="checkImportFile">
+			<result name="success" type="json">
+				<param name="contentType">text/plain</param>
+				<param name="includeProperties">systemTime,message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="findImportDataDefineById"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="findById">
+			<result name="success" type="json">
+				<param name="includeProperties">interfaceName,details.*,message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="checkUniqueName"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="checkUniqueName">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="OutputImportDataExcel"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="OutputImportDataExcel">
+			<result name="success" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;fileName="${fileName}"</param>
+				<param name="inputName">excelStream</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		<action name="showImportDataLog"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="showImportDataLog">
+			<result name="success">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataLog.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/system/importData/importDataDefineDetail/importDataLog.jsp
+			</result>
+		</action>
+		<action name="importDataLogGridList"
+			class="com.huge.ihos.system.importdata.webapp.action.ImportDataDefinePagedAction"
+			method="importDataLogGridList">
+			<result type="json">
+				<param name="includeProperties">interLoggers.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

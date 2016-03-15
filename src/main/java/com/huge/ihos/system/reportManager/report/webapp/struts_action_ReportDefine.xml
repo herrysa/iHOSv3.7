@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="reportDefine" extends="default"	namespace="/">
+
+		<action name="reportDefineList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportDefinePagedAction">
+			<result name="input">/WEB-INF/pages/reportDefine/reportDefineList.jsp</result>
+			<result name="success">/WEB-INF/pages/reportDefine/reportDefineList.jsp</result>
+		</action>
+		<action name="reportDefineGridList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportDefinePagedAction"		method="reportDefineGridList">
+			<result type="json">
+				<param name="includeProperties">reportDefines.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="reportDefineGridEdit" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportDefinePagedAction"			method="reportDefineGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editReportDefine" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportDefinePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/reportDefine/reportDefineForm.jsp</result>
+			<result name="input">/WEB-INF/pages/reportDefine/reportDefineForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveReportDefine" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportDefinePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

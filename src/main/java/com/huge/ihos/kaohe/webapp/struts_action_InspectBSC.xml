@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="inspectBSC" extends="default"	namespace="/">
+
+	    <action name="inspectBSC" class="com.huge.ihos.kaohe.webapp.action.InspectBSCPagedAction"		method="findByInspectTemplId">
+			<result name="input">/WEB-INF/pages/balanceCard/inspectBSC.jsp</result>
+			<result name="success">/WEB-INF/pages/balanceCard/inspectBSC.jsp</result>
+		</action>
+		<action name="inspectBSCList" class="com.huge.ihos.inspectbsc.webapp.action.InspectBSCPagedAction">
+			<result name="input">/WEB-INF/pages/inspectBSC/inspectBSCList.jsp</result>
+			<result name="success">/WEB-INF/pages/inspectBSC/inspectBSCList.jsp</result>
+		</action>
+		<action name="inspectBSCGridList" class="com.huge.ihos.inspectbsc.webapp.action.InspectBSCPagedAction"		method="inspectBSCGridList">
+			<result type="json">
+				<param name="includeProperties">inspectBSCs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="inspectBSCGridEdit" class="com.huge.ihos.inspectbsc.webapp.action.InspectBSCPagedAction"			method="inspectBSCGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInspectBSC" class="com.huge.ihos.inspectbsc.webapp.action.InspectBSCPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/inspectBSC/inspectBSCForm.jsp</result>
+			<result name="input">/WEB-INF/pages/inspectBSC/inspectBSCForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<!-- <action name="saveInspectBSC" class="com.huge.ihos.inspectbsc.webapp.action.InspectBSCPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action> -->
+		
+		<action name="getSelectedKpiInfo" class="com.huge.ihos.kaohe.webapp.action.InspectBSCPagedAction"			method="getSelectedKpiInfo">
+			<result name="success" type="json">
+                <param name="includeProperties">inspectBSCs.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveInspectBSCs" class="com.huge.ihos.kaohe.webapp.action.InspectBSCPagedAction"			method="saveInspectBSCs">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="selectedKpis" class="com.huge.ihos.kaohe.webapp.action.InspectBSCPagedAction"			method="getSelectedKpis">
+			<result name="success">/WEB-INF/pages/balanceCard/kpiItemTree.jsp</result>
+		</action>
+
+	</package>
+
+</struts>

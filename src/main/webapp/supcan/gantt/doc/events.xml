@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<events>
+<Gantt>
+	<Gantt_BeforeDragLeft>
+		<meaning>横道左侧被拖拉前</meaning>
+		<p>行号</p>
+		<memo>可执行全局函数CalcelEvent( )阻止继续执行</memo>
+	</Gantt_BeforeDragLeft>
+	<Gantt_BeforeDragRight>
+		<meaning>横道右侧被拖拉前</meaning>
+		<p>行号</p>
+		<memo>可执行全局函数CalcelEvent( )阻止继续执行</memo>
+	</Gantt_BeforeDragRight>
+	<Gantt_BeforeDrag>
+		<meaning>横道整体被拖拽前</meaning>
+		<p>行号</p>
+		<memo>可执行全局函数CalcelEvent( )阻止继续执行</memo>
+	</Gantt_BeforeDrag>
+	<Gantt_DragLeft>
+		<meaning>横道左侧已经被拖拉</meaning>
+		<p>行号</p>
+	</Gantt_DragLeft>
+	<Gantt_DragRight>
+		<meaning>横道右侧已经被拖拉</meaning>
+		<p>行号</p>
+	</Gantt_DragRight>
+	<Gantt_Drag>
+		<meaning>横道整体已经被拖拽</meaning>
+		<p>行号</p>
+	</Gantt_Drag>
+</Gantt>
+
+</events>

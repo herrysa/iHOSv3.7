@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="indicator" extends="default"	namespace="/">
+
+		<action name="indicatorList" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction">
+			<result name="input">/WEB-INF/pages/indicatoranalysis/indicator/indicatorList.jsp</result>
+			<result name="success">/WEB-INF/pages/indicatoranalysis/indicator/indicatorList.jsp</result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editIndicator" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction"	method="edit">
+			<result name="success">/WEB-INF/pages/indicatoranalysis/indicator/indicatorForm.jsp</result>
+			<result name="input">/WEB-INF/pages/indicatoranalysis/indicator/indicatorForm.jsp</result>
+		</action>
+		<!-- called when clicking save on the edit form -->
+		<action name="saveIndicator" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction"	method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,indicator.*,parentId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="delIndicator" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction" method="delete">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="makeIndicatorTree" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction" method="makeIndicatorTree">
+			<result name="success" type="json">
+                <param name="includeProperties">indicatorNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkIndiactorCode" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction" method="checkIndiactorCode">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkIndiactorName" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction" method="checkIndiactorName">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="setIndicatorFormula" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction" method="setIndicatorFormula">
+			<result name="success">/WEB-INF/pages/indicatoranalysis/indicator/setIndicatorFormula.jsp</result>
+			<result name="input">/WEB-INF/pages/indicatoranalysis/indicator/setIndicatorFormula.jsp</result>
+		</action>
+		<action name="setIndicatorLeafFormula" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorPagedAction" method="setIndicatorLeafFormula">
+			<result name="success">/WEB-INF/pages/indicatoranalysis/indicator/setIndicatorLeafFormula.jsp</result>
+			<result name="input">/WEB-INF/pages/indicatoranalysis/indicator/setIndicatorLeafFormula.jsp</result>
+		</action>
+	</package>
+
+</struts>

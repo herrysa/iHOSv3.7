@@ -1,0 +1,181 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+</head>
+
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag12"/><br>
+<b>GanttBar</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:横道图入口；数量: 1</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>dragAble</td><td>鼠标是否能拖拽</td><td>true/false</td><td>false</td></tr>
+</table>
+<br>
+
+<div id="Tag121"/><br>
+<b>Styles</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:横道图格式入口；数量:1;</td></tr>
+</table>
+<br>
+
+
+<div id="Tag1211"/><br>
+<b>Style</b><br>
+横道图分 左侧 (Start)、中段(Mid)、右侧(End) 三个部分。
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=5>含义:横道图格式；数量:0 - n;</td></tr>
+<tr bgcolor=#f1f1f1><td colspan=2>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td colspan=2>id</td><td>id号</td><td>串</td><td>无</td></tr>
+<tr><td rowspan=7>中段</td><td>hasMid</td><td>是否需要中段, 通常都需要, 但像 "里程碑", 就不需要</td><td>true/false</td><td>true</td></tr>
+<tr><td>size</td><td>高度尺寸</td><td>百分比或小于1的分数，整数表示绝对像素</td><td>0.6</td></tr>
+<tr><td rowspan=2>offset</td><td>垂直方向偏离中心点的尺寸</td><td>百分比或小于1的分数，整数表示绝对像素；负数表示偏离中心点上方</td><td>0</td></tr>
+<tr><td colspan=3>size和offset的百分比，都是相对于 "行高"的, 图示如下:<br><img src='gantt3.png'/></td></tr>
+<tr><td>fillColor</td><td>底色</td><td>颜色串</td><td>#0000FF</td></tr>
+<tr><td>color</td><td>边框色、图案色</td><td>颜色串</td><td>#0000FF</td></tr>
+<tr><td>brush</td><td>填充图案</td><td>
+solid - 实心<br>
+cross - 交叉线(横竖线)<br>
+diagCross - 交叉线(斜线)<br>
+horizontal - 横线<br>
+vertical - 竖线<br>
+fDiagonal - 斜线(左上-右下)<br>
+bDiagonal - 斜线(左下-右上)<br>
+chess - 棋盘状(仅黑色)<br>
+</td><td>solid</td></tr>
+<tr><td rowspan=5>左侧<br>右侧</td><td>startSize<br>endSize</td><td>高度尺寸</td><td>百分比或小于1的分数，整数表示绝对像素</td><td>0.6</td></tr>
+<tr><td>startOffset<br>endOffset</td><td>垂直方向偏离中心点的尺寸</td><td>百分比或小于1的分数，整数表示绝对像素；负数表示偏离中心点上方</td><td>0</td></tr>
+<tr><td>startFillColor<br>endFillColor</td><td>底色</td><td>颜色串</td><td>#0000FF</td></tr>
+<tr><td>startColor<br>endColor</td><td>边框色、图案色</td><td>颜色串</td><td>#0000FF</td></tr>
+<tr><td>startShape<br>endShape</td><td>形状<br><img src='gantt4.png'/></td><td>
+none - 无, 表示不需要左侧或右侧部分<br>
+triangleUp - 向上三角<br>
+triangleDown - 向下三角<br>
+triangleLeft - 向左三角<br>
+triangleRight - 向右三角<br>
+arrowUp - 向上箭头<br>
+arrowDown - 向下箭头<br>
+houseUp - 正锲<br>
+houseDown - 倒锲<br>
+diamond - 菱形<br>
+Square - 方形<br>
+flag 旗帜</td><td>none</td></tr>
+</table>
+<br>
+
+<div id="Tag13"/><br>
+<b>Fields</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:字段映射；数量: 1</td></tr>
+</table>
+<br>
+
+<div id="Tag131"/><br>
+<b>SF</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:开始、结束字段，内容：以逗号分隔的字段名；数量: 1 - n</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>visible</td><td>是否画横道图</td><td>true/false</td><td>true</td></tr>
+</table>
+<br>
+
+<div id="Tag132"/><br>
+<b>Style</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 横道图格式字段，内容：字段名，数量: 1</td></tr>
+</table>
+<br>
+
+<div id="Tag134"/><br>
+<b>TF</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 总浮时字段，内容：字段名，数量: 1</td></tr>
+</table>
+<br>
+
+<div id="Tag135"/><br>
+<b>Duration</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 工期，内容：字段名，数量: 1</td></tr>
+</table>
+<br>
+
+<div id="Tag136"/><br>
+<b>ProjectId</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 工序标识，可选，如果不定义，将采用 ID 作为工序标识，内容：字段名，数量: 1</td></tr>
+</table>
+<br>
+
+<div id="Tag14"/><br>
+<b>LineStyles</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 连接线集合；数量: 0 - 1</td></tr>
+</table>
+<br>
+
+<div id="Tag141"/><br>
+<b>LineStyle</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:连接线；数量: 0 - n</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>id</td><td>style的ID，小数点(.)表示默认被采用的</td><td>串</td><td>无</td></tr>
+<tr><td>Width 或 Thick</td><td>线条粗细</td><td>像素数</td><td>1</td></tr>
+<tr><td>Color</td><td>线条颜色</td><td>颜色串</td><td>#000000</td></tr>
+<tr><td>PenStyle</td><td>线型</td><td>Solid/Dash/Dot/DashDot</td><td>solid</td></tr>
+<tr><td>Arrow</td><td>箭头形状</td><td>none - 无箭头，或者是如下大小和形状的组合：<br>large/small - 大箭头/小箭头，solid/line - 实心箭头/线条箭头</td><td>none</td></tr>
+<tr><td>RoundRadius</td><td>线条拐弯时的圆角半径</td><td>像素数</td><td>0</td></tr>
+</table>
+<br>
+
+
+
+
+<div id="Tag15"/><br>
+<b>PD</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:单代号网络图；数量: 0 - 1</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>FontIndex</td><td>文字字体索引</td><td>字体索引号</td><td>0</td></tr>
+<tr><td>BoxWidth</td><td>工序节点方框宽度</td><td>像素数</td><td>250</td></tr>
+<tr><td>BoxHeight</td><td>工序节点方框高度</td><td>像素数</td><td>68</td></tr>
+<tr><td>SpaceX</td><td>工序节点方框之间的间隔(水平方向)</td><td>像素数</td><td>54</td></tr>
+<tr><td>SpaceY</td><td>工序节点方框之间的间隔(垂直方向)</td><td>像素数</td><td>20</td></tr>
+<tr><td>LineStyleClass</td><td>工序节点之间的连接线线型</td><td>指向&lt;LineStyles&gt;下某个id</td><td>.</td></tr>
+<tr><td>BorderColor</td><td>工序节点方框的边界色</td><td>颜色串</td><td>#008C6E</td></tr>
+<tr><td>NodeBackColor</td><td>树杈的工序节点方框的背景色</td><td>颜色串</td><td>#D6DFEC</td></tr>
+<tr><td>ShadowColor</td><td>阴影色</td><td>颜色串,  #FFFFFF表示不需要画阴影</td><td>#000000</td></tr>
+<tr><td>ActiveTextColor</td><td>当前活动工序节点的首行文字色</td><td>颜色串</td><td>#FF0000</td></tr>
+</table>
+<br>
+
+<div id="Tag16"/><br>
+<b>AD</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:双代号网络图；数量: 0 - 1</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>NodeDiameter</td><td>节点(小圆圈)的直径</td><td>像素数</td><td>26</td></tr>
+<tr><td>Zoom</td><td>布局的松散比例</td><td>1-200之间的整数</td><td>80</td></tr>
+<tr><td>WaveSize</td><td>波浪线的大小</td><td>0-20之间的整数，0表示没有波浪线</td><td>6</td></tr>
+<tr><td>NodeFontIndex</td><td>节点(小圆圈)的文字字体索引</td><td>字体索引号</td><td>0</td></tr>
+<tr><td>ArcFontIndex</td><td>连接线周边的文字字体索引</td><td>字体索引号</td><td>0</td></tr>
+<tr><td>KeyPathTF</td><td>关键线路规则</td><td>0 - 表示总时间最长的路径; <br>大于0的数字 - 表示总浮时小于等于这个数字的工作</td><td>0</td></tr>
+<tr><td>KeyPathWidth</td><td>关键线路的线条宽度</td><td>像素数</td><td>1</td></tr>
+<tr><td>KeyPathWidth_Print</td><td>关键线路的线条宽度(打印时)</td><td>像素数</td><td>2</td></tr>
+<tr><td>KeyPathColor</td><td>关键线路的线条颜色</td><td>颜色</td><td>#FF0000</td></tr>
+<tr><td>KeyPathColor_Print</td><td>关键线路的线条颜色(打印时)</td><td>颜色</td><td>#000000</td></tr>
+<tr><td>isDisplaySolitaryTask</td><td>是否显示单个任务</td><td>true/false, 在调试时可以设为false, 屏幕仅显示有紧前/紧后关系的任务</td><td>true</td></tr>
+<tr><td>MaxNameChars</td><td>任务内容最多显示多少个字</td><td>字数, 超过则以".."结尾表示省略</td><td>32</td></tr>
+<tr><td>isUseSS</td><td>是否启用关系数据中的 SS </td><td>true/false, 如果启用, 那么SS关系的工序将一起成为某个工序共同的紧后</td><td>false</td></tr>
+</table>
+<br>
+
+<br><br><br><br><br>
+<script type='text/javascript' src='../nstd.js'></script>
+</body></html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="buttonPriv" extends="default"	namespace="/">
+
+		<action name="buttonPrivList" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPriv/searchButtonPrivList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPriv/searchButtonPrivList.jsp</result>
+		</action>
+		<action name="buttonPrivGridList" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction"		method="buttonPrivGridList">
+			<result type="json">
+				<param name="includeProperties">buttonPrivs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="buttonPrivGridEdit" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction"			method="buttonPrivGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editButtonPriv" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPriv/searchButtonPrivForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/menuButton/searchButtonPriv/searchButtonPrivForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveButtonPriv" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="addButtonPriv" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction"			method="addButtonPriv">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		 <action name="selectButtonPrivs" class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction" method="selectButtonPrivs">
+            <result name="success">
+            	/WEB-INF/pages/system/systemManager/menuButton/searchButtonPriv/searchButtonTree.jsp
+            </result>
+        </action>
+        <action name="makeButtonTree"	class="com.huge.ihos.system.systemManager.searchButtonPriv.webapp.action.ButtonPrivPagedAction" method="makeButtonTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">buttonPrivTreeList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

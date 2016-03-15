@@ -1,0 +1,61 @@
+<html>
+<head><title>7.单代号网络图</Title>
+<meta http-equiv="content-type" content="text/html; charset=GB2312">
+<link rel="stylesheet" href="../res/temp1.css" type="text/css">
+<script type='text/javascript' src='../binary/dynaloadNG.js?86'></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+  AF.func("Build", "PD/pd_pid.xml");
+  AF.func("Load", "PD/pd_data_pid.xml");
+  AF.func("LoadLine", "PD/pd_data-line.xml");
+  AF.func("BuildDiagram", "");
+  AF.func("Expand", "");
+ }
+ function OnSelData()
+ {
+  var obj=document.getElementById('Sel');
+  var index=obj.selectedIndex;
+  var model, data, line;
+  if(index == 0) {
+   model = "pd_pid.xml";
+   data ="pd_data_pid.xml";
+   line ="pd_data-line.xml";
+  }
+  else if(index == 1) {
+   model = "pd_id.xml";
+   data ="pd_data_id.xml";
+   line ="pd_data-line.xml";
+  }
+  AF.func("Build", "PD/"+ model);
+  AF.func("Load", "PD/"+ data);
+  AF.func("LoadLine", "PD/"+ line);
+  AF.func("BuildDiagram", "");
+  AF.func("Expand", "");
+ }
+</script>
+</head>
+
+<body topmargin=4 leftmargin=5 vlink=#0000ff link=#0000ff>
+<a href="index.htm">&lt;&lt;Back</a> 7.单代号网络图<br>
+<br>
+<center>
+树列表二种格式示例：<Select id="Sel" onchange="OnSelData()">
+	<option>byPid 树的模板和数据</option>
+	<option>byId 树的模板和数据</option>
+</Select>,
+
+<br>
+<div style="position:relative;width:100%">
+	<script>insertGantt('AF', '', '540px')</script>
+</div>
+<br>
+byPid的 <a href="PD/pd_pid.xml" target=_blank>模板</a> 和 <a href="PD/pd_data_pid.xml" target=_blank>主表数据</a>， byId的 <a href="PD/pd_id.xml" target=_blank>模板</a> 和 <a href="PD/pd_data_id.xml" target=_blank>数据</a><br>
+<a href="PD/pd_data-line.xml" target=_blank>关系表数据</a><br>
+</center>
+
+<br>
+
+</body>
+<script type='text/javascript' src='res/nstd.js'></script>
+</html>

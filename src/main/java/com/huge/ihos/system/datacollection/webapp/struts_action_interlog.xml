@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="interlog" extends="default" namespace="/">
+
+		
+        <action name="interLoggerList" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction">
+			<result name="input">/WEB-INF/pages/system/datacollection/interLoggerList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/interLoggerList.jsp</result>
+		</action>
+		<action name="viewInterLoggerList" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction">
+			<result name="input">/WEB-INF/pages/system/datacollection/viewInterLoggerList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/viewInterLoggerList.jsp</result>
+		</action>
+
+		<action name="interLoggerGridList" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction" method="interLoggerGridList">
+			<result type="json">
+				<param name="includeProperties">interLoggers.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		
+		   <action name="interLoggerStepList" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction">
+			<result name="input">/WEB-INF/pages/system/datacollection/interLoggerStepList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/datacollection/interLoggerStepList.jsp</result>
+		</action>
+
+		<action name="interLoggerStepGridList" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction" method="interLoggerStepGridList">
+			<result type="json">
+				<param name="includeProperties">interLoggers.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		
+		
+		<action name="interLoggerGridEdit" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction" method="interLoggerGridEdit">
+            <result type="json">
+                <param name="includeProperties">gridOperationMessage</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editInterLogger" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/datacollection/interLoggerForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/datacollection/interLoggerForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveInterLogger" class="com.huge.ihos.system.datacollection.webapp.action.InterLoggerAction" method="save">
+            <result name="success">/WEB-INF/pages/system/datacollection/interLoggerForm.jsp</result>
+            <result name="input">/WEB-INF/pages/system/datacollection/interLoggerForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+        </action>
+    
+	</package>
+
+</struts>

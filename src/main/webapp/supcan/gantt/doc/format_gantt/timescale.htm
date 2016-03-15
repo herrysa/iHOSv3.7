@@ -1,0 +1,119 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+	pre {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+</head>
+
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag11"/><br>
+<b>TimeScale</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:时间刻度入口；数量: 1</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>dragMode</td><td>鼠标拖拽方式</td><td>
+normal - 鼠标拖拽时自动横向伸缩<br>
+none - 鼠标不可拖拽</td><td>无</td></tr>
+</table>
+<br>
+
+<div id="Tag111"/><br>
+<b>Segments</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:"段"集合；数量:1;</td></tr>
+</table>
+<br>
+
+
+<div id="Tag1111"/><br>
+<b>Segment</b><br>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=5>含义:段；数量:1 - n;</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>From</td><td>该段的开始时间</td><td>日期</td><td>无</td></tr>
+<tr><td>To</td><td>该段的结束时间</td><td>日期</td><td>无</td></tr>
+</table>
+备注1：如果总共只有一个 "段"，则不需要指定 From、To (大多数情况下只有一个段);<br>
+备注2：如果有多个 "段"，第一段不需要指定 From、末段不需要指定 To;<br>
+<br>
+
+<div id="Tag11111"/><br>
+<b>Tier</b><br>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=5>含义:层；数量:1 - n;</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>height</td><td>层高</td><td>像素数</td><td>18</td></tr>
+<tr><td>unit</td><td>刻度单位</td><td>
+year - 年<br>
+halfyear - 半年(例如上半年、下半年)<br>
+season - 季<br>
+month - 月<br>
+bme - 旬(Begin-Middle-End, 例如上旬、中旬、下旬)<br>
+week - 周<br>
+day - 日<br>
+hour - 小时<br>
+</td><td>day</td></tr>
+<tr><td>count</td><td>单位数量</td><td>数字, 例如 Unit=day, Count=2， 表示刻度以 "2天" 为单位</td><td>1</td></tr>
+<tr><td>cellWidth</td><td>刻度的单位宽度<br>注：仅末级 Tier 才需要</td><td>像素数</td><td>20</td></tr>
+<tr><td>cellMinWidth</td><td>刻度的最小单位宽度<br>注1：仅末级 Tier 才需要;<br>注2：用途是防止鼠标拖拽过头</td><td>像素数</td><td>5</td></tr>
+<tr><td>format</td><td>文字显示掩码</td><td>串，例如 "%m月%BME", 其中 "%" 开头的表示宏，宏的含义请见下面的 "备注"</td><td>无</td></tr>
+<tr><td>tip</td><td>鼠标划过时的文字显示掩码</td><td>同上</td><td>无</td></tr>
+<tr><td>fontIndex</td><td>字体</td><td>数字, 树列表的字体集合 &lt;Fonts&gt; 中的顺序号</td><td>0</td></tr>
+<tr><td>align</td><td>文字对齐</td><td>left / center / right</td><td>center</td></tr>
+</table>
+备注：日期掩码宏的含义表(大小写敏感)<br>
+<pre>
+%x - 日期的普遍写法, 如 2014/03/22
+%xd - 日期的普遍写法, 如 2014.03.22
+%xm - 日期的普遍写法, 如 2014-03-22
+%xE - 日期的普遍写法(英文), 如 03/22/2014
+%c - 日期和时间, 如 2014/03/22 19:30:00
+%cd - 日期和时间, 如 2014.03.22 19:30:00
+%cm - 日期和时间, 如 2014-03-22 19:30:00
+%cE - 日期和时间(英文), 如 03/22/2014 07:00:00 AM
+%X - 时间, 如 19:30:00
+%XE - 时间(英文), 如 07:00:00 AM
+%Y - 4位数的年, 如 2014
+%y - 2位数的年, 如 14
+%k - 半年，1至2)
+%kk - 半年, 如 上半年, 下半年
+%kkE - 半年(英语), 如 1st, 2nd
+%q - 季度, 1至4
+%Q - 季度, 为一,二,三,四
+%QE - 季度(英文), 为1st,2nd,3rd,4th
+%m - 月份, 1至12
+%mm - 月份, 01至12
+%B - 月份的全称, 如 三月
+%BE - 月份的全称(英文), 如 March
+%b - 月份的简称, 如 一, 二
+%bE - 月份的简称(英文), 如 Mar
+%bme - 旬, 为1,2,3
+%bmed - 旬, 为1, 11, 21
+%BME - 旬, 为上旬, 中旬, 下旬
+%BMEE - 旬, 为B, M, E
+%A - 星期的全称, 如星期六
+%AE - 星期的全称(英文), 如 Saturday
+%a - 星期的缩写(一, 二...日)
+%aE - 星期的缩写(英文), 如 Sat
+%w - 数字表示的星期, 1至7 (1是星期天)
+%d - 月中的某日, 1至31
+%dd - 月中的某日, 01至31
+%du - 离项目开始的天数, 1, 2, 3...
+%dU - 离项目结束的天数, 90, 89, 88...
+%H - 小时(24小时制，00至23)
+%I - 小时(12小时制，01至12)
+%M - 分钟(00至59)
+%S - 秒钟(00至59)
+%j - 相对于1月1日的日期差(001至366)
+%p - 上午/下午
+%pE - 上午/下午(英文), 如AM,PM
+%Z - 和GMT(或UTC)时区的时差
+</pre>
+
+<br><br><br><br><br>
+<script type='text/javascript' src='../nstd.js'></script>
+</body></html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="businessTypeD" extends="default"	namespace="/">
+
+		<action name="businessTypeDList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeDPagedAction">
+			<result name="input">/WEB-INF/pages/pz/businessType/businessTypeD/businessTypeDList.jsp</result>
+			<result name="success">/WEB-INF/pages/pz/businessType/businessTypeD/businessTypeDList.jsp</result>
+		</action>
+		<action name="businessTypeDGridList" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeDPagedAction"		method="businessTypeDGridList">
+			<result type="json">
+				<param name="includeProperties">businessTypeDs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="businessTypeDGridEdit" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeDPagedAction"			method="businessTypeDGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBusinessTypeD" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeDPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/pz/businessType/businessTypeD/businessTypeDForm.jsp</result>
+			<result name="input">/WEB-INF/pages/pz/businessType/businessTypeD/businessTypeDForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBusinessTypeD" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeDPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkBusinessTypeDDel" class="com.huge.ihos.pz.businesstype.webapp.action.BusinessTypeDPagedAction" method="checkBusinessTypeDDel">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

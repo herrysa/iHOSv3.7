@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="indicatorType" extends="default"	namespace="/">
+
+		<action name="indicatorTypeList" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorTypePagedAction">
+			<result name="input">/WEB-INF/pages/indicatoranalysis/indicatorType/indicatorTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/indicatoranalysis/indicatorType/indicatorTypeList.jsp</result>
+		</action>
+		<action name="indicatorTypeGridList" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorTypePagedAction"		method="indicatorTypeGridList">
+			<result type="json">
+				<param name="includeProperties">indicatorTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="indicatorTypeGridEdit" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorTypePagedAction"			method="indicatorTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editIndicatorType" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/indicatoranalysis/indicatorType/indicatorTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/indicatoranalysis/indicatorType/indicatorTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveIndicatorType" class="com.huge.ihos.indicatoranalysis.webapp.action.IndicatorTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

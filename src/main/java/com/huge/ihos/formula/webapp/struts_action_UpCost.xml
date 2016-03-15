@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="upCost" extends="default"	namespace="/">
+
+		<action name="upCostList" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction" method="upCostPre">
+			<result name="input">/WEB-INF/pages/upCost/upCostList.jsp</result>
+			<result name="success">/WEB-INF/pages/upCost/upCostList.jsp</result>
+		</action>
+		<action name="upCostGridList" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"		method="upCostGridList">
+			<result type="json">
+				<param name="includeProperties">upCosts.*,records,total,page,userdata.*</param>
+				<param name="excludeProperties">upCosts.*\deptId,upCosts.*\.personId,upCosts.*\.ownerdept,upCosts.*\.operatorId,upCosts.*\.operatordeptid,upCosts.*\.auditorId,upCosts.*\.auditorDeptid,upCosts.*\.upitemid,upCosts.*\.costitemid</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="upCostGridEdit" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"			method="upCostGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editUpCost" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/upCost/upCostForm.jsp</result>
+			<result name="input">/WEB-INF/pages/upCost/upCostForm.jsp</result>
+		</action>
+		
+		<action name="eiditInheritanceUpCost" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"	method="eiditInheritanceUpCost">
+			<result name="success">/WEB-INF/pages/upCost/upCostInheritance.jsp</result>
+			<result name="input">/WEB-INF/pages/upCost/upCostInheritance.jsp</result>
+		</action>
+		<action name="inheritanceUpCost" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"	method="inheritanceUpCost">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveUpCost" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="upCostMain" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction" method="getDeptUpItems">
+			<result name="input">/WEB-INF/pages/upCost/upCostMain.jsp</result>
+			<result name="success">/WEB-INF/pages/upCost/upCostMain.jsp</result>
+		</action>
+		
+		<action name="initUpCost" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"			method="initUpCost">
+		</action>
+		
+		<action name="saveUpCostInfo" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"			method="saveUpCostInfo">
+		</action>
+		
+		<action name="submitUpcost" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"			method="submitUpcost">
+		</action>
+		
+		<action name="isUpdata" class="com.huge.ihos.formula.webapp.action.UpCostPagedAction"			method="isUpdata">
+		</action>
+
+	</package>
+
+</struts>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzItemPersonType" extends="default"	namespace="/">
+
+		<action name="gzItemPersonTypeList" class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction">
+			<result name="input">/WEB-INF/pages/gz/gzItemPersonType/gzItemPersonTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzItemPersonType/gzItemPersonTypeList.jsp</result>
+		</action>
+		<action name="gzItemPersonTypeGridList" class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction"		method="gzItemPersonTypeGridList">
+			<result type="json">
+				<param name="includeProperties">gzItemPersonTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzItemPersonTypeGridEdit" class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction"			method="gzItemPersonTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties"></param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editgzItemPersonType" class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/gzItemPersonType/gzItemPersonTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzItemPersonType/gzItemPersonTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savegzItemPersonType" class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+        <action name="makeformulaMiddleTree"	class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction" method="makeformulaMiddleTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">formulaTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		  <action name="getShowNodes"	class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction" method="getShowNodes">
+			<result name="success"  type="json">
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		  <action name="saveGzPersonType"	class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction" method="saveGzPersonType">
+			<result name="success"  type="json">
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		 <action name="getCurrentGzContentFormula"	class="com.huge.ihos.gz.gzItemPersonType.webapp.action.gzItemPersonTypePagedAction" method="getCurrentGzContentFormula">
+			<result name="success"  type="json">
+				<param name="includeProperties">jsonMap.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

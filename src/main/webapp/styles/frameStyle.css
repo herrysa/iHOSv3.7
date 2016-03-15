@@ -1,0 +1,197 @@
+/* table header*/
+/* .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #c5dbec; background: #F0EFF0 url(../dwz/themes/default/images/grid/tableth.png) repeat-x; font-weight: bold; color: #2e6e9e; } */
+/* label align*/
+.pageFormContent label {text-align:right;}
+
+/* searchBar label*/
+.searchBar label {float:none !important;white-space:nowrap}
+
+/* layout padding*/
+
+/* input default value*/
+.defaultValueStyle{color:#aaa;}
+
+/* treeSelect*/
+ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f0f6e4;width:220px;height:360px;overflow-y:scroll;overflow-x:auto;}
+
+
+.ztree li {line-height:18px}
+
+
+.grid-wrapdiv{
+			margin-left: 2px; 
+			margin-top: 2px; 
+			overflow: hidden !important
+}
+
+.fullInputtext{
+		padding:0;
+		width:97%;
+		height:auto;
+		overflow: auto
+}
+.lineInput {
+    border-top-width: 0px !important;
+    border-right-width: 0px !important;
+    border-left-width: 0px !important;
+    border-bottom: #787878 1px solid !important;
+    font-size:12px !important;
+    border-style:solid !important;
+    background-color: #ffffff !important;
+    text-align:center !important;
+    background-image: none !important;
+    padding:2px !important;
+    margin:0 !important; 
+    line-height:15px !important;
+    color:black;
+    z-index:2000
+    
+}
+.formspan select{
+	margin:0;
+}
+.ui-layout-resizer-blue {
+	background: rgb(150, 225, 248); border: 0px solid rgb(187, 187, 187);
+}
+
+.ui-layout-resizer-blue-drag {
+	
+}
+.ui-layout-resizer-blue-hover {
+	
+}
+
+.queryarea-form{
+	word-wrap:break-word;
+}
+.queryarea-label{
+	word-wrap:normal;
+	display: inline-block;
+	width:auto !important;
+}
+
+.progress {
+  position: absolute;
+  left: 500px;
+  top: 300px;
+  overflow: hidden;
+  margin: 100px auto;
+  padding: 0 15px;
+  width: 220px;
+  height: 34px;
+  background: #d3d5d9;
+  border-radius: 17px;
+  background-image: -webkit-linear-gradient(top, #ebecef, #bfc3c7);
+  background-image: -moz-linear-gradient(top, #ebecef, #bfc3c7);
+  background-image: -o-linear-gradient(top, #ebecef, #bfc3c7);
+  background-image: linear-gradient(to bottom, #ebecef, #bfc3c7);
+/*   -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 0 6px #b6babe, 0 7px rgba(255, 255, 255, 0.1); */
+/*   box-shadow: inset 0 1px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 0 6px #b6babe, 0 7px rgba(255, 255, 255, 0.1); */
+}
+
+.progress-val {
+  float: right;
+  margin-left: 15px;
+  font: bold 15px/34px Helvetica, Arial, sans-serif;
+  color: #333;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.progress-bar {
+  display: block;
+  overflow: hidden;
+  height: 8px;
+  margin: 13px 0;
+  background: #b8b8b8;
+  border-radius: 4px;
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2), transparent 60%);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.2), transparent 60%);
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.2), transparent 60%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent 60%);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.progress-in {
+  display: block;
+  min-width: 8px;
+  height: 8px;
+  background: #1997e6;
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0) 61%, rgba(0, 0, 0, 0.2)), -webkit-linear-gradient(left, #147cd6, #24c1fc);
+  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0) 61%, rgba(0, 0, 0, 0.2)), -moz-linear-gradient(left, #147cd6, #24c1fc);
+  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0) 61%, rgba(0, 0, 0, 0.2)), -o-linear-gradient(left, #147cd6, #24c1fc);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0) 61%, rgba(0, 0, 0, 0.2)), linear-gradient(to right, #147cd6, #24c1fc);
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+/*buttonicon*/
+/* .toolBar span { background:url(./themes/rzlt_theme/ihos_images/buttonicon.png) no-repeat;}
+.panelBar .toolBar a.addbutton span { background-position:-41px -27px;} */
+
+.panelBar .toolBar a.addbutton span { background-position:0 -895px;}
+.panelBar .toolBar a.backupbutton span { background-position:0 -945px;}
+.panelBar .toolBar a.canceleditbutton span { background-position:0 -995px;}
+.panelBar .toolBar a.editbutton span { background-position:0 -1045px;}
+.panelBar .toolBar a.deliverbutton span { background-position:0 -1095px;}
+.panelBar .toolBar a.downloadbutton span { background-position:0 -1095px;}
+.panelBar .toolBar a.delallbutton span { background-position:0 -1145px;}
+.panelBar .toolBar a.delbutton span { background-position:0 -1195px;}
+.panelBar .toolBar a.confirmbutton span { background-position:0 -1245px;}
+.panelBar .toolBar a.checkbutton span { background-position:0 -1295px;}
+.panelBar .toolBar a.changebutton span { background-position:0 -1345px;}
+.panelBar .toolBar a.chartbutton span { background-position:0 -1395px;}
+.panelBar .toolBar a.zbcomputebutton span { background-position:0 -1445px;}
+.panelBar .toolBar a.unfoldbutton span { background-position:0 -1495px;}
+.panelBar .toolBar a.submitbutton span { background-position:0 -1545px;}
+.panelBar .toolBar a.regetdatabutton span { background-position:0 -1595px;}
+.panelBar .toolBar a.printbutton span { background-position:0 -1645px;}
+.panelBar .toolBar a.previewbutton span { background-position:0 -1695px;}
+.panelBar .toolBar a.insertrowbutton span { background-position:0 -1745px;}
+.panelBar .toolBar a.helpbutton span { background-position:0 -1795px;}
+.panelBar .toolBar a.getdatabutton span { background-position:0 -1845px;}
+.panelBar .toolBar a.foldbutton span { background-position:0 -1895px;}
+.panelBar .toolBar a.excelbutton span { background-position:0 -1945px;}
+.panelBar .toolBar a.settingbutton span { background-position:0 -1995px;}
+.panelBar .toolBar a.searchbutton span { background-position:0 -2045px;}
+.panelBar .toolBar a.savebutton span { background-position:0 -2095px;}
+.panelBar .toolBar a.importbutton span { background-position:0 -2145px;}
+.panelBar .toolBar a.exportbutton span { background-position:0 -2195px;}
+.panelBar .toolBar a.enablebutton span { background-position:0 -2245px;}
+.panelBar .toolBar a.disablebutton span { background-position:0 -2295px;}
+.panelBar .toolBar a.openbutton span { background-position:0 -2345px;}
+.panelBar .toolBar a.closebutton span { background-position:0 -2395px;}
+.panelBar .toolBar a.initbutton span { background-position:0 -2445px;}
+.panelBar .toolBar a.particularbutton span { background-position:0 -2495px;}
+.panelBar .toolBar a.inheritbutton span { background-position:0 -2545px;}
+.panelBar .toolBar a.pretreatmentbutton span { background-position:0 -2595px;}
+.panelBar .toolBar a.checkbutton span { background-position:0 -2645px;}
+.panelBar .toolBar a.reportbutton span { background-position:0 -2695px;}
+.panelBar .toolBar a.settlebutton span { background-position:0 -2695px;}
+.panelBar .toolBar a.resettlebutton span { background-position:0 -2695px;}
+.panelBar .toolBar a.logoutbutton span { background-position:0 -2895px;}
+
+/* .selectButton { border-width:1px;} */
+.selectButton { display:block; overflow:hidden; /* height:25px; */ /* border-style:solid; border-width:1px 0; */ background-repeat:repeat-x; }
+.selectButton ul { padding:0px;width锛�100%'}
+.selectButton li {/*  float:left; */ display:block; overflow:hidden; height:23px; padding:0 0 0 5px; border: 1px;border-color: #99bbe8;border-style: solid;}
+.selectButton li.hover { background-position:0 -100px;}
+.selectButton li.hover a { background-position:100% -150px;}
+
+.selectButton li.hover { background:#99bbe8}
+.selectButton li.hover a { background:#99bbe8}
+
+.selectButton .toolBar li, .panelBar .toolBar li.hover { /* padding:0 0 0 5px; */ background-position:0 -100px;}
+.selectButton .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:0 5px 0 0; text-decoration:none; background-position:100% -150px;}
+.selectButton .toolBar span, .panelBar .toolBar li.hover span { float:left; display:block; overflow:hidden; height:23px; padding:0 0 0 20px; line-height:23px; cursor:pointer;}
+
+.selectButton .toolBar a.add span { background-position:0 -696px;}
+.selectButton .toolBar a.delete span { background-position:0 -746px;}
+.selectButton .toolBar a.edit span { background-position:0 -796px;}
+.selectButton .toolBar a.icon span { background-position:0 -846px;}
+.selectButton .toolBar a.previewbutton span { background-position:0 -1695px;}
+.selectButton .toolBar a.importbutton span { background-position:0 -2145px;}
+.selectButton .toolBar a.exportbutton span { background-position:0 -2195px;}
+
+.selectButton .toolBar li.line { display:block; overflow:hidden; width:12px; padding:0; text-indent:-1000px; background-position:5px -200px;}

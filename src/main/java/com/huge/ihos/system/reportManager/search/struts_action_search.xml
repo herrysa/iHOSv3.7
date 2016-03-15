@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="search" extends="default" namespace="/">
+
+        <!--SearchAction-START-->
+		
+        <action name="searchList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/searchList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/searchList.jsp</result>
+		</action>
+        <action name="commandScript" >
+			<result name="input">/WEB-INF/pages/system/reportManager/search/commandScript.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/commandScript.jsp</result>
+		</action>
+        <action name="commandScriptForm"  class="com.huge.ihos.system.reportManager.search.webapp.action.SearchAction" method="commandScript">
+			 <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<action name="searchGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchAction" method="searchGridList">
+			<result type="json">
+				<param name="includeProperties">searches.*,records,total,page</param>
+				<param name="excludeProperties">searches.*\.searchurls,searches.*\.searchlinks,searches.*\.searchoptions,searches.*\.searchitems</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="searchGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchAction" method="searchGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editSearch" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/searchForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/searchForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveSearch" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshMasterGrid.jsp</result>
+        </action>
+        
+        
+        <!--SearchAction-END-->
+
+        <!--SearchItemAction-START-->
+		
+		<!--
+		<action name="searchItems" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchItemAction" method="list">
+            <result>/WEB-INF/pages/system/reportManager/search/searchItemList.jsp</result>
+        </action>
+        
+
+        <action name="editSearchItem" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchItemAction" method="edit">
+            <result>/WEB-INF/pages/system/reportManager/search/searchItemForm.jsp</result>
+            <result name="error">/WEB-INF/pages/system/reportManager/search/searchItemList.jsp</result>
+        </action>
+
+        <action name="saveSearchItem" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchItemAction" method="save">
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchItemForm.jsp</result>
+            <result name="cancel" type="redirectAction">searchItems</result>
+            <result name="delete" type="redirectAction">searchItems</result>
+            <result name="success" type="redirectAction">searchItems</result>
+        </action>
+        -->
+        
+
+		
+        <action name="searchItemList">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/searchItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/searchItemList.jsp</result>
+		</action>
+
+		<action name="searchItemGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchItemAction" method="searchItemGridList">
+			<result type="json">
+				<param name="includeProperties">searchItems.*,records,total,page</param>
+				<param name="excludeProperties">searchItems.*\.search</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="searchItemGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchItemAction" method="searchItemGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editSearchItem" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchItemAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/searchItemForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/searchItemForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveSearchItem" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchItemAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchItemForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+        </action>
+        
+        
+        <!--SearchItemAction-END-->
+
+        <!--SearchOptionAction-START-->
+		
+		<!--
+		<action name="searchOptions" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchOptionAction" method="list">
+            <result>/WEB-INF/pages/system/reportManager/search/searchOptionList.jsp</result>
+        </action>
+        
+
+        <action name="editSearchOption" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchOptionAction" method="edit">
+            <result>/WEB-INF/pages/system/reportManager/search/searchOptionForm.jsp</result>
+            <result name="error">/WEB-INF/pages/system/reportManager/search/searchOptionList.jsp</result>
+        </action>
+
+        <action name="saveSearchOption" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchOptionAction" method="save">
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchOptionForm.jsp</result>
+            <result name="cancel" type="redirectAction">searchOptions</result>
+            <result name="delete" type="redirectAction">searchOptions</result>
+            <result name="success" type="redirectAction">searchOptions</result>
+        </action>
+        -->
+        
+
+		
+        <action name="searchOptionList">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/searchOptionList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/searchOptionList.jsp</result>
+		</action>
+
+		<action name="searchOptionGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchOptionAction" method="searchOptionGridList">
+			<result type="json">
+				<param name="includeProperties">searchOptions.*,records,total,page</param>
+				<param name="excludeProperties">searchOptions.*\.search</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="searchOptionGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchOptionAction" method="searchOptionGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editSearchOption" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchOptionAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/searchOptionForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/searchOptionForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveSearchOption" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchOptionAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchOptionForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+        </action>
+        
+        
+        <!--SearchOptionAction-END-->
+
+        <!--SearchLinkAction-START-->
+		
+		<!--
+		<action name="searchLinks" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchLinkAction" method="list">
+            <result>/WEB-INF/pages/system/reportManager/search/searchLinkList.jsp</result>
+        </action>
+        
+
+        <action name="editSearchLink" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchLinkAction" method="edit">
+            <result>/WEB-INF/pages/system/reportManager/search/searchLinkForm.jsp</result>
+            <result name="error">/WEB-INF/pages/system/reportManager/search/searchLinkList.jsp</result>
+        </action>
+
+        <action name="saveSearchLink" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchLinkAction" method="save">
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchLinkForm.jsp</result>
+            <result name="cancel" type="redirectAction">searchLinks</result>
+            <result name="delete" type="redirectAction">searchLinks</result>
+            <result name="success" type="redirectAction">searchLinks</result>
+        </action>
+        -->
+        
+
+		
+        <action name="searchLinkList">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/searchLinkList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/searchLinkList.jsp</result>
+		</action>
+
+		<action name="searchLinkGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchLinkAction" method="searchLinkGridList">
+			<result type="json">
+				<param name="includeProperties">searchLinks.*,records,total,page</param>
+				<param name="excludeProperties">searchLinks.*\.search</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="searchLinkGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchLinkAction" method="searchLinkGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editSearchLink" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchLinkAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/searchLinkForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/searchLinkForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveSearchLink" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchLinkAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchLinkForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+        </action>
+        
+        
+        <!--SearchLinkAction-END-->
+
+        <!--SearchUrlAction-START-->
+		
+		<!--
+		<action name="searchUrls" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchUrlAction" method="list">
+            <result>/WEB-INF/pages/system/reportManager/search/searchUrlList.jsp</result>
+        </action>
+        
+
+        <action name="editSearchUrl" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchUrlAction" method="edit">
+            <result>/WEB-INF/pages/system/reportManager/search/searchUrlForm.jsp</result>
+            <result name="error">/WEB-INF/pages/system/reportManager/search/searchUrlList.jsp</result>
+        </action>
+
+        <action name="saveSearchUrl" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchUrlAction" method="save">
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchUrlForm.jsp</result>
+            <result name="cancel" type="redirectAction">searchUrls</result>
+            <result name="delete" type="redirectAction">searchUrls</result>
+            <result name="success" type="redirectAction">searchUrls</result>
+        </action>
+        -->
+        
+
+		
+        <action name="searchUrlList">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/searchUrlList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/searchUrlList.jsp</result>
+		</action>
+
+		<action name="searchUrlGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchUrlAction" method="searchUrlGridList">
+			<result type="json">
+				<param name="includeProperties">searchUrls.*,records,total,page</param>
+				<param name="excludeProperties">searchUrls.*\.search</param>
+			</result>
+		</action>
+		
+		<action name="searchUrlGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchUrlAction" method="searchUrlGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editSearchUrl" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchUrlAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/searchUrlForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/searchUrlForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveSearchUrl" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchUrlAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/system/reportManager/search/searchUrlForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+        </action>
+        
+        
+        <!--SearchUrlAction-END-->
+
+        
+        <action name="query"  class="com.huge.ihos.system.reportManager.search.webapp.action.QueryAction"  method="querySearchOptions">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/queryList.jsp</result>
+			<result name="noPeriod">/WEB-INF/pages/system/reportManager/search/queryError.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/queryList.jsp?searchName=${searchName}&amp;actionName=${actionName}&amp;_key=${_key}&amp;_field=${_field}</result>
+			<result name="selectSingle">/WEB-INF/pages/system/reportManager/search/querySelectSingleList.jsp?searchName=${searchName}&amp;tarID=${tarID}&amp;tarName=${tarName}&amp;gridID=${gridID}&amp;gridName=${gridName}&amp;isSingle=${isSingle}</result>
+			<result name="selectMulti">/WEB-INF/pages/system/reportManager/search/querySelectMultiList.jsp?searchName=${searchName}</result>
+			<result name="baseChartS">/WEB-INF/pages/system/reportManager/chart/baseChartS.jsp</result>
+		</action>
+        <action name="chartQuery"  class="com.huge.ihos.system.reportManager.search.webapp.action.QueryAction"  method="chartList">
+			<result name="baseChartS">/WEB-INF/pages/system/reportManager/chart/baseChartS.jsp</result>
+		</action>
+
+		<action name="queryListJson" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryAction" method="queryList">
+			<result type="json">
+				<param name="includeProperties">queryList.*,records,total,page,userdata.*</param>
+		<!-- 		<param name="excludeProperties">searchOptions.*\.search</param> -->
+								<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+         <action name="pub"  class="com.huge.ihos.system.reportManager.search.webapp.action.QueryPublicAction"  method="executePublic">
+			<result type="json" name="success">
+			<param name="includeProperties">jsonStatus,jsonMessages,jsonCode,allParam,message,statusCode,callbackType,navTabId</param>
+            <param name="ignoreHierarchy">false</param>
+			</result>
+			<result type="json" name="error">
+			<param name="includeProperties">jsonStatus,jsonMessages,jsonCode,allParam,message,statusCode,callbackType,navTabId</param>
+            <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="exportSearch"> 
+			<result name="input">/WEB-INF/pages/system/reportManager/search/exportSearch.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/exportSearch.jsp
+			</result>
+		</action>
+		<action name="exportExcel" class="com.huge.ihos.system.reportManager.search.webapp.action.ExportAction" method="exportSearchExcel"> 
+			
+			<result name="success" type="redirectAction">exportSearch</result>
+		</action>		
+		<action name="outputExcel" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryPublicAction" method="outputExcel"> 
+			<result name="success" type="redirectAction">exportSearch</result>
+			
+		</action>
+		<action name="outputExcelByRow" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryPublicAction" method="outputExcelByRow"> 
+			
+		</action>	
+		<action name="outputExcelFileExit" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryPublicAction" method="outputExcelFileExit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>	
+				<action name="importSearch" class="com.huge.ihos.system.reportManager.search.webapp.action.ExportAction"> 
+			<result name="input">/WEB-INF/pages/system/reportManager/search/importSearch.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/importSearch.jsp
+			</result>
+		</action>
+		<action name="importExcel" class="com.huge.ihos.system.reportManager.search.webapp.action.ExportAction" method="importSearchExcel"> 
+			<result name="success" type="json">
+				<param name="contentType">text/plain</param>
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,dialogId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		
+		<action name="exportSql" class="com.huge.ihos.system.reportManager.search.webapp.action.ExportAction" method="exportSql"> 
+			<result name="success" type="redirectAction">exportSearch</result>
+			
+		</action>
+		
+		    
+
+        <!--ReportAction-START-->
+		
+		<!--
+		<action name="reports" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction" method="list">
+            <result>/WEB-INF/pages/reportList.jsp</result>
+        </action>
+        
+
+        <action name="editReport" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction" method="edit">
+            <result>/WEB-INF/pages/reportForm.jsp</result>
+            <result name="error">/WEB-INF/pages/reportList.jsp</result>
+        </action>
+
+        <action name="saveReport" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction" method="save">
+            <result name="input">/WEB-INF/pages/reportForm.jsp</result>
+            <result name="cancel" type="redirectAction">reports</result>
+            <result name="delete" type="redirectAction">reports</result>
+            <result name="success" type="redirectAction">reports</result>
+        </action>
+        -->
+        
+
+		
+        <action name="reportList" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/search/reportList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/reportList.jsp</result>
+		</action>
+
+		<action name="reportGridList" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction" method="reportGridList">
+			<result type="json">
+				<param name="includeProperties">reports.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="reportGridEdit" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction" method="reportGridEdit">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editReport" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/reportForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/reportForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveReport" class="com.huge.ihos.system.reportManager.search.webapp.action.ReportAction" method="save">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+            <result name="input">/WEB-INF/pages/system/reportManager/search/reportForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefreshGrid.jsp</result>
+        </action>
+        
+        <action name="showReport" class="com.huge.ihos.system.reportManager.search.webapp.action.ShowReportAction" method="showReport">
+         <result name="success">/WEB-INF/pages/system/reportManager/search/showReport.jsp</result>
+        </action>
+        <action name="importOrExportData"> 
+			<result name="input">/WEB-INF/pages/system/reportManager/search/importOrExportData.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/search/importOrExportData.jsp
+			</result>
+		</action>
+        <!--ReportAction-END-->
+        <action name="getSearchParam" class="com.huge.ihos.system.reportManager.search.webapp.action.SearchAction" method="getSearchParam">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+        
+        <action name="queryEx"  class="com.huge.ihos.system.reportManager.search.webapp.action.QueryExAction"  method="queryExSearchOptions">
+		<!-- 	<result name="input">/WEB-INF/pages/system/reportManager/search/queryList.jsp</result> -->
+			<result name="success">/WEB-INF/pages/system/reportManager/search/queryExList.jsp?searchName=${searchName}&amp;_vKey=${_vKey}&amp;_aKey=${_aKey}&amp;_valueField=${_valueField}&amp;_vValues=${_vValues}&amp;_aValues=${_aValues}&amp;_valueType=${_valueType}&amp;_vKeyTitle=${_vKeyTitle}</result>
+		<!-- 	<result name="selectSingle">/WEB-INF/pages/system/reportManager/search/querySelectSingleList.jsp?searchName=${searchName}&amp;tarID=${tarID}&amp;tarName=${tarName}&amp;gridID=${gridID}&amp;gridName=${gridName}&amp;isSingle=${isSingle}</result>
+			<result name="selectMulti">/WEB-INF/pages/system/reportManager/search/querySelectMultiList.jsp?searchName=${searchName}</result>
+			<result name="baseChartS">/WEB-INF/pages/chart/baseChartS.jsp</result> -->
+		</action>
+  
+
+		<action name="queryExListJson" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryExAction" method="queryExList">
+			<result type="json">
+				<param name="includeProperties">queryList.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+        
+		<action name="addDataByForm" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryAction" method="addDataByForm">
+ 	        <result name="success">/WEB-INF/pages/system/reportManager/search/addDataByForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/system/reportManager/search/addDataByForm.jsp</result>
+ 	    </action>
+        <action name="saveQueryData" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryAction" method="saveQueryData">
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
+	</package>
+
+</struts>
+

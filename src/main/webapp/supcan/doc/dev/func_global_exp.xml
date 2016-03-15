@@ -1,0 +1,17 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="表达式函数">
+	<function name="RunExp">
+		<usage>执行表达式</usage>
+		<para>表达式串</para>
+		<return>结果，如果执行有误，返回的是"[Err!]"</return>
+		<example>var result = AF.func("runExp", "15+3");  //返回18</example>
+	</function>
+	<function name="ParseExp">
+		<usage>解析表达式</usage>
+		<para>表达式串</para>
+		<return>空串表示表达式正确，否则返回错误信息</return>
+	</function>
+</category>
+
+</functions>

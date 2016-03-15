@@ -1,0 +1,58 @@
+<HTML><title>XML规范</title>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<head>
+<script type="text/javascript" src="../../../binary/dynaload.js?86"></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+var xml = '<Data><items>\
+<item ID="0" str="前言" para="main1.htm"/>\
+<item ID="1" str="Gantt" tip="入口" para="main1.htm"/>\
+<item ID="11" PID="1" str="TimeScale" tip="时间刻度" para="timescale.htm"/>\
+<item ID="111" PID="11" str="Segments" tip="段的集合" para="timescale.htm"/>\
+<item ID="1111" PID="111" str="Segment" tip="段" para="timescale.htm"/>\
+<item ID="11111" PID="1111" str="Tier" tip="层" para="timescale.htm"/>\
+<item ID="12" PID="1" str="GanttBar" tip="横道图" para="ganttbar.htm"/>\
+<item ID="121" PID="12" str="Styles" tip="横道图格式集合" para="ganttbar.htm"/>\
+<item ID="1211" PID="121" str="Style" tip="横道图格式" para="ganttbar.htm"/>\
+<item ID="13" PID="1" str="Fields" tip="字段映射" para="ganttbar.htm"/>\
+<item ID="131" PID="13" str="SF" tip="Start,Finish字段" para="ganttbar.htm"/>\
+<item ID="132" PID="13" str="Style" tip="横道图字段" para="ganttbar.htm"/>\
+<item ID="134" PID="13" str="TF" tip="总浮时字段" para="ganttbar.htm"/>\
+<item ID="135" PID="13" str="Duration" tip="工期字段" para="ganttbar.htm"/>\
+<item ID="136" PID="13" str="ProjectId" tip="工序标识字段" para="ganttbar.htm"/>\
+<item ID="14" PID="1" str="LineStyles" tip="连接线集合" para="ganttbar.htm"/>\
+<item ID="141" PID="14" str="LineStyle" tip="连接线" para="ganttbar.htm"/>\
+<item ID="15" PID="1" str="PD" tip="单代号网络图" para="ganttbar.htm"/>\
+<item ID="16" PID="1" str="AD" tip="双代号网络图" para="ganttbar.htm"/>\
+</items></Data>';
+  AF.func('ReadXML', xml);
+  AF.func('ExpandAll', '');
+ }
+ function OnEvent(id, Event, p1, p2, p3, p4)
+ {
+	if(Event!="SelChanged") return;
+	if(p2 == "") {
+		if(p1=="11441" || p1=="11451" || p1=="11461") p1="11431";
+		 parent.document.getElementById('ContentPage').src="main2.htm?86#Tag" + p1;
+	}
+	else
+		parent.document.getElementById('ContentPage').src= p2 + "?86#Tag" + p1;
+ }
+</script>
+</head>
+
+<body bgcolor=#EEEEEE topmargin=10 leftMargin=3 rightMargin=1 bottommargin=1 vlink=#0000ff link=#0000ff alink=#0000ff>
+<table cols=1 border=0 height=100% width=100%>
+<tr height=24><td align=center>Gantt<br>XML文挡规范</td></tr>
+<tr height=38><td align=center><img src='../../../res/tip2.bmp'>&nbsp; 目录 &nbsp;<img src='../../../res/tip2.bmp'></td></tr>
+<tr><td>
+<div style="position:relative;width:100%;height:100%">
+	<script>insertTree('AF', 'Border=clientEdge; Style=hasButtons,hasLines,showSelAlways; leafImage=0; nodeImage=1; BackColor=#F0F0F0,#DFD8D8')</script>
+</div>
+</td></tr>
+</table>
+
+</body>
+</html>

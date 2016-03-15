@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="gzContent" extends="default"	namespace="/">
+
+		<action name="gzContentList" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction" method="gzContentList">
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentList.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentList.jsp</result>
+		</action>
+		<action name="gzContentGrid" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction" >
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentGrid.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentGrid.jsp</result>
+		</action>
+		<action name="gzContentGridList" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"		method="gzContentGridList">
+			<result type="json">
+				<param name="includeProperties">gzContentSets.*,gzContents.*,records,total,page</param>
+				<param name="excludeProperties">gzContents.*\.person,gzContents.*\.dept</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="gzContentGridEdit" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="gzContentGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editGzContent" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentForm.jsp</result>
+		</action>
+		<action name="gzContentPersonAdd" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction" method="gzContentPersonAdd">
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentPersonForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentPersonForm.jsp</result>
+		</action>
+		<action name="batchEditGzContent" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction">
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentBatchEdit.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentBatchEdit.jsp</result>
+		</action>
+		<action name="gzContentMultiSearch" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction">
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentMultiSearch.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentMultiSearch.jsp</result>
+		</action>
+		
+		<!-- called when clicking save on the edit form -->
+		<action name="saveGzContent" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzContentColumnInfo" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="gzContentColumnInfo">
+			<result name="success" type="json">
+                <param name="includeProperties">columns,gzItems.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="refreshGzContent" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="refreshGzContent">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 继承上月数据 -->
+		<action name="inheritGzContent" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="inheritGzContent">
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentInheritForm.jsp</result>
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentInheritForm.jsp</result>
+		</action>
+		<action name="gzContentInherit" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="gzContentInherit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzContentPersonGridList" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="gzContentPersonGridList">
+			<result name="success" type="json">
+                <param name="includeProperties">monthPersons.*\.personId,monthPersons.*\.name,
+                monthPersons.*\.personCode,monthPersons.*\.department.name,monthPersons.*\.gzType,
+                monthPersons.*\.sex,monthPersons.*\.status,monthPersons.*\.postType,
+                monthPersons.*\.jobTitle,monthPersons.*\.ratio,monthPersons.*\.idNumber,
+                monthPersons.*\.disable,monthPersons.*\.jjmark,</param>
+<!--                 <param name="excludeProperties">monthPersons.*\.department.parentDept, -->
+<!-- 				monthPersons.*\.department.personCount,monthPersons.*\.department.personCountD, -->
+<!-- 				monthPersons.*\.department.personCountP,monthPersons.*\.department.personCountDP, -->
+<!-- 				monthPersons.*\.department.personCountWithOutDisabled -->
+<!-- 				</param> -->
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="makeGzDepartmentTree" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="makeGzDepartmentTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">deptTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+	</package>
+
+</struts>

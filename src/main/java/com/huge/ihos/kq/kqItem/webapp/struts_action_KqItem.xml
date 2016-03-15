@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kqItem" extends="default"	namespace="/">
+
+		<action name="kqItemList" class="com.huge.ihos.kq.kqItem.webapp.action.KqItemPagedAction" method="kqItemList">
+			<result name="input">/WEB-INF/pages/kq/kqItem/kqItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqItem/kqItemList.jsp</result>
+		</action>
+		<action name="kqItemGridList" class="com.huge.ihos.kq.kqItem.webapp.action.KqItemPagedAction"		method="kqItemGridList">
+			<result type="json">
+				<param name="includeProperties">kqItems.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqItemGridEdit" class="com.huge.ihos.kq.kqItem.webapp.action.KqItemPagedAction"			method="kqItemGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKqItem" class="com.huge.ihos.kq.kqItem.webapp.action.KqItemPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kq/kqItem/kqItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqItem/kqItemForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKqItem" class="com.huge.ihos.kq.kqItem.webapp.action.KqItemPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">itemNode.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="makeKqItemTree" class="com.huge.ihos.kq.kqItem.webapp.action.KqItemPagedAction" method="makeKqItemTree">
+			<result name="success" type="json">
+				<param name="includeProperties">kqItemTreeNodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="kqItemIconList" class="com.huge.ihos.kq.kqItem.webapp.action.KqItemPagedAction" method="kqItemIconList">
+			<result name="success" type="json">
+				<param name="includeProperties">nodes.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

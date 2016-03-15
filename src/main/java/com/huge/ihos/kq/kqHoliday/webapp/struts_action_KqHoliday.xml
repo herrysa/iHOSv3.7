@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kqHoliday" extends="default"	namespace="/">
+
+		<action name="kqHolidayList" class="com.huge.ihos.kq.kqHoliday.webapp.action.KqHolidayPagedAction" method="kqHolidayList">
+			<result name="input">/WEB-INF/pages/kq/kqHoliday/kqHolidayList.jsp</result>
+			<result name="success">/WEB-INF/pages/kq/kqHoliday/kqHolidayList.jsp</result>
+		</action>
+		<action name="kqHolidayGridList" class="com.huge.ihos.kq.kqHoliday.webapp.action.KqHolidayPagedAction"		method="kqHolidayGridList">
+			<result type="json">
+				<param name="includeProperties">kqHolidays.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kqHolidayGridEdit" class="com.huge.ihos.kq.kqHoliday.webapp.action.KqHolidayPagedAction"			method="kqHolidayGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKqHoliday" class="com.huge.ihos.kq.kqHoliday.webapp.action.KqHolidayPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/kq/kqHoliday/kqHolidayForm.jsp</result>
+			<result name="input">/WEB-INF/pages/kq/kqHoliday/kqHolidayForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKqHoliday" class="com.huge.ihos.kq.kqHoliday.webapp.action.KqHolidayPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="pact" extends="default"	namespace="/">
+
+		<action name="pactList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="pactList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactList.jsp</result>
+		</action>
+		<action name="pactGridList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction"		method="pactGridList">
+			<result type="json">
+				<param name="includeProperties">pacts.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="pactGridEdit" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction"			method="pactGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPact" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/pact/pactForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/pact/pactForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePact" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="checkAddPactForPerson" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction"	method="checkAddPactForPerson">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="pactForSelect" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="pactForSelect">
+			<result name="input">/WEB-INF/pages/hr/pact/pactForSelect.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactForSelect.jsp</result>
+		</action>
+		<action name="pactForSelectGridList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="pactForSelectGridList">
+			<result type="json">
+				<param name="includeProperties">pacts.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- 上传合同模板-->
+		<action name="uploadPactTemplet" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction">
+			<result name="input">/WEB-INF/pages/hr/pact/uploadPactTemplet.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/uploadPactTemplet.jsp</result>
+		</action>
+		<action name="checkPactTemplateExist" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="checkPactTemplateExist">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="confirmUploadPactTemplet" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="confirmUploadPactTemplet">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 查看合同-->
+		<action name="viewPactTemplet" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="viewPactTemplet">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,downloadFilePath,downloadFileName</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="downloadPact" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="downloadPact">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,downloadFilePath,downloadFileName</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 签订合同 -->
+		<action name="pactNewList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="pactNewList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactNew/pactNewList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactNew/pactNewList.jsp</result>
+		</action>
+		<!-- 合同台账明细 -->
+		<action name="pactAccountDetailList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction">
+			<result name="input">/WEB-INF/pages/hr/pact/pactAccount/pactAccountDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactAccount/pactAccountDetailList.jsp</result>
+		</action>
+		<!--  从首页查看更多到期合同-->
+		<action name="pactExpireViewList" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="pactExpireViewList">
+			<result name="input">/WEB-INF/pages/hr/pact/pactExpireViewList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/pact/pactExpireViewList.jsp</result>
+		</action>
+		<action name="getOrgDeptPersonNodes" class="com.huge.ihos.hr.pact.webapp.action.PactPagedAction" method="getOrgDeptPersonNodes">
+			<result name="success" type="json">
+                <param name="includeProperties">ztreeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

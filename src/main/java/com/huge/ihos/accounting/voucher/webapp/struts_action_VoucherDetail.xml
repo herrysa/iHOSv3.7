@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="voucherDetail" extends="default"	namespace="/">
+
+		<action name="voucherDetailList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction" method="voucherDetailCardPre">
+			<result name="input">/WEB-INF/pages/voucherDetail/voucherDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/voucherDetail/voucherDetailList.jsp</result>
+		</action>
+		<action name="voucherCard" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction" method="voucherDetailCardPre">
+			<result name="input">/WEB-INF/pages/voucherDetail/voucherCard.jsp</result>
+			<result name="success">/WEB-INF/pages/voucherDetail/voucherCard.jsp</result>
+		</action>
+		
+		<action name="saveVoucherDetailData" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction" method="saveVoucherDetailData">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="voucherDetailGridList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction"		method="voucherDetailGridList">
+			<result type="json">
+				<param name="includeProperties">voucherDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="voucherDetailGridEdit" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction"			method="voucherDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editVoucherDetail" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/voucherDetail/voucherDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/voucherDetail/voucherDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveVoucherDetail" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="isExistVoucherNo" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction"			method="isExistVoucherNo">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,ts,isExistVoucherNo</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

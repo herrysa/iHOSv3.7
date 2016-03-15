@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="templateDemo" extends="default" namespace="/">
+
+		<!--TempleDemoAction-START -->
+		<action name="templateDemoList" class="com.huge.ihos.templateDemo.webapp.action.TemplateDemoAction">
+			<result name="input">/WEB-INF/pages/templateDemo/templateDemoList.jsp</result>
+			<result name="success">/WEB-INF/pages/templateDemo/templateDemoList.jsp</result>
+		</action>
+		<action name="templateDemoGridList" class="com.huge.ihos.templateDemo.webapp.action.TemplateDemoAction"
+			method="templateDemoGridList">
+			<result type="json">
+				<param name="includeProperties">templateDemos.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="templateDemoGridEdit" class="com.huge.ihos.templateDemo.webapp.action.TemplateDemoAction"
+			method="templateDemoGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editTemplateDemo" class="com.huge.ihos.templateDemo.webapp.action.TemplateDemoAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/templateDemo/templateDemoForm.jsp</result>
+			<result name="input">/WEB-INF/pages/templateDemo/templateDemoForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveTemplateDemo" class="com.huge.ihos.templateDemo.webapp.action.TemplateDemoAction"
+			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<!--TempleDemoAction-END -->
+	</package>
+</struts>

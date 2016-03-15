@@ -1,0 +1,2340 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+  <record>
+    <pid>
+    </pid>
+    <id>0001</id>
+    <actid>0001</actid>
+    <pc>0000000061</pc>
+    <name>施工准备</name>
+    <ES>2011/4/18 0:00:00</ES>
+    <EF>2011/4/20 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0002</id>
+    <actid>0002</actid>
+    <pc>0000000061</pc>
+    <name>土方开挖</name>
+    <ES>2011/4/21 0:00:00</ES>
+    <EF>2011/5/4 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0003</id>
+    <actid>0003</actid>
+    <pc>0000000061</pc>
+    <name>承台垫层</name>
+    <ES>2011/5/5 0:00:00</ES>
+    <EF>2011/5/8 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0004</id>
+    <actid>0004</actid>
+    <pc>0000000061</pc>
+    <name>垫层砖模</name>
+    <ES>2011/5/9 0:00:00</ES>
+    <EF>2011/5/12 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0134,0136,0005</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0005</id>
+    <actid>0005</actid>
+    <pc>0000000061</pc>
+    <name>地下车库施工</name>
+    <ES>2011/5/13 0:00:00</ES>
+    <EF>2011/5/25 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0006</id>
+    <actid>0006</actid>
+    <pc>0000000061</pc>
+    <name>主体基础</name>
+    <ES>2011/5/13 0:00:00</ES>
+    <EF>2011/5/25 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0007</id>
+    <actid>0007</actid>
+    <pc>0000000061</pc>
+    <name>土方回填</name>
+    <ES>2011/5/26 0:00:00</ES>
+    <EF>2011/5/28 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0009</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0008</id>
+    <actid>0008</actid>
+    <pc>0000000061</pc>
+    <name>主体一层放线压力焊</name>
+    <ES>2011/5/29 0:00:00</ES>
+    <EF>2011/5/29 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0009</id>
+    <actid>0009</actid>
+    <pc>0000000061</pc>
+    <name>主体一层墙柱绑筋</name>
+    <ES>2011/5/30 0:00:00</ES>
+    <EF>2011/5/31 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0010</id>
+    <actid>0010</actid>
+    <pc>0000000061</pc>
+    <name>主体一层梁板支模</name>
+    <ES>2011/5/31 0:00:00</ES>
+    <EF>2011/5/31 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0011</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0011</id>
+    <actid>0011</actid>
+    <pc>0000000061</pc>
+    <name>主体一层梁板顶板钢筋</name>
+    <ES>2011/6/1 0:00:00</ES>
+    <EF>2011/6/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0012</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0012</id>
+    <actid>0012</actid>
+    <pc>0000000061</pc>
+    <name>主体一层浇筑</name>
+    <ES>2011/6/3 0:00:00</ES>
+    <EF>2011/6/4 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0013</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0013</id>
+    <actid>0013</actid>
+    <pc>0000000061</pc>
+    <name>主体二层放线压力焊</name>
+    <ES>2011/6/5 0:00:00</ES>
+    <EF>2011/6/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0014</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0014</id>
+    <actid>0014</actid>
+    <pc>0000000061</pc>
+    <name>主体二层墙柱绑筋</name>
+    <ES>2011/6/7 0:00:00</ES>
+    <EF>2011/6/8 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0015</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0015</id>
+    <actid>0015</actid>
+    <pc>0000000061</pc>
+    <name>主体二层梁板模板</name>
+    <ES>2011/6/9 0:00:00</ES>
+    <EF>2011/6/10 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0016</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0016</id>
+    <actid>0016</actid>
+    <pc>0000000061</pc>
+    <name>主体二层梁板顶板</name>
+    <ES>2011/6/11 0:00:00</ES>
+    <EF>2011/6/11 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0017</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0017</id>
+    <actid>0017</actid>
+    <pc>0000000061</pc>
+    <name>主体二层浇筑</name>
+    <ES>2011/6/12 0:00:00</ES>
+    <EF>2011/6/12 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0018</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0018</id>
+    <actid>0018</actid>
+    <pc>0000000061</pc>
+    <name>主体三层放线压力焊</name>
+    <ES>2011/6/13 0:00:00</ES>
+    <EF>2011/6/13 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0019</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0019</id>
+    <actid>0019</actid>
+    <pc>0000000061</pc>
+    <name>主体三层墙柱钢筋</name>
+    <ES>2011/6/14 0:00:00</ES>
+    <EF>2011/6/14 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0020</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0020</id>
+    <actid>0020</actid>
+    <pc>0000000061</pc>
+    <name>主体三层梁板模板</name>
+    <ES>2011/6/15 0:00:00</ES>
+    <EF>2011/6/17 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0021</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0021</id>
+    <actid>0021</actid>
+    <pc>0000000061</pc>
+    <name>主体三层梁板顶板钢筋</name>
+    <ES>2011/6/18 0:00:00</ES>
+    <EF>2011/6/19 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0022</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0022</id>
+    <actid>0022</actid>
+    <pc>0000000061</pc>
+    <name>主体三层浇筑</name>
+    <ES>2011/6/20 0:00:00</ES>
+    <EF>2011/6/20 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0023</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0023</id>
+    <actid>0023</actid>
+    <pc>0000000061</pc>
+    <name>主体四层放线压力焊</name>
+    <ES>2011/6/21 0:00:00</ES>
+    <EF>2011/6/21 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0024</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0024</id>
+    <actid>0024</actid>
+    <pc>0000000061</pc>
+    <name>主体四层墙柱钢筋</name>
+    <ES>2011/6/22 0:00:00</ES>
+    <EF>2011/6/23 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0025</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0025</id>
+    <actid>0025</actid>
+    <pc>0000000061</pc>
+    <name>主体四层梁板模板</name>
+    <ES>2011/6/24 0:00:00</ES>
+    <EF>2011/6/25 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0026</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0026</id>
+    <actid>0026</actid>
+    <pc>0000000061</pc>
+    <name>主体四层梁板顶板钢筋</name>
+    <ES>2011/6/26 0:00:00</ES>
+    <EF>2011/6/26 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0027</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0027</id>
+    <actid>0027</actid>
+    <pc>0000000061</pc>
+    <name>主体四层浇筑</name>
+    <ES>2011/6/27 0:00:00</ES>
+    <EF>2011/6/27 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0028</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0028</id>
+    <actid>0028</actid>
+    <pc>0000000061</pc>
+    <name>主体五层放线压力焊</name>
+    <ES>2011/6/28 0:00:00</ES>
+    <EF>2011/6/28 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0029</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0029</id>
+    <actid>0029</actid>
+    <pc>0000000061</pc>
+    <name>主体五层墙柱钢筋</name>
+    <ES>2011/6/29 0:00:00</ES>
+    <EF>2011/6/30 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0030</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0030</id>
+    <actid>0030</actid>
+    <pc>0000000061</pc>
+    <name>主体五层梁板模板</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/1 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0031</id>
+    <actid>0031</actid>
+    <pc>0000000061</pc>
+    <name>主体五层梁板顶板钢筋</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0032</id>
+    <actid>0032</actid>
+    <pc>0000000061</pc>
+    <name>主体五层浇筑</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/1 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0033</id>
+    <actid>0033</actid>
+    <pc>0000000061</pc>
+    <name>主体六层放线压力焊</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/31 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0034</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0034</id>
+    <actid>0034</actid>
+    <pc>0000000061</pc>
+    <name>主体六层墙柱钢筋</name>
+    <ES>2013/11/1 0:00:00</ES>
+    <EF>2013/11/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0035</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0035</id>
+    <actid>0035</actid>
+    <pc>0000000061</pc>
+    <name>主体六层梁板模板</name>
+    <ES>2013/11/3 0:00:00</ES>
+    <EF>2013/11/3 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0036</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0036</id>
+    <actid>0036</actid>
+    <pc>0000000061</pc>
+    <name>主体六层梁板顶板钢筋</name>
+    <ES>2013/11/4 0:00:00</ES>
+    <EF>2013/11/4 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0037</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0037</id>
+    <actid>0037</actid>
+    <pc>0000000061</pc>
+    <name>主体六层浇筑</name>
+    <ES>2013/11/5 0:00:00</ES>
+    <EF>2013/11/5 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0038</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0038</id>
+    <actid>0038</actid>
+    <pc>0000000061</pc>
+    <name>主体七层放线压力焊</name>
+    <ES>2013/11/6 0:00:00</ES>
+    <EF>2013/11/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0039</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0039</id>
+    <actid>0039</actid>
+    <pc>0000000061</pc>
+    <name>主体七层墙柱钢筋</name>
+    <ES>2013/11/7 0:00:00</ES>
+    <EF>2013/11/7 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0040</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0040</id>
+    <actid>0040</actid>
+    <pc>0000000061</pc>
+    <name>主体七层梁板模板</name>
+    <ES>2013/11/8 0:00:00</ES>
+    <EF>2013/11/9 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0041</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0041</id>
+    <actid>0041</actid>
+    <pc>0000000061</pc>
+    <name>主体七层梁板顶板钢筋</name>
+    <ES>2013/11/10 0:00:00</ES>
+    <EF>2013/11/11 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0042</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0042</id>
+    <actid>0042</actid>
+    <pc>0000000061</pc>
+    <name>主体七层浇筑</name>
+    <ES>2013/11/12 0:00:00</ES>
+    <EF>2013/11/12 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0043</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0043</id>
+    <actid>0043</actid>
+    <pc>0000000061</pc>
+    <name>主体八层放线压力焊</name>
+    <ES>2013/11/13 0:00:00</ES>
+    <EF>2013/11/13 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0044</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0044</id>
+    <actid>0044</actid>
+    <pc>0000000061</pc>
+    <name>主体八层墙柱钢筋</name>
+    <ES>2013/11/14 0:00:00</ES>
+    <EF>2013/11/14 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0045</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0045</id>
+    <actid>0045</actid>
+    <pc>0000000061</pc>
+    <name>主体八层梁板模板</name>
+    <ES>2013/11/15 0:00:00</ES>
+    <EF>2013/11/16 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0046</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0046</id>
+    <actid>0046</actid>
+    <pc>0000000061</pc>
+    <name>主体八层梁板顶板钢筋</name>
+    <ES>2013/11/17 0:00:00</ES>
+    <EF>2013/11/18 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0047</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0047</id>
+    <actid>0047</actid>
+    <pc>0000000061</pc>
+    <name>主体八层浇筑</name>
+    <ES>2013/11/19 0:00:00</ES>
+    <EF>2013/11/19 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0048</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0048</id>
+    <actid>0048</actid>
+    <pc>0000000061</pc>
+    <name>主体九层放线压力焊</name>
+    <ES>2013/11/20 0:00:00</ES>
+    <EF>2013/11/20 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0049</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0049</id>
+    <actid>0049</actid>
+    <pc>0000000061</pc>
+    <name>主体九层墙柱钢筋</name>
+    <ES>2013/11/21 0:00:00</ES>
+    <EF>2013/11/21 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0050</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0050</id>
+    <actid>0050</actid>
+    <pc>0000000061</pc>
+    <name>主体九层梁板模板</name>
+    <ES>2013/11/22 0:00:00</ES>
+    <EF>2013/11/23 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0051</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0051</id>
+    <actid>0051</actid>
+    <pc>0000000061</pc>
+    <name>主体九层顶板梁板钢筋</name>
+    <ES>2013/11/24 0:00:00</ES>
+    <EF>2013/11/25 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0052</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0052</id>
+    <actid>0052</actid>
+    <pc>0000000061</pc>
+    <name>主体九层浇筑</name>
+    <ES>2013/11/26 0:00:00</ES>
+    <EF>2013/11/26 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0053</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0053</id>
+    <actid>0053</actid>
+    <pc>0000000061</pc>
+    <name>主体十层放线压力焊</name>
+    <ES>2013/11/27 0:00:00</ES>
+    <EF>2013/11/27 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0054</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0054</id>
+    <actid>0054</actid>
+    <pc>0000000061</pc>
+    <name>主体十层墙柱钢筋</name>
+    <ES>2013/11/28 0:00:00</ES>
+    <EF>2013/11/28 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0055</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0055</id>
+    <actid>0055</actid>
+    <pc>0000000061</pc>
+    <name>主体十层梁板模板</name>
+    <ES>2013/11/29 0:00:00</ES>
+    <EF>2013/11/30 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0056</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0056</id>
+    <actid>0056</actid>
+    <pc>0000000061</pc>
+    <name>主体十层梁板顶板钢筋</name>
+    <ES>2013/12/1 0:00:00</ES>
+    <EF>2013/12/1 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0057</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0057</id>
+    <actid>0057</actid>
+    <pc>0000000061</pc>
+    <name>主体十层浇筑</name>
+    <ES>2013/12/2 0:00:00</ES>
+    <EF>2013/12/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0058</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0058</id>
+    <actid>0058</actid>
+    <pc>0000000061</pc>
+    <name>主体十一层放线压力焊</name>
+    <ES>2013/12/3 0:00:00</ES>
+    <EF>2013/12/3 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0059</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0059</id>
+    <actid>0059</actid>
+    <pc>0000000061</pc>
+    <name>主体十一层墙柱钢筋</name>
+    <ES>2013/12/4 0:00:00</ES>
+    <EF>2013/12/4 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0060</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0060</id>
+    <actid>0060</actid>
+    <pc>0000000061</pc>
+    <name>主体十一层梁板模板</name>
+    <ES>2013/12/5 0:00:00</ES>
+    <EF>2013/12/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0061</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0061</id>
+    <actid>0061</actid>
+    <pc>0000000061</pc>
+    <name>主体十一层梁板顶板钢筋</name>
+    <ES>2013/12/7 0:00:00</ES>
+    <EF>2013/12/7 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0062</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0062</id>
+    <actid>0062</actid>
+    <pc>0000000061</pc>
+    <name>主体十一层浇筑</name>
+    <ES>2013/12/8 0:00:00</ES>
+    <EF>2013/12/8 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0063</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0063</id>
+    <actid>0063</actid>
+    <pc>0000000061</pc>
+    <name>主体十二层放线压力焊</name>
+    <ES>2013/12/9 0:00:00</ES>
+    <EF>2013/12/9 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0064</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0064</id>
+    <actid>0064</actid>
+    <pc>0000000061</pc>
+    <name>主体十二层墙柱钢筋</name>
+    <ES>2013/12/10 0:00:00</ES>
+    <EF>2013/12/10 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0065</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0065</id>
+    <actid>0065</actid>
+    <pc>0000000061</pc>
+    <name>主体十二层梁板模板</name>
+    <ES>2013/12/11 0:00:00</ES>
+    <EF>2013/12/12 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0066</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0066</id>
+    <actid>0066</actid>
+    <pc>0000000061</pc>
+    <name>主体十二层梁板顶板钢筋</name>
+    <ES>2013/12/13 0:00:00</ES>
+    <EF>2013/12/13 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0067</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0067</id>
+    <actid>0067</actid>
+    <pc>0000000061</pc>
+    <name>主体十二层浇筑</name>
+    <ES>2013/12/14 0:00:00</ES>
+    <EF>2013/12/14 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0068</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0068</id>
+    <actid>0068</actid>
+    <pc>0000000061</pc>
+    <name>主体十三层放线压力焊</name>
+    <ES>2013/12/15 0:00:00</ES>
+    <EF>2013/12/15 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0069</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0069</id>
+    <actid>0069</actid>
+    <pc>0000000061</pc>
+    <name>主体十三层墙柱钢筋</name>
+    <ES>2013/12/16 0:00:00</ES>
+    <EF>2013/12/16 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0070</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0070</id>
+    <actid>0070</actid>
+    <pc>0000000061</pc>
+    <name>主体十三层梁板模板</name>
+    <ES>2013/12/17 0:00:00</ES>
+    <EF>2013/12/18 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0071</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0071</id>
+    <actid>0071</actid>
+    <pc>0000000061</pc>
+    <name>主体十三层梁板顶板钢筋</name>
+    <ES>2013/12/19 0:00:00</ES>
+    <EF>2013/12/19 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0072</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0072</id>
+    <actid>0072</actid>
+    <pc>0000000061</pc>
+    <name>主体十三层浇筑</name>
+    <ES>2013/12/20 0:00:00</ES>
+    <EF>2013/12/20 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0073</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0073</id>
+    <actid>0073</actid>
+    <pc>0000000061</pc>
+    <name>主体十四层放线压力焊</name>
+    <ES>2013/12/21 0:00:00</ES>
+    <EF>2013/12/21 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0074</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0074</id>
+    <actid>0074</actid>
+    <pc>0000000061</pc>
+    <name>主体十四层墙柱钢筋</name>
+    <ES>2013/12/22 0:00:00</ES>
+    <EF>2013/12/22 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0075</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0075</id>
+    <actid>0075</actid>
+    <pc>0000000061</pc>
+    <name>主体十四层梁板模板</name>
+    <ES>2013/12/23 0:00:00</ES>
+    <EF>2013/12/24 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0076</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0076</id>
+    <actid>0076</actid>
+    <pc>0000000061</pc>
+    <name>主体十四层梁板顶板钢筋</name>
+    <ES>2013/12/25 0:00:00</ES>
+    <EF>2013/12/26 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0077</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0077</id>
+    <actid>0077</actid>
+    <pc>0000000061</pc>
+    <name>主体十四层浇筑</name>
+    <ES>2013/12/27 0:00:00</ES>
+    <EF>2013/12/27 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0078</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0078</id>
+    <actid>0078</actid>
+    <pc>0000000061</pc>
+    <name>主体十五层放线压力焊</name>
+    <ES>2013/12/28 0:00:00</ES>
+    <EF>2013/12/28 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0079</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0079</id>
+    <actid>0079</actid>
+    <pc>0000000061</pc>
+    <name>主体十五层墙柱钢筋</name>
+    <ES>2013/12/29 0:00:00</ES>
+    <EF>2013/12/29 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0080</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0080</id>
+    <actid>0080</actid>
+    <pc>0000000061</pc>
+    <name>主体十五层梁板模板</name>
+    <ES>2013/12/30 0:00:00</ES>
+    <EF>2013/12/31 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0081</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0081</id>
+    <actid>0081</actid>
+    <pc>0000000061</pc>
+    <name>主体十五层梁板顶板钢筋</name>
+    <ES>2014/1/1 0:00:00</ES>
+    <EF>2014/1/1 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0082</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0082</id>
+    <actid>0082</actid>
+    <pc>0000000061</pc>
+    <name>主体十五层浇筑</name>
+    <ES>2014/1/2 0:00:00</ES>
+    <EF>2014/1/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0083</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0083</id>
+    <actid>0083</actid>
+    <pc>0000000061</pc>
+    <name>主体十六层放线压力焊</name>
+    <ES>2014/1/3 0:00:00</ES>
+    <EF>2014/1/3 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0084</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0084</id>
+    <actid>0084</actid>
+    <pc>0000000061</pc>
+    <name>主体十六层墙柱钢筋</name>
+    <ES>2014/1/4 0:00:00</ES>
+    <EF>2014/1/4 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0085</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0085</id>
+    <actid>0085</actid>
+    <pc>0000000061</pc>
+    <name>主体十六层梁板模板</name>
+    <ES>2014/1/5 0:00:00</ES>
+    <EF>2014/1/5 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0086</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0086</id>
+    <actid>0086</actid>
+    <pc>0000000061</pc>
+    <name>主体十六层梁板顶板</name>
+    <ES>2014/1/6 0:00:00</ES>
+    <EF>2014/1/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0087</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0087</id>
+    <actid>0087</actid>
+    <pc>0000000061</pc>
+    <name>主体十六层浇筑</name>
+    <ES>2014/1/7 0:00:00</ES>
+    <EF>2014/1/7 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0088</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0088</id>
+    <actid>0088</actid>
+    <pc>0000000061</pc>
+    <name>主体十七层放线压力焊</name>
+    <ES>2014/1/8 0:00:00</ES>
+    <EF>2014/1/8 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0089</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0089</id>
+    <actid>0089</actid>
+    <pc>0000000061</pc>
+    <name>主体十七层墙柱钢筋</name>
+    <ES>2014/1/9 0:00:00</ES>
+    <EF>2014/1/9 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0090</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0090</id>
+    <actid>0090</actid>
+    <pc>0000000061</pc>
+    <name>主体十七层梁板模板</name>
+    <ES>2014/1/10 0:00:00</ES>
+    <EF>2014/1/10 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0091</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0091</id>
+    <actid>0091</actid>
+    <pc>0000000061</pc>
+    <name>主体十七层梁板顶板钢筋</name>
+    <ES>2014/1/11 0:00:00</ES>
+    <EF>2014/1/11 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0092</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0092</id>
+    <actid>0092</actid>
+    <pc>0000000061</pc>
+    <name>主体十七层浇筑</name>
+    <ES>2014/1/12 0:00:00</ES>
+    <EF>2014/1/12 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0093</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0093</id>
+    <actid>0093</actid>
+    <pc>0000000061</pc>
+    <name>主体十八层放线压力焊</name>
+    <ES>2014/1/13 0:00:00</ES>
+    <EF>2014/1/13 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0094</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0094</id>
+    <actid>0094</actid>
+    <pc>0000000061</pc>
+    <name>主体十八层墙柱钢筋</name>
+    <ES>2014/1/14 0:00:00</ES>
+    <EF>2014/1/14 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0095</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0095</id>
+    <actid>0095</actid>
+    <pc>0000000061</pc>
+    <name>主体十八层梁板模板</name>
+    <ES>2014/1/15 0:00:00</ES>
+    <EF>2014/1/16 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0096</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0096</id>
+    <actid>0096</actid>
+    <pc>0000000061</pc>
+    <name>主体十八层梁板顶板钢筋</name>
+    <ES>2014/1/17 0:00:00</ES>
+    <EF>2014/1/17 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0097</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0097</id>
+    <actid>0097</actid>
+    <pc>0000000061</pc>
+    <name>主体十八层浇筑</name>
+    <ES>2014/1/18 0:00:00</ES>
+    <EF>2014/1/18 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0098</id>
+    <actid>0098</actid>
+    <pc>0000000061</pc>
+    <name>一层内墙砌筑</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0099</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0099</id>
+    <actid>0099</actid>
+    <pc>0000000061</pc>
+    <name>二层内墙砌筑</name>
+    <ES>2013/10/3 0:00:00</ES>
+    <EF>2013/10/4 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0100</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0100</id>
+    <actid>0100</actid>
+    <pc>0000000061</pc>
+    <name>三层内墙砌筑</name>
+    <ES>2013/10/5 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0101</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0101</id>
+    <actid>0101</actid>
+    <pc>0000000061</pc>
+    <name>四层内墙砌筑</name>
+    <ES>2013/10/7 0:00:00</ES>
+    <EF>2013/10/8 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0102</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0102</id>
+    <actid>0102</actid>
+    <pc>0000000061</pc>
+    <name>五层内墙砌筑</name>
+    <ES>2013/10/9 0:00:00</ES>
+    <EF>2013/10/10 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0103</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0103</id>
+    <actid>0103</actid>
+    <pc>0000000061</pc>
+    <name>六层内墙砌筑</name>
+    <ES>2013/10/11 0:00:00</ES>
+    <EF>2013/10/12 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0104</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0104</id>
+    <actid>0104</actid>
+    <pc>0000000061</pc>
+    <name>七层内墙砌筑</name>
+    <ES>2013/10/13 0:00:00</ES>
+    <EF>2013/10/14 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0105</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0105</id>
+    <actid>0105</actid>
+    <pc>0000000061</pc>
+    <name>八层内墙砌筑</name>
+    <ES>2013/10/15 0:00:00</ES>
+    <EF>2013/10/16 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0106</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0106</id>
+    <actid>0106</actid>
+    <pc>0000000061</pc>
+    <name>九层内墙砌筑</name>
+    <ES>2013/10/17 0:00:00</ES>
+    <EF>2013/10/18 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0107</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0107</id>
+    <actid>0107</actid>
+    <pc>0000000061</pc>
+    <name>十层内墙砌筑</name>
+    <ES>2013/10/19 0:00:00</ES>
+    <EF>2013/10/20 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0108</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0108</id>
+    <actid>0108</actid>
+    <pc>0000000061</pc>
+    <name>十一层内墙砌筑</name>
+    <ES>2013/10/21 0:00:00</ES>
+    <EF>2013/10/22 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0109</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0109</id>
+    <actid>0109</actid>
+    <pc>0000000061</pc>
+    <name>十二层内墙砌筑</name>
+    <ES>2013/10/23 0:00:00</ES>
+    <EF>2013/10/24 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0110</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0110</id>
+    <actid>0110</actid>
+    <pc>0000000061</pc>
+    <name>十三层内墙砌筑</name>
+    <ES>2013/10/25 0:00:00</ES>
+    <EF>2013/10/26 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0111</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0111</id>
+    <actid>0111</actid>
+    <pc>0000000061</pc>
+    <name>十四层内墙砌筑</name>
+    <ES>2013/10/27 0:00:00</ES>
+    <EF>2013/10/28 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0112</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0112</id>
+    <actid>0112</actid>
+    <pc>0000000061</pc>
+    <name>十五层内墙砌筑</name>
+    <ES>2013/10/29 0:00:00</ES>
+    <EF>2013/10/30 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0113</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0113</id>
+    <actid>0113</actid>
+    <pc>0000000061</pc>
+    <name>十六层内墙砌筑</name>
+    <ES>2013/10/31 0:00:00</ES>
+    <EF>2013/11/1 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0114</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0114</id>
+    <actid>0114</actid>
+    <pc>0000000061</pc>
+    <name>十七层内墙砌筑</name>
+    <ES>2013/11/2 0:00:00</ES>
+    <EF>2013/11/3 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0115</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0115</id>
+    <actid>0115</actid>
+    <pc>0000000061</pc>
+    <name>十八层内墙砌筑</name>
+    <ES>2013/11/4 0:00:00</ES>
+    <EF>2013/11/5 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0116</id>
+    <actid>0116</actid>
+    <pc>0000000061</pc>
+    <name>一到三层门窗工程</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/3 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0117</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0117</id>
+    <actid>0117</actid>
+    <pc>0000000061</pc>
+    <name>四到六层门窗工程</name>
+    <ES>2013/10/4 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0118</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0118</id>
+    <actid>0118</actid>
+    <pc>0000000061</pc>
+    <name>七到九层门窗工程</name>
+    <ES>2013/10/7 0:00:00</ES>
+    <EF>2013/10/9 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0119</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0119</id>
+    <actid>0119</actid>
+    <pc>0000000061</pc>
+    <name>十到十二层门窗工程</name>
+    <ES>2013/10/10 0:00:00</ES>
+    <EF>2013/10/12 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0120</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0120</id>
+    <actid>0120</actid>
+    <pc>0000000061</pc>
+    <name>十三层到十五层门窗工程</name>
+    <ES>2013/10/13 0:00:00</ES>
+    <EF>2013/10/15 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0121</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0121</id>
+    <actid>0121</actid>
+    <pc>0000000061</pc>
+    <name>十六层到十八层门窗工程</name>
+    <ES>2013/10/16 0:00:00</ES>
+    <EF>2013/10/18 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0122</id>
+    <actid>0122</actid>
+    <pc>0000000061</pc>
+    <name>一到六层外墙抹平</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0123</id>
+    <actid>0123</actid>
+    <pc>0000000061</pc>
+    <name>七到十二层外墙抹平</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0124</id>
+    <actid>0124</actid>
+    <pc>0000000061</pc>
+    <name>十三层到十八层外墙抹平</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0125</id>
+    <actid>0125</actid>
+    <pc>0000000061</pc>
+    <name>一到六层内墙地面</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0126</id>
+    <actid>0126</actid>
+    <pc>0000000061</pc>
+    <name>七到十二层内墙地面</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0127</id>
+    <actid>0127</actid>
+    <pc>0000000061</pc>
+    <name>十二层到十八层内墙地面</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0128</id>
+    <actid>0128</actid>
+    <pc>0000000061</pc>
+    <name>外墙保温一到六层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0129</id>
+    <actid>0129</actid>
+    <pc>0000000061</pc>
+    <name>外墙保温七到十二层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0130</id>
+    <actid>0130</actid>
+    <pc>0000000061</pc>
+    <name>外墙保温十三到十八层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0131</id>
+    <actid>0131</actid>
+    <pc>0000000061</pc>
+    <name>外墙装饰一到九层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/5 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0133</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0132</id>
+    <actid>0132</actid>
+    <pc>0000000061</pc>
+    <name>外墙装饰十到十八层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/5 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0133</id>
+    <actid>0133</actid>
+    <pc>0000000061</pc>
+    <name>内墙涂料一到六层</name>
+    <ES>2013/10/6 0:00:00</ES>
+    <EF>2013/10/11 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0134</id>
+    <actid>0134</actid>
+    <pc>0000000061</pc>
+    <name>内墙涂料七到十二层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0135</id>
+    <actid>0135</actid>
+    <pc>0000000061</pc>
+    <name>内墙涂料十三到十八层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0140</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0136</id>
+    <actid>0136</actid>
+    <pc>0000000061</pc>
+    <name>扶手栏杆一到六层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0137</id>
+    <actid>0137</actid>
+    <pc>0000000061</pc>
+    <name>扶手栏杆七到十二层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0138</id>
+    <actid>0138</actid>
+    <pc>0000000061</pc>
+    <name>扶手栏杆十三到十八层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/6 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0139</id>
+    <actid>0139</actid>
+    <pc>0000000061</pc>
+    <name>屋面面层</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/10 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>0134,0135,0143</TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0140</id>
+    <actid>0140</actid>
+    <pc>0000000061</pc>
+    <name>室外散水台阶</name>
+    <ES>2013/10/7 0:00:00</ES>
+    <EF>2013/10/11 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0141</id>
+    <actid>0141</actid>
+    <pc>0000000061</pc>
+    <name>水暖安装工程ss</name>
+    <ES>2011/5/10 0:00:00</ES>
+    <EF>2014/3/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0142</id>
+    <actid>0142</actid>
+    <pc>0000000061</pc>
+    <name>电气安装工程</name>
+    <ES>2011/5/10 0:00:00</ES>
+    <EF>2014/3/2 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0143</id>
+    <actid>0143</actid>
+    <pc>0000000061</pc>
+    <name>设备调试</name>
+    <ES>2013/10/11 0:00:00</ES>
+    <EF>2013/10/13 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+  <record>
+    <pid>
+    </pid>
+    <id>0144</id>
+    <actid>0144</actid>
+    <pc>0000000061</pc>
+    <name>竣工验收</name>
+    <ES>2013/10/1 0:00:00</ES>
+    <EF>2013/10/5 0:00:00</EF>
+    <duration>
+    </duration>
+    <PercentComplete>
+    </PercentComplete>
+    <TID>
+    </TID>
+    <Style>st2</Style>
+  </record>
+</data>

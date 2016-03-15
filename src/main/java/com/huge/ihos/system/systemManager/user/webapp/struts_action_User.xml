@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="user" extends="default"	namespace="/">
+	
+		<action name="userList" class="userAction">
+			<result name="input">/WEB-INF/pages/system/systemManager/security/UserList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/security/UserList.jsp</result>
+		</action>
+
+		<action name="editUser" class="userAction" method="edit">
+			<interceptor-ref name="adminCheck" />
+			<result name="success">/WEB-INF/pages/userForm.jsp</result>
+			<result name="input">/WEB-INF/pages/admin/userList.jsp</result>
+		</action>
+		
+		<action name="editProfile" class="userAction" method="edit">
+			<result name="success">/WEB-INF/pages/userForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="saveUser" class="userAction" method="save">
+			<result name="cancel" type="redirectAction">admin/users</result>
+			<result name="input">/WEB-INF/pages/userForm.jsp</result>
+			<result name="success" type="redirectAction">admin/users</result>
+		</action>
+		
+	</package>
+</struts>

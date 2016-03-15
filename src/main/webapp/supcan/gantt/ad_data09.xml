@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="GBK"?>
+<data>
+<record>
+	<id>B</id>
+	<name>任务B</name>
+	<ES>2014.03.19</ES>
+	<EF>2014.03.27</EF>
+	<TID>C,End</TID>
+</record>
+
+<record>
+	<id>End</id>
+	<name>任务End</name>
+	<ES>2014.03.28</ES>
+	<EF>2014.05.08</EF>
+	<TID></TID>
+</record>
+
+
+<record>
+	<id>C</id>
+	<name>任务C</name>
+	<ES>2014.03.28</ES>
+	<EF>2014.04.08</EF>
+	<TID>D,M</TID>
+</record>
+
+<record>
+	<id>M</id>
+	<name>任务M</name>
+	<ES>2014.04.09</ES>
+	<EF>2014.04.18</EF>
+	<TID>N,O,X</TID>
+</record>
+
+<record>
+	<id>X</id>
+	<name>任务X</name>
+	<ES>2014.04.19</ES>
+	<EF>2014.04.30</EF>
+	<TID>P</TID>
+</record>
+
+<record>
+	<id>N</id>
+	<name>任务N</name>
+	<ES>2014.04.19</ES>
+	<EF>2014.04.23</EF>
+	<TID>L</TID>
+</record>
+<record>
+	<id>L</id>
+	<name>任务L</name>
+	<ES>2014.04.24</ES>
+	<EF>2014.04.30</EF>
+	<TID>P</TID>
+</record>
+<record>
+	<id>P</id>
+	<name>任务P</name>
+	<ES>2014.05.01</ES>
+	<EF>2014.05.17</EF>
+	<TID>Z</TID>
+</record>
+
+
+<record>
+	<id>O</id>
+	<name>任务O</name>
+	<ES>2014.04.19</ES>
+	<EF>2014.05.17</EF>
+	<TID>Z</TID>
+</record>
+
+
+<record>
+	<id>D</id>
+	<name>任务D</name>
+	<ES>2014.04.09</ES>
+	<EF>2014.04.18</EF>
+	<TID>E</TID>
+</record>
+
+<record>
+	<id>E</id>
+	<name>任务E</name>
+	<ES>2014.04.24</ES>
+	<EF>2014.04.29</EF>
+	<TID>A,F,G</TID>
+</record>
+<record>
+	<id>F</id>
+	<name>任务F</name>
+	<ES>2014.04.30</ES>
+	<EF>2014.05.06</EF>
+	<TID>Z</TID>
+</record>
+
+<record>
+	<id>A</id>
+	<name>任务A</name>
+	<ES>2014.04.30</ES>
+	<EF>2014.05.06</EF>
+	<TID>Z</TID>
+</record>
+
+<record>
+	<id>G</id>
+	<name>任务G</name>
+	<ES>2014.04.30</ES>
+	<EF>2014.05.06</EF>
+	<TID>H</TID>
+</record>
+
+<record>
+	<id>H</id>
+	<name>任务H</name>
+	<ES>2014.05.07</ES>
+	<EF>2014.05.17</EF>
+	<TID>Z</TID>
+</record>
+<record>
+	<id>Z</id>
+	<name>任务Z</name>
+	<ES>2014.05.18</ES>
+	<EF>2014.05.27</EF>
+	<TID></TID>
+</record>
+</data>

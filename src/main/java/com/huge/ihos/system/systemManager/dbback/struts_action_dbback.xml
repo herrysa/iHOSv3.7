@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="dbbackup" extends="default" namespace="/">
+
+
+		<!--MenuAction-START -->
+
+		<action name="dbBackupList">
+			<result name="input">/WEB-INF/pages/system/systemManager/dbback/dbBackList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/dbback/dbBackList.jsp</result>
+		</action>
+			<action name="dbBackupGridList" class="com.huge.ihos.system.systemManager.dbback.webapp.action.DbBackupAction"
+			method="dbBackupGridList">
+			<result type="json">
+				<param name="includeProperties">dbBackups.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDbBackup" class="com.huge.ihos.system.systemManager.dbback.webapp.action.DbBackupAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/dbback/dbBackForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/dbback/dbBackForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveDbBackup" class="com.huge.ihos.system.systemManager.dbback.webapp.action.DbBackupAction"
+			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<action name="dbBackupGridEdit" class="com.huge.ihos.system.systemManager.dbback.webapp.action.DbBackupAction"
+			method="dbBackupGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	<action name="downLoadBackUp" class="com.huge.ihos.system.systemManager.dbback.webapp.action.DbBackupAction"
+			method="downLoadBackUp"/>
+	</package>
+</struts>

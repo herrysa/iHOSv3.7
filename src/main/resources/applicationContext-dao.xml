@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+       default-lazy-init="true">
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	 <bean id="selectedDataSource" class="com.huge.ihos.multidatasource.DynamicDatabaseManager">
+    	<property name="selectedDataSource">
+	   		<map>
+	   			<!-- 配置登陆页面显示多个数据库
+	   				key：SessionFactory的id
+	   				value：用户看到的数据库名称
+	   			 -->
+	   			<entry key="HOSP1" value="北京市人民医院总院"/>
+	   		    <!-- <entry key="HOSP2" value="威海市立医院东院"/>
+	   		    <entry key="HOSP3" value="威海市立医院西院"/> -->
+	   		</map>
+   		</property>
+   		<property name="defaultSessionFactory" value="HOSP1"/>
+    </bean>
+    <bean id="sessionFactory" class="com.huge.ihos.multidatasource.MultiSessionFactory">
+    	<property name="sessionFactory" ref="HOSP1"/>
+    </bean>
+    <!-- Hibernate SessionFactory -->
+    <!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=${hibernate.dialect}
+                hibernate.query.substitutions=true 'Y', false 'N'
+                hibernate.cache.use_second_level_cache=true
+                hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+                hibernate.cache.use_query_cache=false 
+                hibernate.jdbc.fetch_size 50
+                hibernate.jdbc.batch_size 30
+                hibernate.show_sql=false
+                hibernate.format_sql=true
+ 
+            </value>
+            Turn batching off for better error messages under PostgreSQL
+            hibernate.jdbc.batch_size=0
+        </property>
+        <property name="entityInterceptor" ref="entityExecInterceptor"/>
+    </bean> -->
+    <!-- 总院数据库配置信息 -->
+    <!-- DataSource -->
+    <bean id="DataSource1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
+        <property name="url" value="jdbc:jtds:sqlserver://192.168.1.109:2008/cb2016"/>
+        <property name="username" value="sa"/>
+        <property name="password" value="1234"/>
+        <property name="maxActive" value="100"/>
+        <property name="maxWait" value="1000"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="defaultAutoCommit" value="true"/>
+    </bean>
+    <!-- SessionFactory -->
+    <bean id="HOSP1" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="DataSource1"/>
+        <!-- <property name="configLocation" value="classpath:hibernate.cfg.xml"/> -->
+        <property name ="packagesToScan" value= "com.huge" />
+        <!-- <property name="mappingLocations">  
+	     <list>  
+	        <value>/META-INF/orm-*.xml</value>  
+	     </list>  
+	   </property> -->
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=com.huge.dao.hibernate.SQLServerIhosDialect
+                hibernate.query.substitutions=true 'Y', false 'N'
+                hibernate.cache.use_second_level_cache=true
+                hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+                hibernate.cache.use_query_cache=true 
+                hibernate.jdbc.fetch_size 50
+                hibernate.jdbc.batch_size 30
+                hibernate.show_sql=false
+                hibernate.format_sql=false
+            </value>
+        </property>
+    </bean>
+    
+    <!-- 东院数据库配置信息 -->
+    
+    <!--<bean id="DataSource2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
+         <property name="url" value="jdbc:jtds:sqlserver://192.168.1.209:2008/fbm"/>
+         <property name="username" value="sa"/>
+         <property name="password" value="1234"/>
+         <property name="maxActive" value="100"/>
+         <property name="maxWait" value="1000"/>
+         <property name="poolPreparedStatements" value="true"/>
+         <property name="defaultAutoCommit" value="true"/>
+     </bean>
+    <bean id="HOSP2" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+         <property name="dataSource" ref="DataSource2"/>
+         <property name ="packagesToScan" value= "com.fbm" />
+         <property name="hibernateProperties">
+             <value>
+                 hibernate.dialect=com.huge.dao.hibernate.SQLServerIhosDialect
+                 hibernate.query.substitutions=true 'Y', false 'N'
+                 hibernate.cache.use_second_level_cache=true
+                 hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+                 hibernate.cache.use_query_cache=true 
+                 hibernate.jdbc.fetch_size 50
+                 hibernate.jdbc.batch_size 30
+                 hibernate.show_sql=false
+                 hibernate.format_sql=true
+             </value>
+         </property>
+     </bean>-->
+     <!--  西院数据库配置信息 -->
+     <!--
+     <bean id="DataSource3" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
+         <property name="url" value="jdbc:jtds:sqlserver://192.168.1.109:1433/WH_X"/>
+         <property name="username" value="sa"/>
+         <property name="password" value="1234"/>
+         <property name="maxActive" value="100"/>
+         <property name="maxWait" value="1000"/>
+         <property name="poolPreparedStatements" value="true"/>
+         <property name="defaultAutoCommit" value="true"/>
+     </bean>
+     <bean id="HOSP3" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+         <property name="dataSource" ref="DataSource3"/>
+         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+         <property name="hibernateProperties">
+             <value>
+                 hibernate.dialect=com.huge.dao.hibernate.SQLServerIhosDialect
+                 hibernate.query.substitutions=true 'Y', false 'N'
+                 hibernate.cache.use_second_level_cache=true
+                 hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+                 hibernate.cache.use_query_cache=true
+                 hibernate.jdbc.fetch_size 50
+                 hibernate.jdbc.batch_size 30
+                 hibernate.show_sql=false
+                 hibernate.format_sql=true
+             </value>
+         </property>
+     </bean>-->
+     
+<!-- <bean id="entityExecInterceptor" class="com.huge.dao.hibernate.EntityExecInterceptor"></bean> -->
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config />
+
+    <!-- Activates scanning of @Repository -->
+    <context:component-scan base-package="com.huge" />
+
+    <!-- Compass Search Section -->
+
+    <!-- Compass Bean, automatically scanning for searchable classes within the model -->
+    <!-- Hooks into Spring transaction management and stores the index on the file system -->
+   <!--  <bean id="compass" class="org.compass.spring.LocalCompassBean">
+        <property name="mappingScan" value="com.huge"/>
+        <property name="transactionManager" ref="transactionManager" />
+        <property name="settings">
+            <map>
+                <entry key="compass.engine.connection" value="target/test-index" />
+            </map>
+        </property>
+    </bean> -->
+
+    <!-- Compass Template allowing to automatically join/start exising transactions when performing operations -->
+  <!--   <bean id="compassTemplate" class="org.compass.core.CompassTemplate">
+        <property name="compass" ref="compass" />
+    </bean>
+ -->
+    <!-- Compass Search Helper allowing to perform search operations in a simpler manner -->
+   <!--  <bean id="compassSearchHelper" class="org.compass.core.support.search.CompassSearchHelper">
+        <constructor-arg ref="compass" />
+        <property name="pageSize" value="10" />
+    </bean> -->
+
+    <!-- CompassGps will automatically mirror any changes done thorugh Hibernate to searchable classes to the index -->
+    <!-- It will also provide the index operation allowing to reindex the database -->
+    <!-- <bean id="compassGps" class="org.compass.gps.impl.SingleCompassGps" init-method="start" destroy-method="stop">
+        <property name="compass" ref="compass" />
+        <property name="gpsDevices">
+            <list>
+                <bean class="org.compass.gps.device.hibernate.HibernateGpsDevice">
+                    <property name="name" value="hibernate" />
+                    <property name="sessionFactory" ref="sessionFactory" />
+                </bean>
+            </list>
+        </property>
+    </bean> -->
+</beans>

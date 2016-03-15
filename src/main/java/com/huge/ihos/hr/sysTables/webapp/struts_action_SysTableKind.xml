@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="sysTableKind" extends="default"	namespace="/">
+
+		<action name="sysTableKindList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableKindPagedAction">
+			<result name="input">/WEB-INF/pages/hr/sysTable/sysTableKind/sysTableKindList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableKind/sysTableKindList.jsp</result>
+		</action>
+		<action name="sysTableKindGridList" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableKindPagedAction"		method="sysTableKindGridList">
+			<result type="json">
+				<param name="includeProperties">sysTableKinds.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="sysTableKindGridEdit" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableKindPagedAction"			method="sysTableKindGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editSysTableKind" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableKindPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/hr/sysTable/sysTableKind/sysTableKindForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/sysTable/sysTableKind/sysTableKindForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveSysTableKind" class="com.huge.ihos.hr.sysTables.webapp.action.SysTableKindPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

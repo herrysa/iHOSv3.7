@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="org" extends="default"	namespace="/">
+
+		<action name="orgList" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction" method="hrOrgList">
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/orgList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/orgList.jsp</result>
+		</action>
+		<action name="orgGridList" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction"		method="orgGridList">
+			<result type="json">
+				<param name="includeProperties">orgs.*,records,total,page,orgAll.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="orgGridEdit" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction"			method="orgGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editOrg" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/systemManager/organization/orgForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/systemManager/organization/orgForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveOrg" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="makeOrgTree" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction" method="makeOrgTree">
+			<result name="success" type="json">
+				<param name="includeProperties">ztreeList.*</param>
+                <param name="noCache">true</param>
+			</result>
+		</action>
+		<action name="checkOrgCanBeAdded" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction" method="checkOrgCanBeAdded">
+			<result name="success" type="json">
+				<param name="includeProperties">canBeAdded,orgNum</param>
+                <param name="noCache">true</param>
+			</result>
+		</action>
+		<!-- hr -->
+		<!-- <action name="hrOrgList" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction" method="hrOrgList">
+			<result name="input">/WEB-INF/pages/hr/org/orgList.jsp</result>
+			<result name="success">/WEB-INF/pages/hr/org/orgList.jsp</result>
+		</action>
+		<action name="editHrOrg" class="com.huge.ihos.system.systemManager.organization.webapp.action.OrgPagedAction"	method="edit">
+			<result name="success">/WEB-INF/pages/hr/org/orgForm.jsp</result>
+			<result name="input">/WEB-INF/pages/hr/org/orgForm.jsp</result>
+		</action> -->
+
+	</package>
+
+</struts>

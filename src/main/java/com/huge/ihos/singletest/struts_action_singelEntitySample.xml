@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="singleSample" extends="default"
+		namespace="/">
+			
+        <action name="singleEntitySampleList">
+			<result name="input">/WEB-INF/pages/singleSample/singleEntitySampleList.jsp</result>
+			<result name="success">/WEB-INF/pages/singleSample/singleEntitySampleList.jsp</result>
+		</action>
+
+		<action name="singleEntitySampleGridList" class="com.huge.ihos.singletest.webapp.action.SingleEntitySampleAction" method="singleEntitySampleGridList">
+			<result type="json">
+				<param name="includeProperties">singleEntitySamples.*,records,total,page</param>
+				<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="singleEntitySampleGridEdit" class="com.huge.ihos.singletest.webapp.action.SingleEntitySampleAction" method="singleEntitySampleGridEdit">
+            <result type="json">
+                <param name="includeProperties">gridOperationMessage</param>
+            </result>
+        </action>
+        <!--  called when a record is clicked on the grid -->
+        <action name="editSingleEntitySample" class="com.huge.ihos.singletest.webapp.action.SingleEntitySampleAction" method="edit">
+ 	        <result name="success">/WEB-INF/pages/singleSample/singleEntitySampleForm.jsp</result>
+ 	        <result name="input">/WEB-INF/pages/singleSample/singleEntitySampleForm.jsp</result>
+ 	    </action>
+        
+        <!--  called when clicking save on the edit form -->
+        <action name="saveSingleEntitySample" class="com.huge.ihos.singletest.webapp.action.SingleEntitySampleAction" method="save">
+            <result name="success">/WEB-INF/pages/singleSample/singleEntitySampleForm.jsp</result>
+            <result name="input">/WEB-INF/pages/singleSample/singleEntitySampleForm.jsp</result>
+            <result name="edit_success">/WEB-INF/pages/popupresult/SuccessRefresh.jsp</result>
+        </action>
+        
+        
+        <!--SingleEntitySampleAction-END-->
+	</package>
+
+</struts>
