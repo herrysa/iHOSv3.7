@@ -358,6 +358,21 @@ public class QueryAction
         this.viewDef = this.queryManager.getViewDef( searchName );
         User user = this.getSessionUser();
         this.searchUrls = this.searchUrls = this.queryManager.getSearchUrlByRight(""+user.getId(), searchId);
+        for(SearchUrl searchUrl :this.searchUrls){
+        	String url = searchUrl.getUrl();
+        	String[] urlArr = url.split("\\(");
+        	String jzSystem = searchUrl.getJzSystem();
+        	if(urlArr.length<2&&jzSystem!=null&&!"".equals(jzSystem)){
+        		continue;
+        	}else{
+        		String[] systemArr = jzSystem.split(",");
+        		Map<String, Boolean> jzStatus = new HashMap<String, Boolean>(); 
+        		for(String system : systemArr){
+        			boolean jz = UserContextUtil.isModuleClosed(system,"月",UserContextUtil.getLoginPeriod());
+        			jzStatus.put(system, jz);
+        		}
+        	}
+        }
         this.sumSearchOptionsNum = this.queryManager.getSearchSumOptionsBySearchNameOrdered( searchId ).length;
 //        this.currentPeriod = this.periodManager.getCurrentPeriod().getPeriodCode();
         this.currentPeriod =  this.getLoginPeriod();

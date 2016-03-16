@@ -244,8 +244,13 @@ public class QueryManagerImpl
                 continue;
             String htmlFieldName = itemArray[i].getHtmlField();
             String htmlFieldValue = req.getParameter( htmlFieldName );
-            if ( ( htmlFieldValue == null ) || ( htmlFieldValue.length() <= 0 ) )
-                continue;
+            if ( ( htmlFieldValue == null ) || ( htmlFieldValue.length() <= 0 ) ){
+            	if(itemArray[i].getMustArg()!=null&&itemArray[i].getMustArg()==true){
+            		htmlFieldValue = "";
+            	}else{
+            		continue;
+            	}
+            }
             String dbFieldName = itemArray[i].getField();
             String operator = itemArray[i].getOperator();
             if ( operator == null )

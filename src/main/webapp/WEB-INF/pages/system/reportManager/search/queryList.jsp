@@ -1830,14 +1830,23 @@
 													}
 													</script>
 												</c:when>
+												<c:when test="${item.userTag=='hidden'}">
+													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
+												</c:when>
 												<c:otherwise>
-													<input type="text"
+													<input type=<c:if test="${item.hidden==true}">"hidden"</c:if> 
 														id="${random}_${searchName}_${item.htmlField}"
 														class="input-small" value="${item.initValueString}"
 														<c:if test="${item.readOnly==true}">readOnly</c:if> 
 														<c:if test="${item.required==true}">requiredd='true'</c:if> 
 														 size="${item.length}"/>
-													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
+													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if>
+													<script>
+														var hidden = "${item.hidden==true}"; 
+														if(hidden=='true'){
+															jQuery("#${random}_${searchName}_${item.htmlField}").parent().hide();
+														}
+													</script>
 												</c:otherwise>
 											</c:choose>
 											<label style="float:none;line-height:15px">${item.suffix}</label>

@@ -650,7 +650,7 @@
 	<div class="page">
 		<div style="margin: 5px;padding: 5px;">
 			<label style="cursor: pointer;position: absolute;right: 50px;text-decoration: underline;" id="${random}${type}acctTree_expandTree" onclick="toggleExpandAccTree(this,'${random}${type}acctTree')">展开</label>
-			<input type="text" onkeyup="searchTree('${random}${type}acctTree',this);" >
+			<input type="text" id="${random}${type}acctInput" >
 			<input type="hidden" id="${random}${type}acctTree_cellId">
 			<div style="margin-top: 10px;height: 300px;overflow: auto;">
 				<div id="${random}${type}acctTree" class="ztree"></div>
@@ -658,60 +658,138 @@
 		</div>
 	</div>
 	<script>
-	/* function searchTree(treeId,input){
-		if(treeId){
-			var zTree = $.fn.zTree.getZTreeObj(treeId);
-			var nodes = null , showNodes = null;//zTree.transformToArray(zTree.getNodes());
-			var initNodes = jQuery("#"+treeId).data('initNodes');
-			var initNodesMap = jQuery("#"+treeId).data('initNodesMap');
-			var treeChanged = jQuery("#"+treeId).data('treeChanged');
-			if(!initNodes){
-				initNodes = zTree.getNodesByParam("isHidden", false, null);
-				initNodesMap = new Map();
-				for(var nindex in initNodes){
-					initNodesMap.put(initNodes[nindex].id,true);
+	function focusAcctInput() {
+		jQuery("#${random}${type}acctInput").get(0).focus();
+	}
+	jQuery("#${random}${type}acctTreeDiv").ready(function() {
+		jQuery("#${random}${type}acctInput").keyup(function(evt) {
+			var keyCode = evt.keyCode;//up:38;down:40;enter:13
+			if(keyCode != "13" && keyCode != "38" && keyCode != "40") {
+				searchTree('${random}${type}acctTree',this);
+			} else {
+				var acctTree = $.fn.zTree.getZTreeObj("${random}${type}acctTree");
+				var sNodes = acctTree.getSelectedNodes();
+				var node,rNode;
+				if (sNodes.length > 0) {
+					node = sNodes[0];
+				} else {
+					node = acctTree.getNodes()[0];
 				}
-				jQuery("#"+treeId).data('initNodes',initNodes);
-				jQuery("#"+treeId).data('initNodesMap',initNodesMap);
-			}
-			if(treeChanged=='true'&&initNodes){
-				initNodesMap = new Map();
-				for(var nindex in initNodes){
-					initNodesMap.put(initNodes[nindex].id,true);
+				if(keyCode == "38") {
+					if(node) {
+						var isParent = node.isParent;
+						if(isParent) {
+							rNode = getCNode0Pre(node);
+						} else {
+							rNode = getPreNode0(node);
+						}
+						if(!rNode) {
+							focusAcctInput();
+							return;
+						}
+					}
+				} else if(keyCode == "40") {
+					if(node) {
+						var isParent = node.isParent;
+						if(isParent) {
+							rNode = getCNode0(node);
+						} else {
+							rNode = getNextNode0(node);
+						}
+						if(!rNode) {
+							focusAcctInput();
+							return;
+						}
+					}
+					
+				} else {
+					chooseSelectNode(node);
+					return;
 				}
-				jQuery("#"+treeId).data('initNodesMap',initNodesMap);
-				jQuery("#"+treeId).data('treeChanged','false');
+				acctTree.selectNode(rNode,false);
+				focusAcctInput();
 			}
-			var seearchValue = jQuery(input).val();
-			if(seearchValue==""){
-				zTree.showNodes(initNodes);
-				zTree.checkAllNodes(false);
-				jQuery(input).val("");
-			}else{
-				nodes = zTree.getNodesByParam("isHidden", false, null);
-				zTree.hideNodes(nodes);
-				var showNodes = zTree.getNodesByParamFuzzy('name',seearchValue,null);
-				for(var nodeIndex=0;nodeIndex<showNodes.length;nodeIndex++){
-					showParentNode(zTree,showNodes[nodeIndex],initNodesMap);
-				}
+		});
+		jQuery("#${random}${type}acctTreeDiv").children().each(function() {
+			jQuery(this).click(function() {
+				focusAcctInput();
+			});
+		});
+	});
+	
+	function getPPNode0(node) {
+		var parentNode = node.getParentNode();
+		if(parentNode) {
+			if(parentNode.isFirstNode) {
+				return getPPNode0(parentNode);
+			} else {
+				return getCNode0Pre(parentNode.getPreNode());
 			}
+		} else {
+			return node;
 		}
 	}
-	function showParentNode(zTree,node,initNodesMap){
-		if(!node){
-			return ;
+	
+	function getPreNode0(node) {
+		if(node.isFirstNode) {
+			var parentNode = node.getParentNode();
+			if(parentNode.isFirstNode) {
+				return getPPNode0(parentNode);
+			} else {
+				return getPreNode0(parentNode);
+			}
+		} else {
+			var preNode = node.getPreNode();
+			return getCNode0Pre(preNode);
 		}
-		if(initNodesMap&&!initNodesMap.get(node.id)){
-			return ;
+	}
+	
+	function getCNode0Pre(node) {
+		var isParent = node.isParent;
+		if(isParent) {
+			var children = node.children;
+			return getCNode0Pre(children[children.length - 1]);
+		} else {
+			return node;
 		}
-		if(!node.isHidden){
-			return ;
+	}
+	
+	
+	function getCNode0(node) {
+		var isParent = node.isParent;
+		if(isParent) {
+			return getCNode0(node.children[0]);
+		} else {
+			return node;
 		}
-		zTree.showNode(node);
-		if(node.getParentNode()!=null){
-			showParentNode(zTree,node.getParentNode(),initNodesMap)
+	}
+	
+	function getPNNode0(node) {
+		var parentNode = node.getParentNode();
+		if(parentNode) {
+			if(parentNode.isLastNode) {
+				return getPNNode0(parentNode);
+			} else {
+				return getCNode0(parentNode.getNextNode());
+			}
+		} else {
+			return node;
 		}
-	} */
+	}
+	
+	function getNextNode0(node) {
+		if(node.isLastNode) {
+			var parentNode = node.getParentNode();
+			if(parentNode.isLastNode) {
+				return getPNNode0(parentNode);
+			} else {
+				return getNextNode0(parentNode);
+			}
+		} else {
+			var nextNode = node.getNextNode();
+			return getCNode0(nextNode);
+		}
+	}
 	
 	function toggleExpandAccTree(obj,treeId){
 		var zTree = $.fn.zTree.getZTreeObj(treeId); 
@@ -735,31 +813,13 @@
 			},
 			callback : {
 				beforeDrag : function() {
-					return false
+					return false;
 				},
 				onClick : function(event, treeId, treeNode, clickFlag) {
-					var isParent = treeNode.isParent;
-					if(!isParent) {
-						var id = treeNode.id;
-						var name = treeNode.name;
-						var cellId = jQuery("#${random}${type}acctTree_cellId").val();
-						if(cellId) {
-							jQuery("#"+cellId).val(name);
-							var rowId = id.substr(0,id.indexOf("_"));
-							var rowId = cellId.substr(0,cellId.indexOf("_"));
-							var rowChangedData = changeData${random}${type}[rowId];
-							if(rowChangedData==null){
-								rowChangedData = {};
-							}
-							var elem = cellId.substring(cellId.indexOf("_")+1);
-							rowChangedData[elem] = name;
-							elem = elem.replace("_name","");
-							rowChangedData[elem] = id;
-							changeData${random}${type}[rowId] = rowChangedData;
-						}
-						jQuery("#${random}${type}acctTree_cellId").val("");
-						$.pdialog.closeCurrentDiv("${random}${type}acctTreeDiv");
-					}
+					focusAcctInput();
+				},
+				onDblClick : function(event, treeId, treeNode, clickFlag) {
+					chooseSelectNode(treeNode);
 				}
 			},
 			data : {
@@ -773,7 +833,34 @@
 				}
 			}
 		};
+		
+		function chooseSelectNode(treeNode) {
+			var isParent = treeNode.isParent;
+			if(!isParent) {
+				var id = treeNode.id;
+				var name = treeNode.name;
+				var cellId = jQuery("#${random}${type}acctTree_cellId").val();
+				if(cellId) {
+					jQuery("#"+cellId).val(name);
+					var rowId = id.substr(0,id.indexOf("_"));
+					var rowId = cellId.substr(0,cellId.indexOf("_"));
+					var rowChangedData = changeData${random}${type}[rowId];
+					if(rowChangedData==null){
+						rowChangedData = {};
+					}
+					var elem = cellId.substring(cellId.indexOf("_")+1);
+					rowChangedData[elem] = name;
+					elem = elem.replace("_name","");
+					rowChangedData[elem] = id;
+					changeData${random}${type}[rowId] = rowChangedData;
+				}
+				jQuery("#${random}${type}acctTree_cellId").val("");
+				$.pdialog.closeCurrentDiv("${random}${type}acctTreeDiv");
+			}
+		}
+		
 		function makeAcctTree(obj) {
+			//保存input的id
 			var cellId = jQuery(obj).attr("id");
 			jQuery("#${random}${type}acctTree_cellId").val(cellId);
 			
@@ -790,6 +877,11 @@
 				acctTree.selectNode(nodes[0]);
 			});
 			jQuery("#${random}${type}acctTree_expandTree").text("展开");
+			
+			//使input获取焦点
+			setTimeout(function() {
+				focusAcctInput();
+			},100);
 		}
 		
 	</script>

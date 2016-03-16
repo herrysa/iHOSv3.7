@@ -92,7 +92,16 @@
 					<s:checkbox key="searchItem.required"
 						labelposition="left" theme="simple"/>
 				</div>
-
+				<div class="unit">
+					<label>隐藏:</label>
+					<span style="float:left;width:140px">
+					<s:checkbox key="searchItem.hidden"
+						labelposition="left" theme="simple"/>
+					</span>
+					<label>传空参:</label>
+					<s:checkbox key="searchItem.mustArg"
+						labelposition="left" theme="simple"/>
+				</div>
 				<div class="unit">
 						<label><fmt:message key='searchItem.param1' />:</label>
 					<s:textarea key="searchItem.param1" required="false"

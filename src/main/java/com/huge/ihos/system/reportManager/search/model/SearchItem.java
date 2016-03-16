@@ -65,8 +65,12 @@ public class SearchItem
     private Boolean required;
 
     private String herpType;
+    
+    private Boolean hidden;
+    
+    private Boolean mustArg;
 
-    @Id
+	@Id
     @Column( length = 30 )
     public String getSearchItemId() {
         return this.searchItemId;
@@ -217,6 +221,25 @@ public class SearchItem
 
 	public void setHerpType(String herpType) {
 		this.herpType = herpType;
+	}
+	
+	
+	@Column(name="hidden",nullable=true)
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+	
+	@Column(name="mustArg",nullable=true)
+	public Boolean getMustArg() {
+		return mustArg;
+	}
+
+	public void setMustArg(Boolean mustArg) {
+		this.mustArg = mustArg;
 	}
 
 	public boolean equals( Object o ) {
