@@ -72,7 +72,7 @@
 				<div class="unit">
 					<s:textfield key="searchUrl.icon" cssClass="required" maxlength="50"/>
 				</div>
-				<!-- <div class="unit">
+				<div class="unit">
 					<label>结账检查:</label>
 					<input  type="text" id="searchUrl_jzSystem" size="50" maxlength="50"/>
 					<input  type="hidden" id="searchUrl_jzSystem_id" name="searchUrl.jzSystem" />
@@ -87,7 +87,7 @@
 						minWidth:'200px'
 					});
 					</script>
-				</div> -->
+				</div>
 				<div class="unit">
 					<s:select list="#{'S1':'S1','S2':'S2','M1':'M1','M2':'M2','G':'G' }" key="searchUrl.herpType" listKey="key"
 						listValue="value" emptyOption="true" maxlength="50" width="50px"></s:select>

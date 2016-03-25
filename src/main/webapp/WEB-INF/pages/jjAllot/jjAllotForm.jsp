@@ -58,12 +58,19 @@
 				<s:hidden id="jjAllot_jjDept_id" name="jjAllot.jjDeptId.departmentId" value="%{jjAllot.jjDeptId.departmentId}"/>
 				<label><s:text name="jjAllot.jjDeptId"></s:text>:</label>
 				<span style="float:left;width:140px">
-						<s:textfield size="25" id="jjAllot_allotDept_name" name="jjAllot_allotDept_name" cssClass="required" value="%{jjAllot.jjDeptId.name}"	 ></s:textfield>
+						<s:textfield id="jjAllot_allotDept_name" name="jjAllot_allotDept_name" cssClass="required" value="%{jjAllot.jjDeptId.name}"	 readonly="true"></s:textfield>
 				</span>
 				<script>
-												addTreeSelect("tree","sync","jjAllot_allotDept_name","jjAllot_jjDept_id","single",{tableName:"v_jj_department",treeId:"deptId",treeName:"name",parentId:"jjdepttype",filter:" jjleaf=1",initSelect:"${jjDeptMap.deptIds}",disabledSelect:"${selected_dept_id}",classTable:"KH_Dict_JjDeptType",classTreeId:"jjDeptTypeId",classTreeName:"jjDeptTypeName",classFilter:""});
-
-
+						//addTreeSelect("tree","sync","jjAllot_allotDept_name","jjAllot_jjDept_id","single",{tableName:"v_jj_department",treeId:"deptId",treeName:"name",parentId:"jjdepttype",order:"internalCode asc",filter:" jjleaf=1",initSelect:"${jjAllot.jjDeptId.departmentId}",disabledSelect:"${selected_dept_id}",classTable:"KH_Dict_JjDeptType",classTreeId:"jjDeptTypeId",classTreeName:"jjDeptTypeName",classFilter:""});
+					jQuery("#jjAllot_allotDept_name").treeselect({
+						idId : "jjAllot_jjDept_id",
+						dataType:"sql",
+						optType:"single",
+						sql:"select v.deptId id,v.name name,v.jjdepttype+v.orgCode parent,0 isParent,'/scripts/zTree/css/zTreeStyle/img/diy/dept.gif' icon,deptCode orderCol from v_jj_department v where v.disabled = '0' and v.jjleaf = '1' union select vj.jjdepttype+vj.orgCode id,k.jjDeptTypeName name ,vj.orgCode parent,1 isParent,null icon, k.jjDeptTypeName orderCol from v_jj_department vj left JOIN KH_Dict_jjDeptType k ON vj.jjdepttype =k.jjDeptTypeId union select t.orgCode id,t.orgname name,'1' parent ,1 isParent ,'/scripts/zTree/css/zTreeStyle/img/diy/1_close.png' icon,t.orgCode orderCol from T_Org t where t.orgCode <> 'XT' and t.disabled = '0' order by orderCol",
+						exceptnullparent:false,
+						lazy:false,
+						minWidth:"200px"
+					});
 				</script>
 				</div>
 				

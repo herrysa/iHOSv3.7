@@ -58,7 +58,7 @@
 					<s:textfield key="dbBackup.backupDataTime"	cssClass="required" readonly="true" size="40"/>
 				</div>
 				<div class="unit">
-					<s:textfield key="dbBackup.dbBackupFileName" 						maxlength="40"  readonly="true" size="40"/>(ZIP格式)
+					<s:textfield key="dbBackup.dbBackupFileName" 						maxlength="100"  readonly="true" size="40"/>(ZIP格式)
 				</div>
 <%-- 				<div class="unit">
 					<s:textfield key="dbBackup.dbBackupFileName" 						maxlength="30" />

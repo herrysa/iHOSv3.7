@@ -120,7 +120,7 @@ function makeVoucherEvent(radom,state){
 				//searchButton : true,
 				width : 500,
 				queryParams:{
-					sql : "SELECT * FROM GL_account where orgCode='%ORGCODE%' and copycode='%COPYCODE%' and kjYear='%PERIODYEAR%' and disabled=0",
+					sql : "SELECT * FROM GL_account where kjYear='2013' and disabled=0",
 					cloumns : 'ACCTID,ACCTNAME,CNCODE,ACCTFULLNAME',
 					specialChar : '['
 				},

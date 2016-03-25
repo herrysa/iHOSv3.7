@@ -625,7 +625,7 @@
 	        			}
 	        		}
 				 resultFormulaObj[code] = type;
-				 resultFormulaExp = resultFormulaExp.replaceAll(value,code);
+				 resultFormulaExp = resultFormulaExp.replaceAll("\\["+value+"\\]","["+code+"]");
 			 }
 			 expression = expression.replaceAll('\\[' + value + '\\]', ' ' + i++ +' ');
 		 });

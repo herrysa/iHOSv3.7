@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -54,6 +55,7 @@ import com.huge.ihos.system.systemManager.user.service.UserManager;
 import com.huge.util.DateUtil;
 import com.huge.util.OtherUtil;
 import com.huge.util.TestTimer;
+import com.huge.util.javabean.MapUtils;
 import com.huge.webapp.util.SpringContextHelper;
 
 public class UserContextUtil{
@@ -1153,6 +1155,24 @@ public class UserContextUtil{
     	String menuButtonArrJson = menuButtonArr.toString();
     	menuButtonArrJson = URLEncoder.encode(menuButtonArrJson, "utf-8");
     	return menuButtonArrJson;
+	}
+	
+	public static String replaceSysVars(String str){
+		Map map = new HashMap();
+        UserContext userContext = UserContextUtil.getUserContext();
+        map = MapUtils.mapObjToMapStr(userContext.getSysVars());
+        Set<Entry<String, String>> entrySet = map.entrySet();
+		Iterator<Entry<String, String>> entryIt = entrySet.iterator();
+		while(entryIt.hasNext()){
+			Entry<String, String> entry = entryIt.next();
+			String key = entry.getKey();
+			String value = entry.getValue();
+			try {
+				str = str.replace(key, value);
+			} catch (Exception e) {
+			}
+		}
+		return str;
 	}
 	
 	public static void main(String[] args) {

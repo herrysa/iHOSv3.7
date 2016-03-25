@@ -159,7 +159,7 @@ public class BusinessTypeDaoHibernate extends GenericDaoHibernate<BusinessType, 
 		Integer count = 0;
 		if(countList != null) {
 			Map<String, Object> countMap = countList.get(0);
-			count =  (Integer) countMap.get("");
+			count =  (Integer) countMap.get("c");
 		}
 		int index = paginatedList.getIndex();
 		int pageSize = paginatedList.getPageSize();

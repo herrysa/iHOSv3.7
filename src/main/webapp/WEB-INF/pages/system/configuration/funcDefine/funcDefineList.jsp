@@ -115,7 +115,7 @@
 			var url = "editFuncDefine?popup=true&navTabId=funcDefine_gridtable"
 			var addTitle=jQuery("#funcDefine_gridtable_addTile").text();
 			url = encodeURI(url);
-			$.pdialog.open(url,"editFuncDefine",addTitle, {mask:true,resizable:false,maxable:false,width : 435,height : 405});
+			$.pdialog.open(url,"editFuncDefine",addTitle, {mask:true,resizable:false,maxable:false,width : 500,height : 450});
 		});
 		jQuery("#funcDefine_gridtable_edit_custom").unbind("click").bind("click",function() {
 			var sid =jQuery(funcDefineGridIdString).jqGrid("getGridParam","selarrrow");

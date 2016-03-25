@@ -25,7 +25,7 @@ public class CombogridAction extends JqGridBaseAction {
 			}*/
  			if(!"".equals(sql)){
  				UserContext userContext = UserContextUtil.getUserContext();
- 				if(sql.contains("%ORGCODE%")){
+ 				/*if(sql.contains("%ORGCODE%")){
  					sql = sql.replace("%ORGCODE%", userContext.getOrgCode());
  				}
  				if(sql.contains("%COPYCODE%")){
@@ -33,7 +33,7 @@ public class CombogridAction extends JqGridBaseAction {
  				}
  				if(sql.contains("%PERIODYEAR%")){//待修改2015-10-28
  					//sql = sql.replace("%PERIODYEAR%", userContext.getKjYear());
- 				}
+ 				}*/
 				if(sql.contains("where") || sql.contains("WHERE")){
 					sql += " and (";
 				}else{

@@ -24,6 +24,7 @@ import com.huge.ihos.excel.ColumnStyle;
 import com.huge.ihos.hql.HqlUtil;
 import com.huge.ihos.hql.QueryItem;
 import com.huge.ihos.period.service.PeriodManager;
+import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.oa.bulletin.model.Bulletin;
 import com.huge.ihos.system.oa.bulletin.service.BulletinManager;
 import com.huge.ihos.system.oa.bylaw.model.ByLaw;
@@ -143,6 +144,7 @@ public class UnitOptAction
         try {
         	nodes = new ArrayList();
         	if(null!=selectTreeSql&&!"".equals(selectTreeSql)){
+        		selectTreeSql = UserContextUtil.replaceSysVars(selectTreeSql);
         		log.info("treeSelectSql:"+selectTreeSql);
         		String icon = this.getContextPath();
         		
@@ -257,6 +259,31 @@ public class UnitOptAction
 //        	String checkPerid = periodManager.getCurrentPeriod().getPeriodCode();
         	String checkPerid = this.getLoginPeriod();
             Object[] proArgs = {(Object)checkPerid,(Object)personId};
+            //return ajaxForward( true, this.queryManager.publicPrecess( taskName, proArgs ), false );
+            ReturnUtil returnUtil = this.queryManager.publicPrecess( taskName, proArgs );
+            if(returnUtil.getStatusCode()==0){
+            	return ajaxForward( true, returnUtil.getMessage(), false );
+            }else if(returnUtil.getStatusCode()<=-1){
+            	return ajaxForward( false, returnUtil.getMessage(), false );
+            }else{
+            	this.setMessage(returnUtil.getMessage());
+            	this.setStatusCode(returnUtil.getStatusCode());
+            	return SUCCESS;
+            }
+        }
+        catch ( Exception e ) {
+            // TODO: handle exception
+            return ajaxForward( false, e.getMessage(), false );
+        }
+
+    }
+    
+    public String executeSpNoParamU() {
+        try {
+        	String userId = ""+this.getUserManager().getCurrentLoginUser().getId();
+//        	String checkPerid = periodManager.getCurrentPeriod().getPeriodCode();
+        	String checkPerid = this.getLoginPeriod();
+            Object[] proArgs = {(Object)checkPerid,(Object)userId};
             //return ajaxForward( true, this.queryManager.publicPrecess( taskName, proArgs ), false );
             ReturnUtil returnUtil = this.queryManager.publicPrecess( taskName, proArgs );
             if(returnUtil.getStatusCode()==0){

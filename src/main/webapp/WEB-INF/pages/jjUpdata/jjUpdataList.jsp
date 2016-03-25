@@ -225,7 +225,7 @@ var jjUpdataGrid = jQuery(jjUpdataGridIdString);
 	};
 	//初始化
 	jjUpdata_toolButtonBar.addCallBody('06030301',function() {
-		executeSp('sp_jj_updataInit','jjUpdata_gridtable');
+		executeSpU('sp_jj_updataInit','jjUpdata_gridtable');
 	},{});
 	//继承
 	jjUpdata_toolButtonBar.addCallBody('06030302',function() {

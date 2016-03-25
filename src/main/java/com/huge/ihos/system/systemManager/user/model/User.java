@@ -91,7 +91,6 @@ public class User
     private SystemVariable systemVariable;
 
 
-    @JSON(serialize=false)
 	@OneToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "person_id", nullable = true )
     public Person getPerson() {
@@ -448,7 +447,7 @@ public class User
                                                                                                                                                                                                                    "accountLocked",
                                                                                                                                                                                                                    this.accountLocked );
 
-        /*if ( roles != null ) {
+        if ( roles != null ) {
             sb.append( "Granted Authorities: " );
 
             int i = 0;
@@ -462,7 +461,7 @@ public class User
         }
         else {
             sb.append( "No Granted Authorities" );
-        }*/
+        }
         return sb.toString();
     }
 }

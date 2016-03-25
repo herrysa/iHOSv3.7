@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.tools.ant.taskdefs.Length;
 
 import net.sf.json.JSONArray;
@@ -23,6 +25,7 @@ import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
 import com.huge.webapp.util.PropertyFilter;
+import com.huge.webapp.util.SpringContextHelper;
 import com.opensymphony.xwork2.Preparable;
 
 public class BusinessTypePagedAction extends JqGridBaseAction implements Preparable {
@@ -850,7 +853,7 @@ public class BusinessTypePagedAction extends JqGridBaseAction implements Prepara
 				String countSql = "";
 				if ("J".equals(type)) {
 					rowSql = "Select * from " + businessId + "_J";
-					countSql = "select count(*) from " + businessId + "_J";
+					countSql = "select count(*) c from " + businessId + "_J";
 
 				} else if ("D".equals(type)) {
 					rowSql = "Select * from " + businessId + "_D";
@@ -1302,7 +1305,11 @@ public class BusinessTypePagedAction extends JqGridBaseAction implements Prepara
 					}
 					Map<String, Object> treeNode = new HashMap<String, Object>();
 					treeNode.put("id", id);
-					treeNode.put("name", acctCode + " " + name);
+					if(name.indexOf(acctCode) != -1) {
+						treeNode.put("name", name);
+					} else {
+						treeNode.put("name", acctCode + " " + name);
+					}
 					treeNode.put("pId", pId);
 					acctTreeDatas.add(treeNode);
 				}
@@ -1312,6 +1319,106 @@ public class BusinessTypePagedAction extends JqGridBaseAction implements Prepara
 		}
 		return SUCCESS;
 	}
+	
+	List<Map<String, Object>>  colList;
+	public List<Map<String, Object>> getColList() {
+		return colList;
+	}
+
+	public void setColList(List<Map<String, Object>> colList) {
+		this.colList = colList;
+	}
+
+	public String businessTypeCollectTable(){
+		businessType = businessTypeManager.get(businessId);
+		String table = businessType.getCollectTempTable();
+		String findColNameSql = "SELECT TableName = OBJECT_NAME(c.object_id), ColumnsName = c.name, Description = ex.value, ColumnType=t.name, Length=c.max_length FROM sys.columns c LEFT OUTER JOIN sys.extended_properties ex ON ex.major_id = c.object_id AND ex.minor_id = c.column_id AND ex.name = 'MS_Description' left outer join systypes t on c.system_type_id=t.xtype WHERE OBJECTPROPERTY(c.object_id, 'IsMsShipped')=0 AND OBJECT_NAME(c.object_id) ='"+table+"' ";
+		colList = businessTypeManager.getBySqlToMap(findColNameSql);
+		return SUCCESS;
+	}
+	
+	private String ColumnsName;
+	private String ColumnType;
+	private String Length;
+	private String Description;
+
+
+	public String getColumnsName() {
+		return ColumnsName;
+	}
+
+	public void setColumnsName(String columnsName) {
+		ColumnsName = columnsName;
+	}
+
+	public String getColumnType() {
+		return ColumnType;
+	}
+
+	public void setColumnType(String columnType) {
+		ColumnType = columnType;
+	}
+
+	public String getLength() {
+		return Length;
+	}
+
+	public void setLength(String length) {
+		Length = length;
+	}
+
+	public String getDescription() {
+		return Description;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
+	public String editBusinessTypeCollectTable(){
+		try {
+			HttpServletRequest request = getRequest();
+			businessType = businessTypeManager.get(businessId);
+			String table = businessType.getCollectTempTable();
+			Boolean exist = businessTypeManager.getIsDBColumnExist(table,ColumnsName);
+			String addSql = "";
+			if(exist!=null&&exist){
+				String deleteSql = "alter table "+table+" drop column "+ColumnsName;
+				businessTypeManager.executeSql(deleteSql);
+			}
+			addSql = "alter table "+table+" add "+ColumnsName+" "+ColumnType+"("+Length+")";
+			businessTypeManager.executeSql(addSql);
+			return ajaxForward(true, "添加成功", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false, e.getMessage(), false);
+		}
+	}
+	
+	public String deleteBusinessTypeCollectTable(){
+		try {
+			businessType = businessTypeManager.get(businessId);
+			String table = businessType.getCollectTempTable();
+			if(ColumnsName!=null){
+				if(ColumnsName.contains(",")){
+					String[] colArr = ColumnsName.split(",");
+					for(String col : colArr){
+						String deleteSql = "alter table "+table+" drop column "+col;
+						businessTypeManager.executeSql(deleteSql);
+					}
+				}else{
+					String deleteSql = "alter table "+table+" drop column "+ColumnsName;
+					businessTypeManager.executeSql(deleteSql);
+				}
+			}
+			
+			return ajaxForward(true, "删除成功", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false, e.getMessage(), false);
+		}
+	}
+	
 	/*BusinessTypeResultMain*/
 	public String businessAccountMap() {
 

@@ -1,10 +1,8 @@
 package com.huge.ihos.pz.businesstype.service.impl;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -152,7 +150,8 @@ public class BusinessTypeManagerImpl extends GenericManagerImpl<BusinessType, St
 		String createSql = "create table "+collectTempTable + "(";
 		createSql += " tempId numeric(20) PRIMARY KEY NOT NULL IDENTITY(1,1),";
 		createSql += " je numeric(19,4) null,";
-		createSql += " snapcode varchar(17) null";
+		createSql += " snapcode varchar(17) null,";
+		createSql += " direction varchar(10)";
 		createSql += ")";
 		this.businessTypeDao.excuteSql(createSql);
 		if(businessId != null && !"".equals(businessId)) {
@@ -187,7 +186,94 @@ public class BusinessTypeManagerImpl extends GenericManagerImpl<BusinessType, St
 	
 	@Override
 	public void checkBusinessType(String businessId) {
+		BusinessType businessType = this.get(businessId);
+		Set<BusinessTypeJ> businessTypeJs = businessType.getBusinessTypeJs();
+		Set<BusinessTypeD> businessTypeDs = businessType.getBusinessTypeDs();
+		Map<String, Object> jTableInfo = this.businessTypeDao.getSysTableByName(businessId + "_J");
+		Map<String, Object> dTableInfo = this.businessTypeDao.getSysTableByName(businessId + "_D");
+		if(jTableInfo == null || jTableInfo.isEmpty()) {
+			this.executeSql(makeCreateSql(businessId, "J"));
+		} else {
+			for(BusinessTypeJ businessTypeJ : businessTypeJs) {
+				String fieldName = businessTypeJ.getFieldName();
+				boolean rowToCol = businessTypeJ.getRowToCol();
+				if(rowToCol) {
+					String sourceId = businessTypeJ.getSourceId();
+					String[] ids = sourceId.split(",");
+					for(String id : ids) {
+						String colName = fieldName + "_" + id;
+						if(!jTableInfo.containsKey(colName)) {
+							this.businessTypeDao.excuteSql(makeAlterSql(businessId, "J", colName));
+						}
+						colName += "_name";
+						if(!jTableInfo.containsKey(colName)) {
+							this.businessTypeDao.excuteSql(makeAlterSql(businessId, "J", colName));
+						}
+					}
+				} else {
+					String colName = fieldName;
+					if(!jTableInfo.containsKey(colName)) {
+						this.businessTypeDao.excuteSql(makeAlterSql(businessId, "J", colName));
+					}
+					colName += "_name";
+					if(!jTableInfo.containsKey(colName)) {
+						this.businessTypeDao.excuteSql(makeAlterSql(businessId, "J", colName));
+					}
+				}
+			}
+		}
+		if(dTableInfo == null || dTableInfo.isEmpty()) {
+			this.executeSql(makeCreateSql(businessId, "D"));
+		} else {
+			for(BusinessTypeD businessTypeD : businessTypeDs) {
+				String fieldName = businessTypeD.getFieldName();
+				boolean rowToCol = businessTypeD.getRowToCol();
+				if(rowToCol) {
+					String sourceId = businessTypeD.getSourceId();
+					String[] ids = sourceId.split(",");
+					for(String id : ids) {
+						String colName = fieldName + "_" + id;
+						if(!jTableInfo.containsKey(colName)) {
+							this.businessTypeDao.excuteSql(makeAlterSql(businessId, "D", colName));
+						}
+						colName += "_name";
+						if(!jTableInfo.containsKey(colName)) {
+							this.businessTypeDao.excuteSql(makeAlterSql(businessId, "D", colName));
+						}
+					}
+				} else {
+					String colName = fieldName;
+					if(!jTableInfo.containsKey(colName)) {
+						this.businessTypeDao.excuteSql(makeAlterSql(businessId, "D", colName));
+					}
+					colName += "_name";
+					if(!jTableInfo.containsKey(colName)) {
+						this.businessTypeDao.excuteSql(makeAlterSql(businessId, "D", colName));
+					}
+				}
+			}
+		}
 		
+	}
+	
+	private String makeAlterSql(String businessId,String type,String colName) {
+		String tableName = businessId + "_" + type;
+		String sqlStr = "ALTER TABLE " + tableName +" ADD "+ colName +" varchar(50) NULL";
+		return sqlStr;
+	}
+	
+	private String makeCreateSql(String businessId,String type) {
+		String tableName = businessId + "_" + type;
+		String id = "id";
+		if("J".equals(type)) {
+			id = "jId";
+		} else if("D".equals(type)) {
+			id = "dId";
+		}
+		String sqlStr = "create table " + tableName + "(";
+		sqlStr += id + " numeric(20) PRIMARY KEY NOT NULL IDENTITY(1,1)";
+		sqlStr += ")";
+		return sqlStr;
 	}
 	
 	@Override

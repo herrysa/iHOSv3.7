@@ -12,7 +12,12 @@
 <script type="text/javascript">
 	//var editQueryRowCount=0;
 	//var editDataId;
-	var timestamp${searchName}${random} = getTimestamp(new Date());
+	var timestamp${searchName}${random} = "";//getTimestamp(new Date());
+	var jzStatus${searchName}${random} = "${jzStatusStr}";
+	if(jzStatus${searchName}${random}){
+		jzStatus${searchName}${random} = jzStatus${searchName}${random}.replaceAll("&#034;","'");
+		jzStatus${searchName}${random} = eval("(" +jzStatus${searchName}${random}+ ")");
+	}
 	function fullGridEdit(gridId){
 			try{
 			var ids = jQuery(gridId).jqGrid('getDataIDs');
@@ -1169,6 +1174,11 @@
 	}
  	
  	function addDataByForm(colNum,width,height,title){
+ 		var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		if(jzSystem){
+			alertMsg.error(jzSystem+"已结账！");
+			return ;
+		}
 		if(!colNum){ colNum = 1;}
 		if(!width){ width = 400;}
 		if(!height){ height = 600;}
@@ -1177,6 +1187,11 @@
 		$.pdialog.open(url, 'popsearch', title, {mask:false,width:width,height:height});
 	}
 	function editDataByForm(colNum,width,height,title){
+		var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		if(jzSystem){
+			alertMsg.error(jzSystem+"已结账！");
+			return ;
+		}
 		if(!colNum){ colNum = 1;}
 		if(!width){ width = 400;}
 		if(!height){ height = 600;}
@@ -1229,7 +1244,11 @@
 		
 	}
     function confirmDelete(){
-
+    	var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		if(jzSystem){
+			alertMsg.error(jzSystem+"已结账！");
+			return ;
+		}
         var sid = jQuery("#${random}_${searchName}_gridTable").jqGrid('getGridParam','selarrrow');
         var msgDialog = jQuery('#msgDialog');
         var confirmDialog = jQuery("#confirmDialog");
@@ -1264,7 +1283,11 @@
 	}
     
     function selectConfirmProcess(taskName,args,msg,returnSearch,waittingMsg,callback){
-    	
+    	var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		if(jzSystem){
+			alertMsg.error(jzSystem+"已结账！");
+			return ;
+		}
         var sid = jQuery("#${random}_${searchName}_gridTable").jqGrid('getGridParam','selarrrow');
         var msgDialog = jQuery('#msgDialog');
         var confirmDialog = jQuery("#confirmDialog");
@@ -1342,7 +1365,11 @@
 		}
 	}
     function noSelectConfirmProcess(taskName,args,msg,returnSearch,waittingMsg,callback){
-		
+    	var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		if(jzSystem){
+			alertMsg.error(jzSystem+"已结账！");
+			return ;
+		}
     	var searchItemValue = "";
 		<c:if test="${searchItems!=null && fn:length(searchItems)>0}">
 			<c:forEach items="${searchItems}" var="item">
@@ -1407,6 +1434,79 @@
 		});		*/
         
 	}
+    
+function conditionConfirmProcess(taskName,args,businessTypeCode,msg,returnSearch,waittingMsg,callback){
+		var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		if(jzSystem){
+			alertMsg.error(jzSystem+"已结账！");
+			return ;
+		}
+    	var searchItemValue = "",searchItemValueUrl = "";
+		<c:if test="${searchItems!=null && fn:length(searchItems)>0}">
+			<c:forEach items="${searchItems}" var="item">
+				<c:if test="${item.userTag=='checkbox'}">
+				var cvs = jQuery("#${random}_${searchName}_${item.htmlField}").attr("values");
+				var checked = jQuery("#${random}_${searchName}_${item.htmlField}").attr("checked");
+				var cvsArr = "";
+				if(cvs){
+					cvsArr = cvs.split(";");
+				}
+				if(checked=='checked'){
+					if(cvsArr.length>0){
+						jQuery("#${random}_${searchName}_${item.htmlField}").val(cvsArr[0]);
+					}else{
+						jQuery("#${random}_${searchName}_${item.htmlField}").val(true);
+					}
+				}else{
+					if(cvsArr.length>1){
+						jQuery("#${random}_${searchName}_${item.htmlField}").val(cvsArr[1]);
+					}else{
+						jQuery("#${random}_${searchName}_${item.htmlField}").val(false);
+					}
+				}
+				</c:if>
+				var ${item.htmlField} = jQuery("#${random}_${searchName}_${item.htmlField}").val();
+				//alert(jQuery("#${random}_${searchName}_${item.htmlField}").attr("requiredd")=="true");
+				if(jQuery("#${random}_${searchName}_${item.htmlField}").attr("requiredd")=="true"&&!${item.htmlField}){
+					alertMsg.error("'${item.caption}'为必填项！");
+					return ;
+				}
+			</c:forEach>
+		</c:if>
+		<c:if test="${searchItems!=null && fn:length(searchItems)>0}">
+			searchItemValue = searchItemValue<c:forEach items="${searchItems}" var="item">+"|${item.htmlField}="+${item.htmlField}</c:forEach>;
+			searchItemValueUrl = searchItemValueUrl<c:forEach items="${searchItems}" var="item">+"&${item.htmlField}="+${item.htmlField}</c:forEach>;
+		</c:if>
+		searchItemValue = "&itemValue="+searchItemValue+searchItemValueUrl;
+        //var sid = jQuery("#${random}_${searchName}_gridTable").jqGrid('getGridParam','selarrrow');
+        var url = "${ctx}/pub?searchName=${searchName}&actionName=processByCondition"+searchItemValue+"&taskName="+taskName+"&businessTypeCode="+businessTypeCode+"&snapCode="+timestamp${searchName}${random}+args+"&callback="+callback;
+		var executCallback = function(){
+					returnSearchFun(returnSearch);
+				};
+		url = encodeURI(url);
+		executeSp(null,"${random}_${searchName}_gridTable",msg,waittingMsg,url,executCallback);
+       /* alertMsg.confirm(msg, {
+			okCall: function(){
+			var url = "${ctx}/pub?searchName=${searchName}&id="+sid+"&actionName=process&taskName="+taskName+args;
+			executeSp(null,"#${random}_${searchName}_gridTable","noSelectConfirmProcess",url);
+				var jqxhr=jQuery.post( url, {dataType : "json"}).success(function(data){
+		      	var status = data['jsonStatus'];
+		    	if(status=="error"){
+		    		alertMsg.error(data['jsonMessages']);
+		    	}else{
+	    			alertMsg.correct(data['jsonMessages']);
+		    		jqxhr.complete(function(){
+						jQuery("#${random}_${searchName}_gridTable").jqGrid('setGridParam',{page:1}).trigger("reloadGrid");
+					});P@
+		    		//处理成功后进入指定Search
+		    		returnSearchFun(returnSearch);
+		    	}
+			}); 
+			}
+		});		*/
+        
+	}
+    
     function returnSearchFun(returnSearch){
 		if(returnSearch!=null&&returnSearch!=""&&returnSearch!="undefined"){
 			//if(data['jsonMessages']=='处理成功。'){
@@ -1517,7 +1617,7 @@
 							<div class="searchContent">
 								<c:if test="${searchItems!=null && fn:length(searchItems)>0}">
 									<c:forEach items="${searchItems}" var="item" varStatus="it">
-										<label style="float: none">${item.caption}： <c:choose>
+										<label id="${random}_${searchName}label<c:out value="${it.index}"/>" style="float: none">${item.caption}： <c:choose>
 												<c:when test="${item.userTag=='yearMonth'}">
 													<input class="input-small" type="text"
 														id="${random}_${searchName}_${item.htmlField}"
@@ -1609,7 +1709,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='deptTreeS'}">
-													<input id="${random}_${searchName}_${item.htmlField}" name="${random}_${searchName}_${item.htmlField}" type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}" name="${random}_${searchName}_${item.htmlField}" type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" <c:if test="${item.readOnly==true}">readOnly</c:if> <c:if test="${item.required==true}">requiredd='true'</c:if>  size="${item.length}" />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1632,7 +1732,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='deptTreeM'}">
-													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" size="${item.length}"  <c:if test="${item.readOnly==true}">readOnly</c:if> <c:if test="${item.required==true}">requiredd='true'</c:if>  />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1653,7 +1753,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='deptFormulaSelect'}">
-													<input id="${random}_${searchName}_${item.htmlField}"  name="${random}_${searchName}_${item.htmlField}" type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}"  name="${random}_${searchName}_${item.htmlField}" type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 													<input id="${random}_${searchName}_${item.htmlField}_name" size="${item.length}"  <c:if test="${item.readOnly==true}">readOnly</c:if> <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1674,7 +1774,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='orgFormulaSelect'}">
-													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" size="${item.length}"  <c:if test="${item.readOnly==true}">readOnly</c:if> <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1695,7 +1795,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='personTreeS'}">
-													<input id="${random}_${searchName}_${item.htmlField}" name="${random}_${searchName}_${item.htmlField}" type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}" name="${random}_${searchName}_${item.htmlField}" type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" <c:if test="${item.readOnly==true}">readOnly</c:if> size="${item.length}" <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1718,7 +1818,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='personTreeM'}">
-													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" size="${item.length}"  <c:if test="${item.readOnly==true}">readOnly</c:if> <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1739,7 +1839,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='costitemTreeS'}">
-													<input id="${random}_${searchName}_${item.htmlField}" name="${random}_${searchName}_${item.htmlField}" type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}" name="${random}_${searchName}_${item.htmlField}" <c:if test="${item.required==true}">requiredd='true'</c:if> type="hidden" value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" <c:if test="${item.readOnly==true}">readOnly</c:if> size="${item.length}" <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1762,7 +1862,7 @@
 													</script>
 												</c:when>
 												<c:when test="${item.userTag=='costitemTreeM'}">
-													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" size="${item.length}"  <c:if test="${item.readOnly==true}">readOnly</c:if> <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1784,7 +1884,7 @@
 												</c:when>
 												<c:when test="${item.userTag=='treeSelectS'}">
 													<input type="hidden" id="${random}_${searchName}_${item.htmlField}_param1" value="${item.param1}"/>
-													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" size="${item.length}" <c:if test="${item.readOnly==true}">readOnly</c:if>  <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1808,7 +1908,7 @@
 												</c:when>
 												<c:when test="${item.userTag=='treeSelectM'}">
 													<input type="hidden" id="${random}_${searchName}_${item.htmlField}_param1" value="${item.param1}"/>
-													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" <c:if test="${item.required==true}">requiredd='true'</c:if> value="${item.initValueString}"/>
 						 							<input id="${random}_${searchName}_${item.htmlField}_name" size="${item.length}"  <c:if test="${item.readOnly==true}">readOnly</c:if> <c:if test="${item.required==true}">requiredd='true'</c:if> />
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if> 
 													<script>
@@ -1834,23 +1934,25 @@
 													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
 												</c:when>
 												<c:otherwise>
-													<input type=<c:if test="${item.hidden==true}">"hidden"</c:if> 
+													<input type="text"
 														id="${random}_${searchName}_${item.htmlField}"
 														class="input-small" value="${item.initValueString}"
 														<c:if test="${item.readOnly==true}">readOnly</c:if> 
 														<c:if test="${item.required==true}">requiredd='true'</c:if> 
 														 size="${item.length}"/>
 													<c:if test="${item.required==true}"><font color="#FF0000">*</font></c:if>
-													<script>
-														var hidden = "${item.hidden==true}"; 
-														if(hidden=='true'){
-															jQuery("#${random}_${searchName}_${item.htmlField}").parent().hide();
-														}
-													</script>
 												</c:otherwise>
 											</c:choose>
 											<label style="float:none;line-height:15px">${item.suffix}</label>
 										</label>
+										<script>
+											var hidden = "${item.hidden==true}"; 
+											var itIndex = "${it.index}";
+											if(hidden=='true'){
+												jQuery("#${random}_${searchName}label"+itIndex).hide();
+											}
+										</script>
+										
 										<c:if test="${it.index==4}">
 										<br/></c:if>
 									</c:forEach>

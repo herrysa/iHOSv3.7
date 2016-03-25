@@ -312,6 +312,15 @@ public class QueryAction
 		this.privilegeClassManager = privilegeClassManager;
 	}
 
+	String jzStatusStr;
+	public String getJzStatusStr() {
+		return jzStatusStr;
+	}
+
+	public void setJzStatusStr(String jzStatusStr) {
+		this.jzStatusStr = jzStatusStr;
+	}
+
 	public String querySearchOptions()
         throws Exception {
     	String periodCode = this.getLoginPeriod();
@@ -358,21 +367,36 @@ public class QueryAction
         this.viewDef = this.queryManager.getViewDef( searchName );
         User user = this.getSessionUser();
         this.searchUrls = this.searchUrls = this.queryManager.getSearchUrlByRight(""+user.getId(), searchId);
+        String modelSql = "SELECT model.code,menu.menuName FROM sy_model model LEFT JOIN t_menu menu ON model.menuId=menu.menuId";
+        //queryManager.
+        JdbcTemplate jt = new JdbcTemplate( (DataSource) SpringContextHelper.getBean( "dataSource" ) );
+        List<Map<String, Object>> modelList = jt.queryForList(modelSql);
+        Map<String, String> modelMap = new HashMap<String, String>();
+        for(Map<String, Object> model : modelList){
+        	Object code = model.get("code");
+        	Object menuName = model.get("menuName");
+        	modelMap.put(code.toString(), menuName.toString());
+        }
+        Map<String, String> jzStatus = new HashMap<String, String>(); 
         for(SearchUrl searchUrl :this.searchUrls){
         	String url = searchUrl.getUrl();
         	String[] urlArr = url.split("\\(");
         	String jzSystem = searchUrl.getJzSystem();
-        	if(urlArr.length<2&&jzSystem!=null&&!"".equals(jzSystem)){
+        	if(urlArr.length<2||jzSystem==null||"".equals(jzSystem)){
         		continue;
         	}else{
         		String[] systemArr = jzSystem.split(",");
-        		Map<String, Boolean> jzStatus = new HashMap<String, Boolean>(); 
-        		for(String system : systemArr){
+           		for(String system : systemArr){
         			boolean jz = UserContextUtil.isModuleClosed(system,"月",UserContextUtil.getLoginPeriod());
-        			jzStatus.put(system, jz);
+        			if(jz){
+        				String nemuname = modelMap.get(system);
+        				jzStatus.put(urlArr[0], nemuname);
+        				break;
+        			}
         		}
         	}
         }
+        jzStatusStr = JSONObject.fromObject(jzStatus).toString();
         this.sumSearchOptionsNum = this.queryManager.getSearchSumOptionsBySearchNameOrdered( searchId ).length;
 //        this.currentPeriod = this.periodManager.getCurrentPeriod().getPeriodCode();
         this.currentPeriod =  this.getLoginPeriod();

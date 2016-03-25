@@ -167,6 +167,14 @@
             </result>
         </action>
         
+        <action name="executeSpNoParamU" class="com.huge.webapp.action.UnitOptAction" method="executeSpNoParamU">
+        	<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                <param name="noCache">true</param>
+                <param name="ignoreHierarchy">false</param>
+            </result>
+        </action>
+        
         <action name="editDetailMsg">
 	        <result name="success">/WEB-INF/pages/editDetailMsg.jsp</result>
         </action>

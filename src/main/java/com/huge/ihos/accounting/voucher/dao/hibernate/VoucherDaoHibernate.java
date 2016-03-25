@@ -53,7 +53,8 @@ public class VoucherDaoHibernate extends GenericDaoHibernate<Voucher, String> im
 
 	@Override
 	public List<Voucher> getBysSysVariable(SystemVariable systemVariable,String voucherType,Integer voucherNo) {
-		this.getHibernateTemplate().enableFilter( "sysVariable" ).setParameter( "orgCode", UserContextUtil.getUserContext().getOrgCode() ).setParameter( "copyCode", UserContextUtil.getUserContext().getCopyCode()).setParameter( "periodYear", UserContextUtil.getUserContext().getPeriodYear() ).setParameter( "periodMonth", systemVariable.getPeriod() );
+		//this.getHibernateTemplate().enableFilter( "sysVariable" ).setParameter( "orgCode", UserContextUtil.getUserContext().getOrgCode() ).setParameter( "copyCode", UserContextUtil.getUserContext().getCopyCode()).setParameter( "periodYear", UserContextUtil.getUserContext().getPeriodYear() ).setParameter( "periodMonth", systemVariable.getPeriod() );
+		this.getHibernateTemplate().enableFilter( "sysVariable" ).setParameter( "orgCode", "T001" ).setParameter( "copyCode", "001").setParameter( "periodYear", UserContextUtil.getUserContext().getPeriodYear() ).setParameter( "periodMonth", UserContextUtil.getUserContext().getPeriodMonth() );
 		Criteria criteria = this.getCriteria();
 		criteria.add(Restrictions.eq("voucherType", voucherType));
 		if(voucherNo!=null){

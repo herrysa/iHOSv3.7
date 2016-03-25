@@ -10,10 +10,10 @@
 		
 		
 		
-		
+		state=1;
 		makeVoucherEvent("${random}",state);
 		if(state=='0'){
-			alertMsg.error(showMessage);
+			//alertMsg.error(showMessage);
 		}
 		
 		/* jQuery("#findVoucherNo").blur(function(){
@@ -333,7 +333,7 @@
             	alert(e.keyCode);
             }); */
             jQuery("#${random}voucherCardTable").unbind('keydown').bind('keydown',function (evt){
-            	console.log(evt.ctrlKey+":"+evt.keyCode);
+            	//console.log(evt.ctrlKey+":"+evt.keyCode);
             });
 	});
 	
@@ -479,16 +479,16 @@
 	<div id="${random }voucherDataField" name="voucherData" style="display:none">${voucherData}</div>
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a id="${random}addNewVoucher" class="addbutton" href="javaScript:" ><span>新单
+				<%-- <li><a id="${random}addNewVoucher" class="addbutton" href="javaScript:" ><span>新单
 					</span>
 				</a>
-				</li>
+				</li> --%>
 				<li><a id="${random}saveVoucher" class="addbutton" href="javaScript:" ><span><fmt:message
 								key="button.save" />
 					</span>
 				</a>
 				</li>
-				<s:if test="voucher.tsStr!=''">
+				<%-- <s:if test="voucher.tsStr!=''">
 				<s:if test="voucher.status==1">
 				<li><a id="${random}voucher_check" class="delbutton"  href="javaScript:"><span>审核</span>
 				</a>
@@ -524,7 +524,7 @@
 					</span>
 				</a>
 				</li>
-				</s:if>
+				</s:if> --%>
 				<li><a  class="changebutton"  href="javaScript:" onclick="hideVoucherJeLine(this,'${random}')"
 					><span>隐藏金额线
 					</span>

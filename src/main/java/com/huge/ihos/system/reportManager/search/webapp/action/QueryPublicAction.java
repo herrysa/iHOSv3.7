@@ -16,10 +16,12 @@ import javax.sql.DataSource;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.huge.foundation.common.GeneralAppException;
 import com.huge.ihos.excel.ColumnDefine;
 import com.huge.ihos.excel.DataSet;
+import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.reportManager.search.exinterface.SearchCallback;
 import com.huge.ihos.system.reportManager.search.model.Search;
 import com.huge.ihos.system.reportManager.search.model.SearchOption;
@@ -32,6 +34,8 @@ import com.huge.ihos.system.reportManager.search.util.SearchUtils;
 import com.huge.util.OtherUtil;
 import com.huge.util.ReturnUtil;
 import com.huge.webapp.action.JqGridBaseAction;
+import com.huge.webapp.pagers.JQueryPager;
+import com.huge.webapp.pagers.PagerFactory;
 import com.huge.webapp.util.SpringContextHelper;
 
 public class QueryPublicAction
@@ -94,7 +98,14 @@ public class QueryPublicAction
                 this.jsonMessages = this.saveRow();
             }
             else if ( this.actionName.equalsIgnoreCase( "process" ) ) {
-            	ReturnUtil returnUtil = this.process();
+            	SearchCriteria criteria = this.queryManager.getSearchCriteriagetSearchCriteria( getRequest(), searchName );
+            	String dataSql = criteria.getRealSql();
+				Object[] args = criteria.getRealAgrs();
+				for(Object arg : args){
+					String argStr = arg.toString();
+					dataSql = dataSql.replaceFirst("\\?", "'"+argStr+"'");
+				}
+            	ReturnUtil returnUtil = this.process(dataSql);
             	if(returnUtil.getStatusCode()!=0){
             		this.jsonStatus = "error";
             	}
@@ -112,6 +123,44 @@ public class QueryPublicAction
 
             else if ( this.actionName.equalsIgnoreCase( "outputExcel" ) ) {
                 this.jsonMessages = this.outputExcel();
+            }
+            else if ( this.actionName.equalsIgnoreCase( "processByCondition" ) ) {
+            	String businessCode = getRequest().getParameter("businessTypeCode");
+            	if(businessCode==null){
+            		businessCode = "''";
+            	}
+            	String userId = UserContextUtil.getLoginUserId();
+            	JdbcTemplate jt = new JdbcTemplate( (DataSource) SpringContextHelper.getBean( "dataSource" ) );
+            	String deleteSql = "delete tmp_conditionID where userId='"+userId+"' and businessTypeCode='"+businessCode+"'";
+            	jt.execute(deleteSql);
+            	Search search = queryManager.getSearchBySearchName(searchName);
+            	String idCol = search.getMyKey();
+            	HttpServletRequest request = getRequest();
+            	SearchCriteria criteria = this.queryManager.getSearchCriteriagetSearchCriteria( request, searchName );
+            	String dataSql = criteria.getRealSql();
+				Object[] args = criteria.getRealAgrs();
+				for(Object arg : args){
+					String argStr = arg.toString();
+					dataSql = dataSql.replaceFirst("\\?", "'"+argStr+"'");
+				}
+				String conditionIdSql = "INSERT INTO tmp_conditionID (dataId,businessTypeCode,userId) SELECT "+idCol+",'"+businessCode+"','"+userId+"' FROM ("+dataSql+") idrs";
+				jt.execute(conditionIdSql);
+				
+				ReturnUtil returnUtil = this.process(dataSql);
+            	if(returnUtil.getStatusCode()!=0){
+            		this.jsonStatus = "error";
+            	}
+            	this.jsonCode = returnUtil.getStatusCode();
+                this.jsonMessages = returnUtil.getMessage();
+                if(jsonCode<0){
+                	this.setStatusCode(300);
+                }else if(jsonCode==0){
+                	this.setStatusCode(200);
+                }else{
+                	this.setStatusCode(jsonCode);
+                }
+                this.setMessage(returnUtil.getMessage());
+				//queryManager.s
             }
         }
         catch ( Exception ex ) {
@@ -340,7 +389,7 @@ public class QueryPublicAction
         return msg;
     }
 
-    private ReturnUtil process() {
+    private ReturnUtil process(String dataSql) {
         if ( taskName == null || this.searchName == null )
             throw new GeneralAppException( "配置参数错误" );
         String[] args = this.getRequest().getParameterValues( "ARGS" );
@@ -348,6 +397,7 @@ public class QueryPublicAction
         String[] itemValueArr = null;
         String callback = this.getRequest().getParameter( "callback" );
         Map<String , String> itemValueMap = new HashMap<String, String>();
+        itemValueMap.put("dataSql", dataSql);
         if(itemValue!=null&&itemValue!=""&&!"".equals(itemValue)){
         	itemValueArr = itemValue.split("%7C");
         }
@@ -383,6 +433,7 @@ public class QueryPublicAction
         String[] callbackArr = null;
         SearchCallback searchCallback = new SearchCallback();
         String afterFunc = "";
+        String afterProcess = "";
         if(callback!=null&&!"".equals(callback)){
         	callbackArr = callback.split(",");
         	for(String value: callbackArr){
@@ -393,6 +444,8 @@ public class QueryPublicAction
         				searchCallback.exeCallback(cbArr[1]+"_"+cbArr[0], itemValueMap);
         			}else if(cbArr[0].equals("afterFunc")){
         				afterFunc = cbArr[1]+"_"+cbArr[0];
+        			}else if(cbArr[0].equals("afterProcess")){
+        				afterProcess = cbArr[1];
         			}
         		}
         	}
@@ -400,6 +453,9 @@ public class QueryPublicAction
         ReturnUtil returnUtil = this.queryManager.publicPrecess( taskName, proArgs );
         if(!"".equals(afterFunc)){
         	searchCallback.exeCallback(afterFunc, itemValueMap);
+        }
+        if(!"".equals(afterProcess)){
+        	returnUtil = this.queryManager.publicPrecess( afterProcess, proArgs );
         }
         return returnUtil;
     }

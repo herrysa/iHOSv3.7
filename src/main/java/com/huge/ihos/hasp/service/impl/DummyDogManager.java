@@ -112,7 +112,7 @@ public class DummyDogManager
 	@Override
 	public String getOrgType() throws AppException {
 		// TODO Auto-generated method stub
-		return "S2";
+		return "S1";
 	}
 
 	@Override

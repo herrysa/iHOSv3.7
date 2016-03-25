@@ -17,8 +17,10 @@ public class FuncDefine extends BaseObject {
 	private static final long serialVersionUID = -6414166444760517678L;
 	//ID主键
 	private String funcId;
-	//函数名称
+	//函数编码
 	private String funcCode;
+	//函数名称
+	private String funcName;
 	//备注
 	private String remark;
 	//函数类型（0:表内函数;1:表间函数）
@@ -31,6 +33,8 @@ public class FuncDefine extends BaseObject {
 	private String funcDesc;
 	//状态（true:系统函数（不可更改，删除）;false:自定义函数）
 	private Boolean isSystemFunc;
+	
+	//private Boolean prepareExe;
 	@Id
 	@Column(name = "func_id", length = 32, nullable = false)
 	@GenericGenerator(name = "uuid", strategy = "uuid")
@@ -50,6 +54,16 @@ public class FuncDefine extends BaseObject {
 	public void setFuncCode(String funcCode) {
 		this.funcCode = funcCode;
 	}
+	
+	@Column(name="func_name",length=50)
+	public String getFuncName() {
+		return funcName;
+	}
+
+	public void setFuncName(String funcName) {
+		this.funcName = funcName;
+	}
+	
 	@Column(name="remark",length=100)
 	public String getRemark() {
 		return remark;

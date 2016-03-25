@@ -493,7 +493,7 @@ public class VoucherDetailPagedAction extends JqGridBaseAction implements Prepar
 					voucher.setVoucherDate(voucherDataJson.getString("voucherDate"));
 					voucher.setVoucherFromCode("GL");
 					voucher.setOrgCode(UserContextUtil.getUserContext().getOrgCode());
-            		voucher.setCopyCode(UserContextUtil.getUserContext().getCopyCode());
+            		voucher.setCopyCode("001");
             		voucher.setPeriodYear(UserContextUtil.getUserContext().getPeriodYear());
             		voucher.setPeriodMonth(UserContextUtil.getUserContext().getPeriodMonth());
             		Person person = this.getSessionUser().getPerson();

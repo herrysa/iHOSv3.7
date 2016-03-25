@@ -369,7 +369,7 @@
 								+ selectedBusinessId;
 
 					} else if (i == 2) {
-						url = "businessTypeParamList?popup=true&businessId="
+						url = "businessTypeCollectTable?popup=true&businessId="
 								+ selectedBusinessId;
 
 					} else if (i == 1) {
@@ -571,8 +571,12 @@
 													<span><s:text name='businessTypeDList.title' /> </span> 
 												</a>
 											</li>
-											<li><a href="businessTypeParamList?popup=true" class="j-ajax">
+											<%-- <li><a href="businessTypeParamList?popup=true" class="j-ajax">
 													<span><s:text name='businessTypeParamList.title' /> </span> 
+												</a>
+											</li> --%>
+											<li><a href="businessTypeCollectTable?popup=true" class="j-ajax">
+													<span>汇总表结构</span> 
 												</a>
 											</li>
 										</ul>

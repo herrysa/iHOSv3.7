@@ -57,7 +57,7 @@
 									cloumns : paramArr[key]
 								},
 								autoFocus : false,
-								showOn : true, 
+								showOn : false, 
 								rows:10,
 								width:600,
 								sidx:"id",
@@ -66,6 +66,7 @@
 									'width' : '40',
 									'label' : 'id',
 									'align' : 'left',
+									'hidden' : true
 								}, {
 									'columnName' : 'NAME',
 									'width' : '40',

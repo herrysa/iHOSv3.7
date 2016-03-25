@@ -1103,6 +1103,65 @@ function executeSp(spName,tableId){
 		}
 	});
 }
+function executeSpU(spName,tableId){
+	var taskName =spName;
+	// var proArgsStr ="${checkPeriod},${personId}";
+	var exeCallback;
+	var comfirmMsg = "确认执行？";
+	var url = 'executeSpNoParamU';
+	if(arguments.length>2){
+		if(arguments[2]){
+			comfirmMsg = arguments[2];
+		}
+	}
+	if(arguments.length>3){
+		var waittingMsg = arguments[3];
+		if(waittingMsg){
+			jQuery("#progressBar").html(arguments[3]);
+		}
+	}
+	if(arguments.length>4){
+		url = arguments[4];
+	}
+	if(arguments.length==6){
+		exeCallback = arguments[5];
+	}
+	if (url.indexOf('taskName')==-1) {
+		if (url.indexOf('?')==-1) {
+			url += '?taskName='+taskName;
+		}else{
+			url += '&taskName='+taskName;
+		}
+	}
+	url = encodeURI(url);
+	alertMsg.confirm(comfirmMsg, {
+		okCall: function(){
+			$.ajax({
+			    url: url,
+			    type: 'post',
+			    //data:{taskName:taskName},
+			    dataType: 'json',
+			    aysnc:false,
+			    error: function(data){
+			        jQuery("#progressBar").html("数据加载中，请稍等...");
+			    },
+			    success: function(data){
+			    	jQuery("#progressBar").html("数据加载中，请稍等...");
+			    	if(tableId){
+			    		data.navTabId = tableId
+			    	}
+			    	formCallBack(data);
+			    	if(typeof(exeCallback)=='function'){
+			    		exeCallback();
+			    	}
+			    }
+			});
+		},
+		cancelCall: function(){
+			jQuery("#progressBar").html("数据加载中，请稍等...");
+		}
+	});
+}
 function ajaxDoneExtend(json){
 	if(json.statusCode===undefined&&json.message===undefined){
 		if(alertMsg)return alertMsg.error(json);
@@ -1312,6 +1371,7 @@ function changeSelectRow(grid,type){
 		}
 		jQuery(grid).jqGrid('resetSelection');
 		jQuery(grid).jqGrid('setSelection',sId);
+		jQuery(grid).data('selectId',sId);
 		if(hasInput){
 			toFocusInput = jQuery("#"+sId).find("td").eq(focusIndex).find("input:first");
 			jQuery(toFocusInput).focus();

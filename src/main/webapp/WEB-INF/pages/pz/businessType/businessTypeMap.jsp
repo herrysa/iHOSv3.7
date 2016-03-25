@@ -90,6 +90,26 @@
 					//jQuery("#${random}${type}pzMap_gridtable").fullEdit();
 		        }
 		    });
+		
+		jQuery("#${random}${type}pzMap_gridtable").on("keyup","tr",function(evt){
+			var keyCode = evt.keyCode;
+			//alert(keyCode);
+			if(keyCode=='13'){
+				editAcct();
+			}else if(keyCode=='40'||keyCode=='38'){
+				chargeKeyPress(jQuery("#${random}${type}pzMap_gridtable"),evt);
+				stopPropagation();
+				return ;
+			}else if(keyCode=='27'){
+				var cancelSel = jQuery("#${random}${type}pzMap_gridtable").data("editting");
+				jQuery("#${random}${type}pzMap_gridtable").jqGrid('restoreRow',cancelSel);
+				jQuery("#${random}${type}pzMap_gridtable").removeData("editting");
+				jQuery("#${random}${type}pzMap_gridtable").removeData("changeSelect");
+				delete changeData${random}${type}[cancelSel+"_temp"];
+				jQuery("#"+cancelSel,"#${random}${type}pzMap_gridtable").focus();
+			}
+		});
+		
 		//刷新	
 		jQuery("#${random}${type}initPzMap").click(function() {
 			jQuery.ajax({
@@ -113,7 +133,7 @@
 		
 		//保存
 		jQuery("#${random}${type}savePzMap").click(function(){
-			
+			//console.log(json2str(changeData${random}${type}));
 			if(jQuery.isEmptyObject(changeData${random}${type})){
 				alertMsg.error("没有需要保存的数据！");
 				return ;
@@ -134,6 +154,7 @@
 				},
 				success: function(data){
 					formCallBack(data);
+					jQuery("#${random}${type}pzMap_gridtable").removeData("editting");
 					var currentPage = jQuery("#${random}${type}pzMap_gridtable").jqGrid('getGridParam', 'page');
 					jQuery("#${random}${type}pzMap_gridtable").trigger('reloadGrid',[{page : currentPage}]);
 				}
@@ -153,6 +174,8 @@
 			var cancelSel = jQuery("#${random}${type}pzMap_gridtable").data("editting");
 			jQuery("#${random}${type}pzMap_gridtable").jqGrid('restoreRow',cancelSel);
 			jQuery("#${random}${type}pzMap_gridtable").removeData("editting");
+			delete changeData${random}${type}[cancelSel+"_temp"];
+			jQuery("#"+cancelSel,"#${random}${type}pzMap_gridtable").focus();
 		});
 		
 		jQuery("#${random}${type}editPzMap").click(function(){
@@ -332,7 +355,7 @@
 					rowChangedData[elem] = "";
 					elem = elem.replace("_name","");
 					rowChangedData[elem] = "";
-					changeData${random}${type}[rowId] = rowChangedData;
+					changeData${random}${type}[rowId+"_temp"] = rowChangedData;
 				}
 			});
 		});
@@ -414,14 +437,10 @@
 			afterSaveCell : function(rowid,name,val,iRow,iCol) {
 			},
 			gridComplete : function() {
-				jQuery("#${random}${type}pzMap_gridtable").on("keyup","tr",function(evt){
-					var keyCode = evt.keyCode;
-					//alert(keyCode);
-					if(keyCode=='13'){
-						editAcct();
-					}else if(keyCode=='40'||keyCode=='38'){
-						chargeKeyPress(jQuery("#${random}${type}pzMap_gridtable"),evt);
-					}
+				jQuery("#${random}${type}pzMap_gridtable").removeData("changeSelect");
+				jQuery(".ui-jqgrid-bdiv","#${random}${type}pzMap_gridtable").keypress(function(){
+					alert();
+					return false;
 				});
 				var rowNum = jQuery("#${random}${type}pzMap_gridtable").getDataIDs().length;
 				if(rowNum<=0){
@@ -429,9 +448,19 @@
 					jQuery("#${random}${type}pzMap_gridtable").parent().width(tw);
 					jQuery("#${random}${type}pzMap_gridtable").parent().height(1);
 				}else{
-					var firstId = jQuery("#${random}${type}pzMap_gridtable").getDataIDs()[0];
-					jQuery("#${random}${type}pzMap_gridtable").jqGrid('setSelection',firstId);
-					jQuery("#"+firstId,"#${random}${type}pzMap_gridtable").focus();
+					var selectId = jQuery("#${random}${type}pzMap_gridtable").data("selectId");
+					var editId = jQuery("#${random}${type}pzMap_gridtable").data("editting");
+					if(editId){
+						jQuery("#${random}${type}pzMap_gridtable").jqGrid('setSelection',editId);
+						jQuery("#"+editId,"#${random}${type}pzMap_gridtable").focus();
+					}else if(selectId){
+						jQuery("#${random}${type}pzMap_gridtable").jqGrid('setSelection',selectId);
+						jQuery("#"+selectId,"#${random}${type}pzMap_gridtable").focus();
+					}else{
+						var firstId = jQuery("#${random}${type}pzMap_gridtable").getDataIDs()[0];
+						jQuery("#${random}${type}pzMap_gridtable").jqGrid('setSelection',firstId);
+						jQuery("#"+firstId,"#${random}${type}pzMap_gridtable").focus();
+					}
 				}
 				var dataTest = {"id":"${random}${type}pzMap_gridtable"};
 				jQuery.publish("onLoadSelect",dataTest,null);
@@ -650,6 +679,7 @@
 	<div class="page">
 		<div style="margin: 5px;padding: 5px;">
 			<label style="cursor: pointer;position: absolute;right: 50px;text-decoration: underline;" id="${random}${type}acctTree_expandTree" onclick="toggleExpandAccTree(this,'${random}${type}acctTree')">展开</label>
+			<label>查找会计科目:</label>
 			<input type="text" id="${random}${type}acctInput" >
 			<input type="hidden" id="${random}${type}acctTree_cellId">
 			<div style="margin-top: 10px;height: 300px;overflow: auto;">
@@ -842,7 +872,6 @@
 				var cellId = jQuery("#${random}${type}acctTree_cellId").val();
 				if(cellId) {
 					jQuery("#"+cellId).val(name);
-					var rowId = id.substr(0,id.indexOf("_"));
 					var rowId = cellId.substr(0,cellId.indexOf("_"));
 					var rowChangedData = changeData${random}${type}[rowId];
 					if(rowChangedData==null){
@@ -852,7 +881,7 @@
 					rowChangedData[elem] = name;
 					elem = elem.replace("_name","");
 					rowChangedData[elem] = id;
-					changeData${random}${type}[rowId] = rowChangedData;
+					changeData${random}${type}[rowId+"_temp"] = rowChangedData;
 				}
 				jQuery("#${random}${type}acctTree_cellId").val("");
 				$.pdialog.closeCurrentDiv("${random}${type}acctTreeDiv");
@@ -862,8 +891,13 @@
 		function makeAcctTree(obj) {
 			//保存input的id
 			var cellId = jQuery(obj).attr("id");
+			var rowId = jQuery(obj).parent().parent().attr("id");
+			var rowData = jQuery("#${random}${type}pzMap_gridtable").jqGrid('getRowData',rowId);
+			var nameId = cellId.replace("_name","");
+			nameId = nameId.replace(rowId+"_","");
+			var acctId = rowData[nameId];
+			var cellValue = jQuery(obj).val();
 			jQuery("#${random}${type}acctTree_cellId").val(cellId);
-			
 			var url = "makeAcctTree";
 			$.get(url, {
 				"_" : $.now()
@@ -874,7 +908,15 @@
 						ztreesetting_${random}${type}acctTree, acctTreeData);
 				var nodes = acctTree.getNodes();
 				acctTree.expandNode(nodes[0], true, false, true);
-				acctTree.selectNode(nodes[0]);
+				var snode;
+				if(cellValue){
+					snode = acctTree.getNodeByParam('id',acctId);
+				}
+				if(snode!=null){
+					acctTree.selectNode(snode);
+				}else{
+					acctTree.selectNode(nodes[0]);
+				}
 			});
 			jQuery("#${random}${type}acctTree_expandTree").text("展开");
 			

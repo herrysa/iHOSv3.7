@@ -11,20 +11,13 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.huge.foundation.util.StringUtil;
 import com.huge.ihos.pz.businesstype.model.BusinessType;
 import com.huge.ihos.pz.businesstype.model.BusinessTypeD;
 import com.huge.ihos.pz.businesstype.model.BusinessTypeJ;
 import com.huge.ihos.pz.businesstype.service.BusinessTypeManager;
 import com.huge.ihos.system.reportManager.search.dao.SearchItemDao;
 import com.huge.ihos.system.reportManager.search.model.Search;
-import com.huge.ihos.system.reportManager.search.model.SearchItem;
 import com.huge.ihos.system.reportManager.search.service.QueryManager;
-import com.huge.ihos.system.reportManager.search.util.LSearchBracket;
-import com.huge.ihos.system.reportManager.search.util.RSearchBracket;
-import com.huge.ihos.system.reportManager.search.util.SearchBoolean;
-import com.huge.ihos.system.reportManager.search.util.SearchCriteria;
-import com.huge.ihos.system.reportManager.search.util.SearchOperator;
 import com.huge.util.OtherUtil;
 import com.huge.util.TestTimer;
 import com.huge.util.UUIDGenerator;
@@ -100,73 +93,9 @@ public class BusinessAccountMap {
 	        	String searchName = businessType.getSearchName();
 				Search search = queryManager.getSearchBySearchName( searchName );
 				dataIdCol = search.getMyKey();
-				SearchCriteria criteria = new SearchCriteria();
-				
-				SearchItem[] itemArray = this.searchItemDao.getEnabledSearchItemsBySearchIdOrdered( search.getSearchId() );
-		        /*
-		         * Set items = search.getSearchitems(); if (items.size() > 0) {
-		         * itemArray = new SearchItem[items.size()]; items.toArray(itemArray); }
-		         */
-		        for ( int i = 0; i < itemArray.length; i++ ) {
-		            if ( !itemArray[i].isSearchFlag() )
-		                continue;
-		            String htmlFieldName = itemArray[i].getHtmlField();
-		            Object pValue = param.get( htmlFieldName );
-		            String htmlFieldValue = null;
-		            if(pValue!=null){
-		            	htmlFieldValue = pValue.toString();
-		            }
-		            if ( ( htmlFieldValue == null ) || ( htmlFieldValue.length() <= 0 ) )
-		                continue;
-		            String dbFieldName = itemArray[i].getField();
-		            String operator = itemArray[i].getOperator();
-		            if ( operator == null )
-		                operator = "";
-		            if ( ( operator.equals( ">" ) ) || ( operator.equals( ">=" ) ) || ( operator.equals( "<" ) ) || ( operator.equals( "<=" ) )
-		                || ( operator.equals( "<>" ) ) )
-		                htmlFieldValue = operator + htmlFieldValue;
-		            /*else if(operator.equals("in")){
-		            	
-		            	
-		            	
-		            	htmlFieldValue = operator +"(" +htmlFieldValue+")";
-		            	
-		            }*/
-		            else if ( operator.equals( "*" ) )
-		                htmlFieldValue = htmlFieldValue + operator;
-		            else if ( operator.equals( "**" ) )
-		                htmlFieldValue = operator + htmlFieldValue + operator;
-		            // else if(operator.equalsIgnoreCase("like"))
-		            // htmlFieldValue = operator + " %" +htmlFieldValue+"%";
-		            boolean bool = itemArray[i].getMutiSelect();
-
-		            if ( bool ) {
-		                String[] arrayOfString = StringUtil.strToArray( htmlFieldValue, "," );
-		                if ( arrayOfString.length > 1 )
-		                    for ( int j = 0; j < arrayOfString.length; j++ )
-		                        if ( j == 0 )
-		                            criteria.addBinding( SearchBoolean.AND, LSearchBracket.LEFT, dbFieldName, SearchOperator.EQUAL, arrayOfString[j],
-		                                                 htmlFieldName );
-		                        else if ( j == arrayOfString.length - 1 )
-		                            criteria.addBinding( SearchBoolean.OR, dbFieldName, SearchOperator.EQUAL, arrayOfString[j], RSearchBracket.RIGHT,
-		                                                 htmlFieldName );
-		                        else
-		                            criteria.addBinding( SearchBoolean.OR, dbFieldName, SearchOperator.EQUAL, arrayOfString[j], htmlFieldName );
-		                else
-		                    criteria.addBinding( dbFieldName, htmlFieldValue, htmlFieldName );
-		            }
-		            else {
-		                criteria.addBinding( dbFieldName, htmlFieldValue, htmlFieldName );
-		            }
-		        }
-				
-				criteria.setSourceSql( search.getMysql() );
-				criteria.getWhereReplaceCount();
-				dataSql = criteria.getRealSql();
-				Object[] args = criteria.getRealAgrs();
-				for(Object arg : args){
-					String argStr = arg.toString();
-					dataSql = dataSql.replaceFirst("\\?", "'"+argStr+"'");
+				Object dataSqlO = param.get("dataSql");
+				if(dataSqlO!=null){
+					dataSql = dataSqlO.toString();
 				}
 	        }else{
 	        	dataIdCol = "tempId";

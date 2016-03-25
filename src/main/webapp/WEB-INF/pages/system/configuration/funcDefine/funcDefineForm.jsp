@@ -99,10 +99,15 @@
 						onblur="checkFuncSame(this);" />
 				</div>
 				<div class="unit">
+					<s:textfield id="funcDefine_funcName" key="funcDefine.funcName"
+						name="funcDefine.funcName" cssClass="required"
+						onblur="checkFuncSame(this);" />
+				</div>
+				<%-- <div class="unit">
 					<s:select list="#{'0':'表内函数','1':'表间函数' }"
 						key="funcDefine.funcType" id="funcDefine_funcType" listKey="key"
 						listValue="value" emptyOption="false" maxlength="50" width="50px"></s:select>
-				</div>
+				</div> --%>
 				<div class="unit">
 					<s:if test="%{!entityIsNew}">
 						<s:textfield id="funcDefine_funcParam" key="funcDefine.funcParam"
@@ -112,23 +117,23 @@
 						<s:textfield id="funcDefine_funcParam" key="funcDefine.funcParam"
 							name="funcDefine.funcParam" cssClass="" value="参数为英文字符，参数之间用逗号分割"
 							onFocus="if(value==defaultValue){value='';this.style.color='#000';}"
-							onBlur="checkParam(this);" style="color:#999;width:206px;" />
+							onBlur="checkParam(this);" style="color:#999;width:300px;" />
 					</s:else>
 				</div>
 				<div class="unit">
 					<s:textarea id="funcDefine_funcBody" key="funcDefine.funcBody"
 						name="funcDefine.funcBody" onblur="checkBody(this);"
-						cssClass="required" style="width: 206px;height: 80px;" />
+						cssClass="required" style="width: 300px;height: 100px;" />
 				</div>
 				<div class="unit">
 					<s:textarea id="funcDefine_funcDesc" key="funcDefine.funcDesc"
 						name="funcDefine.funcDesc" cssClass="required"
-						style="width: 206px;height: 40px;" />
+						style="width: 300px;height: 60px;" />
 				</div>
 				<div class="unit">
 					<s:textarea id="funcDefine_remark" key="funcDefine.remark"
 						name="funcDefine.remark" cssClass=""
-						style="width: 206px;height: 40px;" />
+						style="width: 300px;height: 40px;" />
 				</div>
 			</div>
 			<div class="formBar">

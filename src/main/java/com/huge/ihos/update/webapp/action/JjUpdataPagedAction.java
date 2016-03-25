@@ -454,8 +454,10 @@ public class JjUpdataPagedAction extends JJBaseAction {
 				}
 			}
 			setMenuButtonsToJson(menuButtons);
-			personId = this.getUserManager().getCurrentLoginUser().getPerson().getPersonId();
-			if(!jjUpdataManager.isHaveUpdateRight(personId)){
+			
+			String jjfgks = UserContextUtil.findUserDataPrivilegeStr("jjdept_dp","2");
+			
+			if(jjfgks==null||"".equals(jjfgks)){
 				haveAddRight = "0";
 			}
 //			checkPeriod = periodManager.getCurrentPeriod().getPeriodCode();
