@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +15,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +32,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.huge.ecis.inter.helper.ExcelImport;
 import com.huge.exceptions.BusinessException;
 import com.huge.ihos.excel.ColumnDefine;
 import com.huge.ihos.excel.ColumnStyle;
@@ -48,6 +52,7 @@ import com.huge.ihos.hr.hrOrg.model.HrOrgHis;
 import com.huge.ihos.hr.hrOrg.model.HrOrgSnap;
 import com.huge.ihos.hr.hrOrg.service.HrOrgManager;
 import com.huge.ihos.hr.hrOrg.service.HrOrgSnapManager;
+import com.huge.ihos.hr.hrPerson.model.HrPersonCurrent;
 import com.huge.ihos.hr.hrPerson.model.HrPersonSnap;
 import com.huge.ihos.hr.hrPerson.service.HrPersonCurrentManager;
 import com.huge.ihos.hr.hrPerson.service.HrPersonSnapManager;
@@ -1006,6 +1011,149 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 		importResult="导入成功";
 		return ajaxForward( true,importResult , true );
 	}
+	
+	@SuppressWarnings("unchecked")
+	private String importExcelSheet1( JdbcTemplate jdbcTemplate, Sheet sheet ,int sheetIndx) throws Exception {
+		Map<String, String> personColMap = new HashMap<String, String>();
+		personColMap.put("", "");
+		
+		int orgCodeIndex = -1;
+		int personCodeIndex = -1;
+		int idNumberIndex = -1;
+		List<String> columnNameList = new ArrayList<String>();
+        Row firstRow = sheet.getRow(0);
+        for ( int i = 0;; i++ )
+            try {
+                Cell cell = firstRow.getCell( i );
+                if ( cell != null ) {
+                    String excelCellValue = cell.getStringCellValue();
+                    if ( ( excelCellValue != null ) && ( excelCellValue.trim().equals( "" ) ) )
+                        break;
+                    String colName = personColMap.get(excelCellValue.trim());
+                    if("personCode".equals(colName)||"orgCode".equals(colName)||"idNumber".equals(colName)){
+                    	personCodeIndex = i;
+                    }
+                    columnNameList.add( colName );
+                }
+                else
+                    break;
+            }
+            catch ( Exception localException1 ) {
+                break;
+            }
+        if(sheetIndx==0&&columnNameList.size()==0){
+        	return "导入失败,EXCEL中无数据！";
+        }
+        if(sheetIndx>=0&&columnNameList.size()==0){
+        	return "next";
+        }
+        //人员导入检查必填列
+        
+        if(!(idNumberIndex!=-1||(orgCodeIndex!=-1&&personCodeIndex!=-1))){
+        	return "导入失败,EXCEL中缺少人员唯一标识（单位+人员编码或身份证号）！";
+        }
+        
+        if(!columnNameList.contains("personCode")){
+        	return "导入失败,EXCEL中缺少personCode列！";
+        }
+        if(!columnNameList.contains("name")){
+        	return "导入失败,EXCEL中缺少name列！";
+        }
+        if(!columnNameList.contains("deptId")){
+        	return "导入失败,EXCEL中缺少deptId列！";
+        }
+        String timeStamp = DateUtil.getSnapCode();
+        List<HrPersonSnap> hrPersons = hrPersonSnapManager.getPersonListByHisTime(timeStamp);
+        Map<String,HrPersonSnap> hrPersonMap = new HashMap<String, HrPersonSnap>();
+        for(HrPersonSnap hrPerson : hrPersons){
+        	hrPersonMap.put(hrPerson.getOrgCode()+"_"+hrPerson.getPersonCode(), hrPerson);
+        	hrPersonMap.put(hrPerson.getIdNumber(), hrPerson);
+        }
+        
+        for ( int j = 1;; j++ ) {
+        	Row row = sheet.getRow( j );
+            if ( row == null )
+                break;
+            String orgCode = "";
+            String personCode = "";
+            String idNumber = "";
+            String deptName = "";
+            String empType = "";
+            String postType = "";
+            String jobTitle = "";
+            String profession = "";
+            String degree = "";
+            String zcEduLevel = "";
+            String nation = "";
+            String salaryWay = "";
+            String educationalLevel = "";
+            String attenceCode = "";
+            String maritalStatus = "";
+            String kqType = "";
+            
+            Map<String, String> dataMap = new HashMap<String, String>();
+            for ( int i = 0; i < columnNameList.size(); i++ ){
+            	Cell cell = row.getCell( i );
+            	String cellValue = ExcelImport.getValue(cell);
+            	if(i==orgCodeIndex){
+            		orgCode = cellValue;
+            	}else if(i==personCodeIndex){
+            		personCode = cellValue;
+            	}else if(i==idNumberIndex){
+            		idNumber = cellValue;
+            	}else{
+            		dataMap.put(columnNameList.get(i), cellValue);
+            	}
+            }
+            HrPersonSnap hrPerson = null;
+            if(!"".equals(orgCode)&&!"".equals(personCode)){
+            	hrPerson = hrPersonMap.get(orgCode+"_"+personCode);
+            	if(hrPerson==null){
+            		hrPerson = new HrPersonSnap();
+            		hrPerson.setOrgCode(orgCode);
+            		hrPerson.setPersonCode(personCode);
+            		hrPerson.setSnapCode(timeStamp);
+            		hrPerson.setIdNumber(idNumber);
+            		if(dataMap.containsKey("personId")){
+            			hrPerson.setPersonId(dataMap.get("personId").toString());
+            		}else{
+            			hrPerson.setPersonId(orgCode+"_"+personCode+"_"+timeStamp);
+            		}
+            		
+            		
+            		Set<Entry<String, String>> dataSet = dataMap.entrySet();
+            		for(Entry<String, String> dataEntry :dataSet){
+            			String key = dataEntry.getKey();
+            			String value = dataEntry.getValue();
+            			
+            		}
+            	}else{
+            		HrPersonSnap newHrPerson = hrPerson.clone();//需要克隆
+            		Map<String, Object> oldMap = hrPerson.getMapEntity();
+            		Set<Entry<String, String>> dataSet = dataMap.entrySet();
+            		for(Entry<String, String> dataEntry :dataSet){
+            			String key = dataEntry.getKey();
+            			String value = dataEntry.getValue();
+            			Object oldValue = oldMap.get(key);
+            			
+            		}
+            	}
+            }else if(!"".equals(idNumber)){
+            	hrPerson = hrPersonMap.get(idNumber);
+            	if(hrPerson==null){
+            		return "导入失败,--------------------没有对应的人员！";
+            	}else{
+            		
+            	}
+            }else {
+            	return "导入失败,EXCEL中缺少deptId列！";
+			}
+            
+        }
+		
+		return SUCCESS;
+	}
+	
 	@SuppressWarnings("unchecked")
 	private String importExcelSheet( JdbcTemplate jdbcTemplate, Sheet sheet ,int sheetIndx)
 	        throws Exception {
@@ -1546,5 +1694,31 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 	}
 	public void setKqTypeManager(KqTypeManager kqTypeManager) {
 		this.kqTypeManager = kqTypeManager;
+	}
+	
+	public static void main(String[] args) {
+		Person person = new Person();
+		Field field = null;  
+		try {
+			field = person.getClass().getDeclaredField("o");
+			field.setAccessible(true);
+			System.out.println(field.get(person));
+			//field.set(person, Calendar.getInstance().getTime());
+			System.out.println(field.getType().getName());
+			//System.out.println(field.get(person));
+			
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
