@@ -28,12 +28,14 @@ import com.huge.ihos.hr.hrOrg.model.HrOrgHis;
 import com.huge.ihos.system.systemManager.organization.model.Branch;
 import com.huge.ihos.system.systemManager.organization.model.PersonType;
 import com.huge.model.BaseObject;
+import com.huge.util.annotation.AProperty;
 @Entity
 @Table( name = "hr_person_snap")
 public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 	private static final long serialVersionUID = 9073082388683015474L;
 	private String snapId;
 	private String snapCode;
+	@AProperty(label="11",diccode="postType")
 	private String personId;
 	private String personCode; // 人员编码
 	private String name; // 姓名
@@ -42,6 +44,8 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 	private HrDepartmentHis hrDeptHis;
 	private String deptSnapCode;
 	private PersonType empType; // 职工类别
+	
+	@AProperty(label="11",diccode="postType")
 	private String postType; // 岗位类别
 	private String jobTitle; // 职称
 	private Double ratio; // 系数

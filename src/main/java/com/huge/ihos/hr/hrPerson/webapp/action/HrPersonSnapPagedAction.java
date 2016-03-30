@@ -52,7 +52,6 @@ import com.huge.ihos.hr.hrOrg.model.HrOrgHis;
 import com.huge.ihos.hr.hrOrg.model.HrOrgSnap;
 import com.huge.ihos.hr.hrOrg.service.HrOrgManager;
 import com.huge.ihos.hr.hrOrg.service.HrOrgSnapManager;
-import com.huge.ihos.hr.hrPerson.model.HrPersonCurrent;
 import com.huge.ihos.hr.hrPerson.model.HrPersonSnap;
 import com.huge.ihos.hr.hrPerson.service.HrPersonCurrentManager;
 import com.huge.ihos.hr.hrPerson.service.HrPersonSnapManager;
@@ -60,17 +59,20 @@ import com.huge.ihos.hr.query.service.QueryCommonDetailManager;
 import com.huge.ihos.hr.util.HrUtil;
 import com.huge.ihos.kq.kqType.model.KqType;
 import com.huge.ihos.kq.kqType.service.KqTypeManager;
+import com.huge.ihos.system.configuration.dictionary.model.DictionaryItem;
 import com.huge.ihos.system.reportManager.search.util.ColumnDef;
 import com.huge.ihos.system.reportManager.search.util.ExportHelper;
 import com.huge.ihos.system.systemManager.menu.model.MenuButton;
 import com.huge.ihos.system.systemManager.organization.model.Person;
 import com.huge.ihos.system.systemManager.organization.model.PersonType;
+import com.huge.ihos.system.systemManager.organization.service.OrgManager;
 import com.huge.ihos.system.systemManager.organization.service.PersonTypeManager;
 import com.huge.service.UtilOptService;
 import com.huge.util.DateUtil;
 import com.huge.util.ExcelUtil;
 import com.huge.util.OptFile;
 import com.huge.util.OtherUtil;
+import com.huge.util.annotation.AProperty;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -95,9 +97,15 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 	private PersonTypeManager personTypeManager;
 	private PostManager postManager;
 	private HrPersonCurrentManager hrPersonCurrentManager;
+	private String personCodeOrIdNumber = "1"; //1:orgCode+personCode 2:idNumber
 	
 	
-	
+	public String getPersonCodeOrIdNumber() {
+		return personCodeOrIdNumber;
+	}
+	public void setPersonCodeOrIdNumber(String personCodeOrIdNumber) {
+		this.personCodeOrIdNumber = personCodeOrIdNumber;
+	}
 	public UtilOptService getUtilOptService() {
 		return utilOptService;
 	}
@@ -1013,13 +1021,302 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 	}
 	
 	@SuppressWarnings("unchecked")
-	private String importExcelSheet1( JdbcTemplate jdbcTemplate, Sheet sheet ,int sheetIndx) throws Exception {
-		Map<String, String> personColMap = new HashMap<String, String>();
-		personColMap.put("", "");
+	private String checkExcelSheet( JdbcTemplate jdbcTemplate, Sheet sheet ,int sheetIndx) throws Exception {
+		Map<String, Field> personColMap = new HashMap<String, Field>();
+		HrPersonSnap person = new HrPersonSnap();
+		Field[] fileds = person.getClass().getDeclaredFields();
+		for(Field filed : fileds){
+			AProperty aProperty = filed.getAnnotation(AProperty.class);
+			String label = "";
+			String diccode = "";
+			if(aProperty!=null){
+				label = aProperty.label();
+				diccode = aProperty.diccode();
+				personColMap.put(label, filed);
+			}
+		}
 		
 		int orgCodeIndex = -1;
+		int deptIdIndex = -1;
 		int personCodeIndex = -1;
 		int idNumberIndex = -1;
+		
+		List<Field> columnNameList = new ArrayList<Field>();
+        Row firstRow = sheet.getRow(0);
+        for ( int i = 0;; i++ ){
+            try {
+                Cell cell = firstRow.getCell( i );
+                if ( cell != null ) {
+                    String excelCellValue = cell.getStringCellValue();
+                    if ( ( excelCellValue != null ) && ( excelCellValue.trim().equals( "" ) ) )
+                        break;
+                    Field col = personColMap.get(excelCellValue.trim());
+                    if(col!=null){
+                    	if("orgCode".equals(col.getName())){
+                    		orgCodeIndex = i;
+                    	}else if("deptId".equals(col.getName())){
+                    		personCodeIndex = i;
+                    	}else if("personCode".equals(col.getName())){
+                    		deptIdIndex = i;
+                    	}else if("idNumber".equals(col.getName())){
+                    		idNumberIndex = i;
+                    	}
+                    	columnNameList.add( col );
+                    }
+                }
+                else
+                    break;
+            }
+            catch ( Exception localException1 ) {
+                break;
+            }
+        }
+        if(sheetIndx==0&&columnNameList.size()==0){
+        	return "检查失败,EXCEL中无数据！";
+        }
+        
+        if("1".equals(personCodeOrIdNumber)){
+        	if(orgCodeIndex==-1){
+        		return "检查失败,EXCEL中缺少'单位编码'列！";
+        	}
+        	if(personCodeIndex==-1){
+        		return "检查失败,EXCEL中缺少'人员编码'列！";
+        	}
+        	//
+        }else if("2".equals(personCodeOrIdNumber)){
+        	if(idNumberIndex==-1){
+        		return "检查失败,EXCEL中缺少'身份证号'列！";
+        	}
+        }
+        List<Map<String, String>> dataList = new ArrayList<Map<String,String>>();
+        Map<String, String> checkMap = new HashMap<String, String>();
+        checkMap.put("", "");
+        String orgCheck = "",deptIdCheck = "",personCodeCheck = "" , idNumberCheck = "";
+        for ( int j = 1;; j++ ) {
+        	Row row = sheet.getRow( j );
+            if ( row == null )
+                break;
+            String orgCode = "";
+            String deptId = "";
+            String personCode = "";
+            String idNumber = "";
+            //此列对应的数据map
+            Map<String, String> dataMap = new HashMap<String, String>();
+            for ( int i = 0; i < columnNameList.size(); i++ ){
+            	Cell cell = row.getCell( i );
+            	String cellValue = ExcelImport.getValue(cell);
+            	if("".equals(cellValue)){
+            		cellValue = "&kong&";
+            	}
+            	if(i==orgCodeIndex){
+            		orgCode = cellValue;
+            	}else if(i==personCodeIndex){
+            		personCode = cellValue;
+            	}else if(i==idNumberIndex){
+            		idNumber = cellValue;
+            	}else if(i==deptIdIndex){
+            		deptId = cellValue;
+            	}
+            	Field col = columnNameList.get(i);
+            	String typeName = col.getType().getName();
+            	AProperty aProperty = col.getAnnotation(AProperty.class);
+    			String diccode = "";
+    			if(aProperty!=null){
+    				diccode = aProperty.diccode();
+    			}
+            	if(typeName.startsWith("com")){
+            		String[] typeNameArr = typeName.split("\\.");
+            		String checkValue = checkMap.get(col.getName()+"@"+typeNameArr[typeNameArr.length-1]+"@hql");
+            		if(checkValue==null){
+            			checkValue = "'"+cellValue+"',";
+            		}else{
+            			checkValue += "'"+cellValue+"',";
+            		}
+            		checkMap.put(col.getName()+"@"+typeNameArr[typeNameArr.length-1]+"@hql",checkValue);
+            	}else if(!"".equals(diccode)){
+            		String checkValue = checkMap.get(col.getName()+"@"+diccode+"@dic");
+            		if(checkValue==null){
+            			checkValue = "'"+cellValue+"',";
+            		}else{
+            			checkValue += "'"+cellValue+"',";
+            		}
+            		checkMap.put(col.getName()+"@"+diccode+"@dic",checkValue);
+            	}
+            	dataMap.put(col.getName(), cellValue);
+            }
+            orgCheck += "'"+orgCode+"',";
+            deptIdCheck += "'"+orgCode+"@"+deptId+"',";
+            personCodeCheck += "'"+orgCode+"@"+personCode+"',";
+            idNumberCheck += "'"+idNumber+"',";
+            //checkMap.put("personCodeCheck", personCodeCheck);
+            //checkMap.put("idNumberCheck", idNumberCheck);
+            dataList.add(dataMap);
+        }
+        String[] personCodeCheckArr = null;
+        String[] idNumberCheckArr = null;
+        if("1".equals(personCodeOrIdNumber)){
+        	orgCheck = OtherUtil.subStrEnd(orgCheck, ",");
+        	String orgCodeHql = "SELECT orgCode FROM HrOrg WHERE snapId IN (SELECT MAX(snapId) FROM HrOrg GROUP BY orgCode) AND deleted = 0 AND orgCode IN ("+orgCheck+")";
+        	List<HrOrgSnap> orgList = hrOrgSnapManager.getByHql(orgCodeHql);
+        	Map<String, HrOrgSnap> orgMap = new HashMap<String, HrOrgSnap>();
+        	for(int o=0;o<orgList.size();o++){
+        		orgMap.put("'"+orgList.get(o).getOrgCode()+"'", orgList.get(o));
+        	}
+        	String[] orgCheckArr = orgCheck.split(",");
+        	for(String orgCheckTemp : orgCheckArr){
+        		if("&kong&".equals(orgCheckTemp)){
+        			//第p行数据'单位编码'为空
+        		}else{
+        			HrOrgSnap hrOrgSnap = orgMap.get("'"+orgCheckTemp+"'");
+        			if(hrOrgSnap==null){
+        				//第p行数据'单位编码'错误
+        			}
+        		}
+        		
+        	}
+        	personCodeCheck = OtherUtil.subStrEnd(personCodeCheck, ",");
+        	String personCodehql = "SELECT orgCode,personCode FROM HrPersonSnap WHERE snapId IN (SELECT MAX(snapId) FROM HrPersonSnap GROUP BY personId) AND deleted=0 AND orgCode+'@'+personCode IN ("+personCodeCheck+")";
+        	List<HrPersonSnap> hrPersonSnaps = hrPersonSnapManager.getByHql(personCodehql);
+        	Map<String, HrPersonSnap> personMap = new HashMap<String, HrPersonSnap>();
+        	for(int p=0;p<hrPersonSnaps.size();p++){
+        		personMap.put("'"+hrPersonSnaps.get(p).getOrgCode()+"@"+hrPersonSnaps.get(p).getPersonCode()+"'", hrPersonSnaps.get(p));
+        	}
+        	personCodeCheckArr = personCodeCheck.split(",");
+        	for(int p=0;p<personCodeCheckArr.length;p++){
+        		String personCodeCheckTemp = personCodeCheckArr[p];
+        		String[] orgAndPersonCode = personCodeCheckTemp.split("@");
+        		if(orgAndPersonCode[1].equals("&kong&")){
+        			//第p行数据'人员编码'为空
+        		}else{
+        			HrPersonSnap hrPersonSnap = personMap.get(orgAndPersonCode[1]);
+        			if(hrPersonSnap==null){
+        				//新增人员
+        				Map<String, String> dataMap = dataList.get(p);
+        				dataMap.put("new", "1");
+        			}else{
+        				//修改人员
+        				Map<String, String> dataMap = dataList.get(p);
+        				dataMap.put("new", "0");
+        			}
+        		}
+        	}
+        	
+        	if(!"".equals(deptIdCheck)){
+        		deptIdCheck = OtherUtil.subStrEnd(deptIdCheck, ",");
+            	String deptIdhql = "SELECT orgCode,name FROM HrDepartmentSnap WHERE snapId IN (SELECT MAX(snapId) FROM HrDepartmentSnap GROUP BY deptId) AND deleted = 0 AND state >= 3 AND orgCode+'@'+name IN ("+deptIdCheck+")";
+            	List<HrDepartmentSnap> hrDeptSnaps = hrDepartmentSnapManager.getByHql(personCodehql);
+            	Map<String, HrDepartmentSnap> deptMap = new HashMap<String, HrDepartmentSnap>();
+            	for(int d=0;d<hrDeptSnaps.size();d++){
+            		deptMap.put("'"+hrDeptSnaps.get(d).getName()+"'", hrDeptSnaps.get(d));
+            	}
+            	String[] deptIdCheckArr = deptIdCheck.split(",");
+            	for(int d=0;d<deptIdCheckArr.length;d++){
+            		String deptIdCheckTemp = deptIdCheckArr[d];
+            		String[] orgAndDeptId = deptIdCheckTemp.split("@");
+            		if(orgAndDeptId[1].equals("&kong&")){
+            			//第p行数据'部门编码'为空
+            		}else{
+            			HrDepartmentSnap hrDepartmentSnap = deptMap.get(orgAndDeptId[1]);
+            			if(hrDepartmentSnap==null){
+            				//部门错误
+            			}
+            		}
+            	}
+        	}
+        }else if("2".equals(personCodeOrIdNumber)){
+        	idNumberCheck = OtherUtil.subStrEnd(idNumberCheck, ",");
+        	String idNumberHql = "SELECT orgCode,personCode,idNumber FROM HrPersonSnap WHERE snapId IN (SELECT MAX(snapId) FROM HrPersonSnap GROUP BY personId) AND deleted=0 AND idNumber IN ("+idNumberCheck+")";
+        	List<HrPersonSnap> hrPersonSnaps = hrPersonSnapManager.getByHql(idNumberHql);
+        	Map<String, HrPersonSnap> personMap = new HashMap<String, HrPersonSnap>();
+        	for(int p=0;p<hrPersonSnaps.size();p++){
+        		personMap.put("'"+hrPersonSnaps.get(p).getIdNumber()+"'", hrPersonSnaps.get(p));
+        	}
+        	idNumberCheckArr = idNumberCheck.split(",");
+        	for(int id=0;id<idNumberCheckArr.length;id++){
+        		if("&kong&".equals(idNumberCheckArr[id])){
+        			//第p行数据'单位编码'为空
+        		}else{
+        			HrPersonSnap hrPersonSnap = personMap.get("'"+idNumberCheckArr[id]+"'");
+        			if(hrPersonSnap==null){
+        				//第p行数据'单位编码'错误
+        			}
+        		}
+        	}
+        	
+        }
+        
+        Set<Entry<String, String>> checkSet = checkMap.entrySet();
+        for(Entry<String, String> check : checkSet){
+        	String checkKey = check.getKey();
+        	String checkValue = check.getValue();
+        	checkValue = OtherUtil.subStrEnd(checkValue, ",");
+        	String[] checkKeyArr = checkKey.split("@");
+        	String checkType = checkKeyArr[checkKeyArr.length];
+        	if("hql".equals(checkType)){
+        		String entityName = checkKeyArr[1];
+        		Object manager = SpringContextHelper.getBean(entityName+"Manager");
+        		//String 
+        		
+        		
+        	}else if("dic".equals(checkType)){
+        		String dicHql = "SELECT value FROM DictionaryItem WHERE dictionary.dictionaryId='"+checkKeyArr[1]+"' AND value IN ("+checkValue+")";
+        		List<DictionaryItem> dicList = this.getDictionaryItemManager().getByHql(dicHql);
+        		Map<String,String> dicMap = new HashMap<String, String>();
+        		for(DictionaryItem dictionaryItem : dicList){
+        			dicMap.put("'"+dictionaryItem.getValue()+"'", "1");
+        		}
+        		String[] checkValueArr = checkValue.split(",");
+        		for(int d=0;d<checkValueArr.length;d++){
+        			if("&kong&".equals(checkValueArr[d])){
+            			//第p行数据'单位编码'为空
+            		}else{
+            			String dic = dicMap.get("'"+checkValueArr[d]+"'");
+            			if(!"".equals(dic)){
+            				//第p行数据'单位编码'错误
+            			}
+            		}
+        		}
+        	}
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
+	private String importExcelSheet1( JdbcTemplate jdbcTemplate, Sheet sheet ,int sheetIndx) throws Exception {
+		Map<String, String> personColMap = new HashMap<String, String>();
+		personColMap.put("人员ID","personId");
+		personColMap.put("所在单位编码","orgCode");
+		personColMap.put("人员编码","personCode");
+		personColMap.put("姓名","name");
+		personColMap.put("所属部门", "deptName");
+		personColMap.put("职工类别", "empType");
+		personColMap.put("岗位类别", "postType");
+		personColMap.put("岗位职务", "duty");
+		personColMap.put("职称", "jobTitle");
+		personColMap.put("性别", "sex");
+		personColMap.put("出生日期", "birthday");
+		personColMap.put("年龄", "age");
+		personColMap.put("民族", "nation");
+		personColMap.put("政治面貌", "politicalCode");
+		personColMap.put("身份证号","idNumber");
+		personColMap.put("学历","educationalLevel");
+		personColMap.put("手机号码","mobilePhone");
+		personColMap.put("邮箱","email");
+		personColMap.put("籍贯","nativePlace");
+		personColMap.put("婚姻状况","maritalStatus");
+		personColMap.put("家庭电话","homeTelephone");
+		personColMap.put("户口所在地","domicilePlace");
+		personColMap.put("家庭住址","houseAddress");
+		personColMap.put("毕业院校","school");
+		personColMap.put("专业", "profession");
+		personColMap.put("学位","degree");
+		personColMap.put("毕业时间","graduateDate");
+		personColMap.put("最初毕业学校","zcGraduateSchool");
+		personColMap.put("最初学历","zcEduLevel");
+		personColMap.put("最初毕业时间","zcGraduateDate");
+		/*personColMap.put("参加工作时间","maritalStatus");
+		personColMap.put("进单位时间","maritalStatus");
+		personColMap.put("现有职称","maritalStatus");*/
+		
 		List<String> columnNameList = new ArrayList<String>();
         Row firstRow = sheet.getRow(0);
         for ( int i = 0;; i++ )
@@ -1030,9 +1327,6 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
                     if ( ( excelCellValue != null ) && ( excelCellValue.trim().equals( "" ) ) )
                         break;
                     String colName = personColMap.get(excelCellValue.trim());
-                    if("personCode".equals(colName)||"orgCode".equals(colName)||"idNumber".equals(colName)){
-                    	personCodeIndex = i;
-                    }
                     columnNameList.add( colName );
                 }
                 else
@@ -1048,28 +1342,48 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
         	return "next";
         }
         //人员导入检查必填列
+        int orgCodeIndex = columnNameList.indexOf("orgCode");
+		int personCodeIndex = columnNameList.indexOf("personCode");
+		int idNumberIndex = columnNameList.indexOf("idNumber");
+		
+        int nameIndex = columnNameList.indexOf("name");    			//必填
+        int deptNameIndex = columnNameList.indexOf("deptName");    //必填
+        int empTypeIndex = columnNameList.indexOf("empType");	   //必填
+        int postTypeIndex = columnNameList.indexOf("postType");    //必填
+        int sexIndex = columnNameList.indexOf("sex");    			//必填
+        int jobTitleIndex = columnNameList.indexOf("jobTitle");
+        int professionIndex = columnNameList.indexOf("profession");
+        int degreeIndex = columnNameList.indexOf("degree");
+        int zcEduLevelIndex = columnNameList.indexOf("zcEduLevel");
+        int nationIndex = columnNameList.indexOf("snapId");
+        int salaryWayIndex = columnNameList.indexOf("snapId");
+        int educationalLevelIndex = columnNameList.indexOf("snapId");
+        int attenceCodeIndex = columnNameList.indexOf("snapId");
+        int maritalStatusIndex = columnNameList.indexOf("snapId");
+        int kqTypeIndex = columnNameList.indexOf("snapId");
         
         if(!(idNumberIndex!=-1||(orgCodeIndex!=-1&&personCodeIndex!=-1))){
         	return "导入失败,EXCEL中缺少人员唯一标识（单位+人员编码或身份证号）！";
         }
         
-        if(!columnNameList.contains("personCode")){
+        /*if(!columnNameList.contains("personCode")){
         	return "导入失败,EXCEL中缺少personCode列！";
-        }
-        if(!columnNameList.contains("name")){
-        	return "导入失败,EXCEL中缺少name列！";
-        }
-        if(!columnNameList.contains("deptId")){
-        	return "导入失败,EXCEL中缺少deptId列！";
-        }
+        }*/
+        
+        //获取数据字典和人员list
         String timeStamp = DateUtil.getSnapCode();
         List<HrPersonSnap> hrPersons = hrPersonSnapManager.getPersonListByHisTime(timeStamp);
+        List<HrDepartmentSnap> hrDepartmentSnaps = hrDepartmentSnapManager.getDeptListByHisTime(timeStamp);
+        List<PersonType> personTypes = personTypeManager.getAll();
+        List<Post> posts = postManager.getAll();
+        dictionaryItemLoad();
+        
         Map<String,HrPersonSnap> hrPersonMap = new HashMap<String, HrPersonSnap>();
         for(HrPersonSnap hrPerson : hrPersons){
         	hrPersonMap.put(hrPerson.getOrgCode()+"_"+hrPerson.getPersonCode(), hrPerson);
         	hrPersonMap.put(hrPerson.getIdNumber(), hrPerson);
         }
-        
+        //整理出需要添加或修改的人员list，并整理出loglist
         for ( int j = 1;; j++ ) {
         	Row row = sheet.getRow( j );
             if ( row == null )
@@ -1091,6 +1405,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
             String maritalStatus = "";
             String kqType = "";
             
+            //此列对应的数据map
             Map<String, String> dataMap = new HashMap<String, String>();
             for ( int i = 0; i < columnNameList.size(); i++ ){
             	Cell cell = row.getCell( i );
@@ -1105,28 +1420,66 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
             		dataMap.put(columnNameList.get(i), cellValue);
             	}
             }
+            /*
+             * 简述这块的逻辑:
+             * 人员的唯一标识科室是:1.单位编码+人员编码 2.身份证号
+             * 标识为1时，如果数据库中没有相应记录则添加，检查必填字段，并校验数据正确性；如果有则修改该记录
+             * 标识为2时，只能是修改，应为不可以根据身份证号生成人员编码
+             * 
+             */
             HrPersonSnap hrPerson = null;
+            boolean allowAdd = false;
             if(!"".equals(orgCode)&&!"".equals(personCode)){
             	hrPerson = hrPersonMap.get(orgCode+"_"+personCode);
-            	if(hrPerson==null){
-            		hrPerson = new HrPersonSnap();
-            		hrPerson.setOrgCode(orgCode);
-            		hrPerson.setPersonCode(personCode);
-            		hrPerson.setSnapCode(timeStamp);
-            		hrPerson.setIdNumber(idNumber);
-            		if(dataMap.containsKey("personId")){
-            			hrPerson.setPersonId(dataMap.get("personId").toString());
-            		}else{
-            			hrPerson.setPersonId(orgCode+"_"+personCode+"_"+timeStamp);
-            		}
+            	allowAdd = true;
+            }else if(!"".equals(idNumber)){
+            	hrPerson = hrPersonMap.get(idNumber);
+            }else {
+            	return "导入失败,EXCEL中缺少人员唯一标识（单位+人员编码或身份证号）！";
+			}
+            if(hrPerson==null){
+            	if(!allowAdd){
+            		return "导入失败,身份证'"+idNumber+"'没有对应的人员！";
+            	}
+            	if(nameIndex==-1){
+                	return "导入失败,EXCEL中缺少'姓名'列！";
+                }
+                if(deptNameIndex==-1){
+                	return "导入失败,EXCEL中缺少'所在部门'列！";
+                }
+                if(empTypeIndex==-1){
+                	return "导入失败,EXCEL中缺少'职工类别'列！";
+                }
+                if(postTypeIndex==-1){
+                	return "导入失败,EXCEL中缺少'岗位类别'列！";
+                }
+                if(sexIndex==-1){
+                	return "导入失败,EXCEL中缺少'性别'列！";
+                }
+            	hrPerson = new HrPersonSnap();
+        		hrPerson.setOrgCode(orgCode);
+        		hrPerson.setPersonCode(personCode);
+        		hrPerson.setSnapCode(timeStamp);
+        		hrPerson.setIdNumber(idNumber);
+        		if(dataMap.containsKey("personId")){
+        			hrPerson.setPersonId(dataMap.get("personId").toString());
+        		}else{
+        			hrPerson.setPersonId(orgCode+"_"+personCode+"_"+timeStamp);
+        		}
+        		//检查字典数据 1.单位编码正确性 2.部门名称正确性 3.职工类别正确性 3.岗位类别正确性 4.岗位职务正确性 5.其他字典
+        		
+        		
+        		Set<Entry<String, String>> dataSet = dataMap.entrySet();
+        		for(Entry<String, String> dataEntry :dataSet){
+        			String key = dataEntry.getKey();
+        			String value = dataEntry.getValue();
+        			
+        		}
+            }else{
+            	
+            }
+            	/*if(hrPerson==null){
             		
-            		
-            		Set<Entry<String, String>> dataSet = dataMap.entrySet();
-            		for(Entry<String, String> dataEntry :dataSet){
-            			String key = dataEntry.getKey();
-            			String value = dataEntry.getValue();
-            			
-            		}
             	}else{
             		HrPersonSnap newHrPerson = hrPerson.clone();//需要克隆
             		Map<String, Object> oldMap = hrPerson.getMapEntity();
@@ -1147,7 +1500,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
             	}
             }else {
             	return "导入失败,EXCEL中缺少deptId列！";
-			}
+			}*/
             
         }
 		
@@ -1696,27 +2049,31 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 		this.kqTypeManager = kqTypeManager;
 	}
 	
-	public static void main(String[] args) {
-		Person person = new Person();
-		Field field = null;  
+	public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+		HrPersonSnap person = new HrPersonSnap();
 		try {
-			field = person.getClass().getDeclaredField("o");
-			field.setAccessible(true);
-			System.out.println(field.get(person));
+			Field[] fileds = person.getClass().getDeclaredFields();
+			for(Field field :fileds){
+				field.setAccessible(true);
+				AProperty aProperty = field.getAnnotation(AProperty.class);
+				String label = "";
+				String diccode = "";
+				if(aProperty!=null){
+					label = aProperty.label();
+					diccode = aProperty.diccode();
+				}
+				System.out.println(field.getName()+":"+field.getType().getName()+":"+label+":"+diccode);
+			}
+			//field = person.getClass().getDeclaredField("o");
+			//System.out.println(field.get(person));
 			//field.set(person, Calendar.getInstance().getTime());
-			System.out.println(field.getType().getName());
+			//System.out.println(field.getType().getName());
 			//System.out.println(field.get(person));
 			
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
