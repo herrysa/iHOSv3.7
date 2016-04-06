@@ -70,6 +70,14 @@
 			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrExcelImport.jsp</result>
 		</action>
 		<!-- excel导入 -->
+		<action name="checkHrPersonFromExcel" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="checkHrPersonFromExcel"> 
+			<result name="success" type="json">
+				<param name="contentType">text/plain</param>
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,dialogId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 		<action name="importHrPersonFromExcel" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="importHrPersonFromExcel"> 
 			<result name="success" type="json">
 				<param name="contentType">text/plain</param>
@@ -77,6 +85,13 @@
                    <param name="noCache">true</param>
 				 <param name="ignoreHierarchy">false</param>
             </result>
+		</action>
+		<action name="showHrImportDataLog"
+			class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction">
+			<result name="success">/WEB-INF/pages/hr/hrPersonSnap/hrImportDataLog.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/hr/hrPersonSnap/hrIimportDataLog.jsp
+			</result>
 		</action>
 			<action name="makeHrPersonSnapTree" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="makeHrPersonSnapTree">
 			<result name="success"  type="json">

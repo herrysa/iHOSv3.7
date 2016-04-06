@@ -602,7 +602,7 @@
     	     hrPersonCurrent_toolButtonBar.addCallBody('1002010108',function(e,$this,param){
     	    	 var winTitle='<s:text name="hrPersonExcelImport.title"/>';
        	 		 var url = "hrPersonExcelImport?navTabId=hrPersonCurrent_gridtable&oper=hrPerson";
-       	 		 $.pdialog.open(url,'importHrPersonSnap',winTitle, {mask:true,width : 600,height : 150});
+       	 		 $.pdialog.open(url,'importHrPersonSnap',winTitle, {mask:true,width : 600,height : 200});
 		     },{});
     	     hrPersonCurrent_toolButtonBar.addBeforeCall('1002010108',function(e,$this,param){
  				return hrPersonCurrent_function.optBeforeCall(e,$this,param);

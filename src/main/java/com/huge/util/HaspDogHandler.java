@@ -67,7 +67,7 @@ public class HaspDogHandler {
 		else {
 
 			String dogType = System.getProperty("dogType");
-			//dogType = "dummyDog";
+			dogType = "dummyDog";
 
 			try {
 				if (dogType != null && dogType.equalsIgnoreCase("dummyDog")) {

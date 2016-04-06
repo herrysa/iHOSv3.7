@@ -7,7 +7,6 @@
 	content="<fmt:message key='searchUrlList.heading'/>" />
 <meta name="menu" content="SearchUrlMenu" />
 <%-- <script type="text/javascript" src="${ctx}/scripts/jqgrid/js/jquery.jqGrid.src.js"></script> --%>
-<script type="text/javascript"	src="${ctx}/scripts/jqgrid/js/jquery.jqGrid.groupHeader-0.2.js"></script>
 <%-- <script type="text/javascript"	src="${ctx}/scripts/formater/format.20110630-1100.min.js"></script> --%>
 <script type="text/javascript">
 	//var editQueryRowCount=0;
@@ -676,20 +675,22 @@
 		jQuery("#${random}_${searchName}_gridTable").jqGrid('setFrozenColumns');
 		
 		//jQuery( "button" ).button();
-		jQuery("#${random}_${searchName}_gridTable").jqGrid('setComplexGroupHeaders',{
-			 useColSpanStyle: true, 
-			  groupHeaders:[
+		jQuery("#${random}_${searchName}_gridTable").jqGrid('setComplexHeaders',{
+			complexHeaders:{
+			defaultStyle:true,
+			twoLevel:[
 				<c:forEach items="${secondHeaders}" var="sh" varStatus="stat">
 				
 				{startColumnName: '${sh.startColumnName}', numberOfColumns: ${sh.numberOfColumns}, titleText: '${sh.headerTitleText}'} <c:if test="${!stat.last}">,</c:if>  
 				</c:forEach>
 			  ],
-			  complexGroupHeaders:[//三级表头，和二级表头用法一样
+			  threeLevel:[//三级表头，和二级表头用法一样
 			                       <c:forEach items="${thirdHeaders}" var="sh" varStatus="stat">
 			       				{startColumnName: '${sh.startColumnName}', numberOfColumns: ${sh.numberOfColumns}, titleText: '${sh.headerTitleText}'}<c:if test="${!stat.last}">,</c:if>
 			       				</c:forEach>
 			  ]
-        });
+        }
+		});
 		
 		var htableHeight = jQuery(".ui-jqgrid-htable","#${random}_${searchName}_gridTable_div").height();
 		jQuery(".frozen-div","#${random}_${searchName}_gridTable_div").height(htableHeight);

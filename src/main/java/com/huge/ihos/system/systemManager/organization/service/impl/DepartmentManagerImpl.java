@@ -228,7 +228,7 @@ public class DepartmentManagerImpl extends GenericManagerImpl<Department, String
 			String[] deptIdArr = deptIds.split(",");
 			criteria.add(Restrictions.in("departmentId", deptIdArr));
 		}
-		List<Department> deptTemps = criteria.list();
+		/*List<Department> deptTemps = criteria.list();
 		if(deptTemps != null && !deptTemps.isEmpty()) {
 			for(Department deptTemp : deptTemps) {
 				if(deptTemp.getLeaf()) {
@@ -242,8 +242,8 @@ public class DepartmentManagerImpl extends GenericManagerImpl<Department, String
 					}
 				}
 			}
-		}
-		return departments;
+		}*/
+		return criteria.list();
 	}
 	
 	@Override
