@@ -675,22 +675,38 @@
 		jQuery("#${random}_${searchName}_gridTable").jqGrid('setFrozenColumns');
 		
 		//jQuery( "button" ).button();
-		jQuery("#${random}_${searchName}_gridTable").jqGrid('setComplexHeaders',{
-			complexHeaders:{
-			defaultStyle:true,
-			twoLevel:[
-				<c:forEach items="${secondHeaders}" var="sh" varStatus="stat">
+		<c:choose>
+			<c:when test="${headLeve=='3'}">
+				jQuery("#${random}_${searchName}_gridTable").jqGrid('setComplexHeaders',{
+					complexHeaders:{
+					defaultStyle:true,
+					twoLevel:[
+						<c:forEach items="${secondHeaders}" var="sh" varStatus="stat">
+						
+						{startColumnName: '${sh.startColumnName}', numberOfColumns: ${sh.numberOfColumns}, titleText: '${sh.headerTitleText}'} <c:if test="${!stat.last}">,</c:if>  
+						</c:forEach>
+					],
+					threeLevel:[//三级表头，和二级表头用法一样
+						<c:forEach items="${thirdHeaders}" var="sh" varStatus="stat">
+							{startColumnName: '${sh.startColumnName}', numberOfColumns: ${sh.numberOfColumns}, titleText: '${sh.headerTitleText}'}<c:if test="${!stat.last}">,</c:if>
+						</c:forEach>
+					]
+					}
+				});
+			</c:when>
 				
-				{startColumnName: '${sh.startColumnName}', numberOfColumns: ${sh.numberOfColumns}, titleText: '${sh.headerTitleText}'} <c:if test="${!stat.last}">,</c:if>  
-				</c:forEach>
-			  ],
-			  threeLevel:[//三级表头，和二级表头用法一样
-			                       <c:forEach items="${thirdHeaders}" var="sh" varStatus="stat">
-			       				{startColumnName: '${sh.startColumnName}', numberOfColumns: ${sh.numberOfColumns}, titleText: '${sh.headerTitleText}'}<c:if test="${!stat.last}">,</c:if>
-			       				</c:forEach>
-			  ]
-        }
-		});
+			<c:otherwise>
+				jQuery("#${random}_${searchName}_gridTable").jqGrid('setGroupHeaders',{
+						useColSpanStyle :true,
+						groupHeaders :[
+						<c:forEach items="${secondHeaders}" var="sh" varStatus="stat">
+						
+						{startColumnName: '${sh.startColumnName}', numberOfColumns: ${sh.numberOfColumns}, titleText: '${sh.headerTitleText}'} <c:if test="${!stat.last}">,</c:if>  
+						</c:forEach>
+					  ]
+				});
+			</c:otherwise>
+		</c:choose>
 		
 		var htableHeight = jQuery(".ui-jqgrid-htable","#${random}_${searchName}_gridTable_div").height();
 		jQuery(".frozen-div","#${random}_${searchName}_gridTable_div").height(htableHeight);
