@@ -4,6 +4,24 @@
 <head>
 <script>
 	jQuery(document).ready(function() {
+		jQuery("#dowloadBulletinAppendix").click(function(){
+			$.ajax({
+				url: 'checkAppendix?bulletinId=${bulletin.bulletinId }',
+				type: 'post',
+				dataType: 'json',
+				async:false,
+				error: function(data){
+					alertMsg.error("系统错误！");
+				},
+				success: function(data){
+					if(data!=null&&data.statusCode==200){
+						window.location.url = "dowloadAppendix?bulletinId=${bulletin.bulletinId }";
+					}else{
+						formCallBack(data);
+					}
+				}
+			});
+		});
 	});
 	
 </script>
@@ -18,7 +36,7 @@
 		<s:date name="bulletin.createTime" format="yyyy-MM-dd HH:mm:ss" id="bulletin_createTime"/>
 		<s:property value='%{bulletin_createTime}'/> &nbsp;&nbsp;点击次数：${bulletin.openNum}</div>
 		<div id="bulletinConten" style="margin-top:20px"><s:property escapeHtml='false' value='bulletin.content'/></div>
-		<div style="text-align: left;margin-top:20px">附件下载：<a href="dowloadAppendix?bulletinId=${bulletin.bulletinId }" style="color:blue;">${bulletin.fileName }</a></div>
+		<div style="text-align: left;margin-top:20px">附件下载：<a id="dowloadBulletinAppendix" href="javaScript:" style="color:blue;">${bulletin.fileName }</a></div>
 		</div>
 		
 	</div>

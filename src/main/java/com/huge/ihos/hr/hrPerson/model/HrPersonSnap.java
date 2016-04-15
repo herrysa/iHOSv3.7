@@ -116,6 +116,7 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 	private Date birthday; // 出生日期
 	private String educationalLevel; // 学历
 	private String salaryNumber; // 工资号
+	@AProperty(label="身份证号")
 	private String idNumber; // 身份证号
 
 	private Boolean purchaser;// 是否采购员

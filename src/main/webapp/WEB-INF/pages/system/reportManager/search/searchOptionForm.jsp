@@ -153,7 +153,7 @@
 						maxlength="50" />
 					<%-- <s:textfield key="searchOption.tableKey" required="false"
 					maxlength="50" /> --%>
-					<s:select key="searchOption.userTag" headerKey="" headerValue="" list="{'yearMonth','yearMonthDate','checkbox','stringSelect','stringSelectR','sqlSelect','sqlSelectR','dicSelect','deptTreeS','deptTreeM','deptFormulaSelect','orgFormulaSelect','personTreeS','personTreeM','costitemTreeS','costitemTreeM','treeSelectS','treeSelectM'}"></s:select>
+					<s:select key="searchOption.userTag" headerKey="" headerValue="" list="{'yearMonth','yearMonthDate','checkbox','stringSelect','stringSelectR','sqlSelect','sqlSelectR','dicSelect','deptTreeS','deptTreeM','deptFormulaSelect','orgFormulaSelect','personTreeS','personTreeM','costitemTreeS','costitemTreeM','treeSelectS','treeSelectM','autocomplete'}"></s:select>
 					</div>
 					<div class="unit">
 						<s:textfield key="searchOption.formTitle"></s:textfield>

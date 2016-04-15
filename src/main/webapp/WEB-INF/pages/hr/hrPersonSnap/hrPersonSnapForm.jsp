@@ -285,7 +285,15 @@
 		}
 	}
 	function calPersonAge(obj){
+		var name = obj.name;
 		var birthday = obj.value;
+		/* if(name=='hrPersonSnap.birthday'){
+			var idNumber = jQuery("input[name='hrPersonSnap.idNumber']").val();
+			var idBirthday = idNumber.substring(6,10)+"-"+idNumber.substring(10,12)+"-"+idNumber.substring(12,14);
+			if(birthday!=idBirthday){
+				alertMsg.error(idBirthday);
+			}
+		} */
 		if(birthday){
 			var birthdate = new Date(birthday);
 			//var age = birthdate.DateDiff('y',new Date());
@@ -485,7 +493,7 @@
 									 </span>	
 								</div>
 								<div class="unit">
-									<s:textfield key="hrPersonSnap.idNumber" name="hrPersonSnap.idNumber" cssClass="idcard" maxlength="20"/>
+									<s:textfield key="hrPersonSnap.idNumber" name="hrPersonSnap.idNumber" cssClass="idcard" maxlength="20" />
 									<label><s:text name='hrPersonSnap.educationalLevel' />:</label>
 									<span class="formspan" style="float: left; width: 140px">
 									  	<s:select  key="hrPersonSnap.educationalLevel" cssClass="input-small" maxlength="20"  

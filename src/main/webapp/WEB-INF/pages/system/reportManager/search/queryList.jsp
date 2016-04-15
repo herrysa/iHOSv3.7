@@ -11,49 +11,11 @@
 <script type="text/javascript">
 	//var editQueryRowCount=0;
 	//var editDataId;
-	var timestamp${searchName}${random} = "";//getTimestamp(new Date());
-	var jzStatus${searchName}${random} = "${jzStatusStr}";
-	if(jzStatus${searchName}${random}){
-		jzStatus${searchName}${random} = jzStatus${searchName}${random}.replaceAll("&#034;","'");
-		jzStatus${searchName}${random} = eval("(" +jzStatus${searchName}${random}+ ")");
-	}
-	function fullGridEdit(gridId){
-			try{
-			var ids = jQuery(gridId).jqGrid('getDataIDs');
-		for(var i=0;i < ids.length;i++){
-			var cl = ids[i];
-			jQuery(gridId).editRow(cl);
-		}	
-			}catch(err){
-				alert(err);
-			}
-	}
-	
-	function restoreRowGrid(gridId){
-			try{
-				var ajaxbg = $("#background,#progressBar");
-				$(document).ajaxStart(function(){
-					ajaxbg.hide();
-				}).ajaxStop(function(){
-					ajaxbg.hide();
-				});
-				
-				
-				var currentPage = jQuery(gridId).jqGrid('getGridParam', 'page');
-				
-				jQuery(gridId).trigger('reloadGrid',
-					[ {
-							page : currentPage
-						} ]);
-				$(document).ajaxStart(function(){
-					ajaxbg.show();
-				}).ajaxStop(function(){
-					ajaxbg.hide();
-				});
-				//editQueryRowCount=0;
-			}catch(err){
-				alert(err);
-			}
+	var timestamp${random} = "";//getTimestamp(new Date());
+	var jzStatus${random} = "${jzStatusStr}";
+	if(jzStatus${random}){
+		jzStatus${random} = jzStatus${random}.replaceAll("&#034;","'");
+		jzStatus${random} = eval("(" +jzStatus${random}+ ")");
 	}
 	
 	
@@ -79,87 +41,6 @@
 		} 
 	}
 	
-	
-	
-	function saveRowGrid(random,searchName){
-		try{
-			var gridId = "#"+random+"_"+searchName+"_gridTable"
-			var saveUrl = "pub?searchName="+searchName+"&actionName=saveRow";
-			var grid=jQuery(gridId);
-			var entityArray="";
-			var errorMsg;
-			var editDataId = grid.jqGrid('getGridParam','selrow');
-		/* if(!editDataId){
-			editDataId = "new_row";
-		} */
-			if(editDataId=="new_row"){
-				saveUrl+="&editType=add";
-				var editUrl = grid.jqGrid('getGridParam', 'editurl');
-				 var  saveparameters = {
-								    "url" : 'clientArray',
-								     "aftersavefunc" : function(rowid,resp,tmp) {
-								                          jQuery.each(tmp, function(name, value) {
-								                        	  if(name!="oper")
-								                        	  entityArray = entityArray + name+":"+value+"|";
-								                        	  //alert(name);
-								                        	}); 
-								                          entityArray+=";";
-								                         
-								                      }
-								}; 
-				var returnRes =grid.saveRow('new_row', saveparameters );
-				//alert(entityArray);
-				//editRowCount=0;
-				//editDataId="";
-				errorMsg="数据类型错误！";
-			}else{
-				var ids = grid.jqGrid('getDataIDs');
-				for(var i=0;i < ids.length;i++){
-					var cl = ids[i];
-					if($($(gridId).jqGrid("getInd",cl,true)).attr("editable") === "1") {
-					 
-					var  saveparameters = {
-							    "url" : 'clientArray',
-							     "aftersavefunc" : function(rowid,resp,tmp) {
-							                          jQuery.each(tmp, function(name, value) {
-							                        	  if(name!="oper")
-							                        	  entityArray = entityArray + name+":"+value+"|";
-							                        	//console.log(entityArray);
-							                        	}); 
-							                          entityArray+=";";
-							                         
-							                      }
-							};
-			
-					 var returnRes =$(gridId).saveRow(cl, saveparameters );
-					if(returnRes){
-					continue;
-					}
-					else{
-						break;
-					}
-					}
-				}	
-				errorMsg="编辑保存失败,有可能是由于编辑内容过多,请尝试每页条数在100以内！！！";
-		}
-			  jQuery.ajax({
-				dataType : 'json',
-				url:saveUrl,
-				data:'allParam='+entityArray,
-			    type: 'POST',
-			    async:'false',
-			    error: function(data){
-			    	//alert(data);
-			    	alertMsg.confirm(errorMsg);
-			    },success: function(data){
-			    	//editQueryRowCount=0;
-			    	jQuery(gridId).trigger("reloadGrid");
-			    }
-			}); 
-		}catch(err){
-			alert(err);
-		}
-	}
 	function checkGridsave(result) {
 		if (result.responseText=="") {alertMsg.error("保存失败!"); return false;}
 		return true;
@@ -889,6 +770,134 @@
 			   </c:otherwise>
 			</c:choose>
 		});
+		
+		jQuery("#${random}_${searchName}_fullGridEdit").click(function(){
+			try{
+				var scrollTop = jQuery("#${random}_${searchName}_gridTable_div").find(".ui-jqgrid-bdiv").scrollTop();
+				var ids = jQuery("#${random}_${searchName}_gridTable").jqGrid('getDataIDs');
+				for(var i=0;i < ids.length;i++){
+					var cl = ids[i];
+					jQuery("#${random}_${searchName}_gridTable").editRow(cl);
+				}	
+				jQuery("#${random}_${searchName}_gridTable_div").find(".ui-jqgrid-bdiv").scrollTop(scrollTop)
+			}catch(err){
+				alert(err);
+			}
+		});
+		jQuery("#${random}_${searchName}_restoreRowGrid").click(function(){
+				try{
+					var ajaxbg = $("#background,#progressBar");
+					$(document).ajaxStart(function(){
+						ajaxbg.hide();
+					}).ajaxStop(function(){
+						ajaxbg.hide();
+					});
+					
+					
+					var currentPage = jQuery("#${random}_${searchName}_gridTable").jqGrid('getGridParam', 'page');
+					
+					jQuery("#${random}_${searchName}_gridTable").trigger('reloadGrid',
+						[ {
+								page : currentPage
+							} ]);
+					$(document).ajaxStart(function(){
+						ajaxbg.show();
+					}).ajaxStop(function(){
+						ajaxbg.hide();
+					});
+					//editQueryRowCount=0;
+				}catch(err){
+					alert(err);
+				}
+		});
+		jQuery("#${random}_${searchName}_saveRowGrid").click(function(){
+			var random = "${random}",searchName = "${searchName}";
+				try{
+					var gridId = "#"+random+"_"+searchName+"_gridTable"
+					var scrollTop = jQuery(gridId+"_div").find(".ui-jqgrid-bdiv").scrollTop();
+					var saveUrl = "pub?searchName="+searchName+"&actionName=saveRow";
+					var grid=jQuery(gridId);
+					var entityArray="";
+					var errorMsg;
+					var editDataId = grid.jqGrid('getGridParam','selrow');
+				/* if(!editDataId){
+					editDataId = "new_row";
+				} */
+					if(editDataId=="new_row"){
+						saveUrl+="&editType=add";
+						var editUrl = grid.jqGrid('getGridParam', 'editurl');
+						 var  saveparameters = {
+										    "url" : 'clientArray',
+										     "aftersavefunc" : function(rowid,resp,tmp) {
+										                          jQuery.each(tmp, function(name, value) {
+										                        	  if(name!="oper")
+										                        	  entityArray = entityArray + name+":"+value+"|";
+										                        	  //alert(name);
+										                        	}); 
+										                          entityArray+=";";
+										                         
+										                      }
+										}; 
+						var returnRes =grid.saveRow('new_row', saveparameters );
+						//alert(entityArray);
+						//editRowCount=0;
+						//editDataId="";
+						errorMsg="数据类型错误！";
+					}else{
+						var ids = grid.jqGrid('getDataIDs');
+						for(var i=0;i < ids.length;i++){
+							var cl = ids[i];
+							if($($(gridId).jqGrid("getInd",cl,true)).attr("editable") === "1") {
+							 
+							var  saveparameters = {
+									    "url" : 'clientArray',
+									     "aftersavefunc" : function(rowid,resp,tmp) {
+									                          jQuery.each(tmp, function(name, value) {
+									                        	  if(name!="oper")
+									                        	  entityArray = entityArray + name+":"+value+"|";
+									                        	//console.log(entityArray);
+									                        	}); 
+									                          entityArray+=";";
+									                         
+									                      }
+									};
+					
+							 var returnRes =$(gridId).saveRow(cl, saveparameters );
+							if(returnRes){
+							continue;
+							}
+							else{
+								break;
+							}
+							}
+						}	
+						errorMsg="编辑保存失败,有可能是由于编辑内容过多,请尝试每页条数在100以内！！！";
+				}
+					  jQuery.ajax({
+						dataType : 'json',
+						url:saveUrl,
+						data:'allParam='+entityArray,
+					    type: 'POST',
+					    async:'false',
+					    error: function(data){
+					    	//alert(data);
+					    	alertMsg.confirm(errorMsg);
+					    },success: function(data){
+					    	//editQueryRowCount=0;
+					    	jQuery(gridId).trigger("reloadGrid");
+					    	setTimeout(function(){
+					    		if(editDataId){
+						    		jQuery(gridId).jqGrid('setSelection',editDataId);
+					    			jQuery(gridId+"_div").find(".ui-jqgrid-bdiv").scrollTop(scrollTop);
+						    	}
+					    	},500);
+					    	
+					    }
+					}); 
+				}catch(err){
+					alert(err);
+				}
+		});
 	});
 	
 	function Merger(gridName, CellName) {
@@ -1191,7 +1200,7 @@
 	}
  	
  	function addDataByForm(colNum,width,height,title){
- 		var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+ 		var jzSystem = jzStatus${random}['addDataByForm'];
 		if(jzSystem){
 			alertMsg.error(jzSystem+"已结账！");
 			return ;
@@ -1204,7 +1213,7 @@
 		$.pdialog.open(url, 'popsearch', title, {mask:false,width:width,height:height});
 	}
 	function editDataByForm(colNum,width,height,title){
-		var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		var jzSystem = jzStatus${random}['editDataByForm'];
 		if(jzSystem){
 			alertMsg.error(jzSystem+"已结账！");
 			return ;
@@ -1261,7 +1270,7 @@
 		
 	}
     function confirmDelete(){
-    	var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+    	var jzSystem = jzStatus${random}['confirmDelete'];
 		if(jzSystem){
 			alertMsg.error(jzSystem+"已结账！");
 			return ;
@@ -1300,7 +1309,7 @@
 	}
     
     function selectConfirmProcess(taskName,args,msg,returnSearch,waittingMsg,callback){
-    	var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+    	var jzSystem = jzStatus${random}['selectConfirmProcess'];
 		if(jzSystem){
 			alertMsg.error(jzSystem+"已结账！");
 			return ;
@@ -1353,7 +1362,7 @@
 					searchItemValue = searchItemValue<c:forEach items="${searchItems}" var="item">+"|${item.htmlField}="+${item.htmlField}</c:forEach>;
 				</c:if>
 				searchItemValue = "&itemValue="+searchItemValue;
-				var url = "${ctx}/pub?searchName=${searchName}&id="+sid+"&actionName=process"+searchItemValue+"&taskName="+taskName+"&snapCode="+timestamp${searchName}${random}+args+"&callback="+callback;
+				var url = "${ctx}/pub?searchName=${searchName}&id="+sid+"&actionName=process"+searchItemValue+"&taskName="+taskName+"&snapCode="+timestamp${random}+args+"&callback="+callback;
 				var executCallback = function(){
 					returnSearchFun(returnSearch);
 				};
@@ -1382,7 +1391,7 @@
 		}
 	}
     function noSelectConfirmProcess(taskName,args,msg,returnSearch,waittingMsg,callback){
-    	var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+    	var jzSystem = jzStatus${random}['noSelectConfirmProcess'];
 		if(jzSystem){
 			alertMsg.error(jzSystem+"已结账！");
 			return ;
@@ -1424,7 +1433,7 @@
 		</c:if>
 		searchItemValue = "&itemValue="+searchItemValue;
         //var sid = jQuery("#${random}_${searchName}_gridTable").jqGrid('getGridParam','selarrrow');
-        var url = "${ctx}/pub?searchName=${searchName}&actionName=process"+searchItemValue+"&taskName="+taskName+"&snapCode="+timestamp${searchName}${random}+args+"&callback="+callback;
+        var url = "${ctx}/pub?searchName=${searchName}&actionName=process"+searchItemValue+"&taskName="+taskName+"&snapCode="+timestamp${random}+args+"&callback="+callback;
 		var executCallback = function(){
 					returnSearchFun(returnSearch);
 				};
@@ -1453,7 +1462,7 @@
 	}
     
 function conditionConfirmProcess(taskName,args,businessTypeCode,msg,returnSearch,waittingMsg,callback){
-		var jzSystem = jzStatus${searchName}${random}['conditionConfirmProcess'];
+		var jzSystem = jzStatus${random}['conditionConfirmProcess'];
 		if(jzSystem){
 			alertMsg.error(jzSystem+"已结账！");
 			return ;
@@ -1496,7 +1505,7 @@ function conditionConfirmProcess(taskName,args,businessTypeCode,msg,returnSearch
 		</c:if>
 		searchItemValue = "&itemValue="+searchItemValue+searchItemValueUrl;
         //var sid = jQuery("#${random}_${searchName}_gridTable").jqGrid('getGridParam','selarrrow');
-        var url = "${ctx}/pub?searchName=${searchName}&actionName=processByCondition"+searchItemValue+"&taskName="+taskName+"&businessTypeCode="+businessTypeCode+"&snapCode="+timestamp${searchName}${random}+args+"&callback="+callback;
+        var url = "${ctx}/pub?searchName=${searchName}&actionName=processByCondition"+searchItemValue+"&taskName="+taskName+"&businessTypeCode="+businessTypeCode+"&snapCode="+timestamp${random}+args+"&callback="+callback;
 		var executCallback = function(){
 					returnSearchFun(returnSearch);
 				};
@@ -1947,6 +1956,69 @@ function conditionConfirmProcess(taskName,args,businessTypeCode,msg,returnSearch
 													}
 													</script>
 												</c:when>
+												<c:when test="${item.userTag=='autocomplete'}">
+													<input id="${random}_${searchName}_${item.htmlField}" type='hidden' value="${item.initValueString}"/>
+													<input id="${random}_${searchName}_${item.htmlField}_name" <c:if test="${item.readOnly==true}">readOnly</c:if> class="defaultValueStyle textInput" <c:if test="${item.required==true}">requiredd='true'</c:if> size="${item.length}" value='拼音/汉字/编码' onfocus="clearInput(this,jQuery('#chargeTypeIdC3'))" onblur="setDefaultValue(this,jQuery('#chargeTypeIdC3'))" onkeydown="setTextColor(this)"/>
+												<script>
+													jQuery("#${random}_${searchName}_${item.htmlField}_name").autocomplete("autocompleteBySql",
+															{
+																width : 300,
+																multiple : false,
+																autoFill : false,
+																matchContains : true,
+																matchCase : true,
+																dataType : 'json',
+																parse : function(test) {
+																	var data = test.result;
+																	if (data == null || data == "") {
+																		var rows = [];
+																		rows[0] = {
+																			data : "没有结果",
+																			value : "",
+																			result : ""
+																		};
+																		return rows;
+																	} else {
+																		var rows = [];
+																		for ( var i = 0; i < data.length; i++) {
+																			rows[rows.length] = {
+																				data : {
+																					showValue : data[i].showValue,
+																					id : data[i].id,
+																					name : data[i].name
+																				},
+																				value : data[i].id,
+																				result : data[i].name
+																			};
+																		}
+																		return rows;
+																	}
+																},
+																extraParams : {
+																	sql : "${item.param2}"
+																},
+																formatItem : function(row) {
+																	if(typeof(row)=='string'){
+																		return row
+																	}else{
+																		return row.showValue;
+																	}
+																	//return dropId(row);
+																},
+																formatResult : function(row) {
+																	return row.showValue;
+																	//return dropId(row);
+																}
+															});
+													jQuery("#${random}_${searchName}_${item.htmlField}_name").result(function(event, row, formatted) {
+														if (row == "没有结果") {
+															return;
+														}
+														jQuery("#${random}_${searchName}_${item.htmlField}").attr("value", row.id);
+													});
+												</script>
+		
+												</c:when>
 												<c:when test="${item.userTag=='hidden'}">
 													<input id="${random}_${searchName}_${item.htmlField}"  type="hidden" value="${item.initValueString}"/>
 												</c:when>
@@ -2034,9 +2106,9 @@ function conditionConfirmProcess(taskName,args,businessTypeCode,msg,returnSearch
 							</c:if>
 						</c:forEach>
 						<c:if test="${editOptionsNum>0}">
-						<li><a  class="edit" href="javaScript:fullGridEdit('#${random}_${searchName}_gridTable')"><span>编辑</span></a></li>
-						<li><a  class="canceleditbutton" href="javaScript:restoreRowGrid('#${random}_${searchName}_gridTable')"><span>取消编辑</span></a></li>
-						<li><a  class="savebutton" href="javaScript:saveRowGrid('${random}','${searchName}')"><span>保存</span></a></li>
+						<li><a id="${random}_${searchName}_fullGridEdit" class="edit" href="javaScript:"><span>编辑</span></a></li>
+						<li><a id="${random}_${searchName}_restoreRowGrid" class="canceleditbutton" href="javaScript:"><span>取消编辑</span></a></li>
+						<li><a id="${random}_${searchName}_saveRowGrid" class="savebutton" href="javaScript:"><span>保存</span></a></li>
 						</c:if>
 						</ul>
 					</div>

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,6 +80,7 @@ import com.huge.util.ExcelUtil;
 import com.huge.util.OptFile;
 import com.huge.util.OtherUtil;
 import com.huge.util.annotation.AProperty;
+import com.huge.util.javabean.JavaBeanUtil;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -1045,6 +1047,8 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 		//Map<String, HrPersonSnap> importHrPersonOldData = (Map<String, HrPersonSnap>)this.getRequest().getSession().getAttribute("importHrPersonOldData"+this.getRandom());
 		Map<String, Map<String, String>> importHrPersonOldData = (Map<String, Map<String, String>>)this.getRequest().getSession().getAttribute("importHrPersonOldData"+this.getRandom());
 		List<HrPersonSnap> personList = new ArrayList<HrPersonSnap>();
+		List<String> insertSqlList = new ArrayList<String>();
+		List<HrOperLog> logList = new ArrayList<HrOperLog>();
 		Person operPerson = this.getSessionUser().getPerson();
 		Date operTime = new Date();
 		for(int i=0;i<dataList.size();i++){
@@ -1096,7 +1100,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 					}*/
 				}
 				cnCode = hrPersonSnapManager.pyCode(name);
-				col += "snapId";
+				col += "cnCode)";
 				value += "'"+cnCode+"')";
 				/*String deptId = hrPersonSnapTemp.getDeptId();
 				String orgCode = hrPersonSnapTemp.getOrgCode();
@@ -1114,27 +1118,69 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 				hrOperLog.setOperPerson(operPerson);
 				hrOperLog.setOperTime(operTime);
 				
-				hrOperLogManager.save(hrOperLog);
+				logList.add(hrOperLog);
 				
 				//personList.add(hrPersonSnapTemp);
-				col = OtherUtil.subStrEnd(col, ",")+")";
-				value = OtherUtil.subStrEnd(value, ",")+")";
+				//col = OtherUtil.subStrEnd(col, ",")+")";
+				//value = OtherUtil.subStrEnd(value, ",")+")";
 				insertSql = "insert into hr_person_snap "+col+" values "+value;
+				insertSqlList.add(insertSql);
 			}else{
 				boolean changed = false;
-				personId = oldData.getPersonId();
+				//personId = oldData.getPersonId();
+				Map<String, String> colValueMap = new HashMap<String, String>();
+				orgCode = oldData.get("orgCode");
+				personId = oldData.get("personId");
 				snapId = personId+"_"+timeStamp;
 				//col += "snapId,personId,snapCode,";
-			//	value += "'"+snapId+"','"+personId+"','"+timeStamp+"',";
-				HrPersonSnap hrPersonSnapTemp = oldData.clone();
-				hrPersonSnapTemp.setSnapId(snapId);
-				hrPersonSnapTemp.setSnapCode(timeStamp);
-				hrPersonSnapTemp.setPersonId(personId);
-				Set<Entry<String, String>> dataSet = dataMap.entrySet();
+				//value += "'"+snapId+"','"+personId+"','"+timeStamp+"',";
+				//HrPersonSnap hrPersonSnapTemp = oldData.clone();
+				//hrPersonSnapTemp.setSnapId(snapId);
+				///hrPersonSnapTemp.setSnapCode(timeStamp);
+				//hrPersonSnapTemp.setPersonId(personId);
+				Set<Entry<String, String>> dataSet = oldData.entrySet();
 				for(Entry<String, String> dataEntry : dataSet){
 					String dataKey = dataEntry.getKey();
 					String dataValue = dataEntry.getValue();
-					try {
+					String newValue = dataMap.get(dataKey);
+					if(newValue!=null&&!newValue.equals(dataValue)){
+						//col += dataKey+",";
+						String v = "";
+						if("&kong&".equals(newValue)){
+							newValue = null;
+							v += "null";
+						}else{
+							v += "'"+newValue+"'";
+						}
+						colValueMap.put(dataKey, v);
+						if("name".equals(dataKey)){
+							name = newValue;
+						}
+						changed = true;
+						HrOperLog hrOperLog = new HrOperLog();
+						hrOperLog.setOperTable("hr_person_snap");
+						hrOperLog.setRecordCode(snapId);
+						hrOperLog.setOrgCode(orgCode);
+						hrOperLog.setOperType("修改");
+						hrOperLog.setOperPerson(operPerson);
+						hrOperLog.setOperTime(operTime);
+						
+						hrOperLog.setColumnName(dataKey);
+						hrOperLog.setOldValue(""+dataValue);
+						hrOperLog.setNewValue(""+newValue);
+						
+						logList.add(hrOperLog);
+					}else{
+						//col += dataKey+",";
+						String v = "";
+						if("&kong&".equals(dataValue)){
+							v += "null";
+						}else{
+							v += "'"+dataValue+"'";
+						}
+						colValueMap.put(dataKey, v);
+					}
+					/*try {
 						Field field = hrPersonSnapTemp.getClass().getDeclaredField(dataKey);
 						field.setAccessible(true);
 						Object oldValue = field.get(hrPersonSnapTemp);
@@ -1175,15 +1221,36 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 					} catch (IllegalAccessException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}*/
 				}
 				if(changed){
-					personList.add(hrPersonSnapTemp);
+					colValueMap.put("snapId", "'"+snapId+"'");
+					colValueMap.put("personId", "'"+personId+"'");
+					colValueMap.put("snapCode", "'"+timeStamp+"'");
+					if(!"".equals(name)){
+						cnCode = hrPersonSnapManager.pyCode(name);
+						colValueMap.put("cnCode", "'"+cnCode+"'");
+					}
+					Set<Entry<String, String>> colValueSet = colValueMap.entrySet();
+					for(Entry<String, String> colValue : colValueSet){
+						String c = colValue.getKey();
+						String v = colValue.getValue();
+						col += c+",";
+						value += v+",";
+					}
+					col = OtherUtil.subStrEnd(col, ",")+")";
+					value = OtherUtil.subStrEnd(value, ",")+")";
+					
+					insertSql = "insert into hr_person_snap "+col+" values "+value;
+					insertSqlList.add(insertSql);
+					//personList.add(hrPersonSnapTemp);
 				}
 			}
-			//insertSqlList.add(insertSql);
+			
 		}
-		hrPersonSnapManager.saveAll(personList);
+		//hrPersonSnapManager.saveAll(personList);
+		hrPersonSnapManager.executeSqlList(insertSqlList);
+		hrOperLogManager.saveAll(logList);
 		importResult="导入成功";
 		return ajaxForward( true,importResult , true );
 	}
@@ -1266,23 +1333,46 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 	
 	private Map<String, String> changePersonToMap(HrPersonSnap hrPersonSnap){
 		Map<String, String> personMap = new HashMap<String, String>();
-		Field[] fileds = hrPersonSnap.getClass().getFields();
-		for(Field field : fileds){
-			try {
-				Column column = field.getAnnotation(Column.class);
+		Map<String, String> sqlNameMap = new HashMap<String, String>();
+		Field[] fileds = hrPersonSnap.getClass().getDeclaredFields();
+		Method[] methods = hrPersonSnap.getClass().getMethods();
+		for(Method method : methods){
+			String name = method.getName();
+			if(name.startsWith("get")){
+				Column column = method.getAnnotation(Column.class);
 				String sqlName = "";
 				if(column!=null){
 					sqlName = column.name();
+					String fieldName = name.substring(3);
+					fieldName = fieldName.substring(0, 1).toLowerCase()+fieldName.substring(1);
+					sqlNameMap.put(fieldName, sqlName);
 				}
+			}
+		}
+		
+		for(Field field : fileds){
+			try {
+				String sqlName = "";
+				sqlName = sqlNameMap.get(field.getName());
+				if(sqlName==null){
+					continue;
+				}
+				field.setAccessible(true);
 				Object value = field.get(hrPersonSnap);
 				String v = "";
-				if(value instanceof String){
+				if(value==null){
+					v = "&kong&";
+				}else if(value instanceof String || value instanceof Integer){
 					v = value.toString();
 				}else if(value instanceof Date){
 					v = DateUtil.convertDateToString((Date)value);
-				}
-				if(value==null){
-					v = null;
+				}else if(value instanceof Boolean){
+					Boolean vB = (Boolean)value;
+					if(vB==true){
+						v = "1";
+					}else{
+						v = "0";
+					}
 				}
 				if(sqlName!=null&&!"".equals(sqlName)){
 					personMap.put(sqlName, v);
@@ -1357,6 +1447,43 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     		}
     	}
 	}
+	private void checkIdNumber(String idNumberCheck,Map<String,String> errorMap,Map<String,Map<String, String>> oldDataMap,List<Map<String, String>> dataList){
+		idNumberCheck = OtherUtil.subStrEnd(idNumberCheck, ",");
+    	String idNumberHql = "FROM HrPersonSnap p WHERE p.snapId IN (SELECT MAX(p2.snapId) FROM HrPersonSnap p2 GROUP BY p2.personId) AND p.deleted=0 AND p.idNumber IN ("+idNumberCheck+")";
+    	List<HrPersonSnap> hrPersonSnaps = hrPersonSnapManager.getByHql(idNumberHql);
+    	Map<String, HrPersonSnap> personMap = new HashMap<String, HrPersonSnap>();
+    	for(int p=0;p<hrPersonSnaps.size();p++){
+    		personMap.put("'"+hrPersonSnaps.get(p).getIdNumber()+"'", hrPersonSnaps.get(p));
+    	}
+    	String[] idNumberCheckArr = idNumberCheck.split(",");
+    	for(int id=0;id<idNumberCheckArr.length;id++){
+    		String errorMsg = errorMap.get(""+id);
+    		if("'&kong&'".equals(idNumberCheckArr[id])){
+    			if("new".equals(errorMsg)||"edit".equals(errorMsg)){
+    				errorMsg = "";
+    			}
+    			errorMsg += "第"+id+"行数据'身份证号'为空;";
+    			errorMap.put(""+id, errorMsg);
+    		}else{
+    			HrPersonSnap hrPersonSnap = personMap.get(idNumberCheckArr[id]);
+    			if(hrPersonSnap==null){
+    				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
+        				errorMsg = "";
+        			}
+    				errorMsg += "第"+id+"行数据'身份证号'错误;";
+    				errorMap.put(""+id, errorMsg);
+    			}else{
+    				//修改人员
+    				if(errorMsg==null||"".equals(errorMsg)){
+    					errorMsg = "edit";
+    					errorMap.put(""+id, errorMsg);
+    					//oldDataMap.put(""+p,hrPersonSnap);
+    					oldDataMap.put(""+id,changePersonToMap(hrPersonSnap));
+    				}
+    			}
+    		}
+    	}
+	}
 	
 	private void checkDeptName(String deptNameCheck,Map<String,String> errorMap,List<Map<String, String>> dataList){
 		deptNameCheck = OtherUtil.subStrEnd(deptNameCheck, ",");
@@ -1387,7 +1514,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     				errorMap.put(""+d, errorMsg);
     			}else{
     				Map<String, String> data = dataList.get(d);
-    				data.put("deptSnapCode", hrDepartmentSnap.getSnapCode());
+    				data.put("dept_snapCode", hrDepartmentSnap.getSnapCode());
     				data.put("deptId", hrDepartmentSnap.getDeptId());
     			}
     		}
@@ -1423,7 +1550,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
         			errorMap.put(""+p, errorMsg);
     			}else{
     				Map<String, String> data = dataList.get(p);
-    				data.put("personType", personType.getId());
+    				data.put("empType", personType.getId());
     			}
     		}
     	}
@@ -1511,8 +1638,10 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 		Map<String, String> errorMap = new HashMap<String, String>();
 		List<InterLogger> checkLog = new ArrayList<InterLogger>();
 		Map<String, Field> personColMap = new HashMap<String, Field>();
+		Map<String, String> sqlNameMap = new HashMap<String, String>();
 		HrPersonSnap person = new HrPersonSnap();
 		Field[] fileds = person.getClass().getDeclaredFields();
+		Method[] methods = person.getClass().getMethods();
 		for(Field filed : fileds){
 			AProperty aProperty = filed.getAnnotation(AProperty.class);
 			String label = "";
@@ -1521,6 +1650,19 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 				label = aProperty.label();
 				diccode = aProperty.diccode();
 				personColMap.put(label, filed);
+			}
+		}
+		for(Method method : methods){
+			String name = method.getName();
+			if(name.startsWith("get")){
+				Column column = method.getAnnotation(Column.class);
+				String sqlName = "";
+				if(column!=null){
+					sqlName = column.name();
+					String fieldName = name.substring(3);
+					fieldName = fieldName.substring(0, 1).toLowerCase()+fieldName.substring(1);
+					sqlNameMap.put(fieldName, sqlName);
+				}
 			}
 		}
 		
@@ -1547,7 +1689,6 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
                         break;
                     Field col = personColMap.get(excelCellValue.trim());
                     if(col!=null){
-                    	System.out.println(col.getName());
                     	if("orgCode".equals(col.getName())){
                     		orgCodeIndex = i;
                     	}else if("deptId".equals(col.getName())){
@@ -1639,8 +1780,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
             	Field col = columnNameList.get(i);
             	String typeName = col.getType().getName();
             	AProperty aProperty = col.getAnnotation(AProperty.class);
-            	Column column = col.getAnnotation(Column.class);
-            	String sqlName = column.name();
+            	String sqlName = sqlNameMap.get(col.getName());
             	String label = "";
     			String diccode = "";
     			if(aProperty!=null){
@@ -1657,8 +1797,8 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
             		}
             		checkMap.put(col.getName()+"@"+typeNameArr[typeNameArr.length-1]+"@hql",checkValue);
             	}else */
-            		if(!"".equals(diccode)){
-            		String checkValue = checkMap.get(col.getName()+"@"+diccode+"@dic");
+            	if(!"".equals(diccode)){
+            		String checkValue = checkMap.get(label+"@"+diccode+"@dic");
             		if(checkValue==null){
             			checkValue = "'"+cellValue+"',";
             		}else{
@@ -1678,6 +1818,9 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
             postCheck += "'"+post+"',";
             //checkMap.put("personCodeCheck", personCodeCheck);
             //checkMap.put("idNumberCheck", idNumberCheck);
+            if(!dataMap.containsKey("disabled")){
+            	dataMap.put("disabled", "0");
+            }
             dataList.add(dataMap);
         }
         boolean hasAdd = false;
@@ -1743,17 +1886,26 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
         	}*/
         	
         }else if("2".equals(personCodeOrIdNumber)){
-        	checkIdNumber(idNumberCheck,errorMap);
+        	
         	if(orgCodeIndex!=-1){
         		checkorg(orgCheck,errorMap,dataList);
         	}
         	if(personCodeIndex!=-1){
+        		if(orgCodeIndex==-1){
+            		return "检查失败,EXCEL中缺少'单位编码'列！";
+            	}
         		hasAdd = checkPersonCode(personCodeCheck, errorMap,oldDataMap,dataList);
         		if(hasAdd){
         			return "检查失败,'身份证号'为唯一标识的情况下，不允许新增人员！";
         		}
+        		checkIdNumber(idNumberCheck,errorMap);
+        	}else{
+        		checkIdNumber(idNumberCheck,errorMap,oldDataMap,dataList);
         	}
         	if(deptIdIndex!=-1){
+        		if(orgCodeIndex==-1){
+            		return "检查失败,EXCEL中缺少'单位编码'列！";
+            	}
         		checkDeptName(deptIdCheck, errorMap,dataList);
         	}
         	if(personTypeIndex!=-1){
@@ -1776,6 +1928,9 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
         	String errorMsg = errorMap.get(""+i);
         	if("new".equals(errorMsg)||"edit".equals(errorMsg)){
         		continue;
+        	}
+        	if(errorMsg==null){
+        		errorMsg = "";
         	}
         	hasError = true;
         	interLoggerManager.deleteByTaskInterId("ImportHrPerson");

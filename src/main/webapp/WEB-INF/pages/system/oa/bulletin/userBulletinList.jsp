@@ -21,7 +21,7 @@ var userBulletinGrid = jQuery(userBulletinGridIdString);
 		mtype : "GET",
         colModel:[
 {name:'bulletinId',index:'bulletinId',align:'left',label : '<s:text name="bulletin.bulletinId" />',hidden:true,key:true,formatter:'integer'},				
-{name:'subject',index:'subject',align:'left',label : '<s:text name="bulletin.subject" />',hidden:false,width:300},				
+{name:'subject',index:'subject',align:'left',label : '<s:text name="bulletin.subject" />',hidden:false,width:500},				
 {name:'secretLevel',index:'secretLevel',align:'left',label : '<s:text name="bulletin.secretLevel" />',hidden:false,width:80},
 {name:'department',index:'department',align:'left',label : '<s:text name="bulletin.department" />',hidden:false,width:80},
 {name:'createTime',index:'createTime',align:'center',label : '<s:text name="bulletin.createTime" />',hidden:false,formatter:'date',formatoptions:{srcformat: 'Y-m-d H:i:s',newformat:"Y-m-d H:i:s"},width:150},				

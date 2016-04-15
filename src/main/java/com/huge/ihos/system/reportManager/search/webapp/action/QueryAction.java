@@ -827,6 +827,20 @@ public class QueryAction
 							Object v = rs0.get(field);
 							if(v!=null){
 								searchOption.setTableFieldValue(v.toString());
+								if("autocomplete".equals(searchOption.getUserTag())){
+									String param2 = searchOption.getParam2();
+									if(param2!=null&&!param2.equals("")){
+										param2 = param2.replace("%q%", "%"+v.toString()+"%");
+										rs = jtl.queryForList(param2);
+										if(rs!=null&&rs.size()>0){
+											rs0 = rs.get(0);
+											Object name = rs0.get("name");
+											if(name!=null){
+												searchOption.setTableFieldNameValue(name.toString());
+											}
+										}
+									}
+								}
 							}
 						}
 					}

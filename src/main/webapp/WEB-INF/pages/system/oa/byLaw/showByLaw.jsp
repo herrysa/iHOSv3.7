@@ -4,6 +4,24 @@
 <head>
 <script>
 	jQuery(document).ready(function() {
+		jQuery("#dowloadByLawAppendix").click(function(){
+			$.ajax({
+				url: 'byLaw_checkAppendix?byLawId=${byLaw.byLawId }',
+				type: 'post',
+				dataType: 'json',
+				async:false,
+				error: function(data){
+					alertMsg.error("系统错误！");
+				},
+				success: function(data){
+					if(data!=null&&data.statusCode==200){
+						window.location.url = "byLaw_dowloadAppendix?byLawId=${byLaw.byLawId }";
+					}else{
+						formCallBack(data);
+					}
+				}
+			});
+		});
 	});
 	
 </script>
@@ -19,7 +37,7 @@
 		<s:property value='%{byLaw_createTime}'/> 
 		</div> 
 		<div id="byLawConten" style="margin-top:20px"><s:property escapeHtml='false' value='byLaw.body'/></div>
-		<div style="text-align: left;margin-top:20px">附件下载：<a href="byLaw_dowloadAppendix?byLawId=${byLaw.byLawId }" style="color:blue;">${byLaw.fileName }</a></div>
+		<div style="text-align: left;margin-top:20px">附件下载：<a id="dowloadByLawAppendix" href="javaScript:" style="color:blue;">${byLaw.fileName }</a></div>
 		</div>
 		
 	</div>

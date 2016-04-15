@@ -28,8 +28,11 @@
 						<a href="showBulletin?bulletinId=<s:property value='bulletinId'/>" target="dialog" title="公告" width="880" height="600" style="color:blue"><s:property value='subject'/></a>
 						</span>
 						<span style="float:right;margin-right:20px">
-							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss" id="createTimeId"/>
+							<s:date name="createTime" format="yyyy-MM-dd" id="createTimeId"/>
 							<s:property value='%{createTimeId}'/>
+						</span>
+						<span style="float:right;margin-right:20px">
+							<s:property value='department'/>
 						</span>
 						<br/><br/>
 					</s:iterator>
@@ -45,6 +48,13 @@
 						<span style="margin-top:10px">
 						<img alt="" src="${ctx}/styles/themes/rzlt_theme/ihos_images/rightArrow.png">&nbsp;&nbsp;
 						<a href="showByLaw?byLawId=<s:property value='byLawId'/>" target="dialog" width="880" title="规章制度" height="600" style="color:blue"><s:property value='title'/></a>
+						</span>
+						<span style="float:right;margin-right:20px">
+							<s:date name="createTime" format="yyyy-MM-dd" id="createTimeId"/>
+							<s:property value='%{createTimeId}'/>
+						</span>
+						<span style="float:right;margin-right:20px">
+							<s:property value='department'/>
 						</span>
 						<br/><br/>
 					</s:iterator>

@@ -52,7 +52,13 @@
 		
 		<action name="dowloadAppendix" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"			method="dowloadAppendix">
 		</action>
-
+		<action name="checkAppendix" class="com.huge.ihos.system.oa.bulletin.webapp.action.BulletinPagedAction"			method="checkAppendix">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 	</package>
 
 </struts>

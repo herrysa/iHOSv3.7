@@ -237,6 +237,22 @@ public class BulletinPagedAction
         return SUCCESS;
     }
 
+    public String checkAppendix() {
+        try {
+        	bulletin = bulletinManager.get( bulletinId );
+            File file = new File( bulletin.getUrl() + "/" + bulletin.getFileName() );
+            if(file.exists()){
+            	return ajaxForward(true, "", false);
+            }else{
+            	return ajaxForward(false, "文件不存在!", false);
+            }
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+            return ajaxForward(false, "", false);
+        }
+
+    }
     public String dowloadAppendix() {
         bulletin = bulletinManager.get( bulletinId );
         try {

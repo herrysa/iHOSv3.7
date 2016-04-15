@@ -1830,7 +1830,7 @@
 	}
 	
 	/*外部数据导入函数*/
-	function importDataFunc(tableName) {alert();
+	function importDataFunc(tableName) {
 		//打开窗口
 		var winTitle = "外部数据导入";
 		var url = "findAllImportDataDefine?tableName="+tableName+"&navTabId=gzContent_gridtable";

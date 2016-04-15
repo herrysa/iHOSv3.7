@@ -51,6 +51,14 @@
 		
 		<action name="byLaw_dowloadAppendix" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"			method="dowloadAppendix">
 		</action>
+		
+		<action name="byLaw_checkAppendix" class="com.huge.ihos.system.oa.bylaw.webapp.action.ByLawPagedAction"			method="checkAppendix">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 
 	</package>
 

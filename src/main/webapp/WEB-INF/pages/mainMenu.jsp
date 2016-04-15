@@ -640,23 +640,14 @@ border-right-style: solid;
 
 	</div>
 	<div id="footer">
-		<%-- <label style="text-align:left;position: absolute;left:20px;line-height: 20px">当前数据库：</label>
-	Copyright &copy; 2010 <fmt:message key="company.name"/>
-	<label style="position: absolute;right:40px;">操作日期：${currentDate }</label> --%>
+	
 	<ul style="float:left;width:100%">
 			<li style="float:right;width:33%;text-align: right">
 				<label style="margin-right:10px">业务日期：<span id="businessDate"></span></label>
 			</li>
 			
-			<!-- <li style="float:right;width:25%">
-				<label>帐套：<span id="copyName"></span></label>
-			</li>
-			
-			<li style="float:right;width:25%">
-				<label>单位：<span id="orgName"></span></label>
-			</li> -->
 			<li style="float:right;width:33%">
-				<label>Copyright &copy; 2010 <fmt:message key="company.name"/></label>
+				<label>Copyright 2012 北京瑞志龙腾科技有限公司</label>
 			</li>
 			<li style="float:right;width:33%;text-align: left">
 				<label style="margin-left:10px">当前数据库：<span id="dataBaseName"></span></label>
@@ -671,16 +662,7 @@ border-right-style: solid;
 <sj:dialog id="infodialog"
 	buttons="{'OK':function() { jQuery( this ).dialog( 'close' ); }}" autoOpen="false"
 	modal="true" title="%{getText('messageDialog.title')}" />
-	
-	<!-- <div id="rMenu">
-	<ul>
-		<li id="m_add" onclick="addTreeNode();">增加节点</li>
-		<li id="m_del" onclick="removeTreeNode();">删除节点</li>
-		<li id="m_check" onclick="checkTreeNode(true);">Check节点</li>
-		<li id="m_unCheck" onclick="checkTreeNode(false);">unCheck节点</li>
-		<li id="m_reset" onclick="resetTree();">恢复zTree</li>
-	</ul>
-	</div> -->
+
 	<script>
 	function testFunction2(){
 			

@@ -193,6 +193,23 @@ public class ByLawPagedAction
         return SUCCESS;
     }
 
+    public String checkAppendix() {
+        try {
+        	byLaw = byLawManager.get( byLawId );
+        	File file = new File( byLaw.getUrl() + "/" + byLaw.getFileName() );
+            if(file.exists()){
+            	return ajaxForward(true, "", false);
+            }else{
+            	return ajaxForward(false, "文件不存在!", false);
+            }
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+            return ajaxForward(false, "", false);
+        }
+
+    }
+    
     public String dowloadAppendix() {
         byLaw = byLawManager.get( byLawId );
         try {

@@ -73,6 +73,7 @@ jjScoreDecimalPlaces = parseInt(jjScoreDecimalPlaces);
 	  			  		$(this).parent().find("input[name='score']").attr('disabled','true');
 	  			  		$(this).parent().find("input[name='dscore']").attr('disabled','true');
 	  			   }
+	  			 //$(this).parent().find("input[name='dscore']").attr('readOnly','true');
 	  		   });
            }
        	} 

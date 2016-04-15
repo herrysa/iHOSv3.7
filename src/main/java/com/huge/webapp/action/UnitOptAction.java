@@ -3,12 +3,16 @@ package com.huge.webapp.action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +21,7 @@ import javax.sql.DataSource;
 import net.sf.json.JSONObject;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.huge.ihos.excel.ColumnDefine;
@@ -573,6 +578,61 @@ public class UnitOptAction
         else {
         	return ajaxForward( false, "0", false );
         }
+	}
+	
+	
+	List<Map<String, String>> result;
+	public List<Map<String, String>> getResult() {
+		return result;
+	}
+
+	public void setResult(List<Map<String, String>> result) {
+		this.result = result;
+	}
+
+	public String autocomplete(){
+		try {
+			result = new ArrayList<Map<String,String>>();
+			HttpServletRequest request = ServletActionContext.getRequest();
+			String q = request.getParameter( "q" );
+			q = URLDecoder.decode( q, "UTF-8" );
+			String sql = request.getParameter( "sql" );
+			sql = sql.replaceAll("&#039;", "'");
+			sql = sql.replaceAll("%q%", "%"+q+"%");
+			List<Map<String, Object>> resultList = userManager.getBySqlToMap(sql);
+			for(Map<String, Object> row : resultList){
+				String idValue = "",nameValue = "",showValue = "";
+				Set<Entry<String, Object>> colSet = row.entrySet();
+				for(Entry<String, Object> colEntry : colSet){
+					String colname = colEntry.getKey();
+					Object value = colEntry.getValue();
+					String v = "";
+					if(value!=null){
+						v = value.toString();
+					}
+					if(colname.equals("id")){
+						idValue = v;
+					}else if(colname.equals("name")){
+						nameValue = v;
+					}
+					showValue += v+",";
+				}
+				showValue = OtherUtil.subStrEnd(showValue, ",");
+				Map<String, String> rowMap = new HashMap<String, String>();
+				rowMap.put("id", idValue);
+				rowMap.put("name", nameValue);
+				rowMap.put("showValue", showValue);
+				result.add(rowMap);
+			}
+			request.setAttribute("result", result);
+			
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//this.autocompleteList = matetypeManager.searchDictionary( entity, cloumns, q, extra1, extra2 );
+		
+		return SUCCESS;
 	}
     
     public String getEntityName() {

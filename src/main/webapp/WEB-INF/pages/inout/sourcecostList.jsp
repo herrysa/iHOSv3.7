@@ -285,11 +285,13 @@ jQuery(function(){
 		},{selectRecord:'selectRecord',singleSelect:'singleSelect'});
 		//导出本页数据
 		sourcecost_toolButtonBar.addCallBody('01020204',function() {
-			exportToExcel('sourcecost_gridtable','Sourcecost','成本数据','page');
+			//exportToExcel('sourcecost_gridtable','Sourcecost','成本数据','page');
+			exportToExcelByAction('sourcecost_gridtable','Sourcecost','成本数据','page');
 		},{});
 		//导出当前全部数据
 		sourcecost_toolButtonBar.addCallBody('01020205',function() {
-			exportToExcel('sourcecost_gridtable','Sourcecost','成本数据','all');
+			//exportToExcel('sourcecost_gridtable','Sourcecost','成本数据','all');
+			exportToExcelByAction('sourcecost_gridtable','Sourcecost','成本数据','all');
 		},{});
 		//设置表格列
 		var sourcecost_setColShowButton = {id:'01020220',buttonLabel:'设置表格列',className:"settlebutton",show:true,enable:true,
@@ -330,7 +332,57 @@ jQuery(function(){
     	} else {
     		jQuery("#sourcecost_costOrg_label").hide();
     	}
-    	
+    	function exportToExcelByAction(gridId,entityName,title,outPutType){
+    		var url = jQuery("#"+gridId).jqGrid('getGridParam','url');
+    		var formData = jQuery("#"+gridId).jqGrid('getGridParam','formData');
+    		//var param = url.split("?")[1];
+    		//alert(json2str(jQuery("#sourcepayin_gridtable")[0].p.colModel));
+    		//return ;
+    		var colModel = jQuery("#"+gridId).jqGrid('getGridParam','colModel');
+    		var colDefine = new Array();
+    		var colDefineIndex = 0;
+    		for(var mi=0;mi<colModel.length;mi++){
+    			var col = colModel[mi];
+    			if(col.name!="rn"&&col.name!="cb"&&!col.hidden){
+    				var label = col.label?col.label:col.name;
+    				var type = col.formatter?col.formatter:1;
+    				var align = col.align?col.align:"left";
+    				var width = col.width?parseInt(col.width)*20:50*20;
+    				colDefine[colDefineIndex] = {name:col.name,type:type,align:align,width:width,label:label};
+    				colDefineIndex++;
+    			}
+    		}
+    		var colDefineStr = json2str(colDefine);
+    		var page=1,pageSize=20,sortname,sortorder;
+    		page = jQuery("#"+gridId).jqGrid('getGridParam','page');
+    		pageSize = jQuery("#"+gridId).jqGrid('getGridParam','rowNum');
+    		if(outPutType=='all'){
+    			pageSize = 100000;
+    			page = 1;
+    		}
+    		sortname = jQuery("#"+gridId).jqGrid('getGridParam','sortname');
+    		sortorder = jQuery("#"+gridId).jqGrid('getGridParam','sortorder');
+    		var searchParam = "&rows="+pageSize+"&page="+page+"&sidx="+sortname+"&sord="+sortorder;
+    		url += searchParam;
+    		//var u =  'outPutExcel?'+param+"&entityName="+entityName;
+    		$.ajax({
+    			url: url,
+    			type: 'post',
+    			data:{outputExcel:true,title:title,colDefineStr:colDefineStr},
+    			dataType: 'json',
+    			async:false,
+    			error: function(data){
+    				alertMsg.error("系统错误！");
+    			},
+    			success: function(data){
+    				var downLoadFileName = data["userdata"]["excelFullPath"];
+    				var filePathAndName = downLoadFileName.split("@@");
+    				var url = "${ctx}/downLoadExel?filePath="+filePathAndName[0]+"&fileName="+filePathAndName[1];
+    		 		//url=encodeURI(url);
+    		 		location.href=url;
+    			}
+    		}); 
+    	}
     });
     
 </script>

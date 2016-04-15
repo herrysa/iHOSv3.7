@@ -1774,7 +1774,7 @@ function addDetailButtonForGrid(gridId,colShow,colHtml,id){
 		});
 	});
 	}
-function makeUserTag(containerId,userTag,field,initValueString,title,validate,readOnly,required,rules,length,form,random,searchName,param1,param2,type){
+function makeUserTag(containerId,userTag,field,initValueString,title,validate,readOnly,required,rules,length,form,random,searchName,param1,param2,type,tableFieldNameValue){
 	var tagStr = "";
 	if(validate!='true'){
 		validate = "_exclude_";
@@ -2218,6 +2218,74 @@ function makeUserTag(containerId,userTag,field,initValueString,title,validate,re
 			initSelect:initValueString,
 			lazy:lazy,
 			callback : {}
+		});
+	}else if(userTag=='autocomplete'){
+		var nameValue = tableFieldNameValue;
+		if(!nameValue){
+			nameValue = "拼音/汉字/编码";
+		}
+		tagStr = "<input id='"+random+"_"+searchName+"_"+field+"' name='"+field+validate+"' type='hidden' value='"+initValueString+"'/>"
+		+"<input id='"+random+"_"+searchName+"_"+field+"_name'" +readOnly
+		+" class='defaultValueStyle textInput "+required+" "+rules+"' size='"+size+"' value='"+nameValue+"' onfocus=\"clearInput(this,jQuery('#chargeTypeIdC3'))\" onblur=\"setDefaultValue(this,jQuery('#chargeTypeIdC3'))\" onkeydown=\"setTextColor(this)\"/>";
+		jQuery("#"+containerId,"#"+form).append(tagStr);
+		
+		jQuery("#"+random+"_"+searchName+"_"+field+"_name").autocomplete("autocompleteBySql",
+				{
+					width : 300,
+					multiple : false,
+					autoFill : false,
+					matchContains : true,
+					matchCase : true,
+					dataType : 'json',
+					parse : function(test) {
+						var data = test.result;
+						if (data == null || data == "") {
+							var rows = [];
+							rows[0] = {
+								data : "没有结果",
+								value : "",
+								result : ""
+							};
+							return rows;
+						} else {
+							var rows = [];
+							for ( var i = 0; i < data.length; i++) {
+								rows[rows.length] = {
+									data : {
+										showValue : data[i].showValue,
+										id : data[i].id,
+										name : data[i].name
+									},
+									value : data[i].id,
+									result : data[i].name
+								};
+							}
+							return rows;
+						}
+					},
+					extraParams : {
+						sql : param2
+					},
+					formatItem : function(row) {
+						if(typeof(row)=='string'){
+							return row
+						}else{
+							return row.showValue;
+						}
+						//return dropId(row);
+					},
+					formatResult : function(row) {
+						return row.showValue;
+						//return dropId(row);
+					}
+				});
+		jQuery("#"+random+"_"+searchName+"_"+field+"_name").result(function(event, row, formatted) {
+			if (row == "没有结果") {
+				return;
+			}
+			//alert(row.id);
+			jQuery("#"+random+"_"+searchName+"_"+field).attr("value", row.id);
+			//alert(jQuery("#chargeTypeId").attr("value"));
 		});
 	}else{
 		tagStr = "<input type='text' id='"+random+"_"+searchName+"_"+field+"' name='"+field+validate+"' value='"+initValueString+"' "+readOnly

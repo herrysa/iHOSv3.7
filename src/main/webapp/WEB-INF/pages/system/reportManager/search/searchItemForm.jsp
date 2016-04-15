@@ -75,7 +75,7 @@
 				<div class="unit">
 					<%-- <s:textfield key="searchItem.userTag" required="false"
 						maxlength="20" /> --%>
-					<s:select key="searchItem.userTag" headerKey="" headerValue="" list="{'yearMonth','checkbox','stringSelect','stringSelectR','dpSelect','dpSelectR','sqlSelect','sqlSelectR','dicSelect','deptTreeS','deptTreeM','deptFormulaSelect','orgFormulaSelect','personTreeS','personTreeM','costitemTreeS','costitemTreeM','treeSelectS','treeSelectM'}"></s:select>
+					<s:select key="searchItem.userTag" headerKey="" headerValue="" list="{'yearMonth','checkbox','stringSelect','stringSelectR','dpSelect','dpSelectR','sqlSelect','sqlSelectR','dicSelect','deptTreeS','deptTreeM','deptFormulaSelect','orgFormulaSelect','personTreeS','personTreeM','costitemTreeS','costitemTreeM','treeSelectS','treeSelectM','autocomplete'}"></s:select>
 					<%-- <s:radio key="searchItem.searchFlag" required="true"
 		href="%{dicSelectList}" list="dictionaryItemsSelectList"
 		listKey="value" listValue="content" buttonset="false"/> --%>

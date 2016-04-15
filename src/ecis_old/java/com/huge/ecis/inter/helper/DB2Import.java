@@ -9,7 +9,7 @@ import com.huge.ihos.system.reportManager.search.util.SearchUtils;
 public class DB2Import extends AbstractImportService {
 	public DB2Import() {
 		super();
-		this.setDriver("COM.ibm.db2.jdbc.app.DB2Driver");
+		this.setDriver("com.ibm.db2.jcc.DB2Driver");
 	}
 	@Override
 	protected void prepareData(String url, String username, String password,

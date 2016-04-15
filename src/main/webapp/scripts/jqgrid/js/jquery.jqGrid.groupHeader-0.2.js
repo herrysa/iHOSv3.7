@@ -38,15 +38,12 @@
 				.attr("numberOfColumns",ghItem.numberOfColumns);
 			}
 			var newTr = $('<tr role="rowheader" class="ui-jqgrid-labels jqg-four-row-header"></tr>');
-			//var moveThs = {};
-			var moveThs = new Array(),moveThsKey = {};
+			var moveThs = {};
 			var setThStatus = function(columnName,th,status){
-				var thItem = th;
-				var thItemIndex = moveThsKey[columnName];
-				if(!thItemIndex){
-					//moveThs[columnName] = th;
-					moveThs.push(th);
-					moveThsKey[columnName]=moveThs.length-1;
+				var thItem = moveThs[columnName];
+				if(!thItem){
+					moveThs[columnName] = th;
+					thItem = th;
 				}
 				if(thItem.attr("status")!=0 && thItem.attr("status")!=3){
 					thItem.attr("status",status);
@@ -104,11 +101,9 @@
 					}
 				}
 			}
-			
 			for (prop in moveThs) {
 				var item = moveThs[prop];
 				var status = item.attr("status");
-				console.log(prop);
 				if(status==1){
 					var cloneItem = item.clone(true);
 					cloneItem.attr("rowspan",3);

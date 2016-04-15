@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -23,7 +25,9 @@ import com.huge.ihos.system.systemManager.organization.model.Person;
 import com.huge.ihos.system.systemManager.organization.service.BranchManager;
 import com.huge.ihos.system.systemManager.organization.service.OrgManager;
 import com.huge.ihos.system.systemManager.user.model.User;
+import com.huge.util.ExcelUtil;
 import com.huge.util.OtherUtil;
+import com.huge.util.javabean.JavaBeanUtil;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
 import com.huge.webapp.util.PropertyFilter;
@@ -310,6 +314,17 @@ public class SourcecostAction extends CBBaseAction {
 			} else {
 				userData.put("amount", sumAuount.get("amount").toString());
 				this.setUserdata(userData);
+			}
+			if(this.outputExcel){
+				HttpServletRequest req = getRequest();
+				String colDefineStr = req.getParameter("colDefineStr");
+				String title = req.getParameter("title");
+		    	String excelFullPath = req.getRealPath( "//home//temporary//");
+				List<Map<String, String>> dataList = JavaBeanUtil.convertListBean(this.sourcecosts,colDefineStr,"_");
+			    //excelFullPath += this.fileFullPath;
+				excelFullPath = ExcelUtil.outPutActionToExcel(colDefineStr,title,excelFullPath,dataList);
+				this.sourcecosts = null;
+				userData.put("excelFullPath", excelFullPath);
 			}
 
 		} catch (Exception e) {

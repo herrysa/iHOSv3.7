@@ -41,7 +41,7 @@
 					<input type="hidden" id="${random}_${searchName}_${it.index}_${item.htmlField}_param1" value="${param1}"/>
 					<script>
 					var param1 = jQuery("#${random}_${searchName}_${it.index}_${item.htmlField}_param1").val();
-					makeUserTag('${random}_${searchName}_${it.index}','${userTag}','${tableField}','${tableFieldValue}','${title}','true','${readOnly}','${required}','${rule}','${length}','addQueryDataForm','${random}','${searchName}',param1,'${param2}','form');
+					makeUserTag('${random}_${searchName}_${it.index}','${userTag}','${tableField}','${tableFieldValue}','${title}','true','${readOnly}','${required}','${rule}','${length}','addQueryDataForm','${random}','${searchName}',param1,'${param2}','form','${tableFieldNameValue}');
 					</script>
 					</span>
 					<label style="float:none;line-height:15px">${suffix}</label>

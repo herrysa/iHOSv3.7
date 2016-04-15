@@ -6,7 +6,6 @@
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 			var taskInterId = "${param.taskInterId}";
-			alert(taskInterId);
 			jQuery("#${random}importDataDefine_gridtable_log").jqGrid({
 				url : "importDataLogGridList?taskInterId=" + taskInterId,
 				editurl : "",

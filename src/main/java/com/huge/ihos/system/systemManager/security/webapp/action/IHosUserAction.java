@@ -309,17 +309,16 @@ public class IHosUserAction
             }
             
             boolean isNew = editType == 0 ? true : false;
-
+            User oldUser = null;
             if ( editType == 2 ) {
                 user = userManager.get( id );
-            }else if(editType == 1){
-            	user = userManager.get( user.getId() );
             }
 
             if ( !isNew ) {
                 user.setConfirmPassword( user.getPassword() );
             }
             if ( editType != 2 ) {
+            	oldUser = userManager.get( user.getId() );
                 user.getRoles().clear();
                 String[] userRoles = null;
                 if ( userRolesSelected != null && !userRolesSelected.equals( "" ) ) {
@@ -339,10 +338,11 @@ public class IHosUserAction
                 else {
                     user.setPerson( null );
                 }
+                user.setMenus(oldUser.getMenus());
             }
 
             String[] contentArr;
-            if ( content != null && !content.equals( "undefined" ) ) {
+            if ( content != null && !"".equals(content)&&!content.equals( "undefined" ) ) {
                 user.getMenus().clear();
                 contentArr = content.split( "," );
                 for ( int i = 0; i < contentArr.length; i++ ) {

@@ -323,6 +323,7 @@ public class SourcepayinAction extends CBBaseAction {
 
 		} catch (Exception e) {
 			log.error("sourcepayinGridList Error", e);
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}

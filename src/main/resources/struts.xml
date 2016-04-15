@@ -219,6 +219,14 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
         </action>
+        
+        <action name="autocompleteBySql" class="com.huge.webapp.action.UnitOptAction" method="autocomplete">
+			<result type="json">
+				<param name="includeProperties">result.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>	
+		</action>
 
 
 

@@ -75,7 +75,9 @@ public class SearchOption
     
     private String tableFieldValue = "";
     
-    private Boolean readOnly = false;
+    private String tableFieldNameValue = "";
+    
+	private Boolean readOnly = false;
     
     private Boolean required = false;
     
@@ -370,6 +372,15 @@ public class SearchOption
 
 	public void setTableFieldValue(String tableFieldValue) {
 		this.tableFieldValue = tableFieldValue;
+	}
+	
+	@Transient
+    public String getTableFieldNameValue() {
+		return tableFieldNameValue;
+	}
+
+	public void setTableFieldNameValue(String tableFieldNameValue) {
+		this.tableFieldNameValue = tableFieldNameValue;
 	}
 
 	@Column( name = "readOnly" )

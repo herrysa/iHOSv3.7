@@ -30,7 +30,7 @@ var userByLawGrid = jQuery(userByLawGridIdString);
 		mtype : "GET",
         colModel:[
 {name:'byLawId',index:'byLawId',align:'left',label : '<s:text name="byLaw.byLawId" />',hidden:true,key:true,formatter:'integer'},				
-{name:'title',index:'title',align:'left',label : '<s:text name="byLaw.title" />',hidden:false,width:250},				
+{name:'title',index:'title',align:'left',label : '<s:text name="byLaw.title" />',hidden:false,width:500},				
 {name:'createTime',index:'createTime',align:'center',label : '<s:text name="byLaw.createTime" />',hidden:false,formatter:'date',formatoptions:{srcformat: 'Y-m-d H:i:s',newformat:"Y-m-d H:i:s"}},				
 {name:'creator',index:'creator',align:'left',label : '<s:text name="byLaw.creator" />',hidden:false},				
 {name:'department',index:'department',align:'left',label : '<s:text name="byLaw.department" />',hidden:false}				
