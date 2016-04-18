@@ -254,7 +254,7 @@ var jjUpdataGrid = jQuery(jjUpdataGridIdString);
 	},{});
 	//全部确认
 	jjUpdata_toolButtonBar.addCallBody('06030308',function() {
-		executeSp('sp_jj_updataCheck','jjUpdata_gridtable');
+		executeSpU('sp_jj_updataCheck','jjUpdata_gridtable');
 	},{});
 	
 	 /*===================================按钮权限end============================================*/

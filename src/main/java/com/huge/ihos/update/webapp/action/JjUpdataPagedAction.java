@@ -462,6 +462,7 @@ public class JjUpdataPagedAction extends JJBaseAction {
 			}
 //			checkPeriod = periodManager.getCurrentPeriod().getPeriodCode();
 			checkPeriod =  this.getLoginPeriod();
+			personId = UserContextUtil.getLoginUserId();
 			jjUpdataDefColumns = jjUpdataDefColumnManager.getEnabledByOrder();
 		} catch (Exception e) {
 			e.printStackTrace();

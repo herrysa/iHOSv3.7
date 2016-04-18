@@ -318,7 +318,6 @@ public class IHosUserAction
                 user.setConfirmPassword( user.getPassword() );
             }
             if ( editType != 2 ) {
-            	oldUser = userManager.get( user.getId() );
                 user.getRoles().clear();
                 String[] userRoles = null;
                 if ( userRolesSelected != null && !userRolesSelected.equals( "" ) ) {
@@ -338,7 +337,10 @@ public class IHosUserAction
                 else {
                     user.setPerson( null );
                 }
-                user.setMenus(oldUser.getMenus());
+                if(user.getId()!=null&&!"".equals(user.getId())){
+                	oldUser = userManager.get( user.getId() );
+                	user.setMenus(oldUser.getMenus());
+                }
             }
 
             String[] contentArr;

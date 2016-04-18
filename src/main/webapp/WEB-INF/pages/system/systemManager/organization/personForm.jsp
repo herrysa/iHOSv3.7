@@ -55,8 +55,8 @@
 											+ data[i].cnCode + ","
 											+ data[i].name + ":"
 											+ data[i].departmentId,
-										branchCode : data[i].branch.branchCode,
-										branchName : data[i].branch.branchName
+										branchCode : data[i].branch?data[i].branch.branchCode:"",
+										branchName : data[i].branch?data[i].branch.branchName:""
 									};
 								rows[rows.length] = {
 									data : rowData,
