@@ -1712,10 +1712,27 @@
 	},{});
 	var gzContent_setColShowButton = {id:'1001020189',buttonLabel:'关闭查询区',className:"settlebutton",show:true,enable:true,
 			callBody:function(){
-				toggleFilterArea('gzContent','layout','button_1001020189');
+				toggleFilterArea('gzContent','layout','button_1001020199');
 				//alert(jQuery("#gzContent_pageHeader").height());
 			}};
 	gzContent_toolButtonBar.addButton(gzContent_setColShowButton); 
+	var gzContent_setColShowButton2 = {id:'1001020199',buttonLabel:'重新计算',className:"settlebutton",show:true,enable:true,
+			callBody:function(){
+				$.ajax({
+		            url: 'calculate',
+		            type: 'post',
+		            dataType: 'json',
+		            async:false,
+		            error: function(data){
+		            alertMsg.error("系统错误！");
+		            },
+		            success: function(data){
+		                alert(data);
+		            }
+		        });
+				//alert(jQuery("#gzContent_pageHeader").height());
+			}};
+	gzContent_toolButtonBar.addButton(gzContent_setColShowButton2); 
 	/*----------------------------------tooBar end-----------------------------------------------*/
 	/*高级查询*/
 	function gzContentMultiSearch(){

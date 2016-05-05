@@ -839,10 +839,12 @@ var reportPlanDefine = {
 						var reportGridData = {};
 						reportGridData.Record = reportPlanContents;
 						reportPlanDefine.main.SetSource = "ds1 \r\n " + JSON.stringify(reportGridData);
+						console.log(JSON.stringify(reportPlanDefine));
 						insertReportToDiv(random+"_reportPlan_gridtable_container","reportPlan_gridtable_"+random,"Rebar=None; Border=single;Hue=Lilian;isAnimateFocus=false; PagesTabPercent=0; SeperateBar=none","100%");
 					}
 				});
 			}else{
+				console.log(JSON.stringify(reportPlanDefine));
 				insertReportToDiv(random+"_reportPlan_gridtable_container","reportPlan_gridtable_"+random,"Rebar=None; Border=single;Hue=Lilian;isAnimateFocus=false; PagesTabPercent=0; SeperateBar=none","100%");
 			}
 		}

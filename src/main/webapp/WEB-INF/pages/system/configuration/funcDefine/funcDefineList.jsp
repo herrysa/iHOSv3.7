@@ -49,6 +49,7 @@
 				align : 'left',
 				width : '150px',
 				label : '<s:text name="funcDefine.funcBody" />',
+				formatter:stringFormatter,
 				hidden : false
 			}, {
 				name : 'funcDesc',
@@ -127,7 +128,7 @@
 			var url = "editFuncDefine?funcId=" + sid + "&popup=true&navTabId=funcDefine_gridtable";
 			var editTitle=jQuery("#funcDefine_gridtable_editTile").text();
 			url = encodeURI(url);
-			$.pdialog.open(url,"editFuncDefine",editTitle, {mask:true,resizable:false,maxable:false,width : 435,height : 405});
+			$.pdialog.open(url,"editFuncDefine",editTitle, {mask:true,resizable:false,maxable:false,width : 500,height : 450});
 		});
 	});
 </script>

@@ -43,7 +43,7 @@
 		<isHiLightModified>false</isHiLightModified>
 		<isHiLightNewRow>false</isHiLightNewRow>
 		<multiLayerAble>true</multiLayerAble>
-		<rowHeight>19</rowHeight>
+		<rowHeight>22</rowHeight>
 		<headerHeight>24</headerHeight>
 		<headerFontIndex></headerFontIndex>
 		<disableRowFlag>gray</disableRowFlag>
@@ -102,9 +102,12 @@
 	<DSDataFunctionText>none</DSDataFunctionText>
 	<fadeInStep>5</fadeInStep>
 	<fullScreen>TopMost</fullScreen>
-	<DrawInvalidPicture>Text</DrawInvalidPicture>
+	<DrawInvalidPicture>None</DrawInvalidPicture>
 	<OptimizeTD>auto</OptimizeTD>
+	<OptimizeFont>true</OptimizeFont>
 	<ErrorStackSize>50</ErrorStackSize>
+	<MaxPictureSize>300,1000</MaxPictureSize>
+	<compressPicture>90</compressPicture>
 	<convertData>
 		<FileType></FileType>
 		<mask>asDisplay</mask>

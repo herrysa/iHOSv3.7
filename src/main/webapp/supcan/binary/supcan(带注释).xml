@@ -116,7 +116,7 @@
 		<!-- 是否允许拖拽为多层表头 -->
 		<multiLayerAble>true</multiLayerAble>
 		<!-- 默认行高 -->
-		<rowHeight>19</rowHeight>
+		<rowHeight>22</rowHeight>
 		<!-- 表头(标题)高 -->
 		<headerHeight>24</headerHeight>
 		<!-- 表头(标题)字体 -->
@@ -221,12 +221,18 @@
 	<fadeInStep>5</fadeInStep>
 	<!-- 全屏显示时，全屏窗口的打开模式, "TopMost" - 位于最前端; "Normal" - 不是最前端、鼠标可切换的。默认是 topMost -->
 	<fullScreen>TopMost</fullScreen>
-	<!-- 图片单元格，当URL无效时的显示内容, "Text"-显示文本; "none"-空白 -->
-	<DrawInvalidPicture>Text</DrawInvalidPicture>
+	<!-- 图片单元格，当URL无效时的显示内容, "Text"-显示文本; "none"-空白, 默认是 none -->
+	<DrawInvalidPicture>None</DrawInvalidPicture>
 	<!-- 报表保存时，XML 中 TR 的各个 TD 的生成方式: "col" - 包含 col 列序、且不保存空单元格; "sequence" - 顺序排列, 无 col 标记, 所有单元格全部保存; "full" - 顺序排列且包含 col 列序, 所有单元格全部保存； "auto" - 内部自动优化 -->
 	<OptimizeTD>auto</OptimizeTD>
+	<!-- 报表保存时，是否优化字体(自动剔除未被使用的字体), true 或 false, 默认true -->
+	<OptimizeFont>true</OptimizeFont>
 	<!-- 计算消息框中，最多保留错误条数 -->
 	<ErrorStackSize>50</ErrorStackSize>
+	<!-- 添加图片时，宽和高均超过某个数时，会自动弹出提示，询问你是否调整图片大小. 如下2个像素数，分别用于添加图片、设置背景图. -->
+	<MaxPictureSize>300,1000</MaxPictureSize>
+	<!-- 添加图片时，会弹出压缩图片的对话框, 在此设定弹出对话框的前提：压缩后的JPG图片和原图片的文件尺寸百分比。例如 "60" 表示压缩后最多达到原图的60%的尺寸才弹出对话框，否则不弹出； "0" - 不弹出对话框、也不对图片进行压缩. -->
+	<compressPicture>90</compressPicture>
 
 	<!-- 报表的转换输出(数据文件)的默认选项-->
 	<convertData>

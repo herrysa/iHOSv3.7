@@ -7,6 +7,25 @@
 
 	<package name="gzContent" extends="default"	namespace="/">
 
+<action name="calculate" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"			method="calculate">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="gzContentList2" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction" method="gzContentList2">
+			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentList2.jsp</result>
+			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentList2.jsp</result>
+		</action>
+		<action name="gzContentGridList2" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction"		method="gzContentGridList2">
+			<result type="json">
+				<param name="includeProperties">gzContentSets.*,gzContents.*,records,total,page</param>
+				<param name="excludeProperties">gzContents.*\.person,gzContents.*\.dept</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 		<action name="gzContentList" class="com.huge.ihos.gz.gzContent.webapp.action.GzContentPagedAction" method="gzContentList">
 			<result name="input">/WEB-INF/pages/gz/gzContent/gzContentList.jsp</result>
 			<result name="success">/WEB-INF/pages/gz/gzContent/gzContentList.jsp</result>

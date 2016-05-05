@@ -446,13 +446,13 @@ public class JjUpdataPagedAction extends JJBaseAction {
 	public String getDefColumnInfo(){
 		try {
 			List<MenuButton> menuButtons = this.getMenuButtons();
-			if(!menuButtons.isEmpty() && menuButtons != null) {
+			/*if(!menuButtons.isEmpty() && menuButtons != null) {
 				for(MenuButton button : menuButtons) {
 					if(this.getLoginPeriodClosed() || !this.getLoginPeriodStarted()) {
 						button.setEnable(false);
 					}
 				}
-			}
+			}*/
 			setMenuButtonsToJson(menuButtons);
 			
 			String jjfgks = UserContextUtil.findUserDataPrivilegeStr("jjdept_dp","2");

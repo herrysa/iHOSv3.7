@@ -157,10 +157,10 @@
 					alertMsg.error("只有计算类型的才能添加公式！");
 					return;
 				}
-				if(row['itemType'] == '1'||row['itemType'] == '2'){
+				/* if(row['itemType'] == '1'||row['itemType'] == '2'){
 					alertMsg.error("只有数值或者整型的项目才能添加公式！");
 					return;
-				}
+				} */
 			}
  			var winTitle='<s:text name="gzItemFormulaNew.title"/>';
  	 		var url = "editGzItemFormula?popup=true&itemId="+sid+"&navTabId=gzItemSetFormula_gridtable";

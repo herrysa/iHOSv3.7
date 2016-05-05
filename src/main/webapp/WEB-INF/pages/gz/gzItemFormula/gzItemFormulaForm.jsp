@@ -223,6 +223,7 @@
 				jQuery.each(funcArr, function (key, value) {
 					 jQuery("#gzItemFormula_funcs").get(0).options.add(new Option(value,value));
 		            });
+				jQuery("#gzItemFormula_funcs").get(0).options.add(new Option("getPersonIdNumber","getPersonIdNumber"));
 			}
 			
 			jQuery("#gzItemFormula_funcs").bind('change',function(){
@@ -656,9 +657,9 @@
 		 try {
              var result = eval(expression);
          } catch (e) {
-        	 expFlag = false;
-        	 alertMsg.error("结果表达式错误！");
-			 return;
+        	 expFlag = true;
+        	 //alertMsg.error("结果表达式错误！");
+			//return;
          }
          if(!isSave){
         	 alertMsg.correct("验证成功。");

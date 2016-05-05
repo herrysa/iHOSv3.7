@@ -545,6 +545,19 @@
 				//mergeTitle();
 
 				initFlag = initColumn('${random}_${searchName}_gridTable','${searchName}',initFlag);
+				
+				jQuery('#${random}_${searchName}_gridTable').contextMenu('searchGridCM',{
+					bindings:{
+					showInfo:function(t,m){
+						var url = "#DIA_inline?inlineId=searchGridPropertyDiv";
+						$.pdialog.open(url, 'searchGridProperty', "属性", {
+							mask : false,
+							width : 400,
+							height : 200
+						});
+					}
+					}
+				});
 			}
 		}
 		
@@ -2151,6 +2164,14 @@ function conditionConfirmProcess(taskName,args,businessTypeCode,msg,returnSearch
 				</div>
 			</div>
 
+		</div>
+		<div id="searchGridPropertyDiv" style="display:none">
+			<div class="page" style="height:100%">
+				<div class="pageContent" style="height:100%">
+					<br/>
+					<span style="margin:20px">searchName : ${searchName}</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

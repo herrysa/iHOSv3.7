@@ -42,6 +42,9 @@ import com.huge.ihos.gz.gzType.model.GzType;
 import com.huge.ihos.gz.gzType.service.GzTypeManager;
 import com.huge.ihos.hql.HqlUtil;
 import com.huge.ihos.hql.QueryItem;
+import com.huge.ihos.hr.asyncHrData.model.syncHrData;
+import com.huge.ihos.hr.asyncHrData.service.AsyncHrDataManager;
+import com.huge.ihos.hr.asyncHrData.service.syncHrDataManager;
 import com.huge.ihos.hr.hrDeptment.model.HrDepartmentCurrent;
 import com.huge.ihos.hr.hrDeptment.model.HrDepartmentHis;
 import com.huge.ihos.hr.hrDeptment.model.HrDepartmentSnap;
@@ -50,7 +53,6 @@ import com.huge.ihos.hr.hrDeptment.model.Post;
 import com.huge.ihos.hr.hrDeptment.service.HrDepartmentCurrentManager;
 import com.huge.ihos.hr.hrDeptment.service.HrDepartmentSnapManager;
 import com.huge.ihos.hr.hrDeptment.service.PostManager;
-import com.huge.ihos.hr.hrOperLog.model.HrLogEntityInfo;
 import com.huge.ihos.hr.hrOperLog.model.HrOperLog;
 import com.huge.ihos.hr.hrOperLog.service.HrOperLogManager;
 import com.huge.ihos.hr.hrOrg.model.HrOrgHis;
@@ -80,7 +82,6 @@ import com.huge.util.ExcelUtil;
 import com.huge.util.OptFile;
 import com.huge.util.OtherUtil;
 import com.huge.util.annotation.AProperty;
-import com.huge.util.javabean.JavaBeanUtil;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -108,8 +109,22 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 	private String personCodeOrIdNumber = "1"; //1:orgCode+personCode 2:idNumber
 	private InterLoggerManager interLoggerManager;
 	private HrOperLogManager hrOperLogManager;
+	private AsyncHrDataManager asyncHrDataManager;
+	private syncHrDataManager syncHrDataManager;
 	
 	
+	public syncHrDataManager getSyncHrDataManager() {
+		return syncHrDataManager;
+	}
+	public void setSyncHrDataManager(syncHrDataManager syncHrDataManager) {
+		this.syncHrDataManager = syncHrDataManager;
+	}
+	public AsyncHrDataManager getAsyncHrDataManager() {
+		return asyncHrDataManager;
+	}
+	public void setAsyncHrDataManager(AsyncHrDataManager asyncHrDataManager) {
+		this.asyncHrDataManager = asyncHrDataManager;
+	}
 	public HrOperLogManager getHrOperLogManager() {
 		return hrOperLogManager;
 	}
@@ -1251,6 +1266,19 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 		//hrPersonSnapManager.saveAll(personList);
 		hrPersonSnapManager.executeSqlList(insertSqlList);
 		hrOperLogManager.saveAll(logList);
+		Calendar cal=Calendar.getInstance();//使用日历类 
+		String snapCode = DateUtil.convertDateToString(DateUtil.TIMESTAMP_PATTERN, cal.getTime());
+		syncHrData syncHrData = new syncHrData();
+		asyncHrDataManager.asyncHrData(snapCode);
+		//在此处插入同步日志
+		syncHrData.setSyncHrName("HR系统人员导入");
+		Date today = new Date();
+		syncHrData.setSyncTime(today);
+		syncHrData.setSyncToHrType("HR系统导入时同步");
+		syncHrData.setSyncType("1");
+		syncHrData.setHr_snap_time(cal.getTime());
+		syncHrData.setSyncOperator(UserContextUtil.getUserContext().getLoginPersonName());
+		syncHrDataManager.save(syncHrData);
 		importResult="导入成功";
 		return ajaxForward( true,importResult , true );
 	}

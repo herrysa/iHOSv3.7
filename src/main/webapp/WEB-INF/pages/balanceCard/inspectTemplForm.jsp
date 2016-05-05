@@ -59,7 +59,7 @@ function json2str(o) {
 				var thisName = jQuery(this).attr("name");
 				jQuery(this).after("<input type='hidden' name='"+thisName+"' value='"+thisValue+"'>");
 			});
-			jQuery("textarea","#inspectTemplForm").attr("readOnly","true");
+			//jQuery("textarea","#inspectTemplForm").attr("readOnly","true");
 			jQuery("input[type=checkbox]","#inspectTemplForm").attr("disabled","true");
 		}
 		jQuery("#inspectTempl_inspectModelNo").removeAttr("readOnly");
@@ -124,7 +124,7 @@ function json2str(o) {
 					<script>
 						//addTreeSelect("tree","sync","inspectTempl_dept_name","inspectTempl_dept_id","multi",{tableName:"t_department",treeId:"deptId",treeName:"cnCode+','+name as coderName",parentId:"jjdepttype",order:"internalCode asc",filter:" jjleaf='1'",initSelect:"${inspectTempl.departmentIds}",disabledSelect:"${selected_dept_id}",classTable:"KH_Dict_JjDeptType",classTreeId:"jjDeptTypeId",classTreeName:"jjDeptTypeName",classFilter:""});
 						var editType = "${editType}";
-						if(editType=="0"){
+						//if(editType=="0"){
 							//addTreeSelect("tree","sync","inspectTempl_dept_name","inspectTempl_dept_id","multi",{tableName:"t_department",treeId:"deptId",treeName:"name",parentId:"jjdepttype",order:"internalCode asc",filter:" jjleaf='1'",initSelect:"${inspectTempl.departmentIds}",disabledSelect:"${selected_dept_id}",classTable:"KH_Dict_JjDeptType",classTreeId:"jjDeptTypeId",classTreeName:"jjDeptTypeName",classFilter:""});
 							var sql = "select v.deptId id,v.name name,v.jjdepttype+v.orgCode parent,0 isParent,'/scripts/zTree/css/zTreeStyle/img/diy/dept.gif' icon,deptCode orderCol from v_kh_department v where v.disabled = '0' and v.jjleaf = '1'" //威海版改成了：v_kh_department这个视图
 								sql += " union select vj.jjdepttype+vj.orgCode id,k.jjDeptTypeName name ,vj.orgCode parent,1 isParent,null icon, k.jjDeptTypeName orderCol from v_kh_department vj left JOIN KH_Dict_jjDeptType k ON vj.jjdepttype =k.jjDeptTypeId"
@@ -141,7 +141,7 @@ function json2str(o) {
 								exceptnullparent:false,
 								lazy:false
 							});
-						}
+						//}
 					</script>
 				</div>
 				<div class="unit">

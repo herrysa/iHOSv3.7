@@ -384,7 +384,7 @@ public class GzItemPagedAction extends JqGridBaseAction implements Preparable {
 		String itemCode = this.getRequest().getParameter("itemCode");
 		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
 		filters.add(new PropertyFilter("EQB_disabled","0"));
-		filters.add(new PropertyFilter("INS_itemType","0,3"));
+		//filters.add(new PropertyFilter("INS_itemType","0,3"));
 		filters.add(new PropertyFilter("EQS_gzType.gzTypeId",gzTypeId));
 		if(OtherUtil.measureNotNull(itemCode)){
 			filters.add(new PropertyFilter("NES_itemCode",itemCode));

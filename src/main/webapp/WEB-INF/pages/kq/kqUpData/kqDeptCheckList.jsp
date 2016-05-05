@@ -190,6 +190,41 @@
 	kqDeptCheck_toolButtonBar.addBeforeCall('1006040402',function(e,$this,param){
 		return kqDeptCheck_function.optBeforeCall(e,$this,param);
 	},{selectRecord:"selectRecord",singleSelect:"singleSelect"});
+	
+	//否决
+	var kqDeptCheck_reCheckButton = {id:'1006040403',buttonLabel:'销审',className:'delallbutton',show:true,enable:true,
+		callBody:function() {
+			var sid = jQuery("#kqDeptCheck_gridtable").jqGrid('getGridParam','selarrrow');
+			var rowData = jQuery("#kqDeptCheck_gridtable").jqGrid('getRowData',sid);
+			if(rowData.status != '3') {
+				alertMsg.error("只有审核状态的数据才可以销审！");
+				return;
+			}
+			alertMsg.confirm("确认销审?", {
+				okCall : function() {
+					jQuery.ajax({
+						url:"kqDeptChecked",
+						dataType:"json",
+						type:"post",
+						data:{id:sid,oper:"reCheck"},
+						error:function(data) {
+							alertMsg.error('系统错误！');
+							return;
+						},
+						success:function(data) {
+							if(data.statusCode == 200){
+				        		jQuery("#kqDeptCheck_gridtable").jqGrid("setGridParam",{page:1}).trigger("reloadGrid");
+				        		alertMsg.correct('销审成功！');
+				        	}else{
+				        		alertMsg.error(data.message);
+				        	}
+						}
+					});
+				}
+			});
+		}};
+	kqDeptCheck_toolButtonBar.addButton(kqDeptCheck_reCheckButton);
+	
 /*----------------------------------tooBar end-----------------------------------------------*/
 
 	function kqMonthUpDataRecord(id){

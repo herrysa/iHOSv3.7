@@ -221,6 +221,11 @@
 	<li rel="closeAll">关闭全部标签页</li>
 </ul>
 ]]></_PAGE_>
+<_PAGE_ id="searchGridCM"><![CDATA[
+<ul id="searchGridCM">
+	<li rel="showInfo">属性</li>
+</ul>
+]]></_PAGE_>
 <_PAGE_ id="dialogCM"><![CDATA[
 <ul id="dialogCM">
 	<li rel="closeCurrent">关闭弹出窗口</li>

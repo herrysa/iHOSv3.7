@@ -611,7 +611,9 @@ public class KqTypePagedAction extends JqGridBaseAction implements Preparable {
 			List<MonthPerson> monthPersons = kqDayDataManager.getByFilters(filters,MonthPerson.class);
 			Set<Branch> branches = new HashSet<Branch>();
 			for(MonthPerson monthPerson: monthPersons) {
-				branches.add(monthPerson.getBranch());
+				if(monthPerson.getBranch()!=null){
+					branches.add(monthPerson.getBranch());
+				}
 			}
 			if(!branches.isEmpty()) {
 				String message = "";

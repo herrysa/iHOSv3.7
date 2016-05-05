@@ -49,7 +49,7 @@ public class KqDayDataManagerImpl extends GenericManagerImpl<KqDayData, String> 
 		filters.add(new PropertyFilter("EQS_period",period));
 		filters.add(new PropertyFilter("EQS_kqType",kqType));
 		filters.add(new PropertyFilter("EQS_branchCode",branchCode));
-		if(status != null || !"".equals(status)) {
+		if(status != null && !"".equals(status)) {
 			filters.add(new PropertyFilter("INS_status",status));
 		}
 		List<KqDayData> kqDayDatas = kqDayDataDao.getByFilters(filters);

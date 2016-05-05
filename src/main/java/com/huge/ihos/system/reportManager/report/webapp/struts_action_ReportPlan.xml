@@ -95,6 +95,10 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
+		<action name="defineReportPlan" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportPlanPagedAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/reportPlan/defineReportPlan.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/reportPlan/defineReportPlan.jsp</result>
+		</action>
 	</package>
 
 </struts>

@@ -400,6 +400,8 @@ public class KqDayDataPagedAction extends JqGridBaseAction implements Preparable
 				curDeptId = OtherUtil.splitStrAddQuotes(curDeptId, ",");
 				sqlTemp = "kq.deptId in (" + curDeptId +")";
 				sqlFilterList.add(sqlTemp);
+			}else if("all".equals(curDeptId)){
+				
 			}else{
 				sqlTemp = "kq.deptId in (" + "''" +")";
 				sqlFilterList.add(sqlTemp);
@@ -749,7 +751,7 @@ public class KqDayDataPagedAction extends JqGridBaseAction implements Preparable
 				Person operPerson = this.getSessionUser().getPerson();
 				String sqlTemp = "UPDATE kq_dayData SET status = '1',checker='"+operPerson.getName()+"',checkDate='"+curTime+"' ";
 				curDeptId = OtherUtil.splitStrAddQuotes(curDeptId, ",");
-				if(curDeptId!=null&&!curDeptId.equals("all")){
+				if(curDeptId!=null&&!curDeptId.equals("'all'")){
 					curDeptId = "deptId in ("+curDeptId+") AND ";
 				}else{
 					curDeptId = "";
@@ -763,7 +765,7 @@ public class KqDayDataPagedAction extends JqGridBaseAction implements Preparable
 				List<String> sqlList = new ArrayList<String>();
 				String sqlTemp = "UPDATE kq_dayData SET status = '0',checker=NULL,checkDate=NULL ";
 				curDeptId = OtherUtil.splitStrAddQuotes(curDeptId, ",");
-				if(curDeptId!=null&&!curDeptId.equals("all")){
+				if(curDeptId!=null&&!curDeptId.equals("'all'")){
 					curDeptId = "deptId in ("+curDeptId+") AND ";
 				}else{
 					curDeptId = "";
@@ -779,7 +781,7 @@ public class KqDayDataPagedAction extends JqGridBaseAction implements Preparable
 				Person operPerson = this.getSessionUser().getPerson();
 				String sqlTemp = "UPDATE kq_dayData SET status = '2',submiter='"+operPerson.getName()+"',submitDate='"+curTime+"' ";
 				curDeptId = OtherUtil.splitStrAddQuotes(curDeptId, ",");
-				if(curDeptId!=null&&!curDeptId.equals("all")){
+				if(curDeptId!=null&&!curDeptId.equals("'all'")){
 					curDeptId = "deptId in ("+curDeptId+") AND ";
 				}else{
 					curDeptId = "";

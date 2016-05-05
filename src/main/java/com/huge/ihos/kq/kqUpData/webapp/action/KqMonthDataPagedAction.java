@@ -796,6 +796,12 @@ public class KqMonthDataPagedAction extends JqGridBaseAction implements Preparab
 						data.setSubmiter(null);
 						data.setSubmitDate(null);
 					}
+				}else if("reCheck".equals(oper)) {
+					for(KqDayData data : kqDayDatas) {
+						data.setStatus("2");
+						data.setCheckDate(null);
+						data.setChecker(null);
+					}
 				}
 				kqDayDataManager.saveAll(kqDayDatas);
 			}

@@ -227,6 +227,22 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>	
 		</action>
+		
+		
+		<action name="getBySql" class="com.huge.webapp.action.UnitOptAction" method="getBySql">
+			<result type="json">
+				<param name="includeProperties">sqlResult</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>	
+		</action>
+		<action name="getDataSourceBySql" class="com.huge.webapp.action.UnitOptAction" method="getDataSourceBySql">
+			<result type="json">
+				<param name="includeProperties">sqlMap.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>	
+		</action>
 
 
 

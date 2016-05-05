@@ -79,6 +79,10 @@
 		}
 
 	}
+	function spellFullFuc(){
+		var code = jQuery("#funcDefine_funcCode").val();
+		var code = jQuery("#funcDefine_funcCode").val();
+	}
 </script>
 </head>
 
@@ -94,12 +98,12 @@
 				</div>
 				<div class="unit">
 					<input id="funcDefine_funcCode_check" type="hidden">
-					<s:textfield id="funcDefine_funcCode" key="funcDefine.funcCode"
+					<s:textfield id="funcDefine_funcCode" key="funcDefine.funcCode" style="width:300px"
 						name="funcDefine.funcCode" cssClass="required"
-						onblur="checkFuncSame(this);" />
+						onblur="spellFullFuc();" />
 				</div>
 				<div class="unit">
-					<s:textfield id="funcDefine_funcName" key="funcDefine.funcName"
+					<s:textfield id="funcDefine_funcName" key="funcDefine.funcName" style="width:300px"
 						name="funcDefine.funcName" cssClass="required"
 						onblur="checkFuncSame(this);" />
 				</div>
@@ -107,8 +111,8 @@
 					<s:select list="#{'0':'表内函数','1':'表间函数' }"
 						key="funcDefine.funcType" id="funcDefine_funcType" listKey="key"
 						listValue="value" emptyOption="false" maxlength="50" width="50px"></s:select>
-				</div> --%>
-				<div class="unit">
+				</div>--%>
+				<%-- <div class="unit">
 					<s:if test="%{!entityIsNew}">
 						<s:textfield id="funcDefine_funcParam" key="funcDefine.funcParam"
 							name="funcDefine.funcParam" cssClass=""></s:textfield>
@@ -119,7 +123,7 @@
 							onFocus="if(value==defaultValue){value='';this.style.color='#000';}"
 							onBlur="checkParam(this);" style="color:#999;width:300px;" />
 					</s:else>
-				</div>
+				</div> --%>
 				<div class="unit">
 					<s:textarea id="funcDefine_funcBody" key="funcDefine.funcBody"
 						name="funcDefine.funcBody" onblur="checkBody(this);"
@@ -130,6 +134,12 @@
 						name="funcDefine.funcDesc" cssClass="required"
 						style="width: 300px;height: 60px;" />
 				</div>
+				<%-- <div class="unit">
+					<label>完整函数:</label>
+					<s:textarea id="funcDefine_fullfunc"
+						cssClass="" readonly="true"
+						style="width: 300px;height: 60px;" theme="simple"/>
+				</div> --%>
 				<div class="unit">
 					<s:textarea id="funcDefine_remark" key="funcDefine.remark"
 						name="funcDefine.remark" cssClass=""

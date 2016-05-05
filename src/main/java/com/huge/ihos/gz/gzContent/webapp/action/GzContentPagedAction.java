@@ -158,6 +158,162 @@ public class GzContentPagedAction extends JqGridBaseAction implements Preparable
 		this.deptTypes = deptTypes;
 	}
 
+	public String gzContentList2(){
+		try {
+		gzContentNeedCheck = this.getGlobalParamByKey("gzContentNeedCheck");
+		ColShow colShow = colShowManager.getLastByTemplName("com.huge.ihos.gz.gzContent.model.GzContent", this.getSessionUser().getId()+"",null);
+		if(OtherUtil.measureNotNull(colShow)){
+			gzCustomLayout = colShow.getCustomLayout();
+		}
+		curPeriod = "201504";
+		String gzTypeId = "";
+		gzType = gzTypeManager.getCurrentGzType(getSessionUser().getId().toString());
+		if(OtherUtil.measureNotNull(gzType)){
+			gzTypeId = gzType.getGzTypeId();
+			ModelStatus msTemp = modelStatusManager.getUsableModelStatus(gzTypeId, curPeriod,"GZ");
+			ModelStatus msFirstTemp = modelStatusManager.getGzFirstUsableModelStatus(gzTypeId);
+			String operStrTemp = "期间："+curPeriod+" 工资类别："+gzType.getGzTypeName()+" ";
+			if(OtherUtil.measureNull(msTemp)){
+				curPeriodStatus = operStrTemp + "尚未启用。";
+			}else if("2".equals(msTemp.getStatus())){
+				curPeriodStatus = operStrTemp + "已结账。";
+			}else{
+				curIssueNumber = msTemp.getCheckNumber() + "";
+				lastPeriod = GzUtil.getLastPeriod(curPeriod, globalParamManager.getGlobalParamByKey("personDelayMonth"));
+				List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+				filters.add(new PropertyFilter("EQS_period",curPeriod));
+				filters.add(new PropertyFilter("EQI_issueNumber",curIssueNumber));
+				filters.add(new PropertyFilter("EQS_gzType",gzTypeId));
+				gzContents = gzContentManager.getByFilters(filters);
+				if(OtherUtil.measureNotNull(gzContents)&&!gzContents.isEmpty()){
+					String status = gzContents.get(0).getStatus();
+					if("1".equals(status)&&!"0".equals(gzContentNeedCheck)){
+						curCheckStatus = "checked";
+					}
+				}
+			}
+			if(OtherUtil.measureNotNull(msFirstTemp)){
+				if(OtherUtil.measureNotNull(curPeriodStatus)&&!curPeriod.equals(msFirstTemp.getCheckperiod())){
+					curPeriodStatus += "请选择登录期间:" + msFirstTemp.getCheckperiod()+"";
+				}
+			}
+		}
+		List<MenuButton> menuButtons = this.getMenuButtons();
+		Iterator<MenuButton> ite = menuButtons.iterator();
+		if ("0".equals(gzContentNeedCheck)) {
+			List<String> checkIds = new ArrayList<String>();
+			checkIds.add("11020109");
+			checkIds.add("110201010");
+			while (ite.hasNext()) {
+				MenuButton button = ite.next();
+				if (checkIds.contains(button.getId())) {
+					ite.remove();
+				}
+			}
+		}
+		while (ite.hasNext()) {
+			MenuButton button = ite.next();
+			if(OtherUtil.measureNotNull(curPeriodStatus)){
+				button.setEnable(false);
+				if(curPeriodStatus.indexOf("已结账")>-1&&"11020104".equals(button.getId())){
+					button.setEnable(true);
+				}
+			}
+		}
+		setMenuButtonsToJson(menuButtons);
+		
+		String branchDp = UserContextUtil.findUserDataPrivilegeStr("branch_dp", "2");
+		branchs = branchManager.getAllAvailable(branchDp);
+		
+		deptTypes = deptTypeManager.getAllExceptDisable();
+	} catch (Exception e) {
+		log.error("List Error", e);
+	}
+		return SUCCESS;
+	}
+	
+	public String gzContentGridList2() {
+		try {
+			List<String> sqlFilterList = new ArrayList<String>();
+			List<String> sqlOrderList = new ArrayList<String>();
+			String sqlTemp = "";
+			if(OtherUtil.measureNotNull(curPeriod)){
+				sqlTemp = "gz.period = '" + curPeriod +"'";
+				sqlFilterList.add(sqlTemp);
+			}
+//			if(OtherUtil.measureNotNull(gzTypeId)){
+				sqlTemp = "gz.gzTypeId = '" + gzTypeId +"'";
+				sqlFilterList.add(sqlTemp);
+//			}
+			if(OtherUtil.measureNotNull(curIssueNumber)){
+				sqlTemp = "gz.issueNumber = '" + curIssueNumber +"'";
+				sqlFilterList.add(sqlTemp);
+			}
+			if(OtherUtil.measureNotNull(curPeriodStatus)){//期间状态
+				if(curPeriodStatus.indexOf("已结账") == -1){
+					sqlTemp = "1=2";
+					sqlFilterList.add(sqlTemp);
+				}
+			}
+			gzContentSets = gzContentManager.getGzContentGridData(columns,lastPeriod,sqlFilterList,sqlOrderList);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
+	public String calculate(){
+		List<String> sqlFilterList = new ArrayList<String>();
+		List<String> sqlOrderList = new ArrayList<String>();
+		String sqlTemp = "";
+		curPeriod = "201504";
+		lastPeriod = "201504";
+		gzTypeId = "GZ_001";
+		//columns = "";
+		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+		filters.add(new PropertyFilter("EQS_gzType.gzTypeId",gzTypeId));
+		filters.add(new PropertyFilter("EQB_disabled","0"));
+		filters.add(new PropertyFilter("OAS_sn",""));
+		gzItems = gzItemManager.getByFilters(filters);
+		String discountZero = this.getGlobalParamByKey("discountZero");
+		GzItem saveZeroItem = gzItemManager.getGzItemByName(gzTypeId,"存零");//存零
+		for(GzItem gzItem:gzItems){
+			String saveZeroCode = saveZeroItem.getItemCode();
+			if(saveZeroCode.equals(gzItem.getItemCode())){
+				gzItem.setCalculateType("1") ;
+			}
+			columns += "gz."+saveZeroCode+" "+saveZeroCode+",";
+		}
+		if("1".equals(discountZero)||"2".equals(discountZero)
+				||"4".equals(discountZero)||"5".equals(discountZero)){
+			if(OtherUtil.measureNotNull(saveZeroItem)&&OtherUtil.measureNotNull(gzItems)&&!gzItems.isEmpty()){
+			}
+		}
+		columns = OtherUtil.subStrEnd(columns, ",");
+		if(OtherUtil.measureNotNull(curPeriod)){
+			sqlTemp = "gz.period = '" + curPeriod +"'";
+			sqlFilterList.add(sqlTemp);
+		}
+//		if(OtherUtil.measureNotNull(gzTypeId)){
+			sqlTemp = "gz.gzTypeId = '" + gzTypeId +"'";
+			sqlFilterList.add(sqlTemp);
+//		}
+		if(OtherUtil.measureNotNull(curIssueNumber)){
+			sqlTemp = "gz.issueNumber = '" + curIssueNumber +"'";
+			sqlFilterList.add(sqlTemp);
+		}
+		if(OtherUtil.measureNotNull(curPeriodStatus)){//期间状态
+			if(curPeriodStatus.indexOf("已结账") == -1){
+				sqlTemp = "1=2";
+				sqlFilterList.add(sqlTemp);
+			}
+		}
+		gzContentSets = gzContentManager.getGzContentGridData(columns,lastPeriod,sqlFilterList,sqlOrderList);
+		
+		
+		return SUCCESS;
+	}
+	 
 	public String gzContentList(){
 		try {
 			gzContentNeedCheck = this.getGlobalParamByKey("gzContentNeedCheck");
