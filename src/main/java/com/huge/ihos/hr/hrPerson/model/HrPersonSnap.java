@@ -162,6 +162,8 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
     private String bank2;
     private String salaryNumber2;
 	private String gzType;
+	private String gzType2;
+
 	//考勤附加字段
 	private String kqType;//考勤类别
 	private Boolean stopKq;
@@ -939,13 +941,22 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 		this.salaryNumber2 = salaryNumber2;
 	}
 
-	@Column(name = "gzTypeId", length = 20, nullable = true)
+	@Column(name = "gzTypeId", length = 32, nullable = true)
 	public String getGzType() {
 		return gzType;
 	}
 
 	public void setGzType(String gzType) {
 		this.gzType = gzType;
+	}
+	
+	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	public String getGzType2() {
+		return gzType2;
+	}
+
+	public void setGzType2(String gzType2) {
+		this.gzType2 = gzType2;
 	}
 	
 	@Column(name = "kqTypeId", length = 32, nullable = true)

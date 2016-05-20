@@ -139,7 +139,7 @@ public class GzContentManagerImpl extends GenericManagerImpl<GzContent, String> 
 						gzContentTemp.setOrgName(org.getOrgname());
 	    				gzContentTemp.setOrgCode(org.getOrgCode());
 					}
-					Branch branch = department.getBranch();
+					Branch branch = person.getBranch();
 					if(branch!=null){
 						gzContentTemp.setBranchCode(branch.getBranchCode());
 						gzContentTemp.setBranchName(branch.getBranchName());

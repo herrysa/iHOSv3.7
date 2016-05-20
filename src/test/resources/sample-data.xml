@@ -1,7 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
    
+<!--WorkScore-START-->
+<table name="jj_dict_workScore">
+        <column>id</column>
+        <column>clevel</column>
+        <column>disabled</column>
+        <column>parentid</column>
+        <column>remark</column>
+        <column>workName</column>
+        <column>workScore</column>
+        <column>workunit</column>
+    <row>
+        <value description="id">-1</value>
+        <value description="clevel">5244</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[OzKbDoTeFzGhKzFsFoGmZzVjWvEjFkUaZlVzHjJhRgFnGeJeNiEhNvAlLcIaZlHgRoNwMoQmXiGuJnEeOxGcCoLuEzUdZtGtJjEbJnOeYjJiQcBmLgTwQaFeMwUjPtPaElPaQeZmUaWrQyKiGuXkFmNeSfNuFbKfKvYcOaXrXrDzOcRyWoZsKyFwOyQbJdUyIlUvOlZwRuFbVaFpCqSzIqJtRtJxEqKgMnQkLkDdCpCcKeQiXaXmTsDtTzQoXgQ]]></value>
+        <value description="remark"><![CDATA[QfRsGoFvQyVrGtFnNdKfGlFaPlSlXdRkPjTyHeScDaBrVtUeGhHiDsHcPzTnMuAdJdEeSlPhWoXdKfIrHrTiGnUuItLhWpGxSlRoXhWpIgUrOgHfZqVgMhUqVbGdLvAxEiWmTrAgRzSrLgOrQiOzLoSpZpUpFfTgMrPkZaUsDkNxWuDpDjIkImPhBnFfWaWtHdAdBdTeVgDdQcXzQcAqNrKsRjLmLtHiBnIjSbUlQgJnBmDwQuAvYlXcXuGwSoH]]></value>
+        <value description="workName"><![CDATA[FeBlIxJzUnCqNrEkTkIyUcBoDoVaIeIpYpGhTkTtHdRdSfOvPhByIzLvGwFfAhVoCfSwHiOeKiVhOcFjRwVcLoZoHiDpBrFsObQzUiBoPhTkHtQqBsHeBhUtMyBiZzPrYkYcEoMkPuMjJlCsGtSmUxYoJjYuVqBbMbGfGlPiIpTaZhPiTyPdCpDmOrPtBdVuRhSjFbPoThVkVrEhLbUmQhQxZfIcLfTsUnIfWiUnJgDiEnPdUnYwWiGtBrYmBtX]]></value>
+        <value description="workScore">32096</value>
+        <value description="workunit"><![CDATA[AsJrOcErLvJmDgBbHbDkYeXmRmWiYnQuNoZeZtRnEzSjIvGbOyMjUmCiRlLaRiOiBlKxPsDdEvJtMuSkFzMnKrXuLqSpFnHpMeZjZqCrHuMgQdLfHpHvQhAiUjIjFoWsWgSgPiGdRvYjJtQmTyElWuCjEtPwJwWbOeZmVrSqYuXkJtQcLqPvHyOnBeZjBdKsWiMmEtAsRjBaGlPlZlBjBvFcLhUcJpWwKtMxTiYtKxRuPcQvInRvCqQrYaYeDsF]]></value>
+    </row>
+    <row>
+        <value description="id">-2</value>
+        <value description="clevel">85466</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[MjHfYrVeHsLcDoYrDlQmWjJiTyGoNzHwWkXyNjCfRqYhOkTlRaBfMaPrEaUhNiToQeBaVqZkMqXbZdNfZyCbDyBkEhPbBgQgPuNfFuLiYxGzHsUfCxItNhCyIfLyYoBdJoHaVwPdUeBpHiRvPwHwYyDqYtDjOiAxNhPuPqByFyRiFkEvOrIvHrFsKgWkIaTiDaTyKvVbSnNbQaIoPuUlIiYwXdWiRuBqJzKqSqBpRuQoLeWwClEqOmOdGeIgHiZ]]></value>
+        <value description="remark"><![CDATA[KqQwMcGrJjRxPeUzUyVyHuIiQcSpGlMyNjGdTkBmXiIeVoQkWfSfOjSeWeIlOsToNbQnOxTfWvGxMhQtNiGxGqKpJfSxDyJnClVdNwQjQoZwRbIbSkAbNkWrCmWaIiDyYwMeOcQoGuKfNxSnVsJoTvWoUfIdAvHkTbFtZdAxIoJuDtHrXsWtZoUdXxVgSaOfMdJvTjTwNeJqCfFrAxHsBdTsGwHpEvSuXqVlDqWfFzJtBoYwWiLoOoKhPgTsDsD]]></value>
+        <value description="workName"><![CDATA[GnEgDlUgIdLkDqCyNxBsApCoZuCwKkFqPjBnUeUnQtJqCnTvZfAlHdMlMwWmIyOvQnDkLhYhJiInUwTlYdEtBgEaCpVnOlMgOnFmQuIrQuRnXyTmCxTsBcDkSfGaNgQgRgIiToSxMkHjWaCjTmToJoMyIiGqCcUtFuOzXlEiTyZtXlLcCtBgNsTcPdLeCoOkPyYnTnSsJaZvVeLqLaFiKcGxSdKlXnLcWqQeVrPnVsTjQdWiToWwTlNpNmSmKwV]]></value>
+        <value description="workScore">44210</value>
+        <value description="workunit"><![CDATA[JsMgXoYvZkXxNmWxLpJwRrKfYhWsBpNwScPvVkZbXyOiHiPePkQvLaZyOpYwIaLnWwKhKoBkKuVnWnXoBwEnRqBjNdBoLfJzUzTgSbHgGyPkYyLoDzIzSbRzQuHoGxLoWaLuJgEsEnLgGpYmLvAxAhBeSrXeGkEmBdAvNbQwNzCzNqVkUvMeIzQdJkQtEwLxBnLyPhFsAlUdIwXqSyKrKwNiQoKrPvIjNsObSbSuQhAsSfLcWpEhRnYbHiDkTxE]]></value>
+    </row>
+    <row>
+        <value description="id">-3</value>
+        <value description="clevel">33623</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[CpNxXsQwAcTmFuOdZkMiQeIgEpAxUwEhBkIeBaLuVpLkEvRmTlGxUzFpUcUcExYqQwZkWfQyQeTnHhItJoMyRoTxFyJbIbLjNyNxXvKkVhEuKiGqVdYcImEnDhXtMbGmKkOtDhCxUnDkNePxYaIbSkVmKjQrWgVbZbAkVgMpQpGgAlPlKoLfSeCfNrQjFaHgCaBiGrUlTsUtGhHjZcCiChAgNmEhIaIuJcFyBmHpWeNsKeOrCsLrBqOoCqRxWfK]]></value>
+        <value description="remark"><![CDATA[QoTxStMaBiEqQiUmYsZrKnJtLcHxFvUcVvAfRhGtSoAcFcAvNkGpVhErRaJlBoGuRsWrCePfNuJcEeOwMoAcQxPwTwAcJuFsBrUpKrDpBdZxAqGmNcQbOdXwQlGaZhYwHrLoJfZhZxJuMtHjLdChYlXdKnWrCbMuUhUwLbYyIuBiArEoHdKcEbGfLpYjZvWwHsIxSnUmMbWyKqBlSeVmNuTyUuZuUrOoJiUzKwVuSdNoVyMoHoPmEoEeQuWaOwK]]></value>
+        <value description="workName"><![CDATA[KyIsXmZuMwEnWdYgZnQvSqWcQgNuMuElKgQqUuBtQkLhGjHmXqUuEcWhZbLlOyAfWxFgXyOpHoXkQhNdLcVcLlCyExRlBgKkFmIcUbKpVtOhAsUkQwLpVeFlDtCeFzSkEyKhAbLaQiKaOlXySmEeBtGkPkMuSsUlFsVmMdHoGqDnYzRqTtKxDeTtDsMhGyMwEtFiThBgLbQuSbJhKhOmJtQePtGbZaDlFwVuYjVkVpJoEvMbYzYzQeSxUoPqPeS]]></value>
+        <value description="workScore">45837</value>
+        <value description="workunit"><![CDATA[BqHeKhZdMnFfJcVlPpEqEwCqCzNtJbUkHyLzIiYsZkHtJqXhZbRbClFpVnQhMcYmDkRhSwEpTfNfSbDlCoOrToWgObDeVqPwHsDhMkIfHxSkGvZaFcOjYzNsOaZqStRsFeSaEpUsFaSmFmUpGhRjMyYxWpFqFaAaKsTlLtLbXvDgHcDeGkCmBpZoEoMsKtNxEaIvYpMfCfTmHzHrHpWmHvTyMrDsBbCdOvRcVbSaCnYoXvBjKmDrBkYgLkFlMyG]]></value>
+    </row>
+    <row>
+        <value description="id">-4</value>
+        <value description="clevel">94458</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[MuVsZnCpQzMeSvWcZwCaEgLsJpTqUqNwDdQwSfJwVuKoKdXbFtBcAwBwFpPbDhSeSaZlUaAmLjNvGuUjAsRrUjUtCqDiMsQiItAxSgOqIqQpCnFuZhSeUjAwVkNfKpYqDnDuYwZvDyNrCbEiSvOvAhGyTwXyGwLnUkRyWzKxLySlFpZqIoOsVcUhWkHiRhHlDiEtNlFjVuZzMsChJuEdIuAbFzCcZhTrDoZrAvBaLnPtCcRkSjPkKvPbMaPxIfF]]></value>
+        <value description="remark"><![CDATA[YyJpAuRmRsAjKeWsNzRoPmBcTvYcAqMcKlXzAkSoKhQhZbHhVzLlXiRwHbNsUcLmBxHmDnVzRkSfFzFdJpDmXaPeByYzYvZsAvEjMcRdYhWuCqFjYvKkGlWkMsQjKsYgOgGoTtDpRvSzSiVpRzYgStUuQfYhIoGuWyDmFqRyCqXeLfBbJkKjCeOgWtKxEkPwLkRgZeVqViIgHuBjXbUwYgZjXmUaGkIhOnChPmMiHyKmKqEbQvXaYaPwTgYeNlQ]]></value>
+        <value description="workName"><![CDATA[FaVaTsRrFlPcSyOeWnOeEbPaEnCpYnKtCfXxPgPkUdRqZiRtUgSqSnBiErQiSnQtKhDpWrXxYcWtElCgSjHePjOdJmJxKcJgZvNnXnAzYuUgBeOqFfSdQzOiJsFdRwWrCiZkHbUyEaRsOoNwPrCbMeLrDpKgHjKnPnPbNpFzQdHiFmKfDhZsRfLeEwPlViRaJjMsMmEdAjIdYkFbPqYiXhNyNoGxKgObTuMiPxVxYfRsDuByAbUePdXhXgGoUyU]]></value>
+        <value description="workScore">12813</value>
+        <value description="workunit"><![CDATA[UhPcSlBrHmIoTvJuVlThVbMzPkTwAsIxCxGsBjCzDgJgWxFjClBoDzVtFiGuUkOsLrXbFpMhNgCrNmNaXuTxBxBfPsYjKzCmIyGzUpJvWhPhPeGuKxUxSpKxKhLdXePtZgZuZyVzEfJdEgAkPyFoKkNmQwNzLqVfJiQbPjSjBbMnWwQbVsTfVoOjKjHgYyEfRfYaCeLwMcRkVlNzCfRyLoEoBkMbXfIpAzXtErJjBrYtNfNmCfVaXtRqPyFaQuZ]]></value>
+    </row>
+    <row>
+        <value description="id">-5</value>
+        <value description="clevel">89112</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[IjZxLzCaOwDkBdUcYcVrXiYcGgRuLgErLrKpGdIoNpAvSyFiUcSfHkYxFaHnMoLcMjZnAhPcJaQlSmVbCpTfJoZjWzEvNpUyTfXnNiUbNbMdCjSvMuJzKlYzAjPsZzIoHgYyUoIhXdPwDwTyXoPmOpYaQdYdNuKgJtZvUwXmQjHrRxGzRqOhTuEvNxWfLdGbQmOwUzQxBvMxAjDnFxDwEhVxOnKrUhHkZfVvUyAkXcFrWzXeUdHaVrQpYvYdHrH]]></value>
+        <value description="remark"><![CDATA[JfJtIeZnKtDhMpWoVlVeVdNhUxLuIsSjZkGnPoLiLvKiIrUyBjJqMgViEiDlVsBkXiFeSdGdXxZaWnLfAlIeSiGgGeBvPoEuGxZqXbFnVnInUnCpIxEwGwWtEnRcOeWdQgStHcChFnDhQcNkHqDtQwZlIhNgKsMmSxUwVpLeHqDaTkXiMbKiCqLmOcNmPaAvRaFhFqXxKqTxJbJaLbJhBdYxJkKhWpQoDgZlQoXhTlKaGyMqRnJsOrRrNrIjQsG]]></value>
+        <value description="workName"><![CDATA[NhNyWcOeSsNnGiTeDvLnHwQkNuCyFaTuAeGwSoQdWfVmCpHuIhExUvLjOeOlJuWdHlQkLyVxRkNbAkGlNyAxBvDyOyKgVsVuCeMbRpSyLnIuUzHrFaAuWoPfDmCjMhEnRwZmLxVwMgCaMxEgDnWuGpSuHtSrCjQiXzAwNeZmPzHxDiKgPlIaEoCdLuQwLjQuOnJxExDyEqCpGcVlVyRyGkSyHpXcQpFiAtNlBbZoLlQaDdVzVvOaRsGsIyKlPxH]]></value>
+        <value description="workScore">15985</value>
+        <value description="workunit"><![CDATA[GpLiKtRiSfLpRhIcNhYoVvYrFaLbDhVcWrYeKcPbHtDfKdNhUzLyKpSdWtSjAgOwLgXvYmUuIpLuNkMqDbXwQsLqFrGiDbXqIuAvLyDcBuJpQeEmLzAbAiNvWzXgJdBpJiObDqFbFgRhIwUeXwPfUtSgLwVuGgHbGsVzJyFhUcRtDyFgJyRxJlEnNaKbGgSpRfGpInBbYiBsYiTuViAiGiTvRmHdZqBqCmEfCuYcHuHyItAxGxBqAlPoUrUqWcV]]></value>
+    </row>
+    <row>
+        <value description="id">-6</value>
+        <value description="clevel">8842</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[RoXcOmYdEhXmHmMuMsWwOlYdStJvAhQiGiNlBmZcPdIjIiSrOkJfUxFhBbRtJxZnZcRsXgAkZtWePwFdHxWhFiFjDaLpYdXxTlYdLyLhMpVnLsJwXmBuGxXeNfYnPfGuElWjDcWyMiCtDnWkEaRmGfAqNoOnSbBgSuEqYuYhCjTiUtYiPjDbGdGfYzRsLtCpCtZxEjRhJjEuRyKlAhWwTgKdGfQpCkUsXtSlFgTqHiCqQeKpHfCiPjFeXvExOfK]]></value>
+        <value description="remark"><![CDATA[SnStNtIgKkRfXyUtKjTaUmGyNxLcQiXhFfDvMhXrEkTvJeHpHlZxWjOoYqLaYpCpFqCgYtYyGcLuVjPvArFuQhIxDwUkWpKeViUpKiKdFpCxSuOmFuCcJmInOfVbZcHqUsUsVwUwVxVcXkQoDdTvHqWeFsXqDnRrScKvVaFiWmUlRxTzVyItYkXcWmTnYuDyBiIxWdNqQeXxFcRzQySyIhFhJyGwBvFoSeJhScPbJpYrCfKfMzOpRnYaMdRzVeY]]></value>
+        <value description="workName"><![CDATA[PuGuUgLcUyJkPzSvCzClBiQlQrIvXlSxFlKlPmXfWeAhXzIuGoVnAsSfSgSqJwAzIfUqVvZbLwTlEtEeEmSbFaKeGzQaQoLzPnQrEmYxCnUvPaJoKyYqApWiJmUwCwZbKiFjVkYuOyUjJqRsPlOfRwCjYiXjShYqJdXbOdKnUnOqMmMrDfRsJpLtYePpZlDmVdPkEdWxYfWkQuDzXlVvXbMbKcGhXqGzXyGiEgRvYkYrMuGcCxZvLxZiHjQxJlJ]]></value>
+        <value description="workScore">79802</value>
+        <value description="workunit"><![CDATA[JzAwQoHhEnRsDmSaVuJaPwGcDhFzWtArGsCvKiUbHaIpUsJnFwWbOaQfClDnDzBmKsIgNfIvRwSwVnLaKsKuTaKdMyHbKlErHhUgUwFuNwElWqBhOlVfRySpYiPnRaMuFdQhUqAbWrAvLkTbYnYtTxYeSfQnHgIgQfFjXoCtFoNmNvRbQvQsSmFmIuJbXkNpUdQtVtBbAaMpQuUcBcNbEwFjCwKgMxLoRpFwIsXqWzTyYtHrEjPiIoHnSuCjNfZ]]></value>
+    </row>
+    <row>
+        <value description="id">-7</value>
+        <value description="clevel">98572</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[ZbMgVeChKyMcVoHoRzKzBkRbVhIdYoDkStFcWgAvArYxPjAvJrEwEnYtMrGiSeHhOzAvKmPgHtKaLfVdCvLyWsDfCdJoYxLgYjSxMlGdEaKzNjUaQeQfSgKjEnUiJsYrCxMaBmAhXhEiTfLsBoJbLpOkChAiVtFrKrUjHsErVoHcDkTdAeLtMrPoGlPaDlBzDfZkXkQlQdTjAcGzStMcEbLpEgDlFbTlExSoSgAoSiBiGoTjVgUmXwZfHrYfKhX]]></value>
+        <value description="remark"><![CDATA[NfTaMuJuExBtKoYwIsSdCwLkVqMfXaIeEeKjKiDvTmCaQiKbYzKfOlNsSaEdMgXlWuFbOiOtDfDvNqMzMeBdJwRqCcQyIiWdBmAwIbRgWzPyShMsXvOdFrZlVgPbBqVwPlMzGaLyZhDkJoNvNsUnAdSoBeUxZqCgSbJbHeQzViXkPrKbYiRfNeRtIaVpOiWbBqSrOdFqEaSaAwCvLoPyYePgVsVzIsSpZcEaFeQgTrPoTpFlDyAdBqNpWnBeWyG]]></value>
+        <value description="workName"><![CDATA[GfDwRmVxLtLtXpBxBaNfClEyBuVrXaVdJrSiSbDhLtMgLnVuOsUnYxYvBuFdMsYdKlQuJuCtWzXqRfWkUrAqMfYcBjVmUnNtHhHmImJnPoMjScTvCuQcReBaPuVaTtWrXeBoXzZpWiBpOpEiZaDkVvYlPvIdRxWaEaIaZqSyVoRcZiOmFiWuVzGqWvKsJaBhZwMwNvJvFfSuGaCqXyQxOvJuXzHhAsKaOfNqDxMbCiJcNjBiDuReXdZqZuFwNyX]]></value>
+        <value description="workScore">19067</value>
+        <value description="workunit"><![CDATA[FpGdAgEaFqFvEbAeOeZsLiFkMaZtGrBnBkSkEtLnLnHcQmWxOvVnAaYuHkBwQbUjEzVxNgKcGcDwFfOrIcKtBuGoTiAxKoMkAzEbYoAmUrLdJaLtJhYgJeExRyZfVtGcXxCzUlAlCjMzDyQdIpXpGxYqPfMrKvSvZzHlHeCtJzIqWwYwXvMaRiAbIxNuPbTbJhEaVyDlRfTnCePdDvIxWhUnUsWeYoNqJzWrPyEhCaWaYoNzVtQeYzFzAzRcHmZ]]></value>
+    </row>
+    <row>
+        <value description="id">-8</value>
+        <value description="clevel">70773</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[EyKkLgYpNgUeIjAbHyIlChZwOjEqPdGmTrAjEkKhKoMsUvDsJuNwSgUfVvWoOtRpXfSwTwVyFpBkLaZkRyKqBuTfEzVyTbWhPtGbBzPnNjCoFmRaAvCnWsHnRqDuZpXmSxFoSdGbBvLuFqZaEiArLzEnNlVvWtCjTuMlHyIrEyCbLdZhYuHwYdScQcYxPnUvZzPlQbAtOqLbWmZmFdNuVcJhKmTdDfJuWxAnPzToZkOrLcWtQjXoTdMuSgLvKpS]]></value>
+        <value description="remark"><![CDATA[YqJyMvBcYvRdSuIkIfJhRlFkWiMuDzBuRcMuBxDxKcCdBqAeTkUuCzGpMhYjMwHlHvSvBwUuGiHfZzEgGeDpPlDjTxEsUoAkKmDbVsOpEpNaMfUtBuNuJoMoKqBbEmCwSlFjCkUoBiGaHoEbMfEvVsAmXmOzZjWxYqJtVyGjVeBfWwFpYhIvViBkIlWoUhOjYqIeMqLkYiToOlHyDaRlWfGzXlNrXrGzFbIgNcVrQrThHhWtTvRvUnLyThCpBmV]]></value>
+        <value description="workName"><![CDATA[QoFsNfSqOwTxOiQcPhNfXqPeGlAuSgChBdWsQiCkXhJdPfOwKzDuVrIxLlKpRzVmRmLsGuIoQmGtOfZsMkGkWwRyXjSnRpEpPdHkPsQgHmWwHrVpWrMjDjJjXoXdAzFlBgImWlHnVmPxTaOhRqCrClZgPcTiYnXtYlAkLlUqZyHsFqVoTpCgAlFfDwNgRfGrSdInNlCtPtVlGeJbXzNbQkJcIxRtSbDmKbClEbNrFuCfEgHdWqUlDlBzMeBwNvT]]></value>
+        <value description="workScore">85480</value>
+        <value description="workunit"><![CDATA[BsSoEkIcAsBoWzObUtLaPqJoHfZkBwGaGlAxOaExCwIlRfQjEyIoHfAjFnZfGiIjBtHhIjHwRrVkLtJtPoNfMuYsZtLjYoPgYoQoDaDiXzMwFyJsBiCzNbYqJlUpOtTyGySgMlKpSzSxQiHzLaShAsVfEyTgCyDeVdLiEeDaXdRbDwRvFoPgGgRvSjVeZbRlTtFlVtZvTkXoAdVsIoYpDtFeBfDyKjWzLdGbUmBxMwLoVuAkQnBgCbTdZuMqZgD]]></value>
+    </row>
+    <row>
+        <value description="id">-9</value>
+        <value description="clevel">73062</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[FbBgIxOxFjRbEpZvBbMbIzCaCfRgNyJqMuPkYaGqEpDoOdNwSpTqFfWaUnAcBvXiZdBgYfMsAgXiQjQuKzPvGpAcFcCuFwKsScKjLdDjPsPtPcPgHxSvYaNuQdXxTbHgEgBsKzJoVqQaZsJoZsAfBzLqUtBsHqIeDzMkBwVkScMbJfLyPpFsEvHmZaKhObMyKoPuMtWuArOoVoSiMtMmJdJjQhVpOmUeZqXyNdLdPeYmGhQjMcImGfRmGxEgEiB]]></value>
+        <value description="remark"><![CDATA[SgUiAwRwSrFrRzCvImBeJfAvLcCtBzKdVsTuHmDyUpJdVuAoXcNjHyGkPxZsHiWtWwGpDeSiJrHrMeSzOrJlEdRjCaDwSqSwZdUqKpLhCkHqNqAbQiUoEoTaOmEwGxMrHiDaYdYoGsDmXmPdOsJgKfOsOvLiTrDlAhIyPoKjFyBfJqFuCnYlUyTlZoMnAyEcHnYvBmVyBhVzTaTlGmCpNbYeTnEaYoDnQpJsLfLeKnNcHuByBrOkEnMpYvJxItG]]></value>
+        <value description="workName"><![CDATA[UiErRrAoKoVeGjEmTtWdFuYaGzTxZhXgRnWmZmJiQxXrShJaTiKuInIxRbCtHpTtRxXcYiRfWkOgHmQoEaYyAbRhCyUeBtPjXjIdKyCiWqEtByWnVmZyCzBxYzLpNqVqKfHbJsPfWuSqOvGnPtZcQnUvCiQjLfUvZjQdTrNsYbXsIkCmYuKnYlAoCkAyLnYeSzUsOmAjDhMqKeGyFdLpXkLnMrZhBbAbGgWqHvAvHvChLeFnKuKoGhHkWqHkNgO]]></value>
+        <value description="workScore">4013</value>
+        <value description="workunit"><![CDATA[BjYxNyJlYqApRwDuCnBeNyOjQcGjFdAmZySrQpEmHsJmNtQfRfLzWfPuNpYiFpLvEmGjFyKeUoMfEtXpQmVmMbTwWdSxCjAaAhHgAcVgShSuMnGmTtVvUaMbNiAzWwRdOkIzApCsYnDtGzUxGhAnOaNcTmKjIsRiDzJtXeDsIvWiNlJqXtPoPhIyTdVcTvWyBvTfKaTvWkIkJqPhRuItBnAeVvEsMtZaVfGfNzNqMwBiRaQzDcThZjGrLaByBdB]]></value>
+    </row>
+    <row>
+        <value description="id">-10</value>
+        <value description="clevel">88337</value>
+        <value description="disabled">0</value>
+        <value description="parentid"><![CDATA[HyIfHgZhWlMmMqNyRjSoAeKlZmUoNpLbNoXmKaUnNgDiIwIuOzCdJxGoIrUqBpTnHbZcQwSzKyEtUoGqMlQhBjPtClYqOtDzKqXpXtDqJrSlSnDuEoJkJuHwNeOlXlZpYqTmBwKjZcEsCfAiLlYvRfMuLwFxDpPaVaQeSjChZsApPlHjFyIzIwDlSuHeAoIkQvXkGlUqJpMyJsQeImXqYcUiLbFzXnXuTyBkKsTkDhAaQnQvUuQoVwOxZtKgRyY]]></value>
+        <value description="remark"><![CDATA[XqIbWpTfAfTiFhAlZdGkExOjOxDkEdLvBlCzPbZpLqVkEyYpVhFyWjXjTeByDmSqFuHyAqRiDsWeXvUkKlRsDfEwHtXnEeUqMxKzJoLqWzRuJrCfIdKbDpOgXkHiPzRtSyWqMqPnExJvGuFfHyVtRqCeGpOdXdAjOlVlVkHkMzCkWoEgGbRsCfKcUvFqXbHkLlFqOcHoGjJlPdUeVdOzUnBcJcOaCeTrCeDoCaMbNfCnGiCdOtZxNfYtSuUpGtI]]></value>
+        <value description="workName"><![CDATA[KhUeRpHmWqToNuVzIzQkOnKbOfOfBkIfAmOpLhLjGdLzDoLeYnLuQjMkFcRvOxJvGiBzZfVvLbGyZhCeKtVhFiMfPxNuHvVfMvZzEbSoKmKiItKzRbJzCbMkQwIuLoJoGdOhCoDsZbDoCnDjAiJjIgHjNwGyYuRxBkEcQsNuLeBtYwKcZaHlUvNvHoPoAoUeMzEoEsAuWcHlRfOxNnVtEgYcQsHtMrEnMvXsVoRnDmInYlXyKnCzHzPnStTiSiQ]]></value>
+        <value description="workScore">73645</value>
+        <value description="workunit"><![CDATA[XdChSuFcDbUfArZjByAiOmYhPsWhOyPdJkJiPfRwXpPoFnZkIaEyOePfPgGeRkRoGhDlUjVnNgJzYzLhTkQoErPcGbRsDjMnDiSwAuFhWxBdSfDuZwFhTqBdAkAzZyRaGnNkAtZtSaYbUhDxNaWdNgPqTdDqNnHxGdUqBgRlBkOoMyMoOjLcKnQyEmEhKxFiLyGsReHcZsGtMeQaHpSzYpLsOtCiIvAsZsIxWsTxGuVcPnPbFeKkLfRiTsLwRiA]]></value>
+    </row>
+    </table>
+    <!--WorkScore-END-->
+<!--DefineReport-START-->
+<table name="sy_define_report">
+        <column>code</column>
+        <column>name</column>
+        <column>remark</column>
+        <column>type</column>
+    <row>
+        <value description="code">-1</value>
+        <value description="name"><![CDATA[AdXwMaZfMmFiUkQdWlRvUjRiZdGrNgQqMoWtQaAoHgXsAyWzUcUdCdScVwAwWvYyAwQcDkBiNqGsOoPwSaXeEcQdYiGcHaEvLhIxIsYrLlIrPdYbGwNmDhLqXiFlPfRpYsBgHySiGuMxPlPjSzCkIfThSoWtFsDsPiUmYwOiWjIsMxReVfYvSfUjLrZrXaWmKuLePxUxWbVtFeUeQcIyHkNtLeIdFgWjLaDxPxDwPqQkIlSbZaCjDuEhOcAxHsI]]></value>
+        <value description="remark"><![CDATA[IdYrQcPmZvQpOfLrPxVbJeOxIuElOfWoQaEmXnUmUiXvTdFjBkScOuTqTdGdRcNuMrSlVrJtMvSqIvPfNpGgRbYnYqYzZxEoQsKiUtCdEhXwAdQnWuOgRwPbFvKuHgQeHiFkWzUiOiOqPfLhRdDyBsEaKdOxGnCoJwAyDaYtIyLbBnGaSlLlJeVkRvJhLgBdUuKqKfKjKnNlTmOxIcBeFiFkTcQqWqZcGsAoGlFiDxNoYfVcHjAjEuSeDlRyNqT]]></value>
+        <value description="type"><![CDATA[AcZyWbXaIrAdIqLcMuZiOdLoFxDoFjWqOnDhQsIkNuNfPnVgLwVtTzZpNiDlMkCnJaWgTaOrOySdHeIaCwZzJjMbTeFgXzUgPyHjHyAtXhVuStDsPfCxUtArPzDnIsAhCpFrBpTnLjMjGrNxUmTaYtWcOsNlCbPpLeStJtOfGtHtCoDoEvKoHuThVpIlWqJxUnHiDpNcRcZyLpMfXgHfYvMoNeFoXpXxFlTtZsOoTgMvVbRmHqStAnPqEuVoQfK]]></value>
+    </row>
+    <row>
+        <value description="code">-2</value>
+        <value description="name"><![CDATA[FbWuFaDlEqXmGrZlBiUpGnLqXhDhUfWqZzYnPmXyImFaCeHhMqOgIyVgDlAdXsAnGrLmHwVgUoSoZmYdNqNlTuFvEkRhEcWqGhLsLbItXmVfWxQyUxUqCpSkFoXnMzQbByIdKbQuMxAaDqHsMrAkFyEmZsXzNbVpRkWiKsKyOdUxUmJvFyRjYeUqLxYaAjDaWbPeMsFnAnNnBeYkRnQeGqCtQqNiNhXuXkRjQvQcMlTiZmHfVhYuPbUbQjVgDfT]]></value>
+        <value description="remark"><![CDATA[VaGqMiRkPrCqKnXpKvZxXkGgFbHgHuAmTiSpUfGzHuGtTwRcCdBkVyYcIqAgAlKfEbCsFxCzLeHzNsOdNpUiMiBwWyAnHwSwHyExFiQnUmQwGhNzCeQmRwChDrZgHlUoUvVqOdNzPsDaBfChCpYqQqTnQsNvKgKuAoNfQiSwWsBuRrIhElSrTiUsEcArVpKjFhQdOeFhPyDlDcYaRlVjPeKxMnBkVkYwGtMvGoPwQmVeFvOuLzNbHmKzYqQaZjU]]></value>
+        <value description="type"><![CDATA[KnWyMwFmEnEvUtBkCwXtPxXbDuIyRvViGwWdIiOdYtAcHjEdMzLiXiPwLiIkOqHfGeEpAlPwXaDuZnEwUbRzHeYvMmZsWmAxAxCgEwCzSfNnQpPqWlYpHgDuUqMjGtYySwFhPnZnDzHbWlGzDiReUwPeTqCjKlSuVnNnDkCbNfIcEbRsScJhIuVwOeVcYiBrJdJsGfDnNhSkRqPcQzXpNcLiVhGqOsOyJpCsUvTuAvYxHqPfLlDaAqObTeOdFcK]]></value>
+    </row>
+    <row>
+        <value description="code">-3</value>
+        <value description="name"><![CDATA[OfFmYrKdZhQcOnHeNvOoLkKhJjHzMyMnRxTtFfFnJoUdZyKcRsAlOqJoAeNgHpJaUzYtQpLiLpHwPeFrSpPbClNgRbYqBaVrUxXhCjKeBvLsXjQsIxDeAgDkEeMyTjTzPwGxKpZlEiYeDiTkPyHzKeFvEkYtGsNfVlCpMtBvMkFxXpNqRsVyBhKyDzNfOyXtTyIeAkTlMiLxOfPmZkHgYgZvNdBsUvYtNtKnWtGyVfSdFaWwNsLeHbYlAkDdTkL]]></value>
+        <value description="remark"><![CDATA[ZrVcIqOkVuGnVmEnSoQpBjBvKmTxBqQoAwUpAhJhJeCiCgUaCjRnDkHhPpHoKuDpPvZbTgWcJfUrLvDaUlWgXqBfGgBuIeLbEoVyBrRlLxIbWdOoXtKoUrRwLsBpGrFbVyMeIwAnKqJvChFlDjLeRgNoLnRlGrAwOgVaUeGyYtEhYqTbRjAuEzJlQjElPhBtIjLpQuZnQySgCmFjBxLvRqWiOcQxRhHbAuDlMhYmCgIoDtJyRoRyBjMeEhWgZtV]]></value>
+        <value description="type"><![CDATA[PcHnKxWsXjPgFqHbRvWeEnKjNqVvBpPqCtMxToIcFsWqKtVfGbJxCiAuGtYjGqQeHlYlMcXlFlQsYvBnFoLpJjOoRjDrTgSsRiKqAtQjIdOlAnXvHyZhJqVzTmYsFnFoDhDsCwUnReZtDvBoPhQaJwUuPyFjFbQsJwTuUySbAhRdErYoQkYySuLmHdIdLjUuTxFwZpVsQoWgZsOyZdJoDeXvZfGvFvPbMxAgVgUtGsOvYaCmTlNcTnUuZeWrLrZ]]></value>
+    </row>
+    <row>
+        <value description="code">-4</value>
+        <value description="name"><![CDATA[UxDpEwNcTrHbBwRgWvDxPyXwJmQuUnNfWzOgVvGvVjPsTjWdRuGuNpTbBcOfPtTaUgIyFjQqZhOaKcYlFtLdKoKiKfIbRvMuOzKnWhSzYcWzWmDoWnXeDlJhRxCjZsSyFfKkGtVtVnKkPtXkLfFuTqMrArFbZpNrHtSaTeUwPcBzGxJzAvRnNoMjShFuJhRzVpXaVtWjHyNdGjAqWiUqEyRmTpUcUrRpLkHjKwDrTzOiUpThRuYmKxGpOxDvBsP]]></value>
+        <value description="remark"><![CDATA[TqNyWkGjDnJjUcYyCeUoAtSeRdNmUjFoRlTqXvUsRdZlYtWdCsGfUkCcSiNwVwLhQfDkLtEaYjNgWlLoNfIfXpSvZhTjQpKcBwZyDsGbKaQqGbXdYqSfMeZrJmDgPmVsZfIsYmEjZvCfCqSwUfWmGgYiZlCnBqFvVjMzTuGbVpSxMbRcMiBwGhOvFiMwPcZqJzUeLrNzFrDeQqIhBmBmFjHzPiOrVkFsRySmBqFfVpZwDaRcXmLiRqStKoDiExK]]></value>
+        <value description="type"><![CDATA[ByBiTgKtOlZgZmNeLbYbMrEoBfZgQhAkKwOuSeWuQlTyByNuBeCvBoXaWsVyZzSyWtUeFgDpUwOaJoCnGnQnBeAbMaAdBpMyYrRmXmZrWxJoXlCzUiBcVcFlZxEbIdHnFxShDaKqMdNbZfIlCiFdFkWlDlIsNdBxCqVwBsRhFiVeVaWaVqTnSiPhIyPqPmCuFxDmAhIcOqYqOjZzPtMnEnWmWbMzQrZaHuBcCiOsNrDfHmVmUaJuFhLtMhRqGbS]]></value>
+    </row>
+    <row>
+        <value description="code">-5</value>
+        <value description="name"><![CDATA[DhYtAcBzUdZfLrVzOyZcBpGyWgIiZaRvQpBoGsUlGkBnYqZpHcJrQfGfZlGaMpChGxDbMsBeQmBqNdOeCqBsOqJfZyNoVjPbJuKcCrVdNcFvHlPsQePkRzFvNsGsCcPhAxXaOyWtQeKbYqArOuLaDuTnSpDfIiFrVjEoWqRtWrRePgLnTmEuDiYhLiZcJhJxIhDkRaHiQyOfOdHlUyEuWcZbCvEeUwUrOqKpAfNlMxZiMtZiPlHeToLdXuVzFxM]]></value>
+        <value description="remark"><![CDATA[NuIpOyAnQaXeKvPpWjDdTvCgXgInRvWlMqRcAaCnTyLbMmUlEtOcNmLcZxDcLeRlJmSaRzFrFnKmYqFjHiDiYmWxKfUyZePkSsJkKdAjGcQlNyLwGeLcXeIaDfDhHiSoYvIpOmVtUbGmUzKqJyEhIwCsVlEtTjKhMkNaQhUjAwVqSvXnNxUiZpFiZeBkKyEbQjPcBcFeXmMfXxSiYmEfHbZaYxKtPqVlBnVmIrHuGzGgGhRhDxNtSyRkRfWePiP]]></value>
+        <value description="type"><![CDATA[QfLgImJxXnJsZzBcLfCsHeFmBkQsRuQvCjMwHoSrDqTzMsUnRcXqKtXyHpYeMwRtLkCmEkHmVhTwVwQqLnMbAuCeIjRmLnEoSmIfJcScMcYdGnNmHrBlSzDxSwTkJbSsQhTyCyDwZkXkQcFwKsSgKzChUaSgNpDnJfIjHhRaPdJvLrLaFaUlXcIgQuRrRjMxLzAvIjIbVyHjMlJpNwAbIeUxEdBzBbAoWpZyLjCfMmWdJeZwYpOkDbUiKsCvZwJ]]></value>
+    </row>
+    <row>
+        <value description="code">-6</value>
+        <value description="name"><![CDATA[DoEpWbSfLnIbExLmBePoBvVxRfNdVgKcYbMmNnYvOlOzFxNvEzWrMuShIbCpQdCnQkLvHyFtPjDcYeYrWgSgQhAzHcPpGoMtJhZwUpSrKjBvIuFpObQbAwHxEoLrPkLwAlBtZeWiMvHpIpPkCnSjZvZhBlZvEdUpYkCoPoXhGeKsUyLvDiUzYdZrSeQqEuVxMjKpMvXpJyWyQuLkIwKrHmRlGxYwVzZdIhEcViTaEyKbEtMqLpQyKnHlRrKfSjG]]></value>
+        <value description="remark"><![CDATA[IpLkVyGnFwRnPwYkIrMiVqOeGaFyFvFpOpYkFrDdMlFqDeIhJnWoHaHuUoRcNlJcXnUfReCeOcBzPrDvOqIhKyXkMjRfMkKmKnXnGlUzQxKdWqTaSbHlFyLnLyUzSrUyHaRsEtYeSoPpQlOaDmGyPfFkVjEfHcVgPhMdFsAzGtXsOsLlEgTiJtVqNiEwUoJyUjTxTbGiZgKxQiYsHzJiYlDeHyShZbWyZwAkMiRwXuKuTwJsAzYxSqQsWeMrLkZ]]></value>
+        <value description="type"><![CDATA[IaNjRcDuIvRrDrHoSmNfJfRwZkDoAnYbLfReMmKcFsFiPyUjRzSqYfFmOfAjXsOaBwCxCwZaLrWuVpAvKyFgJeZdYsZpXbZoCoZiBoLgTbXxYjNkNbQdYvUwOrLsDxKmHeJxEpHdWqJqEzFjErVxQhPqOqOmWyCjGqQoZwGhCkEpRvMuIjRmRbGgGrDxSiOkVoImEjUpIgLbTuHjCaXbAoXiHiEdSiTpQfHiQwCmBcCgDmNsMuKpOuEpVtVbByQ]]></value>
+    </row>
+    <row>
+        <value description="code">-7</value>
+        <value description="name"><![CDATA[BvBuPhPaFsIwWwHsWhRrDfHiPbIdTsBcUeZiKpKpSjEhPwMwDhXhTkFuKvGnKlKqIfFhGcXmMlTdHhPuZqFeNqXrRtMaKdKaEdHaIeHwUbAcFwZgKnQnUtLaBkChOhPpWfMeWeVqAcFmHpSwHdCjUsSvTuOnYtXdYbBhTuEnNcIoCmSvJwBeJnJpHbRoQvOxMwIqNnOzOyZuSvDgAqJxAmPzNqGqRlZvNzLcNrIsHyQmWpXkRqIdGnKyEeOwSsF]]></value>
+        <value description="remark"><![CDATA[EhRuTfFvAlJsSpAsJiEiLaDxSeIrOjQaFxEpFbIjAzYkJwKaEeAgGqZhKpJhDdHdJfAlOfUpIxQhRnOmQsOnNrNiTuBlWpWuJxNoIuAbUqYoQrVmAzVeGjAyBnEcMqJjVzSyYgYyPgEjZyYgPcAhQeRiItQfJcHmCjEzDcLfVlXkKiZoMyAtWiGaXfOuMrReErOcVuXtReDoTfGpXhOvEhMiZuAqHyIlDoYwFxCeQdFiTnXbQwCtVpHaVnLnBuK]]></value>
+        <value description="type"><![CDATA[XmWwJcMcLlAeVyFoNlBpSrSyGsLyYfYbXeLbMhVvZkImQrZzDhRuUvSiTrFeNlWqQiXzWrHnZcErLnInIfTnTqIyHyHiAeVtTvWjYbMnXbQuHzRjCyZmEsEpIeFeUkHaAqGvBpSmJbElUgXbGmDcWpKsXoFvXqMoJrXeEhRnEfEoTnDrEyAtPhKvXfXhDeJgBwQmMxGyQwDfBbNrKuCdUhZhJzQmSoMwJjDrOxVbAgQsSdSmFfFzYqJbInKnRkP]]></value>
+    </row>
+    <row>
+        <value description="code">-8</value>
+        <value description="name"><![CDATA[PaCoNpWpEnNyCdSdCmXqYvNbDpFwDiJbWlOyKxYgZfIqOwRxVrRgVeVnVcZvMwJwJyWjVpVxEjGpIgCpSmZgWrGbPcTmAjCoEcAuVxQgEzOdZsZpSeZoRyFjYbOqVbVuNqJqWcJaIrOmOwDqIrMgVfRvPmTiDtJsHjOkWhJoDrTmGiDjRlQkIoJoYeJtZlFaGkJlLaGxWdMoLkWlLcHzWgEeWnZcCoGwDsEfMiVrKsTvMfDtJxDgNoBgOiPcLtL]]></value>
+        <value description="remark"><![CDATA[LjUiOzFoUiHjThAmUwQqDsJmYvSxKiVsHpSbNcVyYgEgMzXhMyTuBhSiMjEsPnBgMyJkXjMoNiHbEnMgFhQhZdQnMuDrEvKdMaYoVhQyYcTxZbAzWtKzPqOnEgRhTtPzOtQkSdCyWsTtNdVuNwRlUtKoVuIcWoPvJvRgDbSjXcLkOkTwAuPzObLkSwHfPlKqZyPyShWqRnMhCiDsZnKtWiCgZwXxUcYpSzRbEsTcTpIjKoWuCfXdBbCzBhIqHgI]]></value>
+        <value description="type"><![CDATA[BrLrLrSoAhEgAlAnDnUjMdMyPeUlLlAeGhLyBqCaMmUiOtRiWqXrWuQnUcPaBdRpVdNnBmPbWsDqThHqHcBqLeZyAfKfZrPvEeYqVsFbGnCbTnTgPxAsRiWuRwEdGcOtIwHqVlEwKbNuAaCpUzItBoOkLtJzRyFcUbFsEzWoOwWpXeKmSyKfCjLrBxLyJwSiVqJjSqEbFqMdYzOtOzOkJhHwFnNwMvWnEqTtJzAdCmShBjHoKdJhYeDrTmIuAhI]]></value>
+    </row>
+    <row>
+        <value description="code">-9</value>
+        <value description="name"><![CDATA[QlRfMnEfWoIvFhQrNzUjGcVbVeQlZhAxYkPfSzMmAbOhIlArKdIyCcPkNeWtZeQpRdDwEzLpUcYnNmWwZuFlRpOgOsXbGzVhDmFcUgQhXeToVnQwCxCoHsPyFfSfPiTfTxEhNuJqZdIgFtKjYdLcQaAdXwAcHkJhQjLaErGjUtMmMyPySdCpYeIaPlEiDlMxHqIaRtWeInTwVaXvKtLuJhFpZeZsBkTzOxGmRkEbPtGnFtMbZtJvKdRjHaIjOaY]]></value>
+        <value description="remark"><![CDATA[AuHwQgPvHcUgDgZjWpSbUdAtJaXhVuWoUiBxJvBrLdRvFeCgEgDmYyNfHjRjQsBsXiTxJlDsRtAsXhGkPqUmNeTkWfXeXoTbYmThJhYiGsVqOkPsKeIyHpRsNfZzIkGeQnAvOmGpHsBlZrDkCiGjDhVaMhTaIhEhEkCcOyWuYbCaSqEoTjWmBxFkQfBnRcWvIhGmEtAoRfNcNpYaBzXgDvLeHnTnYjHsBfEfYnItRaFlKbGuLmYfDvFdOrVjTqU]]></value>
+        <value description="type"><![CDATA[MyPqPkHpZtXsHnQvGfDjUwDuEmKzAqOmCpLiWaJlGlJqXpCnAnSkBlJdVcMbCwApPnHmVeSkTfWrQkPxVxJrWaVxMxKhTwQiEwXaBhHdCzQoBuIfRnRsXnIyOoWgZfIrNyTlFpYaQbFjFoEhLoBuGcAwZrVjFbIrOlIwTsIyBaTcPwYbJtGdAcJcAdIsAiIzXjWfNsChLdZnSwRbCjGgMdPuFnLtHlZnIxJuEkNgEvZfOjZhAbHoEoLmSqIsKmJ]]></value>
+    </row>
+    <row>
+        <value description="code">-10</value>
+        <value description="name"><![CDATA[KuTrWhTcIlQuUtDaIjQhJkBsSrOoWtFhHdMdYcXrExZqRnBpQiFjUbNtSfVzIqOcPzJdRhWoPnTuRfVjHqLtHkHoWdRmAhIiPoKdTdAeTrQtGxQjOyLsHmJoVmZbRaGhAjLzGvNpWpBiSmKxGiDdZoGiMwAlMzZbNjSdAaDtVxEeSkAoYuAvMsSwOfPnStTqBdPnOvEmHsDrGrYqPkWpFbYwAxQkOmZgNtNpVvVfBlSyRyBkKiVhNsAiHySmMgG]]></value>
+        <value description="remark"><![CDATA[JxDiJwKrOlNbAvAsFyKaYqMkLbMaVmKnGjSpXuIjJeUsLxIaLiTvRpLbVaOnXzOnItBqDzUvZiMyZxBoSaVzEvAiQiDmKoLnRjFcTtHiQtIiWdGbPqMoDrDoMoJzLiLiNuToKaAbKkBmRaBoIwMkIiTnZvBxWfUiJhOvFeQyYjTdFeRtWbFsIwPnGjLdCsTcZeNrKpXrYrClEvBoGrQxJrAkXwIaUwIaZmRyJxWwLrFoBbEvBeKsFcJzXtByEjU]]></value>
+        <value description="type"><![CDATA[HlAmPuWiRuOdIpCjQjAkOvImShYiGiDaDxRiKdHgMiGoKeVcKqFjErKhMnSsMxVlEkPpOjLtBbFpQrStQdSyKsVuVoXwWbWaEzHlPzIeRqWxKlSyQlJsLlXlKpFpUkQoBnGiVbPiPpFdRqUtTgZuAfUlLcAnWqZeBiJkSwMhAzKnUrHpKnPlEvRqUpBuDeSeCsJoNmCdAtWvZzTyApIdZlYiZjVaIvSbQbNgLvWaThTkUfDpPyWnUnArRuWqSeB]]></value>
+    </row>
+    </table>
+    <!--DefineReport-END-->
 </dataset>
+
+
 
 
 

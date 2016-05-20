@@ -388,6 +388,8 @@ public class AsyncHrDataAction extends BaseAction implements Preparable{
 					hrPersonSnap.setBank1(person.getBank1());
 					hrPersonSnap.setBank2(person.getBank2());
 					hrPersonSnap.setSalaryNumber2(person.getSalaryNumber2());
+					hrPersonSnap.setGzType(person.getGzType());
+					hrPersonSnap.setGzType2(person.getGzType2());
 					/*考勤*/
 					hrPersonSnap.setKqType(person.getKqType());
 					hrPersonSnap.setStopKq(person.getStopKq());

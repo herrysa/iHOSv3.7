@@ -219,6 +219,9 @@ public class AsyncHrDataManagerImpl implements AsyncHrDataManager{
 				person.setOrgCode(hrPersonSnap.getOrgCode());
 				person.setSnapCode(hrPersonSnap.getSnapCode());
 				person.setBranchCode(hrPersonSnap.getBranchCode());
+				
+				person.setGzType(hrPersonSnap.getGzType());
+				person.setGzType2(hrPersonSnap.getGzType2());
 				personList.add(person);
 			}
 		}

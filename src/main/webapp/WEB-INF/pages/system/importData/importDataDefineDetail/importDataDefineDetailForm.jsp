@@ -136,7 +136,8 @@
 											jQuery("#${random}btnSaveImportDataDefine").attr("disabled",true);
 											jQuery("#${random}btnSaveImportDataDefine").css("color","gray");
  											var tableName = jQuery("#${random}importDataDefine_tableName").val();
-											var url = "findAllImportDataDefine?tableName="+tableName+"&navTabId=${navTabId}&interfaceId="+data.interfaceId;
+ 											var whereSql = jQuery("#${random}importDataDefine_whereSql").val();
+											var url = "findAllImportDataDefine?tableName="+tableName+"&whereSql="+whereSql+"&navTabId=${navTabId}&interfaceId="+data.interfaceId;
 											url += "&subSystemCode=GZ&callBackFunc=gzContentGridTableReLoadData()";
 											url = encodeURI(url);
 											$.pdialog.reload(url,{ifr:true,hasSupcan:true,mask:true,resizable:false,maxable:false,width : 700,height : 550});
@@ -165,7 +166,8 @@
 									success:function(){
 										alertMsg.correct("数据已删除！");
 										var tableName = jQuery("#${random}importDataDefine_tableName").val();
-										var url = "findAllImportDataDefine?tableName="+tableName+"&navTabId=${navTabId}";
+										var whereSql = jQuery("#${random}importDataDefine_whereSql").val();
+										var url = "findAllImportDataDefine?tableName="+tableName+"&whereSql="+whereSql+"&navTabId=${navTabId}";
 										url += "&subSystemCode=GZ&callBackFunc=gzContentGridTableReLoadData()";
 										url = encodeURI(url);
 										$.pdialog.reload(url,{ifr:true,hasSupcan:true,mask:true,resizable:false,maxable:false,width : 700,height : 550});
@@ -245,8 +247,9 @@
 					}else{
 						jQuery("#${random}excelFileName").val(inputExcelFile);
 						var tableName = jQuery("#${random}importDataDefine_tableName").val();
+						var whereSql = jQuery("#${random}importDataDefine_whereSql").val();
 						var interfaceId = jQuery("#${random}importDataDefineDetail_listOfName").val();
-						jQuery("#${random}excelImportDataForm").attr("action","checkImportDataFile?interfaceId="+interfaceId+"&tableName="+tableName+"&popup=true&navTabId=${navTabId}&subSystemCode=${subSystemCode}");
+						jQuery("#${random}excelImportDataForm").attr("action","checkImportDataFile?interfaceId="+interfaceId+"&tableName="+tableName+"&whereSql="+whereSql+"&popup=true&navTabId=${navTabId}&subSystemCode=${subSystemCode}");
 						jQuery("#${random}btnExcelFormCheck").attr("disabled",true);
 						jQuery("#${random}excelImportDataForm").submit();
 						
@@ -573,6 +576,7 @@
 			<div style="width: 580px; padding: 10px 5px 10px 15px;">
 				<div >
 					<s:hidden key="tableName" id="%{random}importDataDefine_tableName"></s:hidden>
+					<s:hidden key="whereSql" id="%{random}importDataDefine_whereSql"></s:hidden>
 				</div>
 				<div style="color: #15428B;">
 					<div id="${random}dvInterfaceList" style="display: block;">

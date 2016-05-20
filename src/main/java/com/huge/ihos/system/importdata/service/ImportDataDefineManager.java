@@ -21,7 +21,7 @@ public interface ImportDataDefineManager extends GenericManager<ImportDataDefine
       * @param subSystemCode 子系统代码
       * @return
       */
-     public List<String> readImportFile(File file,String type,ImportDataDefine importDataDefine,String tableName,String subSystemCode);
+     public List<String> readImportFile(File file,String type,ImportDataDefine importDataDefine,String tableName,String subSystemCode,String whereSql);
      public JQueryPager getImportDataLoggerCriteria( final JQueryPager paginatedList, String interLogId );
  	/**
  	 * 外部数据导入数据库

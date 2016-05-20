@@ -383,6 +383,8 @@ public class HrPersonSnapManagerImpl extends GenericManagerImpl<HrPersonSnap, St
 		person.setBank1(hrPersonSnap.getBank1());
 		person.setBank2(hrPersonSnap.getBank2());
 		person.setSalaryNumber2(hrPersonSnap.getSalaryNumber2());
+		person.setGzType(hrPersonSnap.getGzType());
+		person.setGzType2(hrPersonSnap.getGzType2());
 		personDao.save(person);
 	}
 	public synchronized void syncUpdateHrPerson(Person person,String snapCode,Person operPerson,Date date){
@@ -448,6 +450,8 @@ public class HrPersonSnapManagerImpl extends GenericManagerImpl<HrPersonSnap, St
 		hrPersonSnap.setBank1(person.getBank1());
 		hrPersonSnap.setBank2(person.getBank2());
 		hrPersonSnap.setSalaryNumber2(person.getSalaryNumber2());
+		hrPersonSnap.setGzType(person.getGzType());
+		hrPersonSnap.setGzType2(person.getGzType2());
 		this.saveHrPerson(hrPersonSnap, null, operPerson, date, false);
 		//hrPersonSnapDao.save(hrPersonSnap);
 		person.setSnapCode(snapCode);

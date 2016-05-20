@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="defineReport" extends="default"	namespace="/">
+
+		<action name="defineReportList" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/defineReport/defineReportList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/defineReport/defineReportList.jsp</result>
+		</action>
+		<action name="defineReportGridList" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"		method="defineReportGridList">
+			<result type="json">
+				<param name="includeProperties">defineReports.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="defineReportGridEdit" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="defineReportGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDefineReport" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/reportManager/report/defineReport/defineReportForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/reportManager/report/defineReport/defineReportForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveDefineReport" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="editDefineReport" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="editDefineReport">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/defineReport/defineReport.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/defineReport/defineReport.jsp</result>
+		</action>
+		<action name="saveDefineReportXml" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="saveDefineReportXml">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

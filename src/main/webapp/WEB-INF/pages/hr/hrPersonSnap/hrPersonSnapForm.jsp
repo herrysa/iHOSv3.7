@@ -68,6 +68,17 @@
 			
 		});
 		jQuery('#saveHrPersonlink').click(function() {
+			var gzType = jQuery("#hrPersonSnap_gzType").val();
+			var gzType2 = jQuery("#hrPersonSnap_gzType2").val();
+			if(gzType2){
+				if(!gzType){
+					alertMsg.error("如果该人员只属于一个工资类别,请填入第一项！");
+					return ;
+				}else if(gzType2==gzType){
+					alertMsg.error("'工资类别' 和  '工资类别2' 不能相同！");
+					return ;
+				}
+			}
 			//附加信息保存
 			var gridAllDatas=[];
 			var gridAllDatasIndex=0;
@@ -673,12 +684,18 @@
 								<div class="unit">
 									<label><s:text name='hrPersonSnap.gzType'/>:</label>
 									<span  class="formspan" style="float: left; width: 140px">
-				    				<s:select key="hrPersonSnap.gzType" headerKey=""   
+				    				<s:select key="hrPersonSnap.gzType" headerKey=""   headerValue=""   
 										list="#request.gztypes" listKey="gzTypeId" listValue="gzTypeName"
 						   	 			emptyOption="false"  maxlength="50" width="50px" theme="simple">
 				       				</s:select>
 				       				</span>
-				       				<s:textfield key="hrPersonSnap.taxType" maxlength="20" cssClass=""/>
+				       				<label>工资类别2:</label>
+									<span  class="formspan" style="float: left; width: 140px">
+				    				<s:select key="hrPersonSnap.gzType2" headerKey=""   headerValue=""
+										list="#request.gztypes" listKey="gzTypeId" listValue="gzTypeName"
+						   	 			emptyOption="false"  maxlength="50" width="50px" theme="simple">
+				       				</s:select>
+				       				</span>
 								</div>
 								<div class="unit">
 									<label><s:text name="hrPersonSnap.bank1"/>:</label>
@@ -697,6 +714,7 @@
 									<s:textfield key="hrPersonSnap.salaryNumber2" maxlength="20" cssClass=""/>
 								</div>
 								<div class="unit">
+									<s:textfield key="hrPersonSnap.taxType" maxlength="20" cssClass=""/>
 									<label><s:text name='hrPersonSnap.stopSalary'/>:</label>
 									<span  class="formspan" style="float: left; width: 140px">
 										<s:checkbox key="hrPersonSnap.stopSalary" theme="simple"/>

@@ -88,6 +88,7 @@ import com.huge.webapp.pagers.PagerFactory;
 import com.huge.webapp.util.PropertyFilter;
 import com.huge.webapp.util.PropertyFilter.MatchType;
 import com.huge.webapp.util.SpringContextHelper;
+import com.ibm.db2.jcc.t2zos.s;
 import com.opensymphony.xwork2.Preparable;
 
 @SuppressWarnings("serial")
@@ -1063,6 +1064,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 		Map<String, Map<String, String>> importHrPersonOldData = (Map<String, Map<String, String>>)this.getRequest().getSession().getAttribute("importHrPersonOldData"+this.getRandom());
 		List<HrPersonSnap> personList = new ArrayList<HrPersonSnap>();
 		List<String> insertSqlList = new ArrayList<String>();
+		List<String> snapPersonIdList = new ArrayList<String>();
 		List<HrOperLog> logList = new ArrayList<HrOperLog>();
 		Person operPerson = this.getSessionUser().getPerson();
 		Date operTime = new Date();
@@ -1255,7 +1257,10 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 					}
 					col = OtherUtil.subStrEnd(col, ",")+")";
 					value = OtherUtil.subStrEnd(value, ",")+")";
-					
+					if(snapPersonIdList.contains(snapId)){
+						continue;
+					}
+					snapPersonIdList.add(snapId);
 					insertSql = "insert into hr_person_snap "+col+" values "+value;
 					insertSqlList.add(insertSql);
 					//personList.add(hrPersonSnapTemp);

@@ -22,6 +22,7 @@
 response.setHeader("Cache-Control","no-cache"); 
 response.setDateHeader("Expires", 0); 
 response.flushBuffer();%> 
+
 var navTabMaxNum = "${navTabNum}";
 var leftMenuType = "${leftMenuType}";
 

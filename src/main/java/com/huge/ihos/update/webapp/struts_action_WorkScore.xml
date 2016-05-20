@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="workScore" extends="default"	namespace="/">
+
+		<action name="workScoreList" class="com.huge.ihos.update.webapp.action.WorkScorePagedAction">
+			<result name="input">/WEB-INF/pages/jjUpdata/workScore/workScoreList.jsp</result>
+			<result name="success">/WEB-INF/pages/jjUpdata/workScore/workScoreList.jsp</result>
+		</action>
+		<action name="workScoreGridList" class="com.huge.ihos.update.webapp.action.WorkScorePagedAction"		method="workScoreGridList">
+			<result type="json">
+				<param name="includeProperties">workScores.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="workScoreGridEdit" class="com.huge.ihos.update.webapp.action.WorkScorePagedAction"			method="workScoreGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editWorkScore" class="com.huge.ihos.update.webapp.action.WorkScorePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/jjUpdata/workScore/workScoreForm.jsp</result>
+			<result name="input">/WEB-INF/pages/jjUpdata/workScore/workScoreForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveWorkScore" class="com.huge.ihos.update.webapp.action.WorkScorePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,workScore.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="getWorkScoreTree" class="com.huge.ihos.update.webapp.action.WorkScorePagedAction"			method="getWorkScoreTree">
+			<result name="success" type="json">
+                <param name="includeProperties">workScoreTreeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -144,6 +144,17 @@
 			WdatePicker();
 		});
 		jQuery('#${random}savelink').click(function() {
+			var gzType = jQuery("#personForm_person_gzType").val();
+			var gzType2 = jQuery("#personForm_person_gzType2").val();
+			if(gzType2){
+				if(!gzType){
+					alertMsg.error("如果该人员只属于一个工资类别,请填入到第一项！");
+					return ;
+				}else if(gzType2==gzType){
+					alertMsg.error("'工资类别' 和  '工资类别2' 不能相同！");
+					return ;
+				}
+			}
 			jQuery("#personForm").attr("action","savePerson?popup=true&navTabId="+'${navTabId}&entityIsNew=${entityIsNew}');
 			jQuery("#personForm").submit();
 		});
@@ -401,9 +412,19 @@
 								maxlength="20" cssClass="input-small personFormReadonly" />
 							<%-- <s:textfield key="person.salaryNumber" required="false"
 								cssClass="input-small personFormReadonly" maxlength="20" />  --%>
+							<s:textfield key="person.taxType" maxlength="20" cssClass=""/>
+						</div>
+						<div class="unit">
 							<label><s:text name='person.gzType'/>:</label>
 							<span  class="formspan" style="float: left; width: 140px">
-				    			<s:select key="person.gzType" headerKey=""   
+				    			<s:select key="person.gzType" headerKey=""   headerValue="" 
+									list="#request.gztypes" listKey="typeId" listValue="typeName"
+						   	 		emptyOption="false"  maxlength="50" width="50px" theme="simple">
+				       			</s:select>
+				       		</span>
+				       		<label>工资类别2:</label>
+							<span  class="formspan" style="float: left; width: 140px">
+				    			<s:select key="person.gzType2" headerKey=""   headerValue=""
 									list="#request.gztypes" listKey="typeId" listValue="typeName"
 						   	 		emptyOption="false"  maxlength="50" width="50px" theme="simple">
 				       			</s:select>
@@ -426,7 +447,7 @@
 							<s:textfield key="person.salaryNumber2" maxlength="20" cssClass=""/>
 						</div>
 						<div class="unit">
-							<s:textfield key="person.taxType" maxlength="20" cssClass=""/>
+							
 							<label><s:text name='person.stopSalary'/>:</label>
 							<span  class="formspan" style="float: left; width: 140px">
 								<s:checkbox key="person.stopSalary" theme="simple"/>

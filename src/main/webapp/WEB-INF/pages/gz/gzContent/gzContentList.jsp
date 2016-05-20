@@ -418,7 +418,6 @@
 	function initGzContentGridScript(colModelDatas,columns,gzColMap){
 		var gzContentGrid = cloneObj(supCanTreeListGrid);
 		gzContentGrid.Cols = colModelDatas;
-		//console.log(JSON.stringify(gzContentGrid));
 		gzContentGridDefine.main.Build = JSON.stringify(gzContentGrid);
 		gzContentGridTableload();
 	}
@@ -461,11 +460,11 @@
 {name:'birthday',index:'birthday',width:'80px',align:'center',text : '<s:text name="gzContent.birthday" />',isHide:"absHide",editable:false,dataType:'date'},
 {name:'duty',index:'duty',width:'80px',align:'left',text : '<s:text name="gzContent.duty" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'educationalLevel',index:'educationalLevel',width:'80px',align:'left',text : '<s:text name="gzContent.educationalLevel" />',isHide:"absHide",editable:false,dataType:'string'},
-{name:'salaryNumber',index:'salaryNumber',width:'80px',align:'left',text : '<s:text name="gzContent.salaryNumber" />',isHide:true,editable:false,dataType:'string'},
-{name:'idNumber',index:'idNumber',width:'80px',align:'left',text : '<s:text name="gzContent.idNumber" />',isHide:true,editable:false,dataType:'string'},
-{name:'jobTitle',index:'jobTitle',width:'80px',align:'left',text : '<s:text name="gzContent.jobTitle" />',isHide:true,editable:false,dataType:'string'},
-{name:'postType',index:'postType',width:'80px',align:'left',text : '<s:text name="gzContent.postType" />',isHide:true,editable:false,dataType:'string'},
-{name:'ratio',index:'ratio',width:'80px',align:'left',text : '<s:text name="gzContent.ratio" />',isHide:true,editable:false,dataType:'double'},
+{name:'salaryNumber',index:'salaryNumber',width:'80px',align:'left',text : '<s:text name="gzContent.salaryNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+{name:'idNumber',index:'idNumber',width:'80px',align:'left',text : '<s:text name="gzContent.idNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+{name:'jobTitle',index:'jobTitle',width:'80px',align:'left',text : '<s:text name="gzContent.jobTitle" />',isHide:"absHide",editable:false,dataType:'string'},
+{name:'postType',index:'postType',width:'80px',align:'left',text : '<s:text name="gzContent.postType" />',isHide:"absHide",editable:false,dataType:'string'},
+{name:'ratio',index:'ratio',width:'80px',align:'left',text : '<s:text name="gzContent.ratio" />',isHide:"absHide",editable:false,dataType:'double'},
 {name:'disabled',index:'disabled',width:'80px',align:'left',text : '<s:text name="gzContent.disabled" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'workBegin',index:'workBegin',width:'80px',align:'left',text : '<s:text name="gzContent.workBegin" />',isHide:"absHide",editable:false,dataType:'date'} 
 		];  
@@ -1834,7 +1833,7 @@
 	function importDataFunc(tableName) {
 		//打开窗口
 		var winTitle = "外部数据导入";
-		var url = "findAllImportDataDefine?tableName="+tableName+"&navTabId=gzContent_gridtable";
+		var url = "findAllImportDataDefine?tableName="+tableName+"&whereSql=and gzTypeId='${gzType.gzTypeId}'&navTabId=gzContent_gridtable";
 		url += "&subSystemCode=GZ&callBackFunc=gzContentGridTableReLoadData()";
 		url = encodeURI(url);
 		$.pdialog.open(url,'findAllImportDataDefine',winTitle,{ifr:true,hasSupcan:"gzContent_gridtable",mask:true,resizable:false,maxable:false,width : 622,height : 390});

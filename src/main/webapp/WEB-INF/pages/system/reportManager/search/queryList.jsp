@@ -546,7 +546,7 @@
 
 				initFlag = initColumn('${random}_${searchName}_gridTable','${searchName}',initFlag);
 				
-				jQuery('#${random}_${searchName}_gridTable').contextMenu('searchGridCM',{
+				/* jQuery('#${random}_${searchName}_gridTable').contextMenu('searchGridCM',{
 					bindings:{
 					showInfo:function(t,m){
 						var url = "#DIA_inline?inlineId=searchGridPropertyDiv";
@@ -557,7 +557,7 @@
 						});
 					}
 					}
-				});
+				}); */
 			}
 		}
 		

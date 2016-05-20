@@ -68,13 +68,13 @@ public class ImportDataDefineManagerImpl extends GenericManagerImpl<ImportDataDe
 	}
 
 	@Override
-	public List<String> readImportFile(File file, String type, ImportDataDefine importDataDefine, String tableName, String subSystemCode) {
+	public List<String> readImportFile(File file, String type, ImportDataDefine importDataDefine, String tableName, String subSystemCode,String whereSql) {
 		if (type != null && !"".equals(type)) {
 			Set<ImportDataCheckMessage> messagess = new HashSet<ImportDataCheckMessage>();
 			if ("txt".equals(type)) {
-				messagess = this.readTxtImportFile(file, importDataDefine, tableName);
+				messagess = this.readTxtImportFile(file, importDataDefine, tableName,whereSql);
 			} else if ("excel".equals(type)) {
-				messagess = this.readExcelImportFile(file, importDataDefine, tableName);
+				messagess = this.readExcelImportFile(file, importDataDefine, tableName,whereSql);
 			} else {
 				return null;
 			}
@@ -214,7 +214,7 @@ public class ImportDataDefineManagerImpl extends GenericManagerImpl<ImportDataDe
 		return null;
 	}
 
-	private Set<ImportDataCheckMessage> readTxtImportFile(File file, ImportDataDefine importDataDefine, String tableName) {
+	private Set<ImportDataCheckMessage> readTxtImportFile(File file, ImportDataDefine importDataDefine, String tableName,String andSql) {
 		Set<ImportDataCheckMessage> messages = new HashSet<ImportDataCheckMessage>();
 		Set<ImportDataDefineDetail> details = importDataDefine.getImportDataDefineDetails();
 		List<ImportDataCheck> checks = initImportDataCheck();
@@ -317,7 +317,7 @@ public class ImportDataDefineManagerImpl extends GenericManagerImpl<ImportDataDe
 									checkRepeatList.add(personCode + "," +orgCode);
 								}
 								String updateSql = "update " + tableName + " set ";
-								String whereSql = " where 1=1 ";
+								String whereSql = " where 1=1 "+andSql+" ";
 								for (ImportDataDefineDetail importDataDefineDetail : details) {
 									String detailName = importDataDefineDetail.getDetailName();
 									int index = columnNameMap.get(detailName);
@@ -392,7 +392,7 @@ public class ImportDataDefineManagerImpl extends GenericManagerImpl<ImportDataDe
 
 	}
 
-	private Set<ImportDataCheckMessage> readExcelImportFile(File file, ImportDataDefine importDataDefine, String tableName) {
+	private Set<ImportDataCheckMessage> readExcelImportFile(File file, ImportDataDefine importDataDefine, String tableName,String andSql) {
 		try {
 			Set<ImportDataCheckMessage> messages = new HashSet<ImportDataCheckMessage>();
 			Set<ImportDataDefineDetail> details = importDataDefine.getImportDataDefineDetails();
@@ -542,7 +542,7 @@ public class ImportDataDefineManagerImpl extends GenericManagerImpl<ImportDataDe
 								checkRepeatList.add(personCode + "," +orgCode);
 							}
 							String updateSql = "update " + tableName + " set ";
-							String whereSql = " where 1=1 ";
+							String whereSql = " where 1=1 "+andSql+" ";
 							for (ImportDataDefineDetail importDataDefineDetail : details) {
 								String detailName = importDataDefineDetail.getDetailName();
 								int index = columnNameMap.get(detailName);

@@ -100,6 +100,7 @@ public class Person extends BaseObject implements Serializable {
 	private String bank2;
 	private String salaryNumber2;
 	private String gzType;
+	private String gzType2;
 	//考勤
 	private String kqType;//考勤类别
 	private Boolean stopKq = false;
@@ -417,6 +418,15 @@ public class Person extends BaseObject implements Serializable {
 
 	public void setGzType(String gzType) {
 		this.gzType = gzType;
+	}
+	
+	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	public String getGzType2() {
+		return gzType2;
+	}
+
+	public void setGzType2(String gzType2) {
+		this.gzType2 = gzType2;
 	}
 
 	@Column(name = "kqTypeId", length = 32, nullable = true)

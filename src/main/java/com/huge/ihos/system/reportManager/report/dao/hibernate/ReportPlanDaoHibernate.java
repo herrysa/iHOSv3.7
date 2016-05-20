@@ -646,7 +646,11 @@ public class ReportPlanDaoHibernate extends GenericDaoHibernate<ReportPlan, Stri
         					for(String addStr:groupColumnList){
         						List<String> addList = new ArrayList<String>();
         						for(Map<String, Object> mapTemp:listTemp){
-            						String addValue = mapTemp.get(addStr).toString();
+        							Object addValueObj = mapTemp.get(addStr);
+        							String addValue = "";
+        							if(addValueObj!=null){
+        								addValue = addValueObj.toString();
+        							}
             						if(!addList.contains(addValue)){
             							addList.add(addValue);
             						}

@@ -282,14 +282,24 @@ public class GzTypePagedAction extends JqGridBaseAction implements Preparable {
 			return ajaxForward("该工资类别已进行工资数据编辑，不能删除。");
 		}
 		filters.clear();
-		filters.add(new PropertyFilter("INS_gzType",id));
+		//filters.add(new PropertyFilter("INS_gzType",id));
+		PropertyFilter gzTypeFilter = new PropertyFilter("INS_gzType",id);
+		filters.add(gzTypeFilter);
 		List<Person> persons = personManager.getByFilters(filters);
+		filters.remove(gzTypeFilter);
+		filters.add(new PropertyFilter("INS_gzType2",id));
+		persons.addAll(personManager.getByFilters(filters));
 		if (OtherUtil.measureNotNull(persons) && !persons.isEmpty()) {
 			return ajaxForward("该工资类别已被职工表使用，不能删除。");
 		}
 		filters.clear();
-		filters.add(new PropertyFilter("INS_gzType",id));
+		//filters.add(new PropertyFilter("INS_gzType",id));
+		gzTypeFilter = new PropertyFilter("INS_gzType",id);
+		filters.add(gzTypeFilter);
 		List<MonthPerson> monthPersons = personManager.getByFilters(filters,MonthPerson.class);
+		filters.remove(gzTypeFilter);
+		filters.add(new PropertyFilter("INS_gzType2",id));
+		monthPersons.addAll(personManager.getByFilters(filters,MonthPerson.class));
 		if (OtherUtil.measureNotNull(monthPersons) && !monthPersons.isEmpty()) {
 			return ajaxForward("该工资类别已被月度职工表使用，不能删除。");
 		}
@@ -673,9 +683,14 @@ public class GzTypePagedAction extends JqGridBaseAction implements Preparable {
 			filters.add(new PropertyFilter("NES_personId","XT"));
 			filters.add(new PropertyFilter("EQB_stopSalary","0"));
 			//filters.add(new PropertyFilter("EQB_disable","0"));
-			filters.add(new PropertyFilter("EQS_gzType",gzType));
+			PropertyFilter gzTypeFilter = new PropertyFilter("EQS_gzType",gzType);
+			filters.add(gzTypeFilter);
+			//filters.add(new PropertyFilter("EQS_gzType",gzType));
 			filters.add(new PropertyFilter("EQS_checkperiod",lastPeriod));
 			List<MonthPerson> monthPersons = gzContentManager.getByFilters(filters,MonthPerson.class);
+			filters.remove(gzTypeFilter);
+			filters.add(new PropertyFilter("EQS_gzType2",gzType));
+			monthPersons.addAll(gzContentManager.getByFilters(filters,MonthPerson.class));
 			Set<Branch> branches = new HashSet<Branch>();
 			for(MonthPerson monthPerson: monthPersons) {
 				Branch branch = monthPerson.getBranch();

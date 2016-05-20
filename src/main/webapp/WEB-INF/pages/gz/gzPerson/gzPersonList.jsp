@@ -26,6 +26,7 @@
 			gridGzTypeSelect = gridGzTypeSelect.substring(0,gridGzTypeSelect.length-1);
 		}
 		jQuery("#gzPerson_gzTypeSelect").html(gzTypeHtml);
+		jQuery("#gzPerson_gzType2Select").html(gzTypeHtml);
 		var initFlag = 0;
 		var gridObject = jQuery(gzPersonGridIdString);
 		gridObject.jqGrid({
@@ -39,7 +40,8 @@
 				{name : 'personCode',index : 'personCode',align : 'center',width:70,label : '<s:text name="person.personCode" />',hidden : false, sortable:true,highsearch:true},
 				{name : 'department.name',index : 'department.name',align : 'left',width:70,label : '<s:text name="person.departmentName" />',hidden : false,sortable:true,highsearch:true},
 				{name : 'branch.branchName',index : 'branch.branchName',align : 'left',width:70,label : '<fmt:message key="hisOrg.branchName" />',hidden : false, sortable:false,highsearch:true},
-				{name : 'gzType',index:'gzType',align:'center',width:'70px',label : '<s:text name="person.gzType" />',hidden:false,formatter: "select", editoptions:{value:gridGzTypeSelect},sortable:true,highsearch:true},
+				{name : 'gzType',index:'gzType',align:'left',width:'70px',label : '<s:text name="person.gzType" />',hidden:false,formatter: "select", editoptions:{value:gridGzTypeSelect},sortable:true,highsearch:true},
+				{name : 'gzType2',index:'gzType2',align:'left',width:'70px',label : '工资类别2',hidden:false,formatter: "select", editoptions:{value:gridGzTypeSelect},sortable:true,highsearch:true},
 				{name : 'sex',index : 'sex',align : 'center',width:50,label : '<s:text name="person.sex" />',hidden : false, sortable:true,highsearch:true},
 				{name : 'status',index : 'status',align : 'left',width:100,label : '<s:text name="person.status" />',hidden : false, sortable:true,highsearch:true},
 				{name : 'postType',index : 'postType',align : 'center',width:80,label : '<s:text name="person.postType" />',hidden : false, sortable:true,highsearch:true},
@@ -422,8 +424,12 @@
 						<input type="hidden" id="gzPerson_depts_id" name="filter_INS_department.departmentId">
 					</label>
 					<label class="queryarea-label">
-						<s:text name="person.gzType"></s:text>
+						<s:text name="person.gzType"></s:text>：
 						<select id="gzPerson_gzTypeSelect" name="filter_EQS_gzType" style="float: none;"></select>
+					</label>
+					<label class="queryarea-label">
+						工资类别2：
+						<select id="gzPerson_gzType2Select" name="filter_EQS_gzType2" style="float: none;"></select>
 					</label>
 					<label class="queryarea-label">
 						<fmt:message key='person.postType'/>：

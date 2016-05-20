@@ -11,6 +11,7 @@
 
 	<session-factory>
 
+        <mapping class="com.huge.ihos.system.reportManager.report.model.DefineReport"/>
     </session-factory>
 
 </hibernate-configuration>

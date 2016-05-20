@@ -31,8 +31,8 @@
 			jQuery('#personType_disabled').attr('disabled','true');
 		}
 		if("${oper}"=='view'){
-			   readOnlyForm("personTypeForm");
-			   jQuery("#personTypeButtonActive").hide();
+			readOnlyForm("personTypeForm");
+			jQuery("#personTypeButtonActive").hide();
 		} 
 	});
 	function savePersonTypeForm(data){

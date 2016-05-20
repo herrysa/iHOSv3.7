@@ -61,6 +61,16 @@ public class ImportDataDefinePagedAction extends JqGridBaseAction implements Pre
 	private String subSystemCode;//子系统代码
 	private String callBackFunc;//导入成功回调函数
 	private long systemTime;
+	
+	private String whereSql;
+
+	public String getWhereSql() {
+		return whereSql;
+	}
+
+	public void setWhereSql(String whereSql) {
+		this.whereSql = whereSql;
+	}
 
 	public long getSystemTime() {
 		return systemTime;
@@ -456,10 +466,13 @@ public class ImportDataDefinePagedAction extends JqGridBaseAction implements Pre
 				importDataDefine = this.importDataDefineManager.get(interfaceId);
 			}
 			List<String> list = null;
+			if(whereSql==null){
+				whereSql = "";
+			}
 			if (excelFileName.endsWith(".xls")) {
-				list = this.importDataDefineManager.readImportFile(excelFile, "excel", importDataDefine, tableName, subSystemCode);
+				list = this.importDataDefineManager.readImportFile(excelFile, "excel", importDataDefine, tableName, subSystemCode,whereSql);
 			} else if (excelFileName.endsWith(".txt")) {
-				list = this.importDataDefineManager.readImportFile(excelFile, "txt", importDataDefine, tableName, subSystemCode);
+				list = this.importDataDefineManager.readImportFile(excelFile, "txt", importDataDefine, tableName, subSystemCode,whereSql);
 			} else {
 				return ajaxForwardError("请选择正确的文件格式，Excel或者文本文件！");
 			}

@@ -84,6 +84,17 @@
 	});
 	/*保存*/
 	function gzPersonFormSave(){
+		var gzType = jQuery("#person_gzType").val();
+		var gzType2 = jQuery("#person_gzType2").val();
+		if(gzType2){
+			if(!gzType){
+				alertMsg.error("如果该人员只属于一个工资类别,请填入第一项！");
+				return ;
+			}else if(gzType2==gzType){
+				alertMsg.error("'工资类别' 和  '工资类别2' 不能相同！");
+				return ;
+			}
+		}
 		var urlString = "savePerson?entityIsNew=${entityIsNew}&navTabId=${navTabId}";
 		urlString = encodeURI(urlString);
 		jQuery("#gzPersonForm").attr("action",urlString);
@@ -236,13 +247,23 @@
 					</div>
 					<div class="unit">
 						<s:textfield key="person.idNumber" maxlength="20" cssClass="gzPersonFormReadonly"/>
+						<s:textfield key="person.taxType" maxlength="20" cssClass=""/>
+					</div>
+					<div class="unit">
 						<label><s:text name='person.gzType'/>:</label>
-							<span  class="formspan" style="float: left; width: 140px">
-				    			<s:select key="person.gzType" headerKey=""   
-									list="#request.gztypes" listKey="gzTypeId" listValue="gzTypeName"
-						   	 		emptyOption="false"  maxlength="50" width="50px" theme="simple">
-				       			</s:select>
-				       		</span>
+						<span  class="formspan" style="float: left; width: 140px">
+			    			<s:select key="person.gzType" headerKey=""   headerValue=""
+								list="#request.gztypes" listKey="gzTypeId" listValue="gzTypeName" 
+					   	 		emptyOption="false"  maxlength="50" width="50px" theme="simple">
+			       			</s:select>
+			       		</span>
+			       		<label>工资类别2:</label>
+						<span  class="formspan" style="float: left; width: 140px">
+			    			<s:select key="person.gzType2" headerKey=""   headerValue=""
+								list="#request.gztypes" listKey="gzTypeId" listValue="gzTypeName"
+					   	 		emptyOption="false"  maxlength="50" width="50px" theme="simple">
+			       			</s:select>
+			       		</span>
 					</div>
 					<div class="unit">
 						<label><s:text name="person.bank1"/>:</label>
@@ -261,7 +282,6 @@
 						<s:textfield key="person.salaryNumber2" maxlength="20" cssClass=""/>
 					</div>
 					<div class="unit">
-						<s:textfield key="person.taxType" maxlength="20" cssClass=""/>
 						<label><s:text name='person.stopSalary'/>:</label>
 						<span  class="formspan" style="float: left; width: 140px">
 							<s:checkbox key="person.stopSalary" theme="simple"/>
