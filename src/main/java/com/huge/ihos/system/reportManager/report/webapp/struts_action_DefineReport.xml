@@ -39,7 +39,7 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
-		<action name="editDefineReport" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="editDefineReport">
+		<action name="editUserDefineReport" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="editDefineReport">
 			<result name="input">/WEB-INF/pages/system/reportManager/report/defineReport/defineReport.jsp</result>
 			<result name="success">/WEB-INF/pages/system/reportManager/report/defineReport/defineReport.jsp</result>
 		</action>
@@ -49,6 +49,37 @@
                    <param name="noCache">true</param>
 				 <param name="ignoreHierarchy">false</param>
             </result>
+		</action>
+		<action name="getDefineReportXml" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="getDefineReportXml">
+		</action>
+		
+		<action name="getBySql" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportAction" method="getBySql">
+			<result type="json">
+				<param name="includeProperties">sqlResult</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>	
+		</action>
+		<action name="getListBySql" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportAction" method="getListBySql">
+			<result type="json">
+				<param name="includeProperties">sqlMap.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>	
+		</action>
+		<action name="getDataSourceBySql" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportAction" method="getDataSourceBySql">
+			<result type="json">
+				<param name="includeProperties">sqlMap.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>	
+		</action>
+		<action name="batchFunc" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportAction" method="batchFunc">
+			<result type="json">
+				<param name="includeProperties">sqlMap.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>	
 		</action>
 
 	</package>

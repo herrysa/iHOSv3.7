@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,6 +19,7 @@ import com.huge.common.util.ColumnDef;
 import com.huge.common.util.ExportHelper;
 import com.huge.common.util.ImportException;
 import com.huge.foundation.common.GeneralAppException;
+import com.huge.util.DateUtil;
 
 public class ExcelImport implements ImportService {
 	String	insert	= "";
@@ -238,8 +240,9 @@ public class ExcelImport implements ImportService {
 
         case Cell.CELL_TYPE_NUMERIC:   
             if(HSSFDateUtil.isCellDateFormatted(cell)){   
+            	Date dateValue = cell.getDateCellValue();
                 value = ""  
-                    + cell.getDateCellValue();   
+                    + DateUtil.convertDateToString(dateValue);   
             }else{   
                 value = ""  
                         + cell.getNumericCellValue();   

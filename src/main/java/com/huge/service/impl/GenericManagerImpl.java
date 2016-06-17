@@ -249,10 +249,14 @@ public class GenericManagerImpl<T, PK extends Serializable>
 	}
 	@Override
 	public void executeSqlList(List<String> sqlList){
-		if(OtherUtil.measureNotNull(sqlList)&&!sqlList.isEmpty()){
-			for(String sqlTemp:sqlList){
-				dao.excuteSql(sqlTemp);
+		try {
+			if(OtherUtil.measureNotNull(sqlList)&&!sqlList.isEmpty()){
+				for(String sqlTemp:sqlList){
+					dao.excuteSql(sqlTemp);
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	@Override

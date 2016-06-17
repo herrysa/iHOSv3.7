@@ -29,7 +29,7 @@ public class DummyDogManager
     @Override
     public String[] getAllowedSubSystem()
         throws AppException {
-        String[] dummySubSys = { "00", "01", "0201","0202", "03", "04", "05", "0601","0602","0603","0604", "40" ,"50", "60","90","10","09","11" };
+        String[] dummySubSys = { "00", "01", "0201","0202", "03", "04", "05", "0601","0602","0603","0604", "40" ,"50", "60","90","10","09","11","12" };
         return dummySubSys;
     }
 

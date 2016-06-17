@@ -15,7 +15,7 @@
 				},
 				success: function(data){
 					if(data!=null&&data.statusCode==200){
-						window.location.url = "byLaw_dowloadAppendix?byLawId=${byLaw.byLawId }";
+						window.location.href = "byLaw_dowloadAppendix?byLawId=${byLaw.byLawId }";
 					}else{
 						formCallBack(data);
 					}

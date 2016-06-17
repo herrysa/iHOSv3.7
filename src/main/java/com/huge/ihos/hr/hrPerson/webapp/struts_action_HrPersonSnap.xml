@@ -115,7 +115,8 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
-		
+		<action name="exportHrPersonExcelTemple" class="com.huge.ihos.hr.hrPerson.webapp.action.HrPersonSnapPagedAction" method="exportHrPersonExcelTemple">
+		</action>
 	</package>
 
 </struts>

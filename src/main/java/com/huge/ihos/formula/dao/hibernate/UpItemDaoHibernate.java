@@ -50,6 +50,7 @@ public class UpItemDaoHibernate extends GenericDaoHibernate<UpItem, Long> implem
 		Criteria criteria = this.getCriteria();
 		criteria.add(Restrictions.or(Restrictions.eq("sbdeptId.departmentId", deptId),Restrictions.isNull("sbdeptId.departmentId")));
 		criteria.add(Restrictions.eq("itemClass",upItemClass));
+		criteria.add(Restrictions.eq("disabled",false));
 		return criteria.list();
 	}
 

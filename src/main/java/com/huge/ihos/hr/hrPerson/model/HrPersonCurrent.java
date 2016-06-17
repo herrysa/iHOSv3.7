@@ -13,8 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.annotations.Formula;
 
 import com.huge.ihos.hr.hrDeptment.model.HrDepartmentCurrent;
 import com.huge.ihos.hr.hrDeptment.model.HrDepartmentHis;
@@ -37,24 +39,32 @@ public class HrPersonCurrent extends BaseObject implements Serializable {
 
 	private String personCode; // 人员编码
 	private String educationalLevel;// 学历
+	private String educationalLevelTxt;// 学历
+
 	private Boolean disable = false; // 是否有效
 	private String salaryNumber; // 工资号
 	private String idNumber; // 身份证号
 	private String jobTitle; // 职称
+	private String jobTitleTxt; // 职称
 	private String postType; // 岗位
+	private String postTypeTxt; // 岗位
 	private Double ratio; // 系数
 	private PersonType status;// 职工类别
 	private Date workBegin; // 参加工作时间
 	private String note;
 	private String nation;// 民族
+	private String nationTxt;// 民族
 	private String politicalCode;// 政治面貌
+	private String politicalCodeTxt;// 政治面貌
 	private String workPhone;// 工作电话
 	private String mobilePhone;// 手机号码
 	private String email;// Email
 	private Date entryDate; // 进单位时间
 	private String school;// 毕业学校
 	private String profession;// 专业
+	private String professionTxt;// 专业
 	private String degree;// 学位
+	private String degreeTxt;// 学位
 	private Date graduateDate;// 毕业时间
 	private Integer age;// 年龄
 	private Integer nurseAge;// 护龄
@@ -92,6 +102,10 @@ public class HrPersonCurrent extends BaseObject implements Serializable {
     
     private Branch branch;
 	private String branchCode;
+	
+	private String nativePlace;// 籍贯
+	private String domicilePlace;// 户口所在地
+	private Date nowTitleTime;// 现有职称获得时间
 
 	@Id
 	@Column(name = "personId", length = 50, nullable = false)
@@ -128,6 +142,69 @@ public class HrPersonCurrent extends BaseObject implements Serializable {
 
 	public void setPoliticalCode(String politicalCode) {
 		this.politicalCode = politicalCode;
+	}
+	
+	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='personPol' and dItem.value=political_code)")
+	public String getPoliticalCodeTxt() {
+		return politicalCodeTxt;
+	}
+
+	public void setPoliticalCodeTxt(String politicalCodeTxt) {
+		this.politicalCodeTxt = politicalCodeTxt;
+	}
+	
+	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='jobTitle' and dItem.value=jobTitle)")
+	public String getJobTitleTxt() {
+		return jobTitleTxt;
+	}
+
+	public void setJobTitleTxt(String jobTitleTxt) {
+		this.jobTitleTxt = jobTitleTxt;
+	}
+	
+	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='professional' and dItem.value=profession)")
+	public String getProfessionTxt() {
+		return professionTxt;
+	}
+
+	public void setProfessionTxt(String professionTxt) {
+		this.professionTxt = professionTxt;
+	}
+	
+	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='nation' and dItem.value=nation)")
+	public String getNationTxt() {
+		return nationTxt;
+	}
+
+	public void setNationTxt(String nationTxt) {
+		this.nationTxt = nationTxt;
+	}
+	
+	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='education' and dItem.value=educationalLevel)")
+	public String getEducationalLevelTxt() {
+		return educationalLevelTxt;
+	}
+
+	public void setEducationalLevelTxt(String educationalLevelTxt) {
+		this.educationalLevelTxt = educationalLevelTxt;
+	}
+	
+	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='postType' and dItem.value=postType)")
+	public String getPostTypeTxt() {
+		return postTypeTxt;
+	}
+
+	public void setPostTypeTxt(String postTypeTxt) {
+		this.postTypeTxt = postTypeTxt;
+	}
+	
+	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='degree' and dItem.value=degree)")
+	public String getDegreeTxt() {
+		return degreeTxt;
+	}
+
+	public void setDegreeTxt(String degreeTxt) {
+		this.degreeTxt = degreeTxt;
 	}
 
 	@Column(name = "work_phone", nullable = true, length = 15)
@@ -534,6 +611,16 @@ public class HrPersonCurrent extends BaseObject implements Serializable {
 		this.bank2 = bank2;
 	}
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "now_title_time", length = 19, nullable = true)
+	public Date getNowTitleTime() {
+		return nowTitleTime;
+	}
+
+	public void setNowTitleTime(Date nowTitleTime) {
+		this.nowTitleTime = nowTitleTime;
+	}
+	
 	@Column(name = "salaryNumber2", length = 20, nullable = true)
 	public String getSalaryNumber2() {
 		return salaryNumber2;
@@ -552,7 +639,8 @@ public class HrPersonCurrent extends BaseObject implements Serializable {
 		this.gzType = gzType;
 	}
 	
-	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	//@Column(name = "gzTypeId2", length = 32, nullable = true)
+	@Transient
 	public String getGzType2() {
 		return gzType2;
 	}
@@ -600,6 +688,25 @@ public class HrPersonCurrent extends BaseObject implements Serializable {
 	public void setBranchCode(String branchCode) {
 		this.branchCode = branchCode;
 	}
+	
+	@Column(name="native_place")
+	public String getNativePlace() {
+		return nativePlace;
+	}
+
+	public void setNativePlace(String nativePlace) {
+		this.nativePlace = nativePlace;
+	}
+
+	@Column(name="domicile_place")
+	public String getDomicilePlace() {
+		return domicilePlace;
+	}
+
+	public void setDomicilePlace(String domicilePlace) {
+		this.domicilePlace = domicilePlace;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

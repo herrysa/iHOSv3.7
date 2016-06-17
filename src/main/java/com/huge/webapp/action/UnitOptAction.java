@@ -634,52 +634,6 @@ public class UnitOptAction
 		
 		return SUCCESS;
 	}
-	String sqlResult = "";
-	public String getSqlResult() {
-		return sqlResult;
-	}
-
-	public void setSqlResult(String sqlResult) {
-		this.sqlResult = sqlResult;
-	}
-
-	public String getBySql(){
-		try {
-			HttpServletRequest request = getRequest(); 
-			String sql = request.getParameter("sql");
-			System.out.println(sql);
-			List<Object[]> rs = userManager.getBySql(sql);
-			if(rs!=null&&rs.size()>0){
-				Object value = rs.get(0);
-				if(value!=null){
-					sqlResult = value.toString();
-				}
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return SUCCESS;
-	}
-	List<Map<String, Object>> sqlMap ;
-	public List<Map<String, Object>> getSqlMap() {
-		return sqlMap;
-	}
-
-	public void setSqlMap(List<Map<String, Object>> sqlMap) {
-		this.sqlMap = sqlMap;
-	}
-
-	public String getDataSourceBySql(){
-		try {
-			HttpServletRequest request = getRequest(); 
-			String sql = request.getParameter("sql");
-			sqlMap = userManager.getBySqlToMap(sql);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return SUCCESS;
-	}
     
     public String getEntityName() {
         return entityName;

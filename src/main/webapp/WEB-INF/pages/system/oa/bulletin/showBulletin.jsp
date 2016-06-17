@@ -15,7 +15,7 @@
 				},
 				success: function(data){
 					if(data!=null&&data.statusCode==200){
-						window.location.url = "dowloadAppendix?bulletinId=${bulletin.bulletinId }";
+						window.location.href = "dowloadAppendix?bulletinId=${bulletin.bulletinId }";
 					}else{
 						formCallBack(data);
 					}

@@ -57,7 +57,7 @@
     	var fullHeight = jQuery("#container").innerHeight();
     	var fullWidth = jQuery("#container").innerWidth();
     	var sid = jQuery("#defineReport_gridtable").jqGrid('getGridParam','selarrrow');
-    	var url = "editDefineReport?code="+sid;
+    	var url = "editUserDefineReport?code="+sid;
     	url = encodeURI(url);
     	$.pdialog.open(url, 'editReport', "编辑报表", {
     		mask : true,

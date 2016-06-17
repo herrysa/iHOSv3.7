@@ -194,7 +194,7 @@
 					</span>
 				</div>
 				<div class="unit" id="sbPersonDisPlayFrom">
-					<input type="hidden" id="upItem_sbPersonId_id" name="upItem.sbPersonId.personId" />
+					<input type="hidden" id="upItem_sbPersonId_id" name="upItem.sbPersonId.personId" value="${upItem.sbPersonId.personId }"/>
 					<label><s:text name="upItem.sbPersonId"></s:text>:</label>
 					<input type="text" id="upItem_sbPersonId" value="${upItem.sbPersonId.name }" size="50"  />
 				</div>

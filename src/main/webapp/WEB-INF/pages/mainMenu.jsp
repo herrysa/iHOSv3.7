@@ -128,7 +128,10 @@ var mainMenuSetting = {
 				navTab.openTab("navTab"+node.id, "${ctx}/menuClicked?menuId="+node.id+"&radomJsp="+Math.floor(Math.random()*10), {hideType:hideType, title:node.name, fresh:false, data:{} });
 			}
 		}else{
-			$.fn.zTree.getZTreeObj(treeId).expandNode(node, true, false, true);
+			var thisChildren = node.children;
+			if(thisChildren&&thisChildren.length>0){
+				$.fn.zTree.getZTreeObj(treeId).expandNode(node, true, false, true);
+			}
 		}
 	}
 	function getQueryString(u,name) {

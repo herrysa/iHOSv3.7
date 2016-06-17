@@ -39,6 +39,9 @@
 			$.pdialog.open(url,"showImportDataLog",winTitle, {ifr:true,mask:true,resizable:true,maxable:true,width : 685,height : 450});
 			stopPropagation();
 		});
+		jQuery("#hrExcelTemplelink").click(function(){
+			window.location.href = "exportHrPersonExcelTemple";
+		});
 	});
 	
 	function personImportCallback(data){
@@ -69,6 +72,12 @@
 		</div>
 		<div class="formBar">
 			<ul>
+					<li><div class="buttonActive">
+							<div class="buttonContent">
+								<button type="button" id="hrExcelTemplelink">导出模板</button>
+							</div>
+						</div>
+					</li>
 					<li><div class="buttonActive">
 							<div class="buttonContent">
 								<button type="button" id="hrExcelChecklink">检查</button>

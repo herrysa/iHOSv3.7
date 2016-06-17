@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
@@ -22,16 +23,23 @@ import java.util.StringTokenizer;
 
 import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.converters.BooleanConverter;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.huge.ecis.inter.helper.ExcelImport;
@@ -88,7 +96,6 @@ import com.huge.webapp.pagers.PagerFactory;
 import com.huge.webapp.util.PropertyFilter;
 import com.huge.webapp.util.PropertyFilter.MatchType;
 import com.huge.webapp.util.SpringContextHelper;
-import com.ibm.db2.jcc.t2zos.s;
 import com.opensymphony.xwork2.Preparable;
 
 @SuppressWarnings("serial")
@@ -1057,6 +1064,46 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 		importResult="导入成功";
 		return ajaxForward( true,importResult , true );
 	}*/
+	    
+	public String exportHrPersonExcelTemple(){
+		HrPersonSnap person = new HrPersonSnap();
+		Field[] fileds = person.getClass().getDeclaredFields();
+		try {
+            Workbook workbook = new HSSFWorkbook();
+            Sheet sheet = workbook.createSheet("职员信息");
+            sheet.setDefaultColumnWidth(15);
+            Row row = sheet.createRow( 0 );
+            Font font = workbook.createFont(); 
+            font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); 
+            CellStyle cellStyle= workbook.createCellStyle(); 
+            cellStyle.setFont(font); 
+            cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            int c = 0;
+            for(Field filed : fileds){
+            	AProperty aProperty = filed.getAnnotation(AProperty.class);
+    			String label = "";
+    			if(aProperty!=null){
+    				Cell cell = row.createCell( c );
+    				label = aProperty.label();
+    				cell.setCellType( Cell.CELL_TYPE_STRING );
+                    cell.setCellValue( label );
+                    cell.setCellStyle(cellStyle);
+                    c++;
+    			}
+            }
+            
+            HttpServletResponse resp = ServletActionContext.getResponse();
+            resp.setContentType( "application/vnd.ms-excel" );
+            resp.setHeader( "Content-Disposition", "attachment;filename=" + new String( "人员导入模板.xls".getBytes( "GBK" ), "ISO8859-1" ) );
+            OutputStream outs = resp.getOutputStream();
+            workbook.write( outs );
+            outs.flush();
+            outs.close();
+		}catch ( Exception e ) {
+        	e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public String importHrPersonFromExcel(){
 		List<Map<String, String>> dataList = (List<Map<String, String>>)this.getRequest().getSession().getAttribute("importHrPersonData"+this.getRandom());
@@ -1094,7 +1141,11 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 					String dataKey = dataEntry.getKey();
 					String dataValue = dataEntry.getValue();
 					col += dataKey+",";
-					value += "'"+dataValue+"',";
+					if("&kong&".equals(dataValue)){
+						value += "null,";
+					}else{
+						value += "'"+dataValue+"',";
+					}
 					if("name".equals(dataKey)){
 						name = dataValue;
 					}
@@ -1304,12 +1355,12 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     			errorMsg = "";
     		}
     		if("'&kong&'".equals(orgCheckTemp)){
-    			errorMsg += "第"+o+"行数据'单位编码'为空;";
+    			errorMsg += "第"+(o+2)+"行数据'单位编码'为空;";
     			errorMap.put(""+o, errorMsg);
     		}else{
     			HrOrgSnap hrOrgSnap = orgMap.get(orgCheckTemp);
     			if(hrOrgSnap==null){
-    				errorMsg += "第"+o+"行数据'单位编码'错误;";
+    				errorMsg += "第"+(o+2)+"行数据'单位编码'错误;";
     				errorMap.put(""+o, errorMsg);
     			}else{
     				Map<String, String> data = dataList.get(o);
@@ -1339,7 +1390,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     			if("new".equals(errorMsg)||"edit".equals(errorMsg)){
     				errorMsg = "";
     			}
-    			errorMsg += "第"+p+"行数据'人员编码'错误;";
+    			errorMsg += "第"+(p+2)+"行数据'人员编码'错误;";
     			errorMap.put(""+p, errorMsg);
     		}else{
     			HrPersonSnap hrPersonSnap = personMap.get(personCodeCheckTemp);
@@ -1430,7 +1481,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
     				errorMsg = "";
     			}
-    			errorMsg += "第"+p+"行数据'姓名'为空;";
+    			errorMsg += "第"+(p+2)+"行数据'姓名'为空;";
     			errorMap.put(""+p, errorMsg);
     		}
 		}
@@ -1445,7 +1496,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
 				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
     				errorMsg = "";
     			}
-    			errorMsg += "第"+p+"行数据'姓别'为空;";
+    			errorMsg += "第"+(p+2)+"行数据'姓别'为空;";
     			errorMap.put(""+p, errorMsg);
     		}
 		}
@@ -1466,7 +1517,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     			if("new".equals(errorMsg)||"edit".equals(errorMsg)){
     				errorMsg = "";
     			}
-    			errorMsg += "第"+id+"行数据'身份证号'为空;";
+    			errorMsg += "第"+(id+2)+"行数据'身份证号'为空;";
     			errorMap.put(""+id, errorMsg);
     		}else{
     			HrPersonSnap hrPersonSnap = personMap.get(idNumberCheckArr[id]);
@@ -1474,7 +1525,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
         				errorMsg = "";
         			}
-    				errorMsg += "第"+id+"行数据'身份证号'错误;";
+    				errorMsg += "第"+(id+2)+"行数据'身份证号'错误;";
     				errorMap.put(""+id, errorMsg);
     			}
     		}
@@ -1486,7 +1537,9 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     	List<HrPersonSnap> hrPersonSnaps = hrPersonSnapManager.getByHql(idNumberHql);
     	Map<String, HrPersonSnap> personMap = new HashMap<String, HrPersonSnap>();
     	for(int p=0;p<hrPersonSnaps.size();p++){
-    		personMap.put("'"+hrPersonSnaps.get(p).getIdNumber()+"'", hrPersonSnaps.get(p));
+    		String idNumber = hrPersonSnaps.get(p).getIdNumber();
+    		idNumber = idNumber.toUpperCase();
+    		personMap.put("'"+idNumber+"'", hrPersonSnaps.get(p));
     	}
     	String[] idNumberCheckArr = idNumberCheck.split(",");
     	for(int id=0;id<idNumberCheckArr.length;id++){
@@ -1495,15 +1548,17 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     			if("new".equals(errorMsg)||"edit".equals(errorMsg)){
     				errorMsg = "";
     			}
-    			errorMsg += "第"+id+"行数据'身份证号'为空;";
+    			errorMsg += "第"+(id+2)+"行数据'身份证号'为空;";
     			errorMap.put(""+id, errorMsg);
     		}else{
-    			HrPersonSnap hrPersonSnap = personMap.get(idNumberCheckArr[id]);
+    			String idNumber = idNumberCheckArr[id];
+    			idNumber = idNumber.toUpperCase();
+    			HrPersonSnap hrPersonSnap = personMap.get(idNumber);
     			if(hrPersonSnap==null){
     				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
         				errorMsg = "";
         			}
-    				errorMsg += "第"+id+"行数据'身份证号'错误;";
+    				errorMsg += "第"+(id+2)+"行数据'身份证号'错误;";
     				errorMap.put(""+id, errorMsg);
     			}else{
     				//修改人员
@@ -1535,7 +1590,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     			if("new".equals(errorMsg)||"edit".equals(errorMsg)){
     				errorMsg = "";
     			}
-    			errorMsg += "第"+d+"行数据'所属部门'为空;";
+    			errorMsg += "第"+(d+2)+"行数据'所属部门'为空;";
     			errorMap.put(""+d, errorMsg);
     		}else{
     			HrDepartmentSnap hrDepartmentSnap = deptMap.get(deptIdCheckTemp);
@@ -1543,7 +1598,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
         				errorMsg = "";
         			}
-    				errorMsg += "第"+d+"行数据'所属部门'错误;";
+    				errorMsg += "第"+(d+2)+"行数据'所属部门'错误;";
     				errorMap.put(""+d, errorMsg);
     			}else{
     				Map<String, String> data = dataList.get(d);
@@ -1571,7 +1626,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     			if("new".equals(errorMsg)||"edit".equals(errorMsg)){
     				errorMsg = "";
     			}
-    			errorMsg += "第"+p+"行数据'职工类别'为空;";
+    			errorMsg += "第"+(p+2)+"行数据'职工类别'为空;";
     			errorMap.put(""+p, errorMsg);
     		}else{
     			PersonType personType = personTypeMap.get(personTypeCheckTemp);
@@ -1579,7 +1634,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
     				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
         				errorMsg = "";
         			}
-        			errorMsg += "第"+p+"行数据'职工类别'错误;";
+        			errorMsg += "第"+(p+2)+"行数据'职工类别'错误;";
         			errorMap.put(""+p, errorMsg);
     			}else{
     				Map<String, String> data = dataList.get(p);
@@ -1619,18 +1674,18 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
         		for(int d=0;d<checkValueArr.length;d++){
         			String errorMsg = errorMap.get(""+d);
         			if("'&kong&'".equals(checkValueArr[d])){
-        				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
+        				/*if("new".equals(errorMsg)||"edit".equals(errorMsg)){
             				errorMsg = "";
             			}
         				errorMsg += "第"+d+"行数据'"+checkKeyArr[0]+"'为空;";
-        				errorMap.put(""+d, errorMsg);
+        				errorMap.put(""+d, errorMsg);*/
             		}else{
             			String dic = dicMap.get(checkValueArr[d]);
             			if(!"1".equals(dic)){
             				if("new".equals(errorMsg)||"edit".equals(errorMsg)){
                 				errorMsg = "";
                 			}
-            				errorMsg += "第"+d+"行数据'"+checkKeyArr[0]+"'错误;";
+            				errorMsg += "第"+(d+2)+"行数据'"+checkKeyArr[0]+"'错误;";
             				errorMap.put(""+d, errorMsg);
             			}
             		}
@@ -1957,6 +2012,7 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
         checkData(checkMap,errorMap);
         
         boolean hasError = false;
+        interLoggerManager.deleteByTaskInterId("ImportHrPerson");
         for(int i=0;i<maxRow;i++){
         	String errorMsg = errorMap.get(""+i);
         	if("new".equals(errorMsg)||"edit".equals(errorMsg)){
@@ -1966,7 +2022,6 @@ public class HrPersonSnapPagedAction extends JqGridBaseAction implements
         		errorMsg = "";
         	}
         	hasError = true;
-        	interLoggerManager.deleteByTaskInterId("ImportHrPerson");
         	InterLogger interLogger = new InterLogger();
         	interLogger.setTaskInterId("ImportHrPerson");
         	interLogger.setOperator(UserContextUtil.getUserContext().getLoginPersonName());

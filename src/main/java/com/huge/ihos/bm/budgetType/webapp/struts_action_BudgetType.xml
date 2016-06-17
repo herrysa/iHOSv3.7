@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="budgetType" extends="default"	namespace="/">
+
+		<action name="budgetTypeList" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetType/budgetTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetType/budgetTypeList.jsp</result>
+		</action>
+		<action name="budgetTypeGridList" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"		method="budgetTypeGridList">
+			<result type="json">
+				<param name="includeProperties">budgetTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="budgetTypeGridEdit" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"			method="budgetTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBudgetType" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/budgetType/budgetTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetType/budgetTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBudgetType" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="getBudgetTypeTree" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"			method="getBudgetTypeTree">
+			<result name="success" type="json">
+                <param name="includeProperties">budgetTypeTreeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

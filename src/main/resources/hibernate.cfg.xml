@@ -12,6 +12,10 @@
 	<session-factory>
 
         <mapping class="com.huge.ihos.system.reportManager.report.model.DefineReport"/>
+        <mapping class="com.huge.ihos.system.reportManager.report.model.ReportDataSource"/>
+        <mapping class="com.huge.ihos.system.reportManager.report.model.ReportFunction"/>
+        <mapping class="com.huge.ihos.bm.budgetType.model.BudgetType"/>
+        <mapping class="com.huge.ihos.bm.index.model.BudgetIndex"/>
     </session-factory>
 
 </hibernate-configuration>

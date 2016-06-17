@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="reportFunction" extends="default"	namespace="/">
+
+		<action name="reportFunctionList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportFunctionPagedAction">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/reportFunction/reportFunctionList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/reportFunction/reportFunctionList.jsp</result>
+		</action>
+		<action name="reportFunctionGridList" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportFunctionPagedAction"		method="reportFunctionGridList">
+			<result type="json">
+				<param name="includeProperties">reportFunctions.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="reportFunctionGridEdit" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportFunctionPagedAction"			method="reportFunctionGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editReportFunction" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportFunctionPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/reportManager/report/reportFunction/reportFunctionForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/reportManager/report/reportFunction/reportFunctionForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveReportFunction" class="com.huge.ihos.system.reportManager.report.webapp.action.ReportFunctionPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

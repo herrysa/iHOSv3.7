@@ -9,6 +9,13 @@
 				<para>项目类别，可选</para>
 				<returnDatatype>double</returnDatatype> 
 			</function>
+			<function name="batchSourcepayinSum" >
+				<para>key</para>
+				<para>起始期间</para>
+				<para>结束期间</para>
+				<para>项目类别，可选</para>
+				<returnDatatype>double</returnDatatype> 
+			</function>
 		</category>
 	</functions>
 </root>

@@ -167,6 +167,7 @@ public class DepartmentDaoHibernate
 		if(orgCodes != null && !"".equals(orgCodes)) {
 			Criteria criteria = this.getCriteria();
 			criteria.add(Restrictions.eq("leaf", true));
+			criteria.add(Restrictions.eq("disabled", false));
 			if(orgCodes.contains(",")) {
 				String[] orgCodeArr = orgCodes.split(",");
 				criteria.add(Restrictions.in("orgCode", orgCodeArr));

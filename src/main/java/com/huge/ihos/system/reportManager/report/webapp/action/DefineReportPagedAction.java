@@ -1,10 +1,19 @@
 package com.huge.ihos.system.reportManager.report.webapp.action;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.huge.ihos.system.reportManager.report.model.DefineReport;
 import com.huge.ihos.system.reportManager.report.service.DefineReportManager;
+import com.huge.util.XMLUtil;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -91,7 +100,7 @@ public class DefineReportPagedAction extends JqGridBaseAction implements Prepara
 		return ajaxForward(this.getText(key));
 	}
     public String edit() {
-        if (code != null) {
+        if (code != null&&!"".equals(code)) {
         	defineReport = defineReportManager.get(code);
         	this.setEntityIsNew(false);
         } else {
@@ -126,15 +135,44 @@ public class DefineReportPagedAction extends JqGridBaseAction implements Prepara
 	
 	public String editDefineReport(){
 		try {
-			if (code != null) {
+			if (code != null&&!"".equals(code)) {
 	        	defineReport = defineReportManager.get(code);
-	        	reportXml = defineReport.getReport();
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
+	
+	public String getDefineReportXml(){
+		try {
+			if (code != null) {
+	        	defineReport = defineReportManager.get(code);
+	        	reportXml = defineReport.getReport();
+	        	
+	        }
+			if(reportXml==null){
+				HttpServletRequest request = getRequest();
+	        	HttpSession session = request.getSession();
+	        	String blankPath = session.getServletContext().getRealPath("/home/supcan/userdefine/blank.xml");
+	        	File blank = new File(blankPath);
+	        	reportXml = XMLUtil.xmltoString(XMLUtil.read(blank, "UTF-8"));
+        	}
+			HttpServletResponse response = getResponse();  
+			//设置编码  
+			response.setCharacterEncoding("UTF-8");  
+			response.setContentType("text/xml;charset=utf-8");  
+			response.setHeader("Cache-Control", "no-cache");  
+			PrintWriter out = response.getWriter();  
+			out.write(reportXml);  
+			out.flush();  
+			out.close(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	String reportXml;
 	public String getReportXml() {
 		return reportXml;

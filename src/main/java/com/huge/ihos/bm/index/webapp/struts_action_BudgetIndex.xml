@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="budgetIndex" extends="default"	namespace="/">
+
+		<action name="budgetIndexList" class="com.huge.ihos.bm.index.webapp.action.BudgetIndexPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetIndex/budgetIndexList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetIndex/budgetIndexList.jsp</result>
+		</action>
+		<action name="budgetIndexGridList" class="com.huge.ihos.bm.index.webapp.action.BudgetIndexPagedAction"		method="budgetIndexGridList">
+			<result type="json">
+				<param name="includeProperties">budgetIndices.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="budgetIndexGridEdit" class="com.huge.ihos.bm.index.webapp.action.BudgetIndexPagedAction"			method="budgetIndexGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBudgetIndex" class="com.huge.ihos.bm.index.webapp.action.BudgetIndexPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/budgetIndex/budgetIndexForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetIndex/budgetIndexForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBudgetIndex" class="com.huge.ihos.bm.index.webapp.action.BudgetIndexPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.annotations.Formula;
 
 import com.huge.ihos.hr.hrDeptment.model.HrDepartmentCurrent;
 import com.huge.ihos.hr.hrDeptment.model.HrDepartmentHis;
@@ -35,42 +36,69 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 	private static final long serialVersionUID = 9073082388683015474L;
 	private String snapId;
 	private String snapCode;
+	@AProperty(label="单位编码")
+	private String orgCode;// 单位
+	
 	@AProperty(label="人员ID")
 	private String personId;
 	@AProperty(label="人员编码")
 	private String personCode; // 人员编码
 	@AProperty(label="姓名")
 	private String name; // 姓名
-	@AProperty(label="性别",diccode="sex")
-	private String sex; // 性别
+	@AProperty(label="所在部门")
+	private String deptId;
+	@AProperty(label="职工类别")
+	private String personType;
 	private HrDepartmentCurrent hrDept;
 	private HrDepartmentHis hrDeptHis;
 	private String deptSnapCode;
-	@AProperty(label="职工类别")
-	private String personType;
 	private PersonType empType; // 职工类别
-	@AProperty(label="所在部门")
-	private String deptId;
 	
-	@AProperty(label="岗位类别",diccode="postType")
-	private String postType; // 岗位类别
-	@AProperty(label="职称",diccode="jobTitle")
-	private String jobTitle; // 职称
-	@AProperty(label="系数")
-	private Double ratio; // 系数
+	@AProperty(label="性别",diccode="sex")
+	private String sex; // 性别
 	private Boolean jjmark = true;
 	private Boolean disabled = false; // 是否有效
 
-	@AProperty(label="参加工作时间")
-	private Date workBegin; // 参加工作时间
-	@AProperty(label="单位编码")
-	private String orgCode;// 单位
+	
 	
 	private HrOrg hrOrg;
 	private HrOrgHis hrOrgHis;
 	private String orgSnapCode;
 	private Boolean deleted = false;//是否被删除
 
+	@AProperty(label="出生日期")
+	private Date birthday; // 出生日期
+	@AProperty(label="年龄")
+	private Integer age;// 年龄
+	@AProperty(label="民族",diccode="nation")
+	private String nation;// 民族
+	@AProperty(label="政治面貌",diccode="personPol")
+	private String politicalCode;// 政治面貌
+	
+	@AProperty(label="身份证号")
+	private String idNumber; // 身份证号
+	
+	
+	@AProperty(label="进单位时间")
+	private Date entryDate; // 进单位时间
+	@AProperty(label="岗位类别",diccode="postType")
+	private String postType; // 岗位类别
+	@AProperty(label="岗位职务")
+	private Post duty; // 岗位职务
+	@AProperty(label="职称",diccode="jobTitle")
+	private String jobTitle; // 职称
+	@AProperty(label="参加工作时间")
+	private Date workBegin; // 参加工作时间
+	@AProperty(label="现有职称")
+	private String nowTitleCode;// 现有职称
+	@AProperty(label="现有职称获得时间")
+	private Date nowTitleTime;// 现有职称获得时间
+	
+	
+	@AProperty(label="学历",diccode="education")
+	private String educationalLevel; // 学历
+	
+	
 	/* add for hr */
 	// education info
 	@AProperty(label="毕业学校")
@@ -92,32 +120,29 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 	// person info
 	@AProperty(label="工作电话")
 	private String workPhone;// 工作电话
-	@AProperty(label="手机号码")
+	@AProperty(label="手机号")
 	private String mobilePhone;// 手机号码
 	@AProperty(label="是否外籍")
 	private Boolean foreigner;// 是否外籍
 	@AProperty(label="邮箱")
 	private String email;// Email
-	@AProperty(label="政治面貌",diccode="personPol")
-	private String politicalCode;// 政治面貌
+	
 	private String cnCode;// 助记码
-	@AProperty(label="民族",diccode="nation")
-	private String nation;// 民族
-	@AProperty(label="年龄")
-	private Integer age;// 年龄
+	
+	@AProperty(label="系数")
+	private Double ratio; // 系数
 	@AProperty(label="备注")
 	private String remark; // 备注
 
 	// work info
-	private Date entryDate; // 进单位时间
-	private Post duty; // 岗位职务
+	
+	
 	private String salaryWay;// 工资发放方式
 	// other info
-	private Date birthday; // 出生日期
-	private String educationalLevel; // 学历
+	
+	
 	private String salaryNumber; // 工资号
-	@AProperty(label="身份证号")
-	private String idNumber; // 身份证号
+	
 
 	private Boolean purchaser;// 是否采购员
 	private Boolean payoff;// 是否发工资
@@ -141,9 +166,6 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 	private Date dealDate;// 办理时间
 	private Date salaryBDate;// 起薪时间
 	private String salaryLevel;// 薪级
-	private String nowTitleCode;// 现有职称
-	private Date nowTitleTime;// 现有职称获得时间
-	
 	
 	private String maritalStatus;// 婚姻状况
 	private String nativePlace;// 籍贯
@@ -555,7 +577,7 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 	public void setPoliticalCode(String politicalCode) {
 		this.politicalCode = politicalCode;
 	}
-
+	
 	@Column(name = "cnCode", nullable = true, length = 20)
 	public String getCnCode() {
 		return cnCode;
@@ -950,7 +972,8 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 		this.gzType = gzType;
 	}
 	
-	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	//@Column(name = "gzTypeId2", length = 32, nullable = true)
+	@Transient
 	public String getGzType2() {
 		return gzType2;
 	}
