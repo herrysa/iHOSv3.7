@@ -2,12 +2,19 @@ package com.huge.dao.hibernate;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -24,7 +31,7 @@ public class JqueryPagerHibernateWithSearchCallBack
 
     List<PropertyFilter> filters;
 
-    String group_on = "and";
+    String group_on = "";
 
     JqueryPagerHibernateWithSearchCallBack( final JQueryPager paginatedList, final Class object, List<PropertyFilter> filters ) {
         super( paginatedList, object );
@@ -41,11 +48,167 @@ public class JqueryPagerHibernateWithSearchCallBack
 
     @Override
     public Criteria getCustomCriterion( Criteria criteria ) {
+    	if(filters.size()==0){
+    		return criteria;
+    	}
+    	Map<String, PropertyFilter> propertyMap = new HashMap<String, PropertyFilter>();
+    	Iterator itr = this.filters.iterator();
+    	String filedName = "";
+    	while ( itr.hasNext() ) {
+    		PropertyFilter pf = (PropertyFilter) itr.next();
+    		String propertyName = pf.getPropertyName();
+    		propertyMap.put(propertyName, pf);
+    		filedName += "'"+propertyName+"',";
+    	}
+    	if(OtherUtil.measureNull(group_on)){
+    		filedName = filedName.substring(0, filedName.length()-1);
+    		group_on = "{op:'and',filter:["+filedName+"]}";
+    	}
+		JSONObject groupJson = JSONObject.fromObject(group_on);
+		String op = groupJson.get("op").toString();
+		Junction junction = null;
+		if("and".equals(op)){
+			junction = Restrictions.conjunction();
+		}else if("or".equals(op)){
+			junction = Restrictions.disjunction();
+		}
+		criteria.add(junction);
+		JSONArray groupFilters = (JSONArray)groupJson.get("filter");
+		Object filter1 = groupFilters.get(0);
+		if(filter1 instanceof JSONObject){
+			Iterator<JSONObject> fliterIt = groupFilters.iterator();
+			while(fliterIt.hasNext()){
+				JSONObject subGroupJson = fliterIt.next();
+				getGroupCriteria(criteria,junction,subGroupJson,propertyMap);
+			}
+		}else{
+			Iterator<String> fliterIt = groupFilters.iterator();
+			while(fliterIt.hasNext()){
+				String propertyName = fliterIt.next();
+				PropertyFilter pf = propertyMap.get(propertyName);
+				addFilter(criteria,junction,pf);
+			}
+		}
+		return criteria;
+    }
+    
+    private void getGroupCriteria(Criteria criteria,Junction junction,JSONObject groupJson,Map<String, PropertyFilter> propertyMap){
+    	String op = groupJson.get("op").toString();
+		JSONArray groupFilters = (JSONArray)groupJson.get("filter");
+		Junction subJunction = null;
+		if("and".equals(op)){
+			subJunction = Restrictions.conjunction();
+		}else if("or".equals(op)){
+			subJunction = Restrictions.disjunction();
+		}
+		junction.add(subJunction);
+		Object filter1 = groupFilters.get(0);
+		if(filter1 instanceof JSONObject){
+			Iterator<JSONObject> fliterIt = groupFilters.iterator();
+			while(fliterIt.hasNext()){
+				JSONObject subGroupJson = fliterIt.next();
+				getGroupCriteria(criteria,subJunction,subGroupJson,propertyMap);
+			}
+		}else{
+			Iterator<String> fliterIt = groupFilters.iterator();
+			while(fliterIt.hasNext()){
+				String propertyName = fliterIt.next();
+				PropertyFilter pf = propertyMap.get(propertyName);
+				addFilter(criteria,junction,pf);
+			}
+		}
+    }
+    
+	private void addFilter(Criteria criteria,Junction junction,PropertyFilter pf){
+		try {
+			criteria = CriteriaUtil.createAliasCriteria( (CriteriaImpl) criteria, pf.getPropertyName() ,1);
+			String fieldName= CriteriaUtil.getSearchAliasFieldname(pf.getPropertyName());
+			if(pf.getMatchType().equals( MatchType.LIKE)){
+	            String v = (String) pf.getMatchValue();
+	            boolean bp = v.startsWith( "*" );
+	            boolean ep = v.endsWith( "*" );
+	            v = v.replaceAll( "\\*", "" );
+	            if ( bp && ep )
+	            	junction.add( Restrictions.like( fieldName, v, MatchMode.ANYWHERE ) );
+	            else if ( bp && !ep )
+	            	junction.add( Restrictions.like( fieldName, v, MatchMode.END ) );
+	
+	            else if ( !bp && ep )
+	            	junction.add( Restrictions.like( fieldName, v, MatchMode.START ) );
+	            else
+	            	junction.add( Restrictions.like( fieldName, v, MatchMode.EXACT ) );
+	
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.EQ ) ) {
+	        	junction.add( Restrictions.eq( fieldName, pf.getMatchValue() ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.GE ) ) {
+	        	junction.add( Restrictions.ge( fieldName, pf.getMatchValue() ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.GT ) ) {
+	        	junction.add( Restrictions.gt( fieldName, pf.getMatchValue() ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.IN ) ) {
+	        	junction.add( Restrictions.in( fieldName, (Object[]) pf.getMatchValue() ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.NI ) ) {
+	        	junction.add( Restrictions.not(Restrictions.in( fieldName, (Object[]) pf.getMatchValue() ) ));
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.ISNOTNULL ) ) {
+	        	junction.add( Restrictions.isNotNull( fieldName ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.ISNULL ) ) {
+	        	junction.add( Restrictions.isNull( fieldName ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.LE ) ) {
+	        	junction.add( Restrictions.le( fieldName, pf.getMatchValue() ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.LT ) ) {
+	        	junction.add( Restrictions.lt( fieldName, pf.getMatchValue() ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.NE ) ) {
+	        	
+	        	junction.add( Restrictions.ne( fieldName, pf.getMatchValue() ) );
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.OA ) ) {
+				Field orderEntrysField = CriteriaImpl.class.getDeclaredField("orderEntries");
+				orderEntrysField.setAccessible(true);
+				List orderEntrys = (List) orderEntrysField.get(criteria);
+				if(orderEntrys==null){
+					orderEntrysField.set(criteria,new ArrayList());
+				}
+				
+				criteria.addOrder(Order.asc(fieldName.toString()));
+	        }
+	        else if ( pf.getMatchType().equals( MatchType.OD ) ) {
+				Field orderEntrysField = CriteriaImpl.class.getDeclaredField("orderEntries");
+				orderEntrysField.setAccessible(true);  
+				List orderEntrys = (List) orderEntrysField.get(criteria);
+				if(orderEntrys==null){
+					orderEntrysField.set(criteria,new ArrayList());
+				}
+	        	criteria.addOrder(Order.desc(fieldName.toString()));
+	        }else if( pf.getMatchType().equals(MatchType.SQ)){
+	        	junction.add( Restrictions.sqlRestriction(pf.getMatchValue().toString()) );
+	        }
+	        else {
+	            throw new BusinessException( "查询条件错误，未知的查询操作符。" );
+	        }
+    	} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public Criteria getCustomCriterion1( Criteria criteria ) {
         Iterator itr = this.filters.iterator();
         int i = 0;
         try {
         if ( group_on.equals( "OR" ) ) {
+        	//{and:{}}
             Disjunction disjunction = Restrictions.disjunction();
+            Conjunction conjunction = Restrictions.conjunction();
+            conjunction.add(disjunction);
+            criteria.add(conjunction);
             while ( itr.hasNext() ) {
                 PropertyFilter pf = (PropertyFilter) itr.next();
                 criteria = CriteriaUtil.createAliasCriteria((CriteriaImpl) criteria, pf.getPropertyName());
@@ -237,4 +400,13 @@ public class JqueryPagerHibernateWithSearchCallBack
 		}
         return criteria;
     }
+    
+    public static void main(String[] args) {
+    	String sql = " a=1 or b=1";
+		String aa = "{op:'and',filter:['','']}";
+		JSONObject a = JSONObject.fromObject(aa);
+		JSONArray bb = (JSONArray)a.get("filter");
+		Object aqq = bb.get(0);
+		System.out.println(aqq instanceof JSONObject);
+	}
 }
