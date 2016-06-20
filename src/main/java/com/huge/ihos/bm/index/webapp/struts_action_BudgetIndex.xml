@@ -40,6 +40,14 @@
             </result>
 		</action>
 
+		<action name="getBudgetIndexTree" class="com.huge.ihos.bm.index.webapp.action.BudgetIndexPagedAction"			method="getBudgetIndexTree">
+			<result name="success" type="json">
+                <param name="includeProperties">budgetIndexTreeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
 	</package>
 
 </struts>

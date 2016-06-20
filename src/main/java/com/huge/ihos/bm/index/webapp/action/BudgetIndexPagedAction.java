@@ -1,8 +1,12 @@
 package com.huge.ihos.bm.index.webapp.action;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
+import com.huge.ihos.bm.budgetType.model.BudgetType;
 import com.huge.ihos.bm.index.model.BudgetIndex;
 import com.huge.ihos.bm.index.service.BudgetIndexManager;
 import com.huge.webapp.action.JqGridBaseAction;
@@ -19,7 +23,25 @@ public class BudgetIndexPagedAction extends JqGridBaseAction implements Preparab
 	private BudgetIndexManager budgetIndexManager;
 	private List<BudgetIndex> budgetIndices;
 	private BudgetIndex budgetIndex;
+	private BudgetIndex parentBudgetIndex;
+	public BudgetIndex getParentBudgetIndex() {
+		return parentBudgetIndex;
+	}
+
+	public void setParentBudgetIndex(BudgetIndex parentBudgetIndex) {
+		this.parentBudgetIndex = parentBudgetIndex;
+	}
+
 	private String indexCode;
+	private String parentId;
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
 	public BudgetIndexManager getBudgetIndexManager() {
 		return budgetIndexManager;
@@ -63,8 +85,7 @@ public class BudgetIndexPagedAction extends JqGridBaseAction implements Preparab
 			JQueryPager pagedRequests = null;
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
 					PagerFactory.JQUERYTYPE, getRequest());
-			pagedRequests = budgetIndexManager
-					.getBudgetIndexCriteria(pagedRequests,filters);
+			pagedRequests = budgetIndexManager.getAppManagerCriteriaWithSearch(pagedRequests, BudgetIndex.class, filters, group_on);
 			this.budgetIndices = (List<BudgetIndex>) pagedRequests.getList();
 			records = pagedRequests.getTotalNumberOfRows();
 			total = pagedRequests.getTotalNumberOfPages();
@@ -82,6 +103,10 @@ public class BudgetIndexPagedAction extends JqGridBaseAction implements Preparab
 			return ajaxForwardError(gridOperationMessage);
 		}
 		try {
+			parentBudgetIndex = budgetIndex.getParentId();
+			if("-1".equals(parentBudgetIndex.getIndexCode())){
+				budgetIndex.setParentId(null);
+			}
 			budgetIndexManager.save(budgetIndex);
 		} catch (Exception dre) {
 			gridOperationMessage = dre.getMessage();
@@ -93,9 +118,29 @@ public class BudgetIndexPagedAction extends JqGridBaseAction implements Preparab
     public String edit() {
         if (indexCode != null) {
         	budgetIndex = budgetIndexManager.get(indexCode);
+        	if(budgetIndex.getParentId()!=null){
+        		parentId = budgetIndex.getParentId().getIndexCode();
+        		parentBudgetIndex = budgetIndexManager.get(parentId);
+        		budgetIndex.setParentId(parentBudgetIndex);
+        	}
         	this.setEntityIsNew(false);
         } else {
         	budgetIndex = new BudgetIndex();
+        	if(parentId!=null&&!"".equals(parentId)){
+        		if(parentId.equals("-1")){
+        			parentBudgetIndex = new BudgetIndex();
+        			parentBudgetIndex.setIndexCode("-1");
+        			parentBudgetIndex.setIndexName("预算指标");
+        		}else{
+        			parentBudgetIndex = budgetIndexManager.get(parentId);
+        			budgetIndex.setIndexCode(parentBudgetIndex.getIndexCode());
+        		}
+        		/*Integer l = parentBudgetType.getClevel();
+        		if(l!=null&&!"-1".equals(parentBudgetType.getId())){
+        			budgetType.setClevel(l+1);
+        		}*/
+        		budgetIndex.setParentId(parentBudgetIndex);
+        	}
         	this.setEntityIsNew(true);
         }
         return SUCCESS;
@@ -131,6 +176,39 @@ public class BudgetIndexPagedAction extends JqGridBaseAction implements Preparab
 
 		return SUCCESS;
 
+	}
+	
+	private List<Map<String,String>> budgetIndexTreeNodes;
+	
+	public List<Map<String,String>> getBudgetIndexTreeNodes() {
+		return budgetIndexTreeNodes;
+	}
+
+	public void setBudgetIndexTreeNodes(List<Map<String,String>> budgetIndexTreeNodes) {
+		this.budgetIndexTreeNodes = budgetIndexTreeNodes;
+	}
+
+	public String getBudgetIndexTree(){
+		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+		filters.add(new PropertyFilter("EQB_disabled","false"));
+		List<BudgetIndex> budgetIndexs = budgetIndexManager.getByFilters(filters);
+		budgetIndexTreeNodes = new ArrayList<Map<String,String>>();
+		Map<String, String> budgetIndexRoot = new HashMap<String, String>();
+		budgetIndexRoot.put("id", "-1");
+		budgetIndexRoot.put("name", "预算指标");
+		budgetIndexTreeNodes.add(budgetIndexRoot);
+		for(BudgetIndex budgetIndex : budgetIndexs){
+			Map<String, String> budgetIndexTemp = new HashMap<String, String>();
+			budgetIndexTemp.put("id", budgetIndex.getIndexCode());
+			budgetIndexTemp.put("name", budgetIndex.getIndexName());
+			if(budgetIndex.getParentId()==null||"".equals(budgetIndex.getParentId().getIndexCode())){
+				budgetIndexTemp.put("pId", "-1");
+			}else{
+				budgetIndexTemp.put("pId",budgetIndex.getParentId().getIndexCode());
+			}
+			budgetIndexTreeNodes.add(budgetIndexTemp);
+		}
+		return SUCCESS;
 	}
 }
 

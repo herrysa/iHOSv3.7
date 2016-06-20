@@ -25,9 +25,17 @@
 					</s:else>
 				</div>
 				<div class="unit">
-				<s:textfield id="budgetType_budgetTypeName" key="budgetType.budgetTypeName" name="budgetType.budgetTypeName" cssClass="				
+				<s:textfield id="budgetType_budgetTypeName" key="budgetType.budgetTypeName" name="budgetType.budgetTypeName" cssClass="required			
 				
 				       "/>
+				</div>
+				<div class="unit">
+					<s:hidden key="budgetType.parentId.budgetTypeCode" name="budgetType.parentId.budgetTypeCode" cssClass="				
+				
+				       "/>
+			       <s:textfield key="budgetType.parentId.budgetTypeName" name="budgetType.parentId.budgetTypeName" readonly="true" cssClass="				
+			
+			       "/>
 				</div>
 				<div class="unit">
 				<s:textfield id="budgetType_exceedBudgetType" key="budgetType.exceedBudgetType" name="budgetType.exceedBudgetType" cssClass="				
@@ -35,11 +43,17 @@
 				       "/>
 				</div>
 				<div class="unit">
-				</div>
-				<div class="unit">
 				<s:textfield id="budgetType_warningPercent" key="budgetType.warningPercent" name="budgetType.warningPercent" cssClass="				
 				digits
 				       "/>
+				</div>
+				<div class="unit">
+					<label><s:text name="budgetType.leaf"/>:</label>
+					<s:checkbox id="budgetType_leaf" key="budgetType.leaf" name="budgetType.leaf" theme="simple"/>
+				</div>
+				<div class="unit">
+					<label><s:text name="budgetType.disabled"/>:</label>
+					<s:checkbox id="budgetType_disabled" key="budgetType.disabled" name="budgetType.disabled" theme="simple" />
 				</div>
 			
 			</div>

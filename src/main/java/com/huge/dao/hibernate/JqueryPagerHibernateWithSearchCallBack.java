@@ -11,8 +11,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.MatchMode;
@@ -31,7 +29,7 @@ public class JqueryPagerHibernateWithSearchCallBack
 
     List<PropertyFilter> filters;
 
-    String group_on = "";
+    String group_on = "and";
 
     JqueryPagerHibernateWithSearchCallBack( final JQueryPager paginatedList, final Class object, List<PropertyFilter> filters ) {
         super( paginatedList, object );
@@ -204,11 +202,7 @@ public class JqueryPagerHibernateWithSearchCallBack
         int i = 0;
         try {
         if ( group_on.equals( "OR" ) ) {
-        	//{and:{}}
             Disjunction disjunction = Restrictions.disjunction();
-            Conjunction conjunction = Restrictions.conjunction();
-            conjunction.add(disjunction);
-            criteria.add(conjunction);
             while ( itr.hasNext() ) {
                 PropertyFilter pf = (PropertyFilter) itr.next();
                 criteria = CriteriaUtil.createAliasCriteria((CriteriaImpl) criteria, pf.getPropertyName());
@@ -400,13 +394,4 @@ public class JqueryPagerHibernateWithSearchCallBack
 		}
         return criteria;
     }
-    
-    public static void main(String[] args) {
-    	String sql = " a=1 or b=1";
-		String aa = "{op:'and',filter:['','']}";
-		JSONObject a = JSONObject.fromObject(aa);
-		JSONArray bb = (JSONArray)a.get("filter");
-		Object aqq = bb.get(0);
-		System.out.println(aqq instanceof JSONObject);
-	}
 }

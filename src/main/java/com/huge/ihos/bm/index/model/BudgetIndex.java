@@ -30,7 +30,9 @@ public class BudgetIndex extends BaseObject{
 	
 	private String indexType;
 	
-	private Boolean disabeld;
+	private Boolean leaf;
+	private Boolean disabled;
+
 
 	@Id
 	@Column(name="index_code")
@@ -97,13 +99,22 @@ public class BudgetIndex extends BaseObject{
 		this.indexType = indexType;
 	}
 
-	@Column(name="disabeld")
-	public Boolean getDisabeld() {
-		return disabeld;
+	@Column(name="leaf")
+	public Boolean getLeaf() {
+		return leaf;
 	}
 
-	public void setDisabeld(Boolean disabeld) {
-		this.disabeld = disabeld;
+	public void setLeaf(Boolean leaf) {
+		this.leaf = leaf;
+	}
+	
+	@Column(name="disabled")
+	public Boolean getDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(Boolean disabled) {
+		this.disabled = disabled;
 	}
 
 	@Override
@@ -111,7 +122,7 @@ public class BudgetIndex extends BaseObject{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((disabeld == null) ? 0 : disabeld.hashCode());
+				+ ((disabled == null) ? 0 : disabled.hashCode());
 		result = prime
 				* result
 				+ ((exceedBudgetType == null) ? 0 : exceedBudgetType.hashCode());
@@ -135,10 +146,10 @@ public class BudgetIndex extends BaseObject{
 		if (getClass() != obj.getClass())
 			return false;
 		BudgetIndex other = (BudgetIndex) obj;
-		if (disabeld == null) {
-			if (other.disabeld != null)
+		if (disabled == null) {
+			if (other.disabled != null)
 				return false;
-		} else if (!disabeld.equals(other.disabeld))
+		} else if (!disabled.equals(other.disabled))
 			return false;
 		if (exceedBudgetType == null) {
 			if (other.exceedBudgetType != null)
@@ -173,7 +184,7 @@ public class BudgetIndex extends BaseObject{
 		return "BudgetIndex [indexCode=" + indexCode + ", indexName="
 				+ indexName + ", exceedBudgetType=" + exceedBudgetType
 				+ ", warningPercent=" + warningPercent + ", indexType="
-				+ indexType + ", disabeld=" + disabeld + "]";
+				+ indexType + ", disabeld=" + disabled + "]";
 	}
 	
 	

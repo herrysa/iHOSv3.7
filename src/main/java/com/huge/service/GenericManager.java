@@ -106,6 +106,9 @@ public interface GenericManager<T, PK extends Serializable> {
     //List<T> search( String searchTerm, Class clazz );
 
     JQueryPager getAppManagerCriteriaWithSearch( final JQueryPager paginatedList, final Class object, List<PropertyFilter> filters );
+    
+    JQueryPager getAppManagerCriteriaWithSearch( final JQueryPager paginatedList, final Class object, List<PropertyFilter> filters,
+            String group_on );
 
     HibernateTemplate getHibernateTemplate();
     

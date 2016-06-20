@@ -105,6 +105,10 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
 			return ajaxForwardError(gridOperationMessage);
 		}
 		try {
+			parentBudgetType = budgetType.getParentId();
+			if("-1".equals(parentBudgetType.getBudgetTypeCode())){
+				budgetType.setParentId(null);
+			}
 			budgetTypeManager.save(budgetType);
 		} catch (Exception dre) {
 			gridOperationMessage = dre.getMessage();

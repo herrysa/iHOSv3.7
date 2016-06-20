@@ -88,7 +88,7 @@
 			},
         	sortname: 'budgetTypeCode',
         	viewrecords: true,
-        	sortorder: 'desc',
+        	sortorder: 'asc',
         	//caption:'<s:text name="budgetTypeList.title" />',
         	height:300,
         	gridview:true,

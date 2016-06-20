@@ -207,6 +207,20 @@ public class GenericManagerImpl<T, PK extends Serializable>
         paginatedList.setTotalNumberOfRows( count );
         return paginatedList;
     }
+    
+    @Override
+	public JQueryPager getAppManagerCriteriaWithSearch(
+			JQueryPager paginatedList, Class object,
+			List<PropertyFilter> filters, String group_on) {
+    	Map<String, Object> resultMap = this.dao.getAppManagerCriteriaWithSearch( paginatedList, object, filters ,group_on);
+        paginatedList.setList( (List) resultMap.get( "list" ) );
+        int count = 0;
+        Integer icount = (Integer) resultMap.get( "count" );
+        if ( icount != null )
+            count = icount.intValue();
+        paginatedList.setTotalNumberOfRows( count );
+        return paginatedList;
+	}
 
     @Override
     public HibernateTemplate getHibernateTemplate() {
