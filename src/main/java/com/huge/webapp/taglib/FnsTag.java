@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sf.json.JSONObject;
+
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContext;
 import com.huge.ihos.system.context.UserContextUtil;
@@ -125,5 +127,16 @@ public class FnsTag {
 		String loginYear = loginPeriod.substring(0, 4);*/
 		String paramValue = ContextUtil.getHerpParamByKey(key, subSystemCode);
 		return paramValue;
+	}
+	
+	public static String getAllVariableStr(){
+		UserContext userContext = UserContextUtil.getUserContext();
+		if(userContext!=null){
+			Map sysVarMap = userContext.getSysVars();
+			JSONObject sysVarJson = JSONObject.fromObject(sysVarMap);
+			return sysVarJson.toString();
+		}else{
+			return "";
+		}
 	}
 }

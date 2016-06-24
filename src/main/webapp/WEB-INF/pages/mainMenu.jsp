@@ -52,7 +52,7 @@ var mainMenuSetting = {
 			}
 		},
 		async : {
-			enable : true,
+			enable : false,
 			url : "${ctx}/getAllRootMenu",
 			autoParam : [ "id", "pId" ],
 			dataFilter : mainMenuFilter
@@ -309,7 +309,13 @@ jQuery(function(){
 });
 
 function bulidMenuTree(){
-	$.fn.zTree.init($("#menuTree"), mainMenuSetting);
+	$.get("findAlowMuens", {
+		"_" : $.now()
+	}, function(data) {
+		var alowMenus = data.alowMenus;
+		$.fn.zTree.init($("#menuTree"), mainMenuSetting,alowMenus);
+		dealMainMenuTree();
+	});
 }
 
 function setSv(){

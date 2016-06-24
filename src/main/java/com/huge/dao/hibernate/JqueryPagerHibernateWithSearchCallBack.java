@@ -29,7 +29,7 @@ public class JqueryPagerHibernateWithSearchCallBack
 
     List<PropertyFilter> filters;
 
-    String group_on = "and";
+    String group_on = "";
 
     JqueryPagerHibernateWithSearchCallBack( final JQueryPager paginatedList, final Class object, List<PropertyFilter> filters ) {
         super( paginatedList, object );
@@ -84,7 +84,9 @@ public class JqueryPagerHibernateWithSearchCallBack
 			while(fliterIt.hasNext()){
 				String propertyName = fliterIt.next();
 				PropertyFilter pf = propertyMap.get(propertyName);
-				addFilter(criteria,junction,pf);
+				if(pf!=null){
+					addFilter(criteria,junction,pf);
+				}
 			}
 		}
 		return criteria;

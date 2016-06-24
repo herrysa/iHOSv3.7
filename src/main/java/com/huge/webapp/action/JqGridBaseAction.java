@@ -34,7 +34,7 @@ public class JqGridBaseAction
 
     protected String gridOperationMessage;
 
-    protected String group_on = "AND";
+    protected String group_on = "";
 
     /*	protected String q;
      protected String group_on = "AND";

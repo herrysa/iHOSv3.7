@@ -34,7 +34,7 @@
 			var urlString = "budgetIndexGridList";
 			if(treeNode.id!="-1"){
 				urlString=urlString+"?filter_EQS_indexCode="+treeNode.id+"&filter_EQS_parentId.indexCode="+treeNode.id;	
-				urlString += "&group_on={op:'or',filter:['indexCode','prentId.indexCode']}";
+				urlString += "&group_on={op:'or',filter:['indexCode','parentId.indexCode']}";
 			}
 		    urlString = encodeURI(urlString);
 			jQuery(budgetIndexGridIdString).jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
@@ -59,7 +59,7 @@
 			colModel:[
 			{name:'indexCode',index:'indexCode',align:'left',label : '<s:text name="budgetIndex.indexCode" />',hidden:false,key:true},
 			{name:'indexName',index:'indexName',align:'left',label : '<s:text name="budgetIndex.indexName" />',hidden:false},
-			{name:'parentId',index:'parentId',align:'left',label : '<s:text name="budgetIndex.parentId" />',hidden:false},
+			{name:'parentId.indexName',index:'parentId.indexName',align:'left',label : '<s:text name="budgetIndex.parentId" />',hidden:false},
 			{name:'indexType',index:'indexType',align:'left',label : '<s:text name="budgetIndex.indexType" />',hidden:false},
 			{name:'budgetIndex.budgetTypeName',index:'budgetIndex.budgetTypeName',align:'left',label : '<s:text name="budgetIndex.budgetType" />',hidden:false},
 			{name:'exceedBudgetType',index:'exceedBudgetType',align:'left',label : '<s:text name="budgetIndex.exceedBudgetType" />',hidden:false},

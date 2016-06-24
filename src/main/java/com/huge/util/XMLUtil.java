@@ -244,6 +244,10 @@ public class XMLUtil {
     public static Document createDocument() {
         return DocumentHelper.createDocument();
     }
+    
+    public static Element createElement(String name) {
+        return DocumentHelper.createElement(name);
+    }
      
  
     public static void main(String[] args) {

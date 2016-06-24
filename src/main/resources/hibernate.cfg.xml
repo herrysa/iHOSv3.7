@@ -10,12 +10,104 @@
 <hibernate-configuration>
 
 	<session-factory>
+<mapping class="com.huge.ihos.system.importdata.model.ImportDataDefine"/>
+		<mapping class="com.huge.ihos.system.importdata.model.ImportDataDefineDetail"/>
+		
+		<mapping class="com.huge.ihos.system.excelTemplate.model.ExcelTemplate"/>
+		
+		<mapping class="com.huge.ihos.system.datacollection.model.DataSourceType" />
+		<mapping class="com.huge.ihos.system.datacollection.model.DataSourceDefine" />
+		<mapping class="com.huge.ihos.system.datacollection.model.DataCollectionTaskDefine" />
+		<mapping class="com.huge.ihos.system.datacollection.model.DataCollectionTaskStep" />
+		<mapping class="com.huge.ihos.system.datacollection.model.DataCollectionTaskStepExecute" />
+		<mapping class="com.huge.ihos.system.datacollection.model.DataCollectionTask" />
 
-        <mapping class="com.huge.ihos.system.reportManager.report.model.DefineReport"/>
-        <mapping class="com.huge.ihos.system.reportManager.report.model.ReportDataSource"/>
-        <mapping class="com.huge.ihos.system.reportManager.report.model.ReportFunction"/>
-        <mapping class="com.huge.ihos.bm.budgetType.model.BudgetType"/>
-        <mapping class="com.huge.ihos.bm.index.model.BudgetIndex"/>
+		<mapping class="com.huge.ihos.system.datacollection.model.InterLogger" />
+
+		<mapping class="com.huge.ihos.system.datacollection.maptables.model.Deptmap" />
+		<mapping class="com.huge.ihos.system.datacollection.maptables.model.Matetype" />
+		<mapping class="com.huge.ihos.system.datacollection.maptables.model.Acctcostmap" />
+		<!-- Configuration start -->
+		<mapping class="com.huge.ihos.system.configuration.syvariable.model.Variable"/>
+		<mapping class="com.huge.ihos.system.configuration.funcDefine.model.FuncDefine"/>
+		<mapping class="com.huge.ihos.system.configuration.dictionary.model.Dictionary" />
+		<mapping class="com.huge.ihos.system.configuration.dictionary.model.DictionaryItem" />
+		<mapping class="com.huge.ihos.system.configuration.colsetting.model.ColShow"/>
+		<mapping class="com.huge.ihos.system.configuration.colsetting.model.ColSearch"/>
+		<mapping class="com.huge.ihos.system.configuration.serialNumber.model.SerialNumberGenerate"/>
+		<mapping class="com.huge.ihos.system.configuration.serialNumber.model.SerialNumberSet"/>
+		<mapping class="com.huge.ihos.system.configuration.modelstatus.model.ModelStatus"/>
+		
+		<mapping class="com.huge.ihos.system.configuration.bdinfo.model.BdInfo"/>
+		<mapping class="com.huge.ihos.system.configuration.bdinfo.model.FieldInfo"/>
+		<!-- Configuration end -->
+		<!-- SystemManager start -->
+		<mapping class="com.huge.ihos.system.systemManager.user.model.User" />
+		<mapping class="com.huge.ihos.system.systemManager.role.model.Role" />
+		
+		<mapping class="com.huge.ihos.system.systemManager.copy.model.Copy"/>
+		
+		<mapping class="com.huge.ihos.system.systemManager.menu.model.Menu" />
+		<mapping class="com.huge.ihos.system.systemManager.menu.model.MenuButton"/>
+		
+		<mapping class="com.huge.ihos.system.systemManager.period.model.PeriodPlan"/>
+		<mapping class="com.huge.ihos.system.systemManager.period.model.PeriodMonth"/>
+		<mapping class="com.huge.ihos.system.systemManager.period.model.PeriodYear"/>
+		<mapping class="com.huge.ihos.system.systemManager.period.model.MoudlePeriod"/>
+
+		<mapping class="com.huge.ihos.system.systemManager.globalparam.model.GlobalParam"/>
+		<mapping class="com.huge.ihos.system.systemManager.operateLog.model.OperateLog"/>
+
+		<mapping class="com.huge.ihos.system.systemManager.searchButtonPriv.model.ButtonPriv"/>
+		<mapping class="com.huge.ihos.system.systemManager.searchButtonPriv.model.ButtonPrivDetail"/>
+		<mapping class="com.huge.ihos.system.systemManager.searchButtonPriv.model.ButtonPrivUser"/>
+		<mapping class="com.huge.ihos.system.systemManager.searchButtonPriv.model.ButtonPrivUserDetail"/>
+		
+		<mapping class="com.huge.ihos.system.systemManager.dbback.model.DbBackup"/>
+		
+		<mapping class="com.huge.ihos.system.systemManager.dataprivilege.model.DataPrivilege"/>
+		<mapping class="com.huge.ihos.system.systemManager.dataprivilege.model.PrivilegeClass"/>
+		<mapping class="com.huge.ihos.system.systemManager.dataprivilege.model.UserDataPrivilege"/>
+		
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.Org"/>
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.Branch"/>
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.Department" />
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.PersonType"/>
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.Person" />
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.DeptType" />
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.KhDeptType" />
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.PersonJj" />
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.PersonUpCost" />
+		<mapping class="com.huge.ihos.system.systemManager.organization.model.MonthPerson"/>
+		<!-- SystemManager end -->
+		<!-- Repository start -->
+		<mapping class="com.huge.ihos.system.repository.bank.model.Bank"/>
+		<!-- Repository end -->
+		<!-- oa start -->
+		<mapping class="com.huge.ihos.system.oa.bylaw.model.ByLaw"/>
+		<mapping class="com.huge.ihos.system.oa.bulletin.model.Bulletin"/>
+		<!-- oa end -->
+		<!-- reportManager start -->
+		<mapping class="com.huge.ihos.system.reportManager.chart.model.MccKey" />
+		<mapping class="com.huge.ihos.system.reportManager.chart.model.MccKeyDetail" />
+		
+		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchItem" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.Test" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.TestDate" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.TestValue" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchLink" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchOption" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchUrl" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.Search" />
+		<mapping class="com.huge.ihos.system.reportManager.search.model.Report"/>
+		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchEntity"/>
+		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchEntityCluster"/>
+		
+		<!-- reportManager end -->
+		<!-- System end -->
+        <mapping class="com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata"/>
+        <mapping class="com.huge.ihos.bm.budgetModel.model.BudgetModel"/>
+        <mapping class="com.huge.ihos.bm.budgetUpdata.model.BudgetModelXf"/>
     </session-factory>
 
 </hibernate-configuration>

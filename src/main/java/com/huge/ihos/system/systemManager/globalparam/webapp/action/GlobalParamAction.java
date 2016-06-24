@@ -79,6 +79,8 @@ public class GlobalParamAction extends JqGridBaseAction {
 					filters.add(new PropertyFilter("EQS_subSystemId", "人力资源管理系统"));
 				} else if ("GZ".equalsIgnoreCase(subSystem)) {
 					filters.add(new PropertyFilter("EQS_subSystemId", "薪资管理系统"));
+				}else if ("BM".equalsIgnoreCase(subSystem)) {
+					filters.add(new PropertyFilter("EQS_subSystemId", "全面预算管理系统"));
 				}
 			}
 			String paramType = getRequest().getParameter("paramType");

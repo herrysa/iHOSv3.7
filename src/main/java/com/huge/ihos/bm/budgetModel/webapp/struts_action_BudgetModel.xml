@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="budgetModel" extends="default"	namespace="/">
+
+		<action name="budgetModelList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelList.jsp</result>
+		</action>
+		<action name="budgetModelGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="budgetModelGridList">
+			<result type="json">
+				<param name="includeProperties">budgetModels.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="budgetModelGridEdit" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="budgetModelGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="editBudgetModelReport" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="editBudgetModelReport">
+			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelReport.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelReport.jsp</result>
+		</action>
+		<action name="getBmReportXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getBmReportXml">
+		</action>
+		
+		<action name="saveBmReportXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="saveBmReportXml">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getBmReportIndexXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getBmReportIndexXml">
+		</action>
+		
+		<action name="bmDepartmentList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="bmDepartmentList">
+			<result name="success">/WEB-INF/pages/bm/budgetDept/bmDepartmentList.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetDept/bmDepartmentList.jsp</result>
+		</action>
+		
+		<action name="budgetDepartmentList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="budgetDepartmentList">
+			<result name="success">/WEB-INF/pages/bm/budgetDept/budgetDepartment.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetDept/budgetDepartment.jsp</result>
+		</action>
+
+	</package>
+
+</struts>

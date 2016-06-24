@@ -356,6 +356,163 @@ public class MenuAction
 
     }
 
+    List<ZTreeSimpleNode> alowMenus;
+    public List<ZTreeSimpleNode> getAlowMenus() {
+		return alowMenus;
+	}
+
+	public void setAlowMenus(List<ZTreeSimpleNode> alowMenus) {
+		this.alowMenus = alowMenus;
+	}
+
+	public String findAlowMuens(){
+    	String iconLeaf = "leaf.png";
+        String iconRoot = "jx_sys.png";
+        String iconParentClose = "folder.png";
+        String iconParentOpen = "folder.png";
+        String themeName = (String) this.getRequest().getSession().getAttribute( "themeName" );
+        String iconPath = "/styles/themes/" + themeName + "/ihos_images/tree/";//logo.jpg
+        try {
+        	TreeSet<Menu> rightMenus = new TreeSet<Menu>();
+        	boolean flag = false;
+        	Map<String,Boolean> dogMenus = HaspDogHandler.getInstance().getDogMenus();
+        	Map<String, Boolean> sysMenuMap = new HashMap<String, Boolean>();
+        	SecurityContext securityContext = SecurityContextHolder.getContext();
+            String username = securityContext.getAuthentication().getName();
+            User user = userManager.getUserByUsername( username );
+            
+            User userSv = (User)getSession().getAttribute(""+user.getId());
+            SystemVariable sv = userSv.getSystemVariable();
+            if("未定义".equals(sv.getPeriod())){
+            	sysMenuMap.put("50", true);
+            	sysMenuMap.put("60", true);
+            }else{
+            	List<Menu> sysMenus = menuManager.getBusinessSys(0);
+                String sysMenuStr = "";
+                for(Menu rootMenu : sysMenus){
+                	sysMenuStr += rootMenu.getMenuId()+",";
+                	sysMenuMap.put(rootMenu.getMenuId(), true);
+                }
+                sysMenuStr = OtherUtil.subStrEnd(sysMenuStr, ",");
+                
+                String currentSys = sv.getCurrentRootMenu();
+                if(OtherUtil.measureNotNull(currentSys)&&!"-1".equals(currentSys)){
+                	sysMenuStr += ","+currentSys;
+    				sysMenuMap.put(currentSys, true);
+                }
+            }
+            
+            
+            Set<Role> roles = user.getRoles();
+            Iterator<Role> roleIt = roles.iterator();
+            int i = 0;
+            while ( roleIt.hasNext() ) {
+                Role role = roleIt.next();
+                if ( role.getName().equals( "ROLE_ADMIN" ) ) {
+                    flag = true;
+                    break;
+                }
+                Set<Menu> menus = role.getMenus();
+                for(Menu menu : menus){
+                	Boolean allowSubsys = sysMenuMap.get(menu.getSubSystem().getMenuId());
+            		if(allowSubsys!=null&&allowSubsys){
+	                	if((dogMenus.get(menu.getMenuId())==null?false:true)){
+	                		rightMenus.add(menu);
+	            		}
+            		}
+            	}
+            }
+            Iterator itr = null;
+            if ( !flag ) {
+                Set<Menu> menus = user.getMenus();
+                for ( Menu menuItem : menus ) {
+                	Boolean allowSubsys = sysMenuMap.get(menuItem.getSubSystem().getMenuId());
+            		if(allowSubsys!=null&&allowSubsys){
+	                	if((dogMenus.get(menuItem.getMenuId())==null?false:true)){
+	                		rightMenus.add(menuItem);
+	            		}
+            		}
+                }
+                TreeSet<Menu> rightMenusCopy = new TreeSet<Menu>();
+                for(Menu menu : rightMenus){
+                	rightMenusCopy.add(menu);
+                	Menu menuTemp = menu.getParent();
+                	while(menuTemp!=null){
+                		rightMenusCopy.add(menuTemp);
+                		menuTemp = menuTemp.getParent();
+                	}
+                }
+                itr = rightMenusCopy.iterator();
+            }else{
+            	List<Menu> enableMenus = menuManager.getAllEnabled();
+            	TreeSet<Menu> rightMenusCopy = new TreeSet<Menu>();
+            	for(Menu menu : enableMenus){
+            		/*if(rootMenuId.equals(menu.getSubSystem().getMenuId())&&(dogMenus.get(menu.getMenuId())==null?false:true)){
+            			rightMenusCopy.add(menu);
+            		}*/
+            		Boolean allowSubsys = sysMenuMap.get(menu.getSubSystem().getMenuId());
+            		if(allowSubsys!=null&&allowSubsys){
+	            		if((dogMenus.get(menu.getMenuId())==null?false:true)){
+	            			rightMenusCopy.add(menu);
+	            		}
+            		}
+            	}
+            	itr = rightMenusCopy.iterator();
+            }
+        	
+            alowMenus = new ArrayList();
+            while ( itr.hasNext() ) {
+                subSystem = "";
+                Menu menu = (Menu) itr.next();
+                if((ContextUtil.versionType==1)&&menu.getParent()==null){
+                	String menuName = menu.getMenuName();
+                	menu.setMenuName(menuName+"（演示版）");
+                }
+                if ( menu.isDisabled() ) {
+                    continue;
+                }
+                ZTreeSimpleNode rt = new ZTreeSimpleNode();
+                rt.setName( menu.getMenuName() );
+                rt.setId( menu.getMenuId() );
+                //if(menu.isLeaf())
+                rt.setIsParent( !menu.isLeaf() );
+                //rt.setOpen(true);
+                //rt.setIcon("/scripts/zTree/css/zTreeStyle/img/diy/5.png");
+                if ( menu.getParent() == null ) {
+                    rt.setpId( "" );
+                }
+                else {
+                    rt.setpId( menu.getParent().getMenuId() );
+                }
+
+                if ( rt.getIsParent() && rt.getpId().equals( "" ) ) {
+                    rt.setIcon( this.getContextPath() + iconPath + menu.getIconName() );
+                    rt.setOpen( true );
+                }
+                else if ( rt.getIsParent() && !rt.getpId().equals( "" ) ) {
+                    rt.setIcon( this.getContextPath() + iconPath + iconParentClose );
+                }
+                // 
+                else if ( rt.getpId().equals( "" ) ) {
+                    rt.setIcon( this.getContextPath() + iconPath + menu.getIconName() );
+                    rt.setOpen( true );
+                }
+                else {
+                    rt.setIcon( this.getContextPath() + iconPath + iconLeaf );
+                    //rt.setActionUrl(menu.getMenuAction());
+                }
+
+                rt.setActionUrl( menu.getMenuAction() );
+                alowMenus.add( rt );
+                //ttTestTimer.done();
+            }
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+    
     public String getAllRootMenu() {
     	log.info("enter getAllRootMenu method");
     	String iconLeaf = "leaf.png";

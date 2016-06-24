@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="budgetModelXf" extends="default"	namespace="/">
+
+		<action name="budgetModelXfList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfList.jsp</result>
+		</action>
+		<action name="budgetModelXfGridList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction"		method="budgetModelXfGridList">
+			<result type="json">
+				<param name="includeProperties">budgetModelXfs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="budgetModelXfGridEdit" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction"			method="budgetModelXfGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBudgetModelXf" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBudgetModelXf" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

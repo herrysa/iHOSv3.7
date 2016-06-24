@@ -752,6 +752,12 @@ function gridContainerResize(baseName,type,appendixWidth,appendixHeight){
 		jQuery("#"+baseName+"_gridtable_div").height(h - pageBarAreaH - 6 - appendixHeight);
 		var jLayout = jQuery("#"+baseName+"_container").data('Instance');
 		jLayout.resizeAll();
+	}else if(type=="fullLayout"){
+		var fullWorkSpace = jQuery("#container").innerHeight() - jQuery("div.tabsPageHeader").outerHeight();
+		jQuery("#"+baseName+"_container").height(fullWorkSpace-1- appendixHeight);
+		jQuery("#"+baseName+"_gridtable_div").height(h - pageBarAreaH - 6 - appendixHeight);
+		var jLayout = jQuery("#"+baseName+"_container").data('Instance');
+		jLayout.resizeAll();
 	}
 }
 function gridResize(e,tablecontainer,tableId,type,appendixWidth,appendixHeight){

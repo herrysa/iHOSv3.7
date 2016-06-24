@@ -53,7 +53,8 @@ public class BudgetIndex extends BaseObject{
 		this.indexName = indexName;
 	}
 
-	@Column(name="parent_id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="parent_id")
 	public BudgetIndex getParentId() {
 		return parentId;
 	}

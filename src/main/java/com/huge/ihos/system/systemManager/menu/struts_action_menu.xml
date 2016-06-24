@@ -86,6 +86,12 @@
 				<param name="includeProperties">rootMenusString</param>
 			</result>
 		</action>
+		<action name="findAlowMuens" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction"
+			method="findAlowMuens">
+			<result type="json">
+				<param name="includeProperties">alowMenus.*</param>
+			</result>
+		</action>
 		
 		<action name="moduleFlag" class="com.huge.ihos.system.systemManager.menu.webapp.action.MenuAction" method="moduleFlag">
             <result name="success">
