@@ -40,6 +40,14 @@
             </result>
 		</action>
 
+		<action name="budgetModelXfRefresh" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction"			method="budgetModelXfRefresh">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
 	</package>
 
 </struts>

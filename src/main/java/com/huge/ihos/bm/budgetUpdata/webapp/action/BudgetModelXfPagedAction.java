@@ -1,10 +1,17 @@
 package com.huge.ihos.bm.budgetUpdata.webapp.action;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
+import com.huge.ihos.bm.budgetModel.model.BudgetModel;
+import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetModelXf;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetModelXfManager;
+import com.huge.ihos.system.context.UserContextUtil;
+import com.huge.ihos.system.systemManager.organization.model.Department;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -20,9 +27,11 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	private List<BudgetModelXf> budgetModelXfs;
 	private BudgetModelXf budgetModelXf;
 	private String xfId;
+	
+	private BudgetModelManager budgetModelManager;
 
-	public BudgetModelXfManager getBudgetModelXfManager() {
-		return budgetModelXfManager;
+	public void setBudgetModelManager(BudgetModelManager budgetModelManager) {
+		this.budgetModelManager = budgetModelManager;
 	}
 
 	public void setBudgetModelXfManager(BudgetModelXfManager budgetModelXfManager) {
@@ -131,6 +140,37 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 
 		return SUCCESS;
 
+	}
+	
+	public String budgetModelXfRefresh(){
+		List<PropertyFilter> modelfilters = new ArrayList<PropertyFilter>();
+		modelfilters.add(new PropertyFilter("EQB_disabled", "false"));
+		String periodYear = UserContextUtil.getUserContext().getPeriodYear();
+		modelfilters.add(new PropertyFilter("SQS_modelId", "modelId not in (select modelId from bm_model_xf where period_year='"+periodYear+"')"));
+		List<BudgetModel> budgetModels = budgetModelManager.getByFilters(modelfilters);
+		for(BudgetModel bmm :budgetModels){
+			BudgetModelXf budgetModelXf = new BudgetModelXf();
+			budgetModelXf.setModelId(bmm);
+			budgetModelXf.setPeriodYear(periodYear);
+			budgetModelXf.setState(0);
+			budgetModelXf.setXfDate(Calendar.getInstance().getTime());
+			budgetModelXfManager.save(budgetModelXf);
+		}
+		return ajaxForward("刷新成功！");
+	}
+	
+	public String budgetModel_Xf(){
+		List<PropertyFilter> xfModelfilters = new ArrayList<PropertyFilter>();
+		String periodYear = UserContextUtil.getUserContext().getPeriodYear();
+		xfModelfilters.add(new PropertyFilter("EQS_periodYear", periodYear));
+		List<BudgetModelXf> xfBudgetModelXfs = budgetModelXfManager.getByFilters(xfModelfilters);
+		for(BudgetModelXf bmmXf :xfBudgetModelXfs){
+			BudgetModel bmm = bmmXf.getModelId();
+			int state = bmmXf.getState();
+			Set<Department> departments = bmm.getDepartments();
+			
+		}
+		return ajaxForward("刷新成功！");
 	}
 }
 

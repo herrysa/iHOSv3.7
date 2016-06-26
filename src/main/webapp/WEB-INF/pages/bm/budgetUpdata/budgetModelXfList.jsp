@@ -13,7 +13,16 @@
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-{name:'xfId',index:'xfId',align:'center',label : '<s:text name="budgetModelXf.xfId" />',hidden:false,key:true},{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelXf.periodYear" />',hidden:false},{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelXf.state" />',hidden:false,formatter:'integer'},{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelXf.xfDate" />',hidden:false,formatter:'date'}        	],
+			{name:'xfId',index:'xfId',align:'center',label : '<s:text name="budgetModelXf.xfId" />',hidden:true,key:true},
+			{name:'modelName',index:'modelName',align:'left',label : '<s:text name="budgetModelXf.model" />',hidden:false},
+			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelXf.periodYear" />',hidden:false},
+			{name:'budgetType',index:'state',align:'left',label : '<s:text name="budgetModelXf.budgetType" />',hidden:false,formatter:'integer'},
+			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelXf.state" />',hidden:false,formatter:'integer'},
+			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelXf.xfDate" />',hidden:false,formatter:'date'},
+			{name:'xfNum',index:'xfNum',align:'left',label : '<s:text name="budgetModelXf.xfNum" />',hidden:false},
+			{name:'updatating',index:'updatating',align:'left',label : '<s:text name="budgetModelXf.updatating" />',hidden:false},
+			{name:'updatated',index:'updatated',align:'left',label : '<s:text name="budgetModelXf.updatated" />',hidden:false}
+			],
         	jsonReader : {
 				root : "budgetModelXfs", // (2)
 				page : "page",
@@ -47,6 +56,14 @@
 
     	});
     jQuery(budgetModelXfGrid).jqGrid('bindKeys');
+    
+    jQuery("#budgetModelXf_gridtable_refresh").click(function(){
+    	$.get("budgetModelXfRefresh", {
+			"_" : $.now()
+		}, function(data) {
+			formCallBack(data);
+		});
+    });
   	});
 </script>
 
@@ -56,16 +73,8 @@
 				<div class="searchContent">
 				<form id="budgetModelXf_search_form" >
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelXf.xfId'/>:
-						<input type="text" name="filter_EQS_xfId"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelXf.modelId'/>:
-						<input type="text" name="filter_EQS_modelId"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelXf.periodYear'/>:
-						<input type="text" name="filter_EQS_periodYear"/>
+						<s:text name='budgetModelXf.model'/>:
+						<input type="text" name="filter_EQS_model"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelXf.state'/>:
@@ -75,38 +84,27 @@
 						<s:text name='budgetModelXf.xfDate'/>:
 						<input type="text" name="filter_EQS_xfDate"/>
 					</label>
-				</form>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
 							<button type="button" onclick="propertyFilterSearch(budgetModelXf_search_form,budgetModelXf_gridtable)"><s:text name='button.search'/></button>
 						</div>
 					</div>
-				</div>
-				<div class="subBar">
-					<ul>
-						<li><div class="buttonActive">
-								<div class="buttonContent">
-									<button type="button" onclick="propertyFilterSearch(budgetModelXf_search_form,budgetModelXf_gridtable)"><s:text name='button.search'/></button>
-								</div>
-							</div>
-						</li>
-					</ul>
+				</form>
 				</div>
 			</div>
 	</div>
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a id="budgetModelXf_gridtable_add" class="addbutton" href="javaScript:" ><span><fmt:message
-								key="button.add" />
+				<li><a id="budgetModelXf_gridtable_refresh" class="addbutton" href="javaScript:" ><span>刷新
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelXf_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
+				<li><a id="budgetModelXf_gridtable_xf" class="delbutton"  href="javaScript:"><span>下发</span>
 				</a>
 				</li>
-				<li><a id="budgetModelXf_gridtable_edit" class="changebutton"  href="javaScript:"
-					><span><s:text name="button.edit" />
+				<li><a id="budgetModelXf_gridtable_reXf" class="changebutton"  href="javaScript:"
+					><span>重新下发
 					</span>
 				</a>
 				</li>
