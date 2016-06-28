@@ -34,7 +34,7 @@ public class BudgetUpdata extends BaseObject {
 	private Date submitDate ;
 	private Person checker ;
 	private Date checkDate ;
-	private Integer state ;
+	private Integer state ;		//0:上报中;1:已确认;2：科室已审核;3:已上报
 	private String periodYear;
 	
 	@Id
@@ -51,11 +51,11 @@ public class BudgetUpdata extends BaseObject {
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "modelXfId")
-	public BudgetModelXf getModelId() {
+	public BudgetModelXf getModelXfId() {
 		return modelXfId;
 	}
 
-	public void setModelId(BudgetModelXf modelXfId) {
+	public void setModelXfId(BudgetModelXf modelXfId) {
 		this.modelXfId = modelXfId;
 	}
 

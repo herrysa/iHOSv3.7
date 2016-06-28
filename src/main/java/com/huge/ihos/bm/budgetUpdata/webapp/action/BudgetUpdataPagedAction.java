@@ -1,10 +1,25 @@
 package com.huge.ihos.bm.budgetUpdata.webapp.action;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+
+import com.huge.ihos.bm.budgetModel.model.BudgetModel;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
+import com.huge.util.UUIDGenerator;
+import com.huge.util.XMLUtil;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -131,6 +146,112 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 
 		return SUCCESS;
 
+	}
+	
+	public String openBmReport(){
+		return SUCCESS;
+	}
+	
+	String reportXml;
+	
+	public String getReportXml() {
+		return reportXml;
+	}
+
+	public void setReportXml(String reportXml) {
+		this.reportXml = reportXml;
+	}
+
+	public String getBmUpdataReportXml(){
+		try {
+			if(updataId!=null&&!"".equals(updataId)){
+				budgetUpdata = budgetUpdataManager.get(updataId);
+				BudgetModel budgetModel = budgetUpdata.getModelXfId().getModelId();
+	        	reportXml = budgetModel.getReportXml();
+	        	
+	        }
+			if(reportXml==null){
+				HttpServletRequest request = getRequest();
+	        	HttpSession session = request.getSession();
+	        	String blankPath = session.getServletContext().getRealPath("/home/supcan/userdefine/blank.xml");
+	        	File blank = new File(blankPath);
+	        	reportXml = XMLUtil.xmltoString(XMLUtil.read(blank, "UTF-8"));
+        	}
+			HttpServletResponse response = getResponse();  
+			//设置编码  
+			response.setCharacterEncoding("UTF-8");  
+			response.setContentType("text/xml;charset=utf-8");  
+			response.setHeader("Cache-Control", "no-cache");  
+			PrintWriter out = response.getWriter();  
+			out.write(reportXml);  
+			out.flush();  
+			out.close(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String updataXml;
+	
+	public String getUpdataXml() {
+		return updataXml;
+	}
+
+	public void setUpdataXml(String updataXml) {
+		this.updataXml = updataXml;
+	}
+
+	public String saveBmUpdata(){
+		if(updataXml==null||updataId==null){
+			return ajaxForward(false,"保存失败！",false);
+		}
+		budgetUpdata = budgetUpdataManager.get(updataId);
+		String deptId = budgetUpdata.getDepartment().getDepartmentId();
+		String periodYear = budgetUpdata.getPeriodYear();
+		Document document = XMLUtil.stringToXml(updataXml);
+		Element root = document.getRootElement();
+		Iterator<Element> elementIt = root.elementIterator("data");
+		List<String> updataDetailSqlList = new ArrayList<String>();
+		budgetUpdataManager.executeSql("delete from bm_updatadetail where updataId='"+updataId+"'");
+		while(elementIt.hasNext()){
+			String uuid = UUIDGenerator.getInstance().getNextValue();
+			Element dataElement = elementIt.next();
+			String indexCode = dataElement.attributeValue("name");
+			String Cell = dataElement.attributeValue("Cell");
+			String value = dataElement.getText();
+			updataDetailSqlList.add("insert into bm_updatadetail(detailId,updataId,deptId,period_year,cell,indexCode,bmvalue,state) values ('"+uuid+"','"+updataId+"','"+deptId+"','"+periodYear+"','"+Cell+"','"+indexCode+"','"+value+"',0)");
+		}
+		budgetUpdataManager.executeSqlList(updataDetailSqlList);
+		return ajaxForward("保存成功！");
+	}
+	
+	public String getBmUpdataXml(){
+		try {
+			if(updataId!=null&&!"".equals(updataId)){
+				reportXml = "<WorkSheet name=\"Sheet\" number=\"0\">";
+				List<Map<String, Object>> bmValueList = budgetUpdataManager.getBySqlToMap("select cell,indexCode,bmvalue from bm_updatadetail where updataId='"+updataId+"'");
+				for(Map<String, Object> bmValue : bmValueList){
+					String indexCode = bmValue.get("indexCode").toString();
+					String cell = bmValue.get("cell").toString();
+					String bmvalue = bmValue.get("bmvalue").toString();
+					reportXml += "<data name=\""+indexCode+"\" Cell=\""+cell+"\">"+bmvalue+"</data>";
+				}
+				reportXml += "</WorkSheet>";
+				HttpServletResponse response = getResponse();  
+				//设置编码  
+				response.setCharacterEncoding("UTF-8");  
+				response.setContentType("text/xml;charset=utf-8");  
+				response.setHeader("Cache-Control", "no-cache");  
+				PrintWriter out = response.getWriter();  
+				out.write(reportXml);  
+				out.flush();  
+				out.close(); 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
 

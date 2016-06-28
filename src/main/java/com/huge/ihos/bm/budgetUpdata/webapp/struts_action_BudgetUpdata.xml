@@ -39,6 +39,28 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
+		
+		<action name="budgetUpdata" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetUpdata.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetUpdata.jsp</result>
+		</action>
+		
+		<action name="openBmReport" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction" method="openBmReport">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataReport.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataReport.jsp</result>
+		</action>
+		
+		<action name="getBmUpdataReportXml" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction"			method="getBmUpdataReportXml">
+		</action>
+		<action name="saveBmUpdata" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction"			method="saveBmUpdata">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getBmUpdataXml" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction"			method="getBmUpdataXml">
+		</action>
 
 	</package>
 

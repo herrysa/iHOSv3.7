@@ -36,7 +36,51 @@ public class BudgetModelXf extends BaseObject {
 	private Date xfDate;
 	private String periodYear;
 	private Integer state;
+	private Integer xfNum;
+	private Integer updataingNum;
+	private Integer confirmNum;
+	private Integer checkedNum;
+	private Integer submitedNum;
 	
+	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId)")
+	public Integer getXfNum() {
+		return xfNum;
+	}
+	public void setXfNum(Integer xfNum) {
+		this.xfNum = xfNum;
+	}
+	
+	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=0)")
+	public Integer getUpdataingNum() {
+		return updataingNum;
+	}
+	public void setUpdataingNum(Integer updataingNum) {
+		this.updataingNum = updataingNum;
+	}
+	
+	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=1)")
+	public Integer getConfirmNum() {
+		return confirmNum;
+	}
+	public void setConfirmNum(Integer confirmNum) {
+		this.confirmNum = confirmNum;
+	}
+	
+	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=2)")
+	public Integer getCheckedNum() {
+		return checkedNum;
+	}
+	public void setCheckedNum(Integer checkedNum) {
+		this.checkedNum = checkedNum;
+	}
+	
+	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=3)")
+	public Integer getSubmitedNum() {
+		return submitedNum;
+	}
+	public void setSubmitedNum(Integer submitedNum) {
+		this.submitedNum = submitedNum;
+	}
 	@Id
 	@Column(name = "xfId", length = 32, nullable = false)
 	@GenericGenerator(name = "uuid", strategy = "uuid")

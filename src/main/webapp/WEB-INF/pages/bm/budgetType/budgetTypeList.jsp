@@ -183,12 +183,12 @@
 						<s:text name='budgetType.warningPercent'/>:
 						<input type="text" name="filter_EQS_warningPercent"/>
 					</label>
-				</form>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
 							<button type="button" onclick="propertyFilterSearch(budgetType_search_form,budgetType_gridtable)"><s:text name='button.search'/></button>
 						</div>
 					</div>
+				</form>
 				</div>
 			</div>
 	</div>
