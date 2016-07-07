@@ -167,6 +167,16 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		return ajaxForward("刷新成功！");
 	}
 	
+	String xfType ;
+	
+	public String getXfType() {
+		return xfType;
+	}
+
+	public void setXfType(String xfType) {
+		this.xfType = xfType;
+	}
+
 	public String budgetModel_Xf(){
 		if(xfId!=null&&!"".equals(xfId)){
 			List<PropertyFilter> xfModelfilters = new ArrayList<PropertyFilter>();
@@ -177,6 +187,30 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			for(BudgetModelXf bmmXf :xfBudgetModelXfs){
 				BudgetModel bmm = bmmXf.getModelId();
 				int state = bmmXf.getState();
+				if(state>0){
+					if("1".equals(xfType)){
+						List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
+						updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",bmmXf.getXfId()));
+						List<BudgetUpdata> budgetUpdataList = budgetUpdataManager.getByFilters(updatafilters);
+						for(BudgetUpdata bup : budgetUpdataList){
+							bup.setState(4);
+							budgetUpdataManager.executeSql("update bm_updatadetail set state=4 where updataId='"+bup.getUpdataId()+"'");
+							budgetUpdataManager.save(bup);
+						}
+						bmmXf.setState(3);
+						budgetModelXfManager.save(bmmXf);
+						bmmXf = new BudgetModelXf();
+						bmmXf.setModelId(bmm);
+						bmmXf.setPeriodYear(periodYear);
+						bmmXf.setState(0);
+						bmmXf.setXfDate(Calendar.getInstance().getTime());
+						bmmXf = budgetModelXfManager.save(bmmXf);
+					}else{
+						return ajaxForward(false,bmm.getModelName()+" 已下发！",false);
+					}
+				}else{
+					bmmXf.setState(1);
+				}
 				Set<Department> departments = bmm.getDepartments();
 				List<BudgetUpdata> budgetUpdatas = new ArrayList<BudgetUpdata>();
 				for(Department dept : departments){
@@ -185,13 +219,14 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					budgetUpdata.setDepartment(dept);
 					budgetUpdata.setPeriodYear(periodYear);
 					budgetUpdata.setState(0);
-					Person operator = UserContextUtil.getSessionUser().getPerson();
-					budgetUpdata.setOperator(operator);
-					budgetUpdata.setOptDate(Calendar.getInstance().getTime());
+					//Person operator = UserContextUtil.getSessionUser().getPerson();
+					//budgetUpdata.setOperator(operator);
+					//budgetUpdata.setOptDate(Calendar.getInstance().getTime());
 					budgetUpdatas.add(budgetUpdata);
 				}
 				budgetUpdataManager.saveAll(budgetUpdatas);
 			}
+			budgetModelXfManager.saveAll(xfBudgetModelXfs);
 		}
 		
 		return ajaxForward("下发成功！");

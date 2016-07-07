@@ -66,8 +66,10 @@ var budgetReportDefine = {
  		jQuery("#${random}_budgetReport_container").css("height",bmReportFullSize);
 		var bmReportLayout = $('#${random}_budgetReport_container').layout({ 
 			applyDefaultStyles: false ,
-			west__size : 290,
-			east__size : 290,
+			east:{
+				size : 290,
+				initClosed:true
+			},
 			spacing_open:5,//边框的间隙  
 			spacing_closed:5,//关闭时边框的间隙 
 			resizable :true,
@@ -305,6 +307,17 @@ var budgetReportDefine = {
  	function batchFunc(){
  		var grid = eval("(budgetReport_gridtable_${random})");
  		grid.func("SetBatchFunctionURL","batchFunc \r\n functions=50;timeout=9999 \r\n user=normal");
+ 	}
+ 	
+ 	function sv(str){
+ 		var sysVarStr = '${fns:getAllVariableStr()}';
+ 		var sysVarJson = eval("("+sysVarStr+")");
+ 		var varIndex = 0;
+ 		for(var vName in sysVarJson){
+ 			var vValue = sysVarJson[vName];
+ 			str = str.replace(vName,vValue);
+ 		}
+ 		return str;
  	}
  </script>
  <div class="page" style="height: 100%;">

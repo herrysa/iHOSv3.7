@@ -24,6 +24,7 @@ public class BudgetIndexPagedAction extends JqGridBaseAction implements Preparab
 	private List<BudgetIndex> budgetIndices;
 	private BudgetIndex budgetIndex;
 	private BudgetIndex parentBudgetIndex;
+	static String[] bigNum={"零","一","二","三","四","五","六","七","八","九","十","十一","十二"};
 	public BudgetIndex getParentBudgetIndex() {
 		return parentBudgetIndex;
 	}
@@ -107,7 +108,61 @@ public class BudgetIndexPagedAction extends JqGridBaseAction implements Preparab
 			if("-1".equals(parentBudgetIndex.getIndexCode())){
 				budgetIndex.setParentId(null);
 			}
+			if(budgetIndex.getBudgetType()!=null&&"".equals(budgetIndex.getBudgetType().getBudgetTypeCode())){
+				budgetIndex.setBudgetType(null);
+			}
 			budgetIndexManager.save(budgetIndex);
+			String type = budgetIndex.getIndexType();
+			if("月度".equals(type)){
+				for(int i = 1; i<=12 ;i++){
+					BudgetIndex budgetIndexTemp = budgetIndex.clone();
+					String code = budgetIndexTemp.getIndexCode();
+					String name = budgetIndexTemp.getIndexName();
+					if(i<10){
+						code += "0"+i;
+					}else{
+						code += i;
+					}
+					name += bigNum[i]+"月";
+					budgetIndexTemp.setParentId(budgetIndex);
+					budgetIndexTemp.setIndexCode(code);
+					budgetIndexTemp.setIndexName(name);
+					budgetIndexTemp.setLeaf(true);
+					budgetIndexManager.save(budgetIndexTemp);
+				}
+			}else if("季度".equals(type)){
+				for(int i = 1; i<=4 ;i++){
+					BudgetIndex budgetIndexTemp = budgetIndex.clone();
+					String code = budgetIndexTemp.getIndexCode();
+					String name = budgetIndexTemp.getIndexName();
+					code += "0"+i;
+					name += bigNum[i]+"季度";
+					budgetIndexTemp.setParentId(budgetIndex);
+					budgetIndexTemp.setIndexCode(code);
+					budgetIndexTemp.setIndexName(name);
+					budgetIndexTemp.setLeaf(true);
+					budgetIndexManager.save(budgetIndexTemp);
+				}
+			}else if("半年".equals(type)){
+				for(int i = 1; i<=2 ;i++){
+					BudgetIndex budgetIndexTemp = budgetIndex.clone();
+					String code = budgetIndexTemp.getIndexCode();
+					String name = budgetIndexTemp.getIndexName();
+					code += "0"+i;
+					if(i==1){
+						name += "上半年";
+					}else{
+						name += "下半年";
+					}
+					budgetIndexTemp.setParentId(budgetIndex);
+					budgetIndexTemp.setIndexCode(code);
+					budgetIndexTemp.setIndexName(name);
+					budgetIndexTemp.setLeaf(true);
+					budgetIndexManager.save(budgetIndexTemp);
+				}
+			}else if("年度".equals(type)){
+				
+			}
 		} catch (Exception dre) {
 			gridOperationMessage = dre.getMessage();
 			return ajaxForwardError(gridOperationMessage);

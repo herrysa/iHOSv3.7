@@ -171,8 +171,16 @@ public class BudgetModel extends BaseObject {
 		this.departments = departments;
 	}
 	
+	
+	
 	@Transient
 	public String getDepartment() {
+		if(departments!=null){
+			department = "";
+			for(Department dept : departments){
+				department += dept.getDepartmentId()+",";
+			}
+		}
 		return department;
 	}
 

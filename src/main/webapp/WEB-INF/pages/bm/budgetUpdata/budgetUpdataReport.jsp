@@ -16,8 +16,8 @@ var budgetReportDefine = {
 			"Opened":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
 				grid.func("AddUserFunctions", "${ctx}/home/supcan/userdefine/func.xml");
-				grid.func("SetAutoCalc","0");
-				grid.func("CallFunc","2");
+				//grid.func("SetAutoCalc","0");
+				//grid.func("CallFunc","2");
 				grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
 			},
 			"Toolbar":function( id,p1, p2, p3, p4){
@@ -278,21 +278,32 @@ var budgetReportDefine = {
  			}
  		}
  	}
+ 	
+ 	function sv(str){
+ 		var sysVarStr = '${fns:getAllVariableStr()}';
+ 		var sysVarJson = eval("("+sysVarStr+")");
+ 		var varIndex = 0;
+ 		for(var vName in sysVarJson){
+ 			var vValue = sysVarJson[vName];
+ 			str = str.replace(vName,vValue);
+ 		}
+ 		return str;
+ 	}
  </script>
  <div class="page" style="height: 100%;">
 	<div id="${random}_bmReportContent" class="pageContent" style="height: 100%;">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a id="${random}_submitReport" class="changebutton"  href="javaScript:"
-					><span>提交
-					</span>
-				</a>
-				</li>
 				<li><a id="${random}_saveBmReportData" class="changebutton"  href="javaScript:"
 					><span>保存
 					</span>
 				</a>
 				</li>
+				<%-- <li><a id="${random}_submitReport" class="changebutton"  href="javaScript:"
+					><span>提交
+					</span>
+				</a>
+				</li> --%>
 			</ul>
 		</div>
 		<div id="${random}_budgetReport_gridtable_container" style="height:100%;overflow: hidden;"></div>

@@ -30,7 +30,7 @@
 			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelXf.model" />',hidden:false},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelXf.periodYear" />',hidden:false},
 			{name:'modelId.modelTypeTxt',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelXf.budgetType" />',hidden:false},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelXf.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:上报中;1:已上报'}},
+			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelXf.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'}},
 			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelXf.xfDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
 			{name:'xfNum',index:'xfNum',align:'right',label : '<s:text name="budgetModelXf.xfNum" />',hidden:false},
 			{name:'updataingNum',index:'updataingNum',align:'right',label : '<s:text name="budgetModelXf.updatating" />',hidden:false},
@@ -46,7 +46,7 @@
 				repeatitems : false
 				// (4)
 			},
-        	sortname: 'xfId',
+        	sortname: 'xfDate',
         	viewrecords: true,
         	sortorder: 'desc',
         	//caption:'<s:text name="budgetModelXfList.title" />',
@@ -98,7 +98,7 @@
     
     jQuery("#budgetModelXf_gridtable_refresh").click(function(){
     	$.get("budgetModelXfRefresh", {
-			"_" : $.now()
+			"_" : $.now(),navTabId:'budgetModelXf_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
@@ -106,10 +106,31 @@
     
     jQuery("#budgetModelXf_gridtable_xf").click(function(){
     	var sid = jQuery("#budgetModelXf_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
     	$.get("budgetModel_Xf", {
-			"_" : $.now(),xfId:sid
+			"_" : $.now(),xfId:sid,navTabId:'budgetModelXf_gridtable'
 		}, function(data) {
 			formCallBack(data);
+		});
+    });
+    jQuery("#budgetModelXf_gridtable_reXf").click(function(){
+    	var sid = jQuery("#budgetModelXf_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	alertMsg.confirm("确认重新下发？重新下发后,之前填报的数据将作废！", {
+			okCall: function(){
+				jQuery.post("budgetModel_Xf", {
+					"_" : $.now(),xfId:sid,xfType:'1',navTabId:'budgetModelXf_gridtable'
+				}, function(data) {
+					formCallBack(data);
+				},"json");
+				
+			}
 		});
     });
   	});
@@ -143,16 +164,19 @@
 						<input type="text" name="filter_EQS_model"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelXf.state'/>:
-						<input type="text" name="filter_EQS_state"/>
+						<s:text name='budgetModelXf.xfDate'/>:
+						<input type="text" name="filter_EQD_xfDate" class="Wdate"  style="height:15px"
+				              			 onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
+				              			 value="<fmt:formatDate value="${hrPersonSnap.birthday}" pattern="yyyy-MM-dd"/>"
+				              			 onFocus="WdatePicker({skin:'ext',isShowClear:true,readOnly:true,onpicked:calPersonAge(this)})" />
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelXf.xfDate'/>:
-						<input type="text" name="filter_EQS_xfDate"/>
+						<s:text name='budgetModelXf.state'/>:
+						<s:select list="#{'0':'未上报','1':'上报中','2':'已上报','3':'已过期' }" name="filter_EQS_state" headerKey="" headerValue="--"></s:select>
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(budgetModelXf_search_form,budgetModelXf_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('budgetModelXf_search_form','budgetModelXf_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
 				</form>

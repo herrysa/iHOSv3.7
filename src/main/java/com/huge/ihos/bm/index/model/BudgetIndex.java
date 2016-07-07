@@ -13,7 +13,7 @@ import com.huge.model.BaseObject;
 
 @Entity
 @Table( name = "bm_index" )
-public class BudgetIndex extends BaseObject{
+public class BudgetIndex extends BaseObject implements Cloneable{
 
 	/**
 	 * 
@@ -188,6 +188,15 @@ public class BudgetIndex extends BaseObject{
 				+ indexType + ", disabeld=" + disabled + "]";
 	}
 	
-	
+	@Override
+	public BudgetIndex clone() {
+		BudgetIndex o = null;
+		try {
+			o = (BudgetIndex) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return o;
+	}
 	
 }

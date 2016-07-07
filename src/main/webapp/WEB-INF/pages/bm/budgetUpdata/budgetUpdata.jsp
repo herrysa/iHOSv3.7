@@ -7,16 +7,16 @@
 	
 	jQuery(document).ready(function() { 
 		var bmUpdataGrid = jQuery(bmUpdataGridIdString);
-		var bmUpdataIndexFullSize = jQuery("#container").innerHeight()-116;
-		setLeftTreeLayout('bmUpdata_container','bmUpdata_gridtable',bmUpdataIndexFullSize);
-		var setting_bmUpdataIndex = {
+		var bmUpdataTypeFullSize = jQuery("#container").innerHeight()-116;
+		//setLeftTreeLayout('bmUpdata_container','bmUpdata_gridtable',bmUpdataTypeFullSize);
+		var setting_bmUpdataType = {
 				view : {
 					dblClickExpand : false,
 					showLine : true,
 					selectedMulti : false
 				},
 				callback : {
-					onClick : onBmUpdataIndexClick
+					onClick : onBmUpdataTypeClick
 				},
 				data : {
 					key : {
@@ -29,9 +29,9 @@
 					}
 				}
 		};
-		function onBmUpdataIndexClick(event, treeId, treeNode, clickFlag) { 
+		function onBmUpdataTypeClick(event, treeId, treeNode, clickFlag) { 
 			var nodeId = treeNode.id;
-			var urlString = "budgetIndexGridList";
+			var urlString = "budgetUpdataGridList?upType=0";
 			if(treeNode.id!="-1"){
 				urlString=urlString+"?filter_EQS_indexCode="+treeNode.id+"&filter_EQS_parentId.indexCode="+treeNode.id;	
 				urlString += "&group_on={op:'or',filter:['indexCode','parentId.indexCode']}";
@@ -39,18 +39,18 @@
 		    urlString = encodeURI(urlString);
 			jQuery(bmUpdataGridIdString).jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
 		}
-		$.get("getBudgetIndexTree", {
+		/* $.get("getBudgetTypeTree", {
 			"_" : $.now()
 		}, function(data) {
-			var budgetIndexTreeData = data.budgetIndexTreeNodes;
-			var budgetIndexTree = $.fn.zTree.init($("#bmUpdataIndexTreeLeft"),
-					setting_bmUpdataIndex, budgetIndexTreeData);
-			var nodes = budgetIndexTree.getNodes();
-			budgetIndexTree.expandNode(nodes[0], true, false, true);
-			budgetIndexTree.selectNode(nodes[0]);
+			var budgetTypeTreeData = data.budgetTypeTreeNodes;
+			var budgetTypeTree = $.fn.zTree.init($("#bmUpdataTypeTreeLeft"),
+					setting_bmUpdataType, budgetTypeTreeData);
+			var nodes = budgetTypeTree.getNodes();
+			budgetTypeTree.expandNode(nodes[0], true, false, true);
+			budgetTypeTree.selectNode(nodes[0]);
 			
-		});
-		jQuery("#bmUpdataIndex_expandTree").text("展开");
+		}); */
+		jQuery("#bmUpdataType_expandTree").text("展开");
     	bmUpdataGrid.jqGrid({
     		url : "budgetUpdataGridList?upType=0",
     		editurl:"budgetUpdataGridEdit",
@@ -58,10 +58,12 @@
 			mtype : "GET",
         	colModel:[
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="bmUpdata.updataId" />',hidden:true,key:true},
-			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetUpdata.periodYear" />',hidden:false},
-			{name:'modelXfId.modelId.modelName',index:'modelXfId..modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false},
-			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetUpdata.state" />',hidden:false,formatter : 'select',editoptions : {value : '0:上报中;1:已确认;2:科室已审核;3:已上报'}}
+			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetUpdata.periodYear" />',hidden:false,width:70},
+			{name:'modelXfId.modelId.modelName',index:'modelXfId..modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false,width:250},
+			{name:'modelXfId.modelId.modelTypeTxt',index:'modelXfId.modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetUpdata.budgetType" />',hidden:false,width:70},
+			{name:'modelXfId.modelId.periodType',index:'modelXfId.modelId.periodType',align:'left',label : '<s:text name="budgetUpdata.periodType" />',hidden:false,width:70},
+			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false,width:200},
+			{name:'state',index:'state',align:'center',label : '<s:text name="budgetUpdata.state" />',hidden:false,formatter : 'select',editoptions : {value : '0:上报中;1:已确认;2:科室已审核;3:已上报'},width:70}
 			],
         	jsonReader : {
 				root : "budgetUpdatas", // (2)
@@ -81,15 +83,15 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
         	onSelectRow: function(rowid) {
        		},
 		 	gridComplete:function(){
            	//if(jQuery(this).getDataIDs().length>0){
            	//  jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
            	// }
-           	gridContainerResize('bmUpdata','layout');
+           	gridContainerResize('bmUpdata','div');
            	var dataTest = {"id":"bmUpdata_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
        		} 
@@ -98,8 +100,26 @@
     jQuery(bmUpdataGrid).jqGrid('bindKeys');
     
     jQuery("#bmUpdata_gridtable_up").click(function(){
+    	var fullHeight = jQuery("#container").innerHeight();
+    	var fullWidth = jQuery("#container").innerWidth();
     	var sid = jQuery("#bmUpdata_gridtable").jqGrid('getGridParam','selarrrow');
-		$.pdialog.open('openBmReport?updataId='+sid,'bmReport',"预算上报", {mask:true,width : 700,height : 650});
+    	if(sid.length==0||sid.length>1){
+    		alertMsg.error("请选择一条记录！");
+    		return;
+    	}
+		$.pdialog.open('openBmReport?updataId='+sid,'bmReport',"预算上报", {mask:true,width : fullWidth,height : fullHeight});
+    });
+    jQuery("#bmUpdata_gridtable_confirm").click(function(){
+    	var sid = jQuery("#bmUpdata_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	$.get("confirmBmUpdata", {
+			"_" : $.now(),updataId:sid
+		}, function(data) {
+			formCallBack(data);
+		});
     });
   	});
 </script>
@@ -157,7 +177,7 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="bmUpdata_gridtable_del" class="delbutton"  href="javaScript:"><span>确认</span>
+				<li><a id="bmUpdata_gridtable_comfirm" class="delbutton"  href="javaScript:"><span>确认</span>
 				</a>
 				</li>
 				<%-- <li><a id="bmUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
@@ -170,23 +190,23 @@
 		</div>
 	</div>
 		<div id="bmUpdata_container">
-		<div id="bmUpdata_layout-west" class="pane ui-layout-west" style="float: left; display: block; overflow: auto;">
-			<a style="position: relative; float: right;top:5px" id="bmUpdataIndex_expandTree" href="javaScript:">展开</a>
+		<!-- <div id="bmUpdata_layout-west" class="pane ui-layout-west" style="float: left; display: block; overflow: auto;">
+			<a style="position: relative; float: right;top:5px" id="bmUpdataType_expandTree" href="javaScript:">展开</a>
 			<script>
-				jQuery("#budgetIndex_expandTree").click(function(){
+				jQuery("#bmUpdataType_expandTree").click(function(){
 					var thisText = jQuery(this).text();
-					var budgetIndexTee = $.fn.zTree.getZTreeObj("budgetIndex_expandTree");
+					var budgetTypeTee = $.fn.zTree.getZTreeObj("bmUpdataTypeTreeLeft");
 					if(thisText=="展开"){
-						budgetIndexTee.expandAll(true);
+						budgetTypeTee.expandAll(true);
 						jQuery(this).text("折叠");
 					}else{
-						budgetIndexTee.expandAll(false);
+						budgetTypeTee.expandAll(false);
 						jQuery(this).text("展开");
 					}
 				});
 			</script>
-			<div id="bmUpdataIndexTreeLeft" class="ztree"></div>
-		</div>
+			<div id="bmUpdataTypeTreeLeft" class="ztree"></div>
+		</div> -->
 		<div id="bmUpdata_layout-center" class="pane ui-layout-center">
 		<div id="bmUpdata_gridtable_div" layoutH="90" class="grid-wrapdiv" buttonBar="width:500;height:300">
 			<input type="hidden" id="bmUpdata_gridtable_navTabId" value="${sessionScope.navTabId}">

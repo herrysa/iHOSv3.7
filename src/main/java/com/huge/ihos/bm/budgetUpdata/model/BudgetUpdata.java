@@ -34,7 +34,7 @@ public class BudgetUpdata extends BaseObject {
 	private Date submitDate ;
 	private Person checker ;
 	private Date checkDate ;
-	private Integer state ;		//0:上报中;1:已确认;2：科室已审核;3:已上报
+	private Integer state ;		//0:上报中;1:已确认;2：科室已审核;3:已上报;4:已过期
 	private String periodYear;
 	
 	@Id

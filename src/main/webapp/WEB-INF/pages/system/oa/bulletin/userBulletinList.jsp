@@ -11,7 +11,7 @@
 			baseName: 'userBulletin', 
 			tableIds: 'userBulletin_gridtable'
 		}, null);
-		var gridUrl = "bulletinGridList?group_on=OR&filter_EQS_secretLevel=全院&filter_EQS_department=${currentUser.person.department.name}";
+		var gridUrl = "bulletinGridList?group_on={op:'or',filter:['*']}&filter_EQS_secretLevel=全院&filter_EQS_department=${currentUser.person.department.name}";
 		gridUrl = encodeURI(gridUrl);
 var userBulletinGrid = jQuery(userBulletinGridIdString);
     userBulletinGrid.jqGrid({
@@ -164,7 +164,7 @@ var userBulletinGrid = jQuery(userBulletinGridIdString);
 				id="userBulletin_gridtable_selectMore">
 				<s:text name='list.selectMore'/>
 			</label>
-<div id="load_userBulletin_gridtable" class='loading ui-state-default ui-state-active'></div>
+<div id="load_userBulletin_gridtable" class='loading ui-state-default ui-state-active' style="display:none"></div>
  <table id="userBulletin_gridtable"></table>
 		<div id="userBulletinPager"></div>
 </div>

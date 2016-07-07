@@ -31,9 +31,9 @@
 			{name:'modelTypeTxt',index:'modelTypeTxt',align:'left',label : '<s:text name="budgetModel.modelType" />',width:100,hidden:false},
 			{name:'periodType',index:'periodType',align:'left',label : '<s:text name="budgetModel.periodType" />',width:100,hidden:false},
 			{name:'creator',index:'creator',align:'left',label : '<s:text name="budgetModel.creator" />',width:100,hidden:false},
-			{name:'createDate',index:'createDate',align:'left',label : '<s:text name="budgetModel.createDate" />',width:100,hidden:false,formatter:'date'},
+			{name:'createDate',index:'createDate',align:'left',label : '<s:text name="budgetModel.createDate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
 			{name:'modifier',index:'modifier',align:'left',label : '<s:text name="budgetModel.modifier" />',width:100,hidden:false},
-			{name:'modifydate',index:'modifydate',align:'left',label : '<s:text name="budgetModel.modifydate" />',width:100,hidden:false,formatter:'date'},
+			{name:'modifydate',index:'modifydate',align:'left',label : '<s:text name="budgetModel.modifydate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
 			{name:'disabled',index:'disabled',align:'center',label : '<s:text name="budgetModel.disabled" />',width:100,hidden:false,formatter:'checkbox'},
 			{name:'remark',index:'remark',align:'left',label : '<s:text name="budgetModel.remark" />',width:200,hidden:false}
 			],
@@ -163,7 +163,7 @@
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(budgetModel_search_form,budgetModel_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('budgetModel_search_form','budgetModel_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
 				</form>

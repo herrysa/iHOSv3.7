@@ -3,6 +3,7 @@ package com.huge.ihos.bm.budgetModel.webapp.action;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -118,6 +119,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			return ajaxForwardError(gridOperationMessage);
 		}
 		try {
+			modelId = budgetModel.getModelId();
 			String deptStr = budgetModel.getDepartment();
 			if(deptStr!=null&&!"".equals(deptStr)){
 				String[] deptArr = deptStr.split(",");
@@ -132,6 +134,15 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 					departments.add(dept);
 				}
 				budgetModel.setDepartments(departments);
+			}
+			if(this.isEntityIsNew()){
+				budgetModel.setCreator(UserContextUtil.getContextUser().getPersonName());
+				budgetModel.setCreateDate(Calendar.getInstance().getTime());
+			}else{
+				BudgetModel oldModel = budgetModelManager.get(modelId);
+				budgetModel.setReportXml(oldModel.getReportXml());
+				budgetModel.setModifier(UserContextUtil.getContextUser().getPersonName());
+				budgetModel.setModifydate(Calendar.getInstance().getTime());
 			}
 			budgetModelManager.save(budgetModel);
 		} catch (Exception dre) {
@@ -257,8 +268,11 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public String saveBmReportXml(){
 		try {
 			if (modelId != null) {
-				budgetModel = budgetModelManager.get(modelId);
-				budgetModel.setReportXml(reportXml);
+				if(reportXml!=null&&!"".equals(reportXml)){
+					budgetModel = budgetModelManager.get(modelId);
+					budgetModel.setReportXml(reportXml);
+					budgetModelManager.save(budgetModel);
+				}
 				if(cellIndex!=null&&!"".equals(cellIndex)){
 					List<String> cellIndexSqlList = new ArrayList<String>();
 					String cellIndexSql = "insert into bm_model_index (modelId,cellName,indexCode) values ";
@@ -273,7 +287,6 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 					}
 					budgetModelManager.executeSqlList(cellIndexSqlList);
 				}
-				budgetModelManager.save(budgetModel);
 	        	return ajaxForward(true,"保存成功！",false);
 	        } else {
 	        	return ajaxForward(false, "保存失败！",false);

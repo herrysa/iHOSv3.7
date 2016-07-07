@@ -107,6 +107,7 @@ public class GzContentManagerImpl extends GenericManagerImpl<GzContent, String> 
     			sqlTemp += " AND b.period = '"+filterPeriod+"' ";
     			sqlTemp += " AND b.issueNumber = '"+filterIssueNumber+"' ";
     			sqlTemp += " AND gz_gzContent.gzTypeId = '"+gzTypeId+"' ";
+    			System.out.println(sqlTemp);
     			sqlList.add(sqlTemp);
     		}
     		for(MonthPerson person:monthPersons){

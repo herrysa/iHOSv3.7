@@ -31,7 +31,7 @@
 				</div>
 				<div class="unit">
 					<label><s:text name="budgetIndex.indexType"/>:</label>
-					<s:select list="#{'月':'月','季度':'季度','半年':'半年','年':'年'}" key="budgetIndex.indexType" headerKey="" headerValue="--" theme="simple"></s:select>
+					<s:select list="#{'月度':'月度','季度':'季度','半年':'半年','年度':'年度'}" key="budgetIndex.indexType" headerKey="" headerValue="--" theme="simple"></s:select>
 				</div>
 				<div class="unit">
 				<label><s:text name="budgetIndex.parentId"/>:</label>
@@ -42,10 +42,10 @@
 				</div>
 				<div class="unit">
 					<label><s:text name="budgetIndex.budgetType"/>:</label>
-					<s:hidden id="budgetIndex_budgetType_id" name="budgetIndex.budgetType.budgetTypeCode"/>
-					<s:textfield id="budgetIndex_budgetType"></s:textfield>
+					<s:hidden id="budgetIndexForm_budgetType_id" name="budgetIndex.budgetType.budgetTypeCode"/>
+					<s:textfield id="budgetIndexForm_budgetType"></s:textfield>
 					<script>
-					jQuery("#budgetIndex_budgetType").treeselect({
+					jQuery("#budgetIndexForm_budgetType").treeselect({
 						optType : "single",
 						dataType : 'sql',
 						sql : "select type_code id,type_name name,parent_id parent from bm_budgetType",
@@ -59,9 +59,12 @@
 					</script>
 				</div>
 				<div class="unit">
-				<s:textfield id="budgetIndex_exceedBudgetType" key="budgetIndex.exceedBudgetType" name="budgetIndex.exceedBudgetType" cssClass="				
-				
-				       "/>
+					<label><s:text name="budgetIndex.exceedBudgetType"/>:</label>
+					<select name="budgetIndex.exceedBudgetType">
+							<option value="">--</option>
+							<option value="禁止">禁止</option>
+							<option value="警告">警告</option>
+						</select>
 				</div>
 				<div class="unit">
 				<s:textfield id="budgetIndex_warningPercent" key="budgetIndex.warningPercent" name="budgetIndex.warningPercent" cssClass="				

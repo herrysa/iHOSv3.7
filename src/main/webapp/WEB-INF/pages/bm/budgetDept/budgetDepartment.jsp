@@ -7,7 +7,7 @@ var bmsDepartmentGridIdString="#bmsDepartment_gridtable";
 jQuery(document).ready(function() { 
 	var bmsDepartmentGrid = jQuery(bmsDepartmentGridIdString);
 	bmsDepartmentGrid.jqGrid({
-		url : "bmsDepartmentGridList?1=1",
+		url : "bmsDepartmentGridList?1=1&modelId=${modelId}",
 		editurl : "",
 		datatype : "json",
 		mtype : "GET",
@@ -67,7 +67,7 @@ jQuery(document).ready(function() {
 		},
 		gridComplete : function() {
 	 		/*2015.08.27 form search change*/
-	 		gridContainerResize('bmsDepartment','div');
+	 		//gridContainerResize('bmsDepartment','div');
 			 var rowNum = jQuery(this).getDataIDs().length;
 	           if(rowNum>0){
 				}else{
@@ -114,7 +114,7 @@ jQuery(document).ready(function() {
 				</li>
 			</ul>
 		</div>
-		<div id="bmsDepartment_gridtable_div" class="grid-wrapdiv">
+		<div id="bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=120 tablecontainer="budgetModel_layout-south" extraHeight=100>
 			<table id="bmsDepartment_gridtable"></table>
 		</div>
 		<div class="panelBar" id="bmsDepartment_pageBar">

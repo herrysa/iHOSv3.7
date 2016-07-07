@@ -18,6 +18,7 @@ import org.dom4j.Element;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
+import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.util.UUIDGenerator;
 import com.huge.util.XMLUtil;
 import com.huge.webapp.action.JqGridBaseAction;
@@ -35,6 +36,33 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	private List<BudgetUpdata> budgetUpdatas;
 	private BudgetUpdata budgetUpdata;
 	private String updataId;
+	private String xfId;
+	private String state;
+	private String upType;
+	public String getUpType() {
+		return upType;
+	}
+
+	public void setUpType(String upType) {
+		this.upType = upType;
+	}
+
+	public String getXfId() {
+		return xfId;
+	}
+
+	public void setXfId(String xfId) {
+		this.xfId = xfId;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 
 	public BudgetUpdataManager getBudgetUpdataManager() {
 		return budgetUpdataManager;
@@ -44,7 +72,7 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 		this.budgetUpdataManager = budgetUpdataManager;
 	}
 
-	public List<BudgetUpdata> getbudgetUpdatas() {
+	public List<BudgetUpdata> getBudgetUpdatas() {
 		return budgetUpdatas;
 	}
 
@@ -75,6 +103,18 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 		log.debug("enter list method!");
 		try {
 			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(getRequest());
+			if("0".equals(upType)){
+				String depts = UserContextUtil.findUserDataPrivilegeStr("bmDept_dp", "2");
+				if(depts.startsWith("SELECT")||depts.startsWith("select")){
+					
+				}else{
+					filters.add(new PropertyFilter("INS_department.departmentId",depts));
+				}
+				filters.add(new PropertyFilter("NEI_state","4"));
+			}else{
+				filters.add(new PropertyFilter("EQS_modelXfId.xfId",xfId));
+				filters.add(new PropertyFilter("EQI_state",state));
+			}
 			JQueryPager pagedRequests = null;
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
 					PagerFactory.JQUERYTYPE, getRequest());
@@ -220,7 +260,12 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			String indexCode = dataElement.attributeValue("name");
 			String Cell = dataElement.attributeValue("Cell");
 			String value = dataElement.getText();
-			updataDetailSqlList.add("insert into bm_updatadetail(detailId,updataId,deptId,period_year,cell,indexCode,bmvalue,state) values ('"+uuid+"','"+updataId+"','"+deptId+"','"+periodYear+"','"+Cell+"','"+indexCode+"','"+value+"',0)");
+			if(value==null||"".equals(value)){
+				value = "null";
+			}else{
+				value = "'"+value+"'";
+			}
+			updataDetailSqlList.add("insert into bm_updatadetail(detailId,updataId,deptId,period_year,cell,indexCode,bmvalue,state) values ('"+uuid+"','"+updataId+"','"+deptId+"','"+periodYear+"','"+Cell+"','"+indexCode+"',"+value+",0)");
 		}
 		budgetUpdataManager.executeSqlList(updataDetailSqlList);
 		return ajaxForward("保存成功！");
@@ -252,6 +297,27 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public String confirmBmUpdata(){
+		try {
+			if(updataId!=null&&!"".equals(updataId)){
+				List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+				filters.add(new PropertyFilter("INS_updataId", updataId));
+				budgetUpdatas = budgetUpdataManager.getByFilters(filters);
+				for(BudgetUpdata budgetUpdata : budgetUpdatas){
+					budgetUpdata.setState(1);
+					budgetUpdataManager.executeSql("update bm_updatadetail set state=1 where updataId='"+budgetUpdata.getUpdataId()+"'");
+					budgetUpdataManager.save(budgetUpdata);
+				}
+			}else{
+				return ajaxForward(false,"确认失败！",false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"确认失败！",false);
+		}
+		return ajaxForward(true,"确认成功！",false);
 	}
 }
 

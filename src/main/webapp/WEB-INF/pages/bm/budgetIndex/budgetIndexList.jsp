@@ -50,22 +50,22 @@
 			budgetIndexTree.selectNode(nodes[0]);
 			
 		});
-		jQuery("#gzPerson_expandTree").text("展开");
+		jQuery("#budgetIndex_expandTree").text("展开");
     	budgetIndexGrid.jqGrid({
     		url : "budgetIndexGridList",
     		editurl:"budgetIndexGridEdit",
 			datatype : "json",
 			mtype : "GET",
 			colModel:[
-			{name:'indexCode',index:'indexCode',align:'left',label : '<s:text name="budgetIndex.indexCode" />',hidden:false,key:true},
-			{name:'indexName',index:'indexName',align:'left',label : '<s:text name="budgetIndex.indexName" />',hidden:false},
-			{name:'parentId.indexName',index:'parentId.indexName',align:'left',label : '<s:text name="budgetIndex.parentId" />',hidden:false},
-			{name:'indexType',index:'indexType',align:'left',label : '<s:text name="budgetIndex.indexType" />',hidden:false},
-			{name:'budgetIndex.budgetTypeName',index:'budgetIndex.budgetTypeName',align:'left',label : '<s:text name="budgetIndex.budgetType" />',hidden:false},
-			{name:'exceedBudgetType',index:'exceedBudgetType',align:'left',label : '<s:text name="budgetIndex.exceedBudgetType" />',hidden:false},
-			{name:'warningPercent',index:'warningPercent',align:'left',label : '<s:text name="budgetIndex.warningPercent" />',hidden:false,formatter:'integer'},
-			{name:'leaf',index:'leaf',align:'center',label : '<s:text name="budgetIndex.leaf" />',hidden:false,formatter:'checkbox'},
-			{name:'disabled',index:'disabled',align:'center',label : '<s:text name="budgetIndex.disabled" />',hidden:false,formatter:'checkbox'}
+			{name:'indexCode',index:'indexCode',align:'left',label : '<s:text name="budgetIndex.indexCode" />',hidden:false,width:100,key:true},
+			{name:'indexName',index:'indexName',align:'left',label : '<s:text name="budgetIndex.indexName" />',hidden:false,width:150},
+			{name:'parentId.indexName',index:'parentId.indexName',align:'left',label : '<s:text name="budgetIndex.parentId" />',hidden:false,width:150},
+			{name:'indexType',index:'indexType',align:'left',label : '<s:text name="budgetIndex.indexType" />',hidden:false,width:70},
+			{name:'budgetIndex.budgetTypeName',index:'budgetIndex.budgetTypeName',align:'left',label : '<s:text name="budgetIndex.budgetType" />',hidden:false,width:100},
+			{name:'exceedBudgetType',index:'exceedBudgetType',align:'left',label : '<s:text name="budgetIndex.exceedBudgetType" />',hidden:false,width:100},
+			{name:'warningPercent',index:'warningPercent',align:'left',label : '<s:text name="budgetIndex.warningPercent" />',hidden:false,formatter:'integer',width:100},
+			{name:'leaf',index:'leaf',align:'center',label : '<s:text name="budgetIndex.leaf" />',hidden:false,formatter:'checkbox',width:60},
+			{name:'disabled',index:'disabled',align:'center',label : '<s:text name="budgetIndex.disabled" />',hidden:false,formatter:'checkbox',width:60}
 			],
 			jsonReader : {
 				root : "budgetIndices", // (2)
@@ -85,8 +85,8 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
         	onSelectRow: function(rowid) {
        		},
 		 	gridComplete:function(){
@@ -116,7 +116,43 @@
 		var winTitle='<s:text name="budgetIndexNew.title"/>';
 		$.pdialog.open(url,'addBudgetIndex',winTitle, {mask:true,width : 500,height : 450});
     });
+    
+    jQuery("#budgetIndex_gridtable_edit_c").click(function(){
+    	var sid = jQuery("#budgetIndex_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择一条记录！");
+    		return;
+    	}
+    	if(sid.length>1){
+    		alertMsg.error("只能选择一条记录！");
+    		return;
+    	}
+        var url = "editBudgetIndex?navTabId=budgetIndex_gridtable&indexCode="+sid;
+		var winTitle='<s:text name="budgetIndexEdit.title"/>';
+		$.pdialog.open(url,'editBudgetIndex',winTitle, {mask:true,width : 500,height : 450});
+    });
+    
+    jQuery("#budgetIndex_gridtable_reload").click(function(){
+    	var zTree = $.fn.zTree.getZTreeObj("budgetIndexTreeLeft");
+		var treeNodes = zTree.getSelectedNodes();
+		if(treeNodes.length==0){
+			return ;
+		}
+		var treeNode = treeNodes[0];
+		var nodeId = treeNode.id;
+		var urlString = "budgetIndexGridList";
+		if(treeNode.id!="-1"){
+	    	urlString=urlString+"?filter_EQS_indexCode="+treeNode.id+"&filter_EQS_parentId.indexCode="+treeNode.id;	
+	    	urlString += "&group_on={op:'and',filter:[{op:'or',filter:['indexCode','parentId.indexCode']},{op:'and',filter:['*']}]}";
+		}
+	    urlString = encodeURI(urlString);
+		jQuery(budgetIndexGridIdString).jqGrid('setGridParam',{url:urlString});
+    	propertyFilterSearch('budgetIndex_search_form','budgetIndex_gridtable')
+    });
+    
   	});
+	
+	
 </script>
 
 <div class="page" id="budgetIndex_page">
@@ -126,38 +162,68 @@
 				<form id="budgetIndex_search_form" >
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetIndex.indexCode'/>:
-						<input type="text" name="filter_EQS_indexCode"/>
+						<input type="text" name="filter_LIKES_indexCode"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetIndex.indexName'/>:
-						<input type="text" name="filter_EQS_indexName"/>
+						<input type="text" name="filter_LIKES_indexName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetIndex.indexType'/>:
-						<input type="text" name="filter_EQS_indexType"/>
+						<s:select list="#{'月度':'月度','季度':'季度','半年':'半年','年度':'年度'}" key="budgetIndex.indexType" name="filter_EQS_indexType" headerKey="" headerValue="--" theme="simple"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetIndex.budgetType'/>:
-						<input type="text" name="filter_EQS_budgetType"/>
+						<input type="hidden" id="budgetIndex_budgetType_id" name="filter_INS_budgetType.budgetTypeCode"/>
+						<input type="text" id="budgetIndex_budgetType" name="_exclude_"/>
+						<script>
+						jQuery("#budgetIndex_budgetType").treeselect({
+							optType : "multi",
+							dataType : 'sql',
+							sql : "SELECT type_code id,type_name name,parent_id parent FROM bm_budgetType where disabled=0 ORDER BY type_code asc",
+							exceptnullparent : true,
+							lazy : false,
+							minWidth : '180px',
+							selectParent : false,
+							callback : {
+							}
+						});
+						</script>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetIndex.exceedBudgetType'/>:
-						<input type="text" name="filter_EQS_exceedbudgetType"/>
+						<select name="filter_EQS_exceedBudgetType">
+							<option value="">--</option>
+							<option value="禁止">禁止</option>
+							<option value="警告">警告</option>
+						</select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetIndex.warningPercent'/>:
 						<input type="text" name="filter_EQS_warningPercent"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetIndex.disabled'/>:
-						<input type="text" name="filter_EQS_disabled"/>
+						<s:text name='budgetIndex.leaf'/>:
+						<select name="filter_EQB_leaf">
+							<option value="">--</option>
+							<option value="true">是</option>
+							<option value="false">否</option>
+						</select>
 					</label>
-				</form>
+					<label style="float:none;white-space:nowrap" >
+						<s:text name='budgetIndex.disabled'/>:
+						<select name="filter_EQB_disabled">
+							<option value="">--</option>
+							<option value="true">是</option>
+							<option value="false">否</option>
+						</select>
+					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(budgetIndex_search_form,budgetIndex_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" id="budgetIndex_gridtable_reload"><s:text name='button.search'/></button>
 						</div>
 					</div>
+				</form>
 				</div>
 			</div>
 	</div>
@@ -172,7 +238,7 @@
 				<li><a id="budgetIndex_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
-				<li><a id="budgetIndex_gridtable_edit" class="changebutton"  href="javaScript:"
+				<li><a id="budgetIndex_gridtable_edit_c" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
 					</span>
 				</a>
@@ -186,7 +252,7 @@
 			<script>
 				jQuery("#budgetIndex_expandTree").click(function(){
 					var thisText = jQuery(this).text();
-					var budgetIndexTee = $.fn.zTree.getZTreeObj("budgetIndex_expandTree");
+					var budgetIndexTee = $.fn.zTree.getZTreeObj("budgetIndexTreeLeft");
 					if(thisText=="展开"){
 						budgetIndexTee.expandAll(true);
 						jQuery(this).text("折叠");

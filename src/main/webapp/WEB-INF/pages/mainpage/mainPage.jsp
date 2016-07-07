@@ -41,7 +41,7 @@
 			</div>
 
 			<div class="panel" style="margin-top:5px">
-				<h1>规章制度<span style="float:right;margin-top:7px;"><a href="userByLawList" target="navTab" title="规整制度列表" style="color:#15428B" rel="bylaw">更多>></a></span></h1>
+				<h1>规章制度<span style="float:right;margin-top:7px;"><a href="userByLawList" target="navTab" title="规章制度列表" style="color:#15428B" rel="bylaw">更多>></a></span></h1>
 				<div>
 					<div style="margin-left:20px;margin-top:10px" >
 					<s:iterator value="byLawList" status="it" >

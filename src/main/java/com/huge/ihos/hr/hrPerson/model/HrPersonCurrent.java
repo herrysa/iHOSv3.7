@@ -639,8 +639,8 @@ public class HrPersonCurrent extends BaseObject implements Serializable {
 		this.gzType = gzType;
 	}
 	
-	//@Column(name = "gzTypeId2", length = 32, nullable = true)
-	@Transient
+	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	//@Transient
 	public String getGzType2() {
 		return gzType2;
 	}

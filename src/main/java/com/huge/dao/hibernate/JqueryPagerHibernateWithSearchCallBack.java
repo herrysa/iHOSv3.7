@@ -4,8 +4,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Queue;
+import java.util.Set;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -49,13 +53,18 @@ public class JqueryPagerHibernateWithSearchCallBack
     	if(filters.size()==0){
     		return criteria;
     	}
-    	Map<String, PropertyFilter> propertyMap = new HashMap<String, PropertyFilter>();
+    	Map<String, Queue<PropertyFilter>> propertyMap = new HashMap<String, Queue<PropertyFilter>>();
     	Iterator itr = this.filters.iterator();
     	String filedName = "";
     	while ( itr.hasNext() ) {
     		PropertyFilter pf = (PropertyFilter) itr.next();
     		String propertyName = pf.getPropertyName();
-    		propertyMap.put(propertyName, pf);
+    		Queue<PropertyFilter> pfQueue = propertyMap.get(propertyName);
+    		if(pfQueue==null){
+    			pfQueue = new LinkedList<PropertyFilter>();
+    			propertyMap.put(propertyName, pfQueue);
+    		}
+    		pfQueue.offer(pf);
     		filedName += "'"+propertyName+"',";
     	}
     	if(OtherUtil.measureNull(group_on)){
@@ -83,16 +92,32 @@ public class JqueryPagerHibernateWithSearchCallBack
 			Iterator<String> fliterIt = groupFilters.iterator();
 			while(fliterIt.hasNext()){
 				String propertyName = fliterIt.next();
-				PropertyFilter pf = propertyMap.get(propertyName);
-				if(pf!=null){
-					addFilter(criteria,junction,pf);
+				if("*".equals(propertyName)){
+					Set<Entry<String, Queue<PropertyFilter>>> entrySet = propertyMap.entrySet();
+					for(Entry<String, Queue<PropertyFilter>> entry : entrySet){
+						Queue<PropertyFilter> pfQueue = entry.getValue();
+						Iterator<PropertyFilter> qIt = pfQueue.iterator();
+						while(qIt.hasNext()){
+							PropertyFilter pf = qIt.next();
+							if(pf!=null){
+								addFilter(criteria,junction,pf);
+							}
+						}
+					}
+				}else{
+					Queue<PropertyFilter> pfQueue = propertyMap.get(propertyName);
+					PropertyFilter pf = null;
+					pf = pfQueue.poll();
+					if(pf!=null){
+						addFilter(criteria,junction,pf);
+					}
 				}
 			}
 		}
 		return criteria;
     }
     
-    private void getGroupCriteria(Criteria criteria,Junction junction,JSONObject groupJson,Map<String, PropertyFilter> propertyMap){
+    private void getGroupCriteria(Criteria criteria,Junction junction,JSONObject groupJson,Map<String, Queue<PropertyFilter>> propertyMap){
     	String op = groupJson.get("op").toString();
 		JSONArray groupFilters = (JSONArray)groupJson.get("filter");
 		Junction subJunction = null;
@@ -113,8 +138,26 @@ public class JqueryPagerHibernateWithSearchCallBack
 			Iterator<String> fliterIt = groupFilters.iterator();
 			while(fliterIt.hasNext()){
 				String propertyName = fliterIt.next();
-				PropertyFilter pf = propertyMap.get(propertyName);
-				addFilter(criteria,junction,pf);
+				if("*".equals(propertyName)){
+					Set<Entry<String, Queue<PropertyFilter>>> entrySet = propertyMap.entrySet();
+					for(Entry<String, Queue<PropertyFilter>> entry : entrySet){
+						Queue<PropertyFilter> pfQueue = entry.getValue();
+						Iterator<PropertyFilter> qIt = pfQueue.iterator();
+						while(qIt.hasNext()){
+							PropertyFilter pf = qIt.next();
+							if(pf!=null){
+								addFilter(criteria,subJunction,pf);
+							}
+						}
+					}
+				}else{
+					Queue<PropertyFilter> pfQueue = propertyMap.get(propertyName);
+					PropertyFilter pf = null;
+					pf = pfQueue.poll();
+					if(pf!=null){
+						addFilter(criteria,subJunction,pf);
+					}
+				}
 			}
 		}
     }

@@ -65,6 +65,13 @@
 			<result name="success">/WEB-INF/pages/bm/budgetDept/budgetDepartment.jsp</result>
 			<result name="input">/WEB-INF/pages/bm/budgetDept/budgetDepartment.jsp</result>
 		</action>
+		<action name="bmsDepartmentGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="bmsDepartmentGridList">
+			<result type="json">
+				<param name="includeProperties">departments.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 
 	</package>
 

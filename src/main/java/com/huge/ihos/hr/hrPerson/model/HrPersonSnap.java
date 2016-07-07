@@ -972,8 +972,8 @@ public class HrPersonSnap extends BaseObject implements Serializable ,Cloneable{
 		this.gzType = gzType;
 	}
 	
-	//@Column(name = "gzTypeId2", length = 32, nullable = true)
-	@Transient
+	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	//@Transient
 	public String getGzType2() {
 		return gzType2;
 	}

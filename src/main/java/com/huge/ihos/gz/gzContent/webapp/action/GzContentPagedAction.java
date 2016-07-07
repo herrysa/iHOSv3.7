@@ -623,6 +623,9 @@ public class GzContentPagedAction extends JqGridBaseAction implements Preparable
 				filters.add(new PropertyFilter("EQS_period",lastMonthPeriod));
 				filters.add(new PropertyFilter("ODI_issueNumber",""));
 			}
+			if(!"true".equals(allItems)){
+				filters.add(new PropertyFilter("EQS_gzType",gzTypeId));
+			}
 			List<GzContent> gzContents = gzContentManager.getByFilters(filters);
 			String filterPeriod;
 			String filterIssueNumber;

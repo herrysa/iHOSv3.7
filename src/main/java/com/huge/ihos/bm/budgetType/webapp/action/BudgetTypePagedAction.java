@@ -87,7 +87,7 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
 					PagerFactory.JQUERYTYPE, getRequest());
 			pagedRequests = budgetTypeManager
-					.getBudgetTypeCriteria(pagedRequests,filters);
+					.getAppManagerCriteriaWithSearch(pagedRequests,BudgetType.class,filters,group_on);
 			this.budgetTypes = (List<BudgetType>) pagedRequests.getList();
 			records = pagedRequests.getTotalNumberOfRows();
 			total = pagedRequests.getTotalNumberOfPages();
@@ -124,6 +124,11 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
         		parentId = budgetType.getParentId().getBudgetTypeCode();
         		parentBudgetType = budgetTypeManager.get(parentId);
         		budgetType.setParentId(parentBudgetType);
+        	}else{
+        		parentBudgetType = new BudgetType();
+    			parentBudgetType.setBudgetTypeCode("-1");
+    			parentBudgetType.setBudgetTypeName("预算类型");
+    			budgetType.setParentId(parentBudgetType);
         	}
         	this.setEntityIsNew(false);
         } else {

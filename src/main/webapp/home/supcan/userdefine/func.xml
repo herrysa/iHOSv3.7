@@ -16,6 +16,11 @@
 				<para>项目类别，可选</para>
 				<returnDatatype>double</returnDatatype> 
 			</function>
+			<function name="sv" >
+				<runAt>Local</runAt>
+				<para>含有系统变量的字符串</para>
+				<returnDatatype>string</returnDatatype> 
+			</function>
 		</category>
 	</functions>
 </root>

@@ -25,9 +25,16 @@
 					</s:else>
 				</div>
 				<div class="unit">
-				<s:textfield id="budgetModel_modelCode" key="budgetModel.modelCode" name="budgetModel.modelCode" oldValue='${budgetModel.modelCode}' notrepeat='预算模板编码已存在' validatorParam="from BudgetModel entity where entity.modelCode=%value%" cssClass="	required			
+					<s:if test="%{entityIsNew}">
+				<s:textfield id="budgetModel_modelCode" key="budgetModel.modelCode" name="budgetModel.modelCode" notrepeat='预算模板编码已存在' validatorParam="from BudgetModel entity where entity.modelCode=%value%" cssClass="	required			
 				
 				       "/>
+					</s:if>
+					<s:else>
+				<s:textfield id="budgetModel_modelCode" key="budgetModel.modelCode" name="budgetModel.modelCode" oldValue="${budgetModel.modelCode}" notrepeat='预算模板编码已存在' validatorParam="from BudgetModel entity where entity.modelCode=%value%" cssClass="	required			
+				
+				       "/>
+					</s:else>
 				</div>
 				<div class="unit">
 				<s:textfield id="budgetModel_modelName" key="budgetModel.modelName" name="budgetModel.modelName" style="width:350px;" cssClass="	required			
@@ -54,6 +61,7 @@
 						dataType : 'sql',
 						sql : "SELECT deptid id,name,parentDept_id parent FROM t_department where disabled=0 ORDER BY internalCode asc",
 						exceptnullparent : true,
+						initSelect : "${budgetModel.department}",
 						lazy : false,
 						minWidth : '180px',
 						selectParent : false,

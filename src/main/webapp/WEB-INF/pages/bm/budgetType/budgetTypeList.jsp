@@ -32,26 +32,11 @@
 			var nodeId = treeNode.id;
 			var urlString = "budgetTypeGridList";
 			if(treeNode.id!="-1"){
-				if(treeNode.children){
-			    	var ids=treeNode.id;
-			    	ids = findChildrenNode(ids,treeNode);
-			    	urlString=urlString+"?filter_INS_budgetTypeCode="+ids;	
-				}else{
-					urlString=urlString+"?filter_EQS_budgetTypeCode="+treeNode.id;	
-				}
+				urlString=urlString+"?filter_EQS_budgetTypeCode="+treeNode.id+"&filter_EQS_parentId.budgetTypeCode="+treeNode.id;	
+		    	urlString += "&group_on={op:'or',filter:['budgetTypeCode','parentId.budgetTypeCode']}";
 			}
 		    urlString = encodeURI(urlString);
 			jQuery(budgetTypeGridIdString).jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
-		}
-		function findChildrenNode(ids,treeNode){
-			$.each(treeNode.children,function(n,value) {  
-				var n = treeNode.children[n];
-	    		 ids+=","+n.id;
-	    		 if(n.children&&n.children.length>0){
-	    			 ids = findChildrenNode(ids,n);
-	    		 }
-	    	});
-			return ids;
 		}
 		$.get("getBudgetTypeTree", {
 			"_" : $.now()
@@ -64,7 +49,7 @@
 			budgetTypeTree.selectNode(nodes[0]);
 			
 		});
-		jQuery("#gzPerson_expandTree").text("展开");
+		jQuery("#budgetType_expandTree").text("展开");
 		var budgetTypeGrid = jQuery(budgetTypeGridIdString);
     	budgetTypeGrid.jqGrid({
     		url : "budgetTypeGridList",
@@ -129,6 +114,21 @@
 		$.pdialog.open(url,'addBudgetType',winTitle, {mask:true,width : 500,height : 400});
     });
     
+    jQuery("#budgetType_gridtable_edit_c").click(function(){
+    	var sid = jQuery("#budgetType_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择一条记录！");
+    		return;
+    	}
+    	if(sid.length>1){
+    		alertMsg.error("只能选择一条记录！");
+    		return;
+    	}
+        var url = "editBudgetType?navTabId=budgetType_gridtable&budgetTypeCode="+sid;
+		var winTitle='<s:text name="budgetTypeEdit.title"/>';
+		$.pdialog.open(url,'editBudgetType',winTitle, {mask:true,width : 500,height : 400});
+    });
+    
   	});
 	function budgetTypeReload(){
 		var zTree = $.fn.zTree.getZTreeObj("budgetTypeTreeLeft");
@@ -139,17 +139,13 @@
 		var treeNode = treeNodes[0];
 		var nodeId = treeNode.id;
 		var urlString = "budgetTypeGridList";
-		if(treeNode.children){
-	    	var ids=treeNode.id;
-	    	$.each(treeNode.children,function(n,value) {  
-	    		 ids+=","+treeNode.children[n].id;
-	    	});
-	    	urlString=urlString+"?filter_INS_budgetTypeCode="+ids;	
-		}else{
-			urlString=urlString+"?filter_EQS_budgetTypeCode="+treeNode.id;	
+		if(treeNode.id!="-1"){
+	    	urlString=urlString+"?filter_EQS_budgetTypeCode="+treeNode.id+"&filter_EQS_parentId.budgetTypeCode="+treeNode.id;	
+	    	urlString += "&group_on={op:'and',filter:[{op:'or',filter:['budgetTypeCode','parentId.budgetTypeCode']},{op:'and',filter:['*']}]}";
 		}
 	    urlString = encodeURI(urlString);
-		jQuery(budgetTypeGridIdString).jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
+		jQuery(budgetTypeGridIdString).jqGrid('setGridParam',{url:urlString});
+		propertyFilterSearch('budgetType_search_form','budgetType_gridtable');
 	}
 </script>
 
@@ -160,11 +156,11 @@
 				<form id="budgetType_search_form" >
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetType.budgetTypeCode'/>:
-						<input type="text" name="filter_EQS_budgetTypeCode"/>
+						<input type="text" name="filter_LIKES_budgetTypeCode"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetType.budgetTypeName'/>:
-						<input type="text" name="filter_EQS_budgetTypeName"/>
+						<input type="text" name="filter_LIKES_budgetTypeName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetType.exceedBudgetType'/>:
@@ -183,9 +179,18 @@
 						<s:text name='budgetType.warningPercent'/>:
 						<input type="text" name="filter_EQS_warningPercent"/>
 					</label>
+					<label style="float:none;white-space:nowrap" >
+						<s:text name='budgetType.disabled'/>:
+						<!-- <input type="text" name="filter_EQS_exceedBudgetType"/> -->
+						<select name="filter_EQB_disabled">
+							<option value="">--</option>
+							<option value="true">是</option>
+							<option value="false">否</option>
+						</select>
+					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(budgetType_search_form,budgetType_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="budgetTypeReload()"><s:text name='button.search'/></button>
 						</div>
 					</div>
 				</form>
@@ -203,7 +208,7 @@
 				<li><a id="budgetType_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
-				<li><a id="budgetType_gridtable_edit" class="changebutton"  href="javaScript:"
+				<li><a id="budgetType_gridtable_edit_c" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
 					</span>
 				</a>
@@ -217,7 +222,7 @@
 			<script>
 				jQuery("#budgetType_expandTree").click(function(){
 					var thisText = jQuery(this).text();
-					var budgetTypeTee = $.fn.zTree.getZTreeObj("budgetType_expandTree");
+					var budgetTypeTee = $.fn.zTree.getZTreeObj("budgetTypeTreeLeft");
 					if(thisText=="展开"){
 						budgetTypeTee.expandAll(true);
 						jQuery(this).text("折叠");

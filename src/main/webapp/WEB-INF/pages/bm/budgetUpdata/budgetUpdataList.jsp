@@ -4,11 +4,10 @@
 <script type="text/javascript">
 	var budgetUpdataLayout;
 	var budgetUpdataGridIdString="#budgetUpdata_gridtable";
-	
 	jQuery(document).ready(function() { 
 		var budgetUpdataGrid = jQuery(budgetUpdataGridIdString);
     	budgetUpdataGrid.jqGrid({
-    		url : "budgetUpdataGridList",
+    		url : "budgetUpdataGridList?xfId=${xfId}&state=${state}",
     		editurl:"budgetUpdataGridEdit",
 			datatype : "json",
 			mtype : "GET",

@@ -189,7 +189,7 @@ var userByLawGrid = jQuery(userByLawGridIdString);
 				id="userByLaw_gridtable_selectMore">
 				<s:text name='list.selectMore'/>
 			</label>
-<div id="load_userByLaw_gridtable" class='loading ui-state-default ui-state-active'></div>
+<div id="load_userByLaw_gridtable" class='loading ui-state-default ui-state-active' style="display:none"></div>
  <table id="userByLaw_gridtable"></table>
 		<div id="userByLawPager"></div>
 </div>

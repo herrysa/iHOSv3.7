@@ -35,7 +35,7 @@ public class BudgetModelXf extends BaseObject {
 	private BudgetModel modelId;
 	private Date xfDate;
 	private String periodYear;
-	private Integer state;
+	private Integer state;			//0:未上报;1:上报中;2:已上报;3已过期
 	private Integer xfNum;
 	private Integer updataingNum;
 	private Integer confirmNum;

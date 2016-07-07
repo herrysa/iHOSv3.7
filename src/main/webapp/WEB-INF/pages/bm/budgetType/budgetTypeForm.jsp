@@ -33,14 +33,14 @@
 					<s:hidden key="budgetType.parentId.budgetTypeCode" name="budgetType.parentId.budgetTypeCode" cssClass="				
 				
 				       "/>
+				   <label><s:text name="budgetType.parent"/>:</label>
 			       <s:textfield key="budgetType.parentId.budgetTypeName" name="budgetType.parentId.budgetTypeName" readonly="true" cssClass="				
 			
-			       "/>
+			       " theme="simple"/>
 				</div>
 				<div class="unit">
-				<s:textfield id="budgetType_exceedBudgetType" key="budgetType.exceedBudgetType" name="budgetType.exceedBudgetType" cssClass="				
-				
-				       "/>
+					<label><s:text name="budgetType.exceedBudgetType"/>:</label>
+					<s:select list="#{'禁止':'禁止','警告':'警告' }" key="budgetType.exceedBudgetType" name="budgetType.exceedBudgetType" theme="simple"></s:select>
 				</div>
 				<div class="unit">
 				<s:textfield id="budgetType_warningPercent" key="budgetType.warningPercent" name="budgetType.warningPercent" cssClass="				
