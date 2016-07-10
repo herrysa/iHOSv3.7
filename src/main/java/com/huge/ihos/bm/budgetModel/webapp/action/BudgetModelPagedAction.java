@@ -2,6 +2,7 @@ package com.huge.ihos.bm.budgetModel.webapp.action;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -29,8 +30,13 @@ import com.huge.ihos.system.configuration.syvariable.service.VariableManager;
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContext;
 import com.huge.ihos.system.context.UserContextUtil;
+import com.huge.ihos.system.systemManager.menu.model.MenuButton;
+import com.huge.ihos.system.systemManager.organization.model.Branch;
 import com.huge.ihos.system.systemManager.organization.model.Department;
+import com.huge.ihos.system.systemManager.organization.service.BranchManager;
 import com.huge.ihos.system.systemManager.organization.service.DepartmentManager;
+import com.huge.ihos.system.systemManager.organization.service.DeptTypeManager;
+import com.huge.ihos.system.systemManager.organization.service.KhDeptTypeManager;
 import com.huge.util.XMLUtil;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
@@ -358,10 +364,76 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		}
 		return null;
 	}
+	private DeptTypeManager deptTypeManager;
+	private KhDeptTypeManager khDeptTypeManager;
+	private BranchManager branchManager;
+	public void setDeptTypeManager(DeptTypeManager deptTypeManager) {
+		this.deptTypeManager = deptTypeManager;
+	}
+	public void setKhDeptTypeManager(KhDeptTypeManager khDeptTypeManager) {
+		this.khDeptTypeManager = khDeptTypeManager;
+	}
+	public void setBranchManager(BranchManager branchManager) {
+		this.branchManager = branchManager;
+	}
+
+	private List deptClassList;
+    private List outinList;
+    private List subClassList;
+    private List jjDeptTypeList;
+    private List dgroupList;
+    private List<Branch> branches;
 	
+	public List getDeptClassList() {
+		return deptClassList;
+	}
+	public void setDeptClassList(List deptClassList) {
+		this.deptClassList = deptClassList;
+	}
+	public List getOutinList() {
+		return outinList;
+	}
+	public void setOutinList(List outinList) {
+		this.outinList = outinList;
+	}
+	public List getSubClassList() {
+		return subClassList;
+	}
+	public void setSubClassList(List subClassList) {
+		this.subClassList = subClassList;
+	}
+	public List getJjDeptTypeList() {
+		return jjDeptTypeList;
+	}
+	public void setJjDeptTypeList(List jjDeptTypeList) {
+		this.jjDeptTypeList = jjDeptTypeList;
+	}
+	public List getDgroupList() {
+		return dgroupList;
+	}
+	public void setDgroupList(List dgroupList) {
+		this.dgroupList = dgroupList;
+	}
+    
+    public List<Branch> getBranches() {
+		return branches;
+	}
 	public String bmDepartmentList(){
-		
-		return SUCCESS;
+		this.deptClassList = this.deptTypeManager.getAllExceptDisable();
+        this.outinList = this.getDictionaryItemManager().getAllItemsByCode( "outin" );
+        this.subClassList = this.getDictionaryItemManager().getAllItemsByCode( "subClass" );
+        this.jjDeptTypeList = khDeptTypeManager.getAllExceptDisable();
+        this.dgroupList = this.getDictionaryItemManager().getAllItemsByCode("dgroup");
+        List<MenuButton> menuButtons = this.getMenuButtons();
+		//menuButtons.get(0).setEnable(false);
+		try {
+			setMenuButtonsToJson(menuButtons);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.branches = branchManager.getAllAvailable();
+        return SUCCESS;
 	}
 	
 	public String budgetDepartmentList(){

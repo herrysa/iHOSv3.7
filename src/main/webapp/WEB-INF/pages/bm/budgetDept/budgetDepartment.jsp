@@ -79,8 +79,13 @@ jQuery(document).ready(function() {
 			jQuery.publish("onLoadSelect", dataTest, null);
 		}
 	});
-	jQuery("#budgetModel_sellectDepartment").click(function(){
-		var url = "editWorkScore?navTabId=workScore_gridtable&parentid="+nodes[0].id;
+	jQuery("#budgetModel_selectDepartment").click(function(){
+		var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid==null|| sid.length != 1){       	
+			alertMsg.error("请选择模板。");
+			return;
+		}
+		var url = "selectDepartment?navTabId=bmsDepartment_gridtable&modelId="+sid;
 		var winTitle='选择部门';
 		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 700,height : 500});
 	});
@@ -114,7 +119,7 @@ jQuery(document).ready(function() {
 				</li>
 			</ul>
 		</div>
-		<div id="bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=120 tablecontainer="budgetModel_layout-south" extraHeight=100>
+		<div id="bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=150 tablecontainer="budgetModel_layout-south" extraHeight=145>
 			<table id="bmsDepartment_gridtable"></table>
 		</div>
 		<div class="panelBar" id="bmsDepartment_pageBar">

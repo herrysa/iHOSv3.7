@@ -4,12 +4,12 @@
 <head>
 <script type="text/javascript">
 var showIds = null;
-function departmentGridReload(){
-	propertyFilterSearch('department_search_form','department_gridtable');
+function bmDepartmentGridReload(){
+	propertyFilterSearch('bmDepartment_search_form','bmDepartment_gridtable');
 	deptTreeReShow();
 }
 		function deptTreeReShow(){
-			var postData = jQuery("#department_gridtable").jqGrid('getGridParam',"postData");
+			var postData = jQuery("#bmDepartment_gridtable").jqGrid('getGridParam',"postData");
 			var urlString = 'departmentGridList?1=1';
 			var isShowAll=true;
 			jQuery.each(postData, function(key, val) {
@@ -62,11 +62,11 @@ function departmentGridReload(){
 				}    
 				}
 		 　　});   
-			var showDisabledDept = jQuery("#department_showDisabled").attr("checked");
+			var showDisabledDept = jQuery("#bmDepartment_showDisabled").attr("checked");
 			if(showDisabledDept){
 				urlString += "&showDisabled=true";
 			}
-			var treeObj = $.fn.zTree.getZTreeObj("departmentLeftTree");
+			var treeObj = $.fn.zTree.getZTreeObj("bmDepartmentLeftTree");
 			 if(!treeObj){
 	        	return; 
 	         }
@@ -92,22 +92,22 @@ function departmentGridReload(){
 				   }
 				  });
 			 }
-			 toggleDisabledOrCount({treeId:'departmentLeftTree',
-		         showCode:jQuery('#department_showCode')[0],
-		         disabledDept:jQuery("#department_showDisabled")[0],
+			 toggleDisabledOrCount({treeId:'bmDepartmentLeftTree',
+		         showCode:jQuery('#bmDepartment_showCode')[0],
+		         disabledDept:jQuery("#bmDepartment_showDisabled")[0],
 		         disabledPerson: false,
-		         showCount:jQuery("#department_showPersonCount")[0],
+		         showCount:jQuery("#bmDepartment_showPersonCount")[0],
 		         showIds:showIds}); 
 		}
 
 		jQuery(document).ready(function() {
-			var departmentGridIdString="#department_gridtable";
-			var departmentFullSize = jQuery("#container").innerHeight()-118;
-			setLeftTreeLayout('department_container','department_gridtable',departmentFullSize);
-			departmentLeftTree();
-			var initFlag_department = 0;
-			var departmentGrid = jQuery(departmentGridIdString);
-			departmentGrid.jqGrid({
+			var bmDepartmentGridIdString="#bmDepartment_gridtable";
+			var bmDepartmentFullSize = jQuery("#container").innerHeight()-118;
+			setLeftTreeLayout('bmDepartment_container','bmDepartment_gridtable',bmDepartmentFullSize);
+			bmDepartmentLeftTree();
+			var initFlag_bmDepartment = 0;
+			var bmDepartmentGrid = jQuery(bmDepartmentGridIdString);
+			bmDepartmentGrid.jqGrid({
 				url : "departmentGridList?1=1",
 				editurl : "departmentGridEdit",
 				datatype : "json",
@@ -168,10 +168,10 @@ function departmentGridReload(){
 				},
 				gridComplete : function() {
 			 		/*2015.08.27 form search change*/
-			 		gridContainerResize('department','layout');
+			 		gridContainerResize('bmDepartment','layout');
 					 var rowNum = jQuery(this).getDataIDs().length;
 			           if(rowNum>0){
-						var ztree = $.fn.zTree.getZTreeObj("departmentLeftTree");
+						var ztree = $.fn.zTree.getZTreeObj("bmDepartmentLeftTree");
 							if(ztree){
 		 	                	var selectNode = ztree.getSelectedNodes();
 		 						if(selectNode && selectNode.length==1){
@@ -186,21 +186,21 @@ function departmentGridReload(){
 						}
 			           
 					var dataTest = {
-						"id" : "department_gridtable"
+						"id" : "bmDepartment_gridtable"
 					};
 					jQuery.publish("onLoadSelect",
 							dataTest, null);
-					initFlag_department = initColumn('department_gridtable','com.huge.ihos.system.systemManager.organization.model.Department',initFlag_department);
+					initFlag_bmDepartment = initColumn('bmDepartment_gridtable','com.huge.ihos.system.systemManager.organization.model.bmDepartment',initFlag_bmDepartment);
 				}
     		}); 
-			jQuery(departmentGrid).jqGrid('bindKeys');
+			jQuery(bmDepartmentGrid).jqGrid('bindKeys');
 			
 			 /*--------------------------------------tooBar start-------------------------------------------*/
-	    	var department_menuButtonArrJson = "${menuButtonArrJson}";
-	    	var department_toolButtonCollection = new ToolButtonCollection(eval(zzhUtil.DecodeURI(department_menuButtonArrJson,false)));
-	    	var department_toolButtonBar = new ToolButtonBar({el:$('#department_buttonBar'),collection:department_toolButtonCollection,attributes:{
-	    		tableId : 'department_gridtable',
-	    		baseName : 'department',
+	    	var bmDepartment_menuButtonArrJson = "${menuButtonArrJson}";
+	    	var bmDepartment_toolButtonCollection = new ToolButtonCollection(eval(zzhUtil.DecodeURI(bmDepartment_menuButtonArrJson,false)));
+	    	var bmDepartment_toolButtonBar = new ToolButtonBar({el:$('#bmDepartment_buttonBar'),collection:bmDepartment_toolButtonCollection,attributes:{
+	    		tableId : 'bmDepartment_gridtable',
+	    		baseName : 'bmDepartment',
 	    		width : 700,
 	    		height : 580,
 	    		base_URL : null,
@@ -213,8 +213,8 @@ function departmentGridReload(){
 	    		editTitle : "修改科室"
 	    	}}).render();
 	    	
-	    	var department_function = new scriptFunction();
-	    	department_function.optBeforeCall = function(e,$this,param){
+	    	var bmDepartment_function = new scriptFunction();
+	    	bmDepartment_function.optBeforeCall = function(e,$this,param){
 	    		var pass = false;
 				if('${yearStarted}' == 'true'){
 					alertMsg.error("本年度人力资源系统已启用，请到人力资源系统维护!");
@@ -222,29 +222,29 @@ function departmentGridReload(){
 				}
 		        return true;
 			};
-			department_toolButtonBar.addFunctionAdd('50010201');
-			department_toolButtonBar.addBeforeCall('50010201',function(e,$this,param){
-				var departmentTreeObj = $.fn.zTree.getZTreeObj('departmentLeftTree');
-				var selectedNodes = departmentTreeObj.getSelectedNodes();
+			bmDepartment_toolButtonBar.addFunctionAdd('50010201');
+			bmDepartment_toolButtonBar.addBeforeCall('50010201',function(e,$this,param){
+				var bmDepartmentTreeObj = $.fn.zTree.getZTreeObj('bmDepartmentLeftTree');
+				var selectedNodes = bmDepartmentTreeObj.getSelectedNodes();
 				if(selectedNodes){
 					var selectedNode = selectedNodes[0];
 					if(selectedNode.subSysTem==='ORG'){
-						department_toolButtonBar.buttonUtil.userDefineParam = '&orgCode='+selectedNode.id;
+						bmDepartment_toolButtonBar.buttonUtil.userDefineParam = '&orgCode='+selectedNode.id;
 					}else if(selectedNode.subSysTem==='DEPT'){
-						department_toolButtonBar.buttonUtil.userDefineParam = '&pDeptId='+selectedNode.id;
+						bmDepartment_toolButtonBar.buttonUtil.userDefineParam = '&pDeptId='+selectedNode.id;
 			    	}else if(selectedNode.subSysTem==='ALL') {
 			    		alertMsg.info("请选择一个上属单位。");
 			    		return false;
 			    	}
 				}else{
-					department_toolButtonBar.buttonUtil.userDefineParam = null;
+					bmDepartment_toolButtonBar.buttonUtil.userDefineParam = null;
 				}
-				return department_function.optBeforeCall(e,$this,param);
+				return bmDepartment_function.optBeforeCall(e,$this,param);
 	    	},{});
 			//删除
-			department_toolButtonBar.addCallBody('50010202',function(e,$this,param) {
-				var sid = jQuery(departmentGridIdString).jqGrid("getGridParam","selarrrow");
-				var urlString = "departmentGridEdit?id="+sid+"&navTabId=department_gridtable&oper=del";
+			bmDepartment_toolButtonBar.addCallBody('50010202',function(e,$this,param) {
+				var sid = jQuery(bmDepartmentGridIdString).jqGrid("getGridParam","selarrrow");
+				var urlString = "departmentGridEdit?id="+sid+"&navTabId=bmDepartment_gridtable&oper=del";
 				alertMsg.confirm("确认删除？",{
 					okCall:function() {
 						jQuery.post(urlString,function(data) {
@@ -253,39 +253,39 @@ function departmentGridReload(){
 								return;
 							}
 							for(var i = 0;i < sid.length; i++) {
-								dealTreeNodeC("departmentLeftTree",{id:sid[i]},"del");
+								dealTreeNodeC("bmDepartmentLeftTree",{id:sid[i]},"del");
 							}
 						});
 					}
 				});
 			});//addFunctionDel('50010202');
-			department_toolButtonBar.addBeforeCall('50010202',function(e,$this,param){
-				return department_function.optBeforeCall(e,$this,param);
+			bmDepartment_toolButtonBar.addBeforeCall('50010202',function(e,$this,param){
+				return bmDepartment_function.optBeforeCall(e,$this,param);
 	    	},{});
 			
-			department_toolButtonBar.addFunctionEdit('50010203');
+			bmDepartment_toolButtonBar.addFunctionEdit('50010203');
 // 			department_toolButtonBar.addBeforeCall('50010203',function(e,$this,param){
 // 				return department_function.optBeforeCall(e,$this,param);
 // 	    	},{});
 			//检查
- 			department_toolButtonBar.addCallBody('50010204',function(e,$this,param){
+ 			bmDepartment_toolButtonBar.addCallBody('50010204',function(e,$this,param){
  				jQuery.post("checkDeptRationality",function(data) {
 					formCallBack(data);
 				});
 			},{});
 			//查看日志
- 			department_toolButtonBar.addCallBody('50010205',function(e,$this,param){
+ 			bmDepartment_toolButtonBar.addCallBody('50010205',function(e,$this,param){
 				var url = "viewInterLoggerList?taskInterId=deptCheck";
 				var winTitle="部门检查日志";
 				url = encodeURI(url);
 				$.pdialog.open(url,"viewInterLoggerList",winTitle, {ifr:true,mask:true,resizable:true,maxable:true,width : 685,height : 450});
 			},{});
 			//设置表格列
-			var department_setColShowButton = {id:'50010288',buttonLabel:'<s:text name="button.setColShow" />',className:"settlebutton",show:true,enable:true,
+			var bmDepartment_setColShowButton = {id:'50010288',buttonLabel:'<s:text name="button.setColShow" />',className:"settlebutton",show:true,enable:true,
 	   			callBody:function(){
-	   				setColShow('department_gridtable','com.huge.ihos.system.systemManager.organization.model.Department');
+	   				setColShow('bmDepartment_gridtable','com.huge.ihos.system.systemManager.organization.model.bmDepartment');
 	   			}};
-			department_toolButtonBar.addButton(department_setColShowButton);
+			bmDepartment_toolButtonBar.addButton(bmDepartment_setColShowButton);
 			
 		});
 		function dealTreeNodeC(treeId,node,opt) {
@@ -297,22 +297,22 @@ function departmentGridReload(){
 				case 'add' :
 					var parentNode = treeObj.getNodeByParam("id", node.pId, null);
 					node = treeObj.addNodes(parentNode,node);
-					toggleDisabledOrCount({treeId:'departmentLeftTree',
-						showCode:jQuery('#department_showCode')[0],
-						disabledDept:jQuery("#department_showDisabled")[0],
+					toggleDisabledOrCount({treeId:'bmDepartmentLeftTree',
+						showCode:jQuery('#bmDepartment_showCode')[0],
+						disabledDept:jQuery("#bmDepartment_showDisabled")[0],
 						disabledPerson: false,
-						showCount:jQuery("#department_showPersonCount")[0] });
+						showCount:jQuery("#bmDepartment_showPersonCount")[0] });
 					break;
 				case 'change' :
 					if(oldNode) {
 						oldNode.nameWithoutPerson = node.name;
 						oldNode.code = node.code;
 						treeObj.updateNode(oldNode);
-						toggleDisabledOrCount({treeId:'departmentLeftTree',
-							showCode:jQuery('#department_showCode')[0],
-							disabledDept:jQuery("#department_showDisabled")[0],
+						toggleDisabledOrCount({treeId:'bmDepartmentLeftTree',
+							showCode:jQuery('#bmDepartment_showCode')[0],
+							disabledDept:jQuery("#bmDepartment_showDisabled")[0],
 							disabledPerson: false,
-							showCount:jQuery("#department_showPersonCount")[0] });
+							showCount:jQuery("#bmDepartment_showPersonCount")[0] });
 					}
 					break;
 				case 'del' :
@@ -321,23 +321,23 @@ function departmentGridReload(){
 				}
 			}
 		}
-		function departmentLeftTree(){
+		function bmDepartmentLeftTree(){
 			var url = "makeDepartmentTree";
 			$.get(url, {"_" : $.now()}, function(data) {
 				var departmentTreeData = data.deptTreeNodes;
-				var departmentTree = $.fn.zTree.init($("#departmentLeftTree"),ztreesetting_departmentTree, departmentTreeData);
+				var departmentTree = $.fn.zTree.init($("#bmDepartmentLeftTree"),ztreesetting_departmentTree, departmentTreeData);
 				var nodes = departmentTree.getNodes();
 				departmentTree.expandNode(nodes[0], true, false, true);
 				departmentTree.selectNode(nodes[0]);
-				toggleDisabledOrCount({treeId:'departmentLeftTree',
-					showCode:jQuery('#department_showCode')[0],
-					disabledDept:jQuery("#department_showDisabled")[0],
+				toggleDisabledOrCount({treeId:'bmDepartmentLeftTree',
+					showCode:jQuery('#bmDepartment_showCode')[0],
+					disabledDept:jQuery("#bmDepartment_showDisabled")[0],
 					disabledPerson: false,
-					showCount:jQuery("#department_showPersonCount")[0] });
+					showCount:jQuery("#bmDepartment_showPersonCount")[0] });
 			});
-			jQuery("#department_expandTree").text("展开");
+			jQuery("#bmDepartment_expandTree").text("展开");
 		}
-		var ztreesetting_departmentTree = {
+		var ztreesetting_bmDepartmentTree = {
 				view : {
 					dblClickExpand : false,
 					showLine : true,
@@ -356,12 +356,12 @@ function departmentGridReload(){
 						    	urlString += "&departmentId="+nodeId;
 					    	}
 					    }
-					    var showDisabled = jQuery("#department_showDisabled").attr("checked");
+					    var showDisabled = jQuery("#bmDepartment_showDisabled").attr("checked");
 					    if(showDisabled){
 					    	urlString += "&showDisabled=true";
 					    }
 						urlString=encodeURI(urlString);
-						jQuery("#department_gridtable").jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
+						jQuery("#bmDepartment_gridtable").jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
 					}
 				},
 				data : {
@@ -375,25 +375,25 @@ function departmentGridReload(){
 					}
 				}
 		};
-		function showDisabledDepartment(obj){
-			var urlString = jQuery("#department_gridtable").jqGrid('getGridParam',"url");
+		function showDisabledbmDepartment(obj){
+			var urlString = jQuery("#bmDepartment_gridtable").jqGrid('getGridParam',"url");
 			urlString = urlString.replace('showDisabled','');
 			if(obj.checked){
 				urlString += "&showDisabled=true";
 			}
-			jQuery("#department_gridtable").jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
+			jQuery("#bmDepartment_gridtable").jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
 			deptTreeReShow();
 		}
 	</script>
 </head>
 
 <div class="page">
-			<div id="department_pageHeader" class="pageHeader">
-				<form  id="department_search_form" class="queryarea-form">
+			<div id="bmDepartment_pageHeader" class="pageHeader">
+				<form  id="bmDepartment_search_form" class="queryarea-form">
 					<div class="searchBar">
 						<div class="searchContent">
 								<label class="queryarea-label">
-									<s:text name="department.branchCode"></s:text>
+									<s:text name="bmDepartment.branchCode"></s:text>
 									<s:select list="branches" headerKey="" headerValue="--" listKey="branchCode" listValue="branchName" name="filter_LIKES_branchCode"></s:select>
 								</label>
 								<label class="queryarea-label"><fmt:message key='department.departmentId' />： <input
@@ -468,7 +468,7 @@ function departmentGridReload(){
 								
 								<div class="buttonActive" style="float:right">
 										<div class="buttonContent">
-											<button type="button" onclick="departmentGridReload()">
+											<button type="button" onclick="bmDepartmentGridReload()">
 												<fmt:message key='button.search' />
 											</button>
 										</div>
@@ -485,7 +485,7 @@ function departmentGridReload(){
 
 				<s:url id="editurl" action="departmentGridEdit" />
 				<s:url id="remoteurl" action="departmentGridList" />
-				<div id="department_buttonBar" class="panelBar">
+				<div id="bmDepartment_buttonBar" class="panelBar">
 					<%-- <ul class="toolBar">
 						<li><a id="department_gridtable_add" class="addbutton"
 							href="javaScript:"><span><fmt:message
@@ -508,65 +508,65 @@ function departmentGridReload(){
 					</ul> --%>
 				</div>
 				
-				<div id="department_container">
-			<div id="department_layout-west" class="pane ui-layout-west" style="float: left; display: block; overflow: auto;">
+				<div id="bmDepartment_container">
+			<div id="bmDepartment_layout-west" class="pane ui-layout-west" style="float: left; display: block; overflow: auto;">
 					<div class="treeTopCheckBox">
 					<span>
 						显示机构编码
-						<input id="department_showCode" checked="checked" type="checkbox" onclick="toggleDisabledOrCount({treeId:'departmentLeftTree',showCode:this,disabledDept:jQuery('#department_showDisabled')[0],disabledPerson: false,showCount:jQuery('#department_showPersonCount')[0],showIds:showIds})"/>
+						<input id="bmDepartment_showCode" checked="checked" type="checkbox" onclick="toggleDisabledOrCount({treeId:'bmDepartmentLeftTree',showCode:this,disabledDept:jQuery('#bmDepartment_showDisabled')[0],disabledPerson: false,showCount:jQuery('#bmDepartment_showPersonCount')[0],showIds:showIds})"/>
 					</span>
 					<span>
 						显示人员数
-						<input id="department_showPersonCount" type="checkbox" onclick="toggleDisabledOrCount({treeId:'departmentLeftTree',showCode:jQuery('#department_showCode')[0],disabledDept:jQuery('#department_showDisabled')[0],disabledPerson: false,showCount:this,showIds:showIds})"/>
+						<input id="bmDepartment_showPersonCount" type="checkbox" onclick="toggleDisabledOrCount({treeId:'bmDepartmentLeftTree',showCode:jQuery('#bmDepartment_showCode')[0],disabledDept:jQuery('#bmDepartment_showDisabled')[0],disabledPerson: false,showCount:this,showIds:showIds})"/>
 					</span>
-					<label id="department_expandTree" onclick="toggleExpandTree(this,'departmentLeftTree')">展开</label>
+					<label id="bmDepartment_expandTree" onclick="toggleExpandTree(this,'bmDepartmentLeftTree')">展开</label>
 				</div>
 				<div class="treeTopCheckBox">
 					<span>
 						显示停用部门
-						<input id="department_showDisabled" type="checkbox" onclick="showDisabledDepartment(this)"/>
+						<input id="bmDepartment_showDisabled" type="checkbox" onclick="showDisabledbmDepartment(this)"/>
 					</span>
 				</div>
 				<div class="treeTopCheckBox">
 					<span>
 						按部门检索：
-						<input type="text" onKeyUp="searchTree('departmentLeftTree',this)"/>
+						<input type="text" onKeyUp="searchTree('bmDepartmentLeftTree',this)"/>
 					</span>
 				</div>
-				<div id="departmentLeftTree" class="ztree"></div>
+				<div id="bmDepartmentLeftTree" class="ztree"></div>
 			</div>
-			<div id="department_layout-center" class="pane ui-layout-center">
+			<div id="bmDepartment_layout-center" class="pane ui-layout-center">
 
-				<div id="department_gridtable_div" class="grid-wrapdiv"
+				<div id="bmDepartment_gridtable_div" class="grid-wrapdiv"
 					buttonBar="width:700;height:580">
-					<input type="hidden" id="department_gridtable_navTabId"
+					<input type="hidden" id="bmDepartment_gridtable_navTabId"
 						value="${sessionScope.navTabId}"> <label
-						style="display: none" id="department_gridtable_addTile"> <fmt:message
+						style="display: none" id="bmDepartment_gridtable_addTile"> <fmt:message
 							key="departmentNew.title" />
-					</label> <label style="display: none" id="department_gridtable_editTile">
+					</label> <label style="display: none" id="bmDepartment_gridtable_editTile">
 						<fmt:message key="departmentEdit.title" />
-					</label> <label style="display: none" id="department_gridtable_selectNone">
+					</label> <label style="display: none" id="bmDepartment_gridtable_selectNone">
 						<fmt:message key='list.selectNone' />
-					</label> <label style="display: none" id="department_gridtable_selectMore">
+					</label> <label style="display: none" id="bmDepartment_gridtable_selectMore">
 						<fmt:message key='list.selectMore' />
 					</label>
-					<div id="load_department_gridtable"
+					<div id="load_bmDepartment_gridtable"
 						class='loading ui-state-default ui-state-active'
 						style="display: none"></div>
-					<table id="department_gridtable"></table>
+					<table id="bmDepartment_gridtable"></table>
 				</div>
-				<div class="panelBar" id="department_pageBar">
+				<div class="panelBar" id="bmDepartment_pageBar">
 					<div class="pages">
-						<span>显示</span> <select id="department_gridtable_numPerPage">
+						<span>显示</span> <select id="bmDepartment_gridtable_numPerPage">
 							<option value="20">20</option>
 							<option value="50">50</option>
 							<option value="100">100</option>
 							<option value="200">200</option>
-						</select> <span>条，共<label id="department_gridtable_totals"></label>条
+						</select> <span>条，共<label id="bmDepartment_gridtable_totals"></label>条
 						</span>
 					</div>
 
-					<div id="department_gridtable_pagination" class="pagination"
+					<div id="bmDepartment_gridtable_pagination" class="pagination"
 						targetType="navTab" totalCount="200" numPerPage="20"
 						pageNumShown="10" currentPage="1"></div>
 
