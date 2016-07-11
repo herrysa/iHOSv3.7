@@ -85,7 +85,7 @@ jQuery(document).ready(function() {
 			alertMsg.error("请选择模板。");
 			return;
 		}
-		var url = "selectDepartment?navTabId=bmsDepartment_gridtable&modelId="+sid;
+		var url = "bmDepartmentList?navTabId=bmsDepartment_gridtable&modelId="+sid;
 		var winTitle='选择部门';
 		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 700,height : 500});
 	});
@@ -115,7 +115,7 @@ jQuery(document).ready(function() {
 		<div id="bmsDepartment_buttonBar" class="panelBar">
 			<ul class="toolBar">
 				<li>
-					<a id="budgetModel_sellectDepartment" class="settingbutton"  href="javaScript:"><span>选择部门</span></a>
+					<a id=budgetModel_selectDepartment class="settingbutton"  href="javaScript:"><span>选择部门</span></a>
 				</li>
 			</ul>
 		</div>

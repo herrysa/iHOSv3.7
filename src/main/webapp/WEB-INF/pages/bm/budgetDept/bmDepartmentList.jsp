@@ -168,7 +168,7 @@ function bmDepartmentGridReload(){
 				},
 				gridComplete : function() {
 			 		/*2015.08.27 form search change*/
-			 		gridContainerResize('bmDepartment','layout');
+			 		gridContainerResize('bmDepartment','layout',0,35);
 					 var rowNum = jQuery(this).getDataIDs().length;
 			           if(rowNum>0){
 						var ztree = $.fn.zTree.getZTreeObj("bmDepartmentLeftTree");
@@ -325,7 +325,7 @@ function bmDepartmentGridReload(){
 			var url = "makeDepartmentTree";
 			$.get(url, {"_" : $.now()}, function(data) {
 				var departmentTreeData = data.deptTreeNodes;
-				var departmentTree = $.fn.zTree.init($("#bmDepartmentLeftTree"),ztreesetting_departmentTree, departmentTreeData);
+				var departmentTree = $.fn.zTree.init($("#bmDepartmentLeftTree"),ztreesetting_bmDepartmentTree, departmentTreeData);
 				var nodes = departmentTree.getNodes();
 				departmentTree.expandNode(nodes[0], true, false, true);
 				departmentTree.selectNode(nodes[0]);
@@ -392,10 +392,10 @@ function bmDepartmentGridReload(){
 				<form  id="bmDepartment_search_form" class="queryarea-form">
 					<div class="searchBar">
 						<div class="searchContent">
-								<label class="queryarea-label">
+								<%-- <label class="queryarea-label">
 									<s:text name="bmDepartment.branchCode"></s:text>
 									<s:select list="branches" headerKey="" headerValue="--" listKey="branchCode" listValue="branchName" name="filter_LIKES_branchCode"></s:select>
-								</label>
+								</label> --%>
 								<label class="queryarea-label"><fmt:message key='department.departmentId' />： <input
 									type="text"  size="15" style="width:90px" name="filter_LIKES_departmentId">
 								</label>

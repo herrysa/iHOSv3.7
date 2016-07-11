@@ -56,6 +56,11 @@
 		<action name="getBmReportIndexXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getBmReportIndexXml">
 		</action>
 		
+		<action name="bmDeptMain" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"	>
+			<result name="success">/WEB-INF/pages/bm/budgetDept/bmDeptMain.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetDept/bmDeptMain.jsp</result>
+		</action>
+		
 		<action name="bmDepartmentList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="bmDepartmentList">
 			<result name="success">/WEB-INF/pages/bm/budgetDept/bmDepartmentList.jsp</result>
 			<result name="input">/WEB-INF/pages/bm/budgetDept/bmDepartmentList.jsp</result>
