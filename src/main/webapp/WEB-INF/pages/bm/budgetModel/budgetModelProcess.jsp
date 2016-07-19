@@ -1,7 +1,8 @@
 <%@ include file="/common/taglibs.jsp"%>
 <%@ page language="java"   pageEncoding="UTF-8"%>
 <script type="text/javascript">
-jQuery(document).ready(function() { 
+jQuery(document).ready(function() {
+	var modelProcessGridIdString = "#modelProcess_gridtable";
 	var modelProcessGrid = jQuery(modelProcessGridIdString);
 	modelProcessGrid.jqGrid({
 		url : "modelProcessGridList?modelId=${modelId}",
@@ -9,7 +10,8 @@ jQuery(document).ready(function() {
 		datatype : "json",
 		mtype : "GET",
     	colModel:[
-		{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="modelProcess.stepCode" />',hidden:false,key:true},
+		{name:'bmProcessId',index:'bmProcessId',align:'center',label : '<s:text name="modelProcess.bmProcessId" />',hidden:true,key:true},
+		{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="modelProcess.stepCode" />',hidden:false},
 		{name:'stepName',index:'stepName',align:'center',label : '<s:text name="modelProcess.stepName" />',hidden:false},
 		{name:'roleId',index:'roleId',align:'center',label : '<s:text name="modelProcess.roleId" />',hidden:true},
 		{name:'okName',index:'okName',align:'center',label : '<s:text name="modelProcess.okName" />',hidden:false},
@@ -53,6 +55,45 @@ jQuery(document).ready(function() {
    		} 
 		
 	});
+	jQuery("#modelProcess_gridtable_refresh").click(function(){
+		$.ajax({
+            url: 'refreshModelProcess?modelId=${modelId}',
+            type: 'post',
+            dataType: 'json',
+            async:false,
+            error: function(data){
+            alertMsg.error("系统错误！");
+            },
+            success: function(data){
+            	formCallBack(data);
+            }
+        });
+	});
+	jQuery("#modelProcess_gridtable_add_c").click(function(){
+		var url = "selectBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}";
+		var winTitle='选择预算审批流程';
+		$.pdialog.open(url,'addBmModelProcess',winTitle, {mask:true,width : 500,height : 450});
+	});
+	jQuery("#modelProcess_gridtable_del_c").click(function(){
+		var sid = jQuery("#modelProcess_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid.length==0){
+			alertMsg.error("请选择一条记录！");
+			return;
+		}
+		var url = "delBmModelProcess?navTabId=modelProcess_gridtable&bmProcessId"+sid;
+		$.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            async:false,
+            error: function(data){
+            alertMsg.error("系统错误！");
+            },
+            success: function(data){
+            	formCallBack(data);
+            }
+        });
+	});
 });
 </script>
 
@@ -60,7 +101,7 @@ jQuery(document).ready(function() {
 	<div class="pageContent">
 		<div id="modelProcess_buttonBar" class="panelBar">
 			<ul class="toolBar">
-				<li><a id="modelProcess_gridtable_edit_c" class="changebutton"  href="javaScript:"><span>刷新</span>
+				<li><a id="modelProcess_gridtable_refresh" class="changebutton"  href="javaScript:"><span>初始化</span>
 				</a>
 				</li>
 				<li><a id="modelProcess_gridtable_add_c" class="addbutton" href="javaScript:" ><span>添加</span>

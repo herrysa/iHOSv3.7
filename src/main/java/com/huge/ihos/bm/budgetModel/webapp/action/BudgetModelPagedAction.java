@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -23,9 +24,12 @@ import org.dom4j.Element;
 
 import com.huge.ihos.bm.budgetModel.model.BmModelProcess;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
+import com.huge.ihos.bm.budgetModel.service.BmModelProcessManager;
 import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
 import com.huge.ihos.bm.index.model.BudgetIndex;
 import com.huge.ihos.bm.index.service.BudgetIndexManager;
+import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessStep;
+import com.huge.ihos.system.configuration.businessprocess.service.BusinessProcessStepManager;
 import com.huge.ihos.system.configuration.syvariable.service.VariableManager;
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
@@ -56,7 +60,17 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	private BudgetIndexManager budgetIndexManager;
 	private VariableManager variableManager;
 	private DepartmentManager departmentManager;
+	
+	private BusinessProcessStepManager businessProcessStepManager;
+	private BmModelProcessManager bmModelProcessManager;
 
+	public void setBmModelProcessManager(BmModelProcessManager bmModelProcessManager) {
+		this.bmModelProcessManager = bmModelProcessManager;
+	}
+	public void setBusinessProcessStepManager(
+			BusinessProcessStepManager businessProcessStepManager) {
+		this.businessProcessStepManager = businessProcessStepManager;
+	}
 	public void setDepartmentManager(DepartmentManager departmentManager) {
 		this.departmentManager = departmentManager;
 	}
@@ -471,6 +485,61 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 
 		} catch (Exception e) {
 			log.error("List Error", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String refreshModelProcess(){
+		try {
+			budgetModel = budgetModelManager.get(modelId);
+			modelProcesss = budgetModel.getBmModelProcesses();
+			if(modelProcesss!=null&&modelProcesss.size()>0){
+				return ajaxForward(false, "改模板已经初始化！", false);
+			}else{
+				List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
+				processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode","bmCheck"));
+				processStepFilters.add(new PropertyFilter("OAS_state",""));
+				List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
+				if(bmCheckStep.size()==0){
+					return ajaxForward(false, "预算审批流程配置错误，请检查！", false);
+				}
+				Map<String, BmModelProcess> bmModelProcessMap = new HashMap<String, BmModelProcess>();
+				for(BusinessProcessStep step : bmCheckStep){
+					BmModelProcess bmModelProcess = new BmModelProcess();
+					bmModelProcess.setStepCode(step.getStepCode());
+					bmModelProcess.setStepName(step.getStepName());
+					bmModelProcess.setState(step.getState());
+					bmModelProcess.setStepInfo(step.getStepInfo());
+					bmModelProcess.setOkName(step.getOkName());
+					bmModelProcess.setNoName(step.getNoName());
+					bmModelProcess.setUnionCheck(step.getUnionCheck());
+					bmModelProcess.setBudgetModel(budgetModel);
+					bmModelProcess.setCondition(step.getCondition());
+					bmModelProcess.setIsEnd(step.getIsEnd());
+					bmModelProcess.setRoleId(bmModelProcess.getRoleId());
+					bmModelProcess.setRoleName(step.getRoleName());
+					bmModelProcess = bmModelProcessManager.save(bmModelProcess);
+					bmModelProcessMap.put(step.getStepCode(), bmModelProcess);
+				}
+				for(BusinessProcessStep step : bmCheckStep){
+					BmModelProcess bmModelProcess = bmModelProcessMap.get(step.getStepCode());
+					BmModelProcess bmModelProcessOk = null;
+					BmModelProcess bmModelProcessNo = null;
+					if(step.getOkStep()!=null){
+						bmModelProcessOk = bmModelProcessMap.get(step.getOkStep().getStepCode());
+					}
+					if(step.getNoStep()!=null){
+						bmModelProcessNo = bmModelProcessMap.get(step.getNoStep().getStepCode());
+					}
+					bmModelProcess.setOkStep(bmModelProcessOk);
+					bmModelProcess.setNoStep(bmModelProcessNo);
+					bmModelProcessManager.save(bmModelProcess);
+				}
+				return ajaxForward(true, "初始化成功！", false);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}

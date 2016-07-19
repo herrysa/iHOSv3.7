@@ -90,6 +90,14 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+		
+		<action name="refreshModelProcess" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="refreshModelProcess">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 
 	</package>
 
