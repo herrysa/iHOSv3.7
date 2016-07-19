@@ -10,7 +10,7 @@
 <hibernate-configuration>
 
 	<session-factory>
-<mapping class="com.huge.ihos.system.importdata.model.ImportDataDefine"/>
+<!-- <mapping class="com.huge.ihos.system.importdata.model.ImportDataDefine"/>
 		<mapping class="com.huge.ihos.system.importdata.model.ImportDataDefineDetail"/>
 		
 		<mapping class="com.huge.ihos.system.excelTemplate.model.ExcelTemplate"/>
@@ -27,7 +27,7 @@
 		<mapping class="com.huge.ihos.system.datacollection.maptables.model.Deptmap" />
 		<mapping class="com.huge.ihos.system.datacollection.maptables.model.Matetype" />
 		<mapping class="com.huge.ihos.system.datacollection.maptables.model.Acctcostmap" />
-		<!-- Configuration start -->
+		Configuration start
 		<mapping class="com.huge.ihos.system.configuration.syvariable.model.Variable"/>
 		<mapping class="com.huge.ihos.system.configuration.funcDefine.model.FuncDefine"/>
 		<mapping class="com.huge.ihos.system.configuration.dictionary.model.Dictionary" />
@@ -40,8 +40,8 @@
 		
 		<mapping class="com.huge.ihos.system.configuration.bdinfo.model.BdInfo"/>
 		<mapping class="com.huge.ihos.system.configuration.bdinfo.model.FieldInfo"/>
-		<!-- Configuration end -->
-		<!-- SystemManager start -->
+		Configuration end
+		SystemManager start
 		<mapping class="com.huge.ihos.system.systemManager.user.model.User" />
 		<mapping class="com.huge.ihos.system.systemManager.role.model.Role" />
 		
@@ -79,15 +79,15 @@
 		<mapping class="com.huge.ihos.system.systemManager.organization.model.PersonJj" />
 		<mapping class="com.huge.ihos.system.systemManager.organization.model.PersonUpCost" />
 		<mapping class="com.huge.ihos.system.systemManager.organization.model.MonthPerson"/>
-		<!-- SystemManager end -->
-		<!-- Repository start -->
+		SystemManager end
+		Repository start
 		<mapping class="com.huge.ihos.system.repository.bank.model.Bank"/>
-		<!-- Repository end -->
-		<!-- oa start -->
+		Repository end
+		oa start
 		<mapping class="com.huge.ihos.system.oa.bylaw.model.ByLaw"/>
 		<mapping class="com.huge.ihos.system.oa.bulletin.model.Bulletin"/>
-		<!-- oa end -->
-		<!-- reportManager start -->
+		oa end
+		reportManager start
 		<mapping class="com.huge.ihos.system.reportManager.chart.model.MccKey" />
 		<mapping class="com.huge.ihos.system.reportManager.chart.model.MccKeyDetail" />
 		
@@ -101,13 +101,8 @@
 		<mapping class="com.huge.ihos.system.reportManager.search.model.Search" />
 		<mapping class="com.huge.ihos.system.reportManager.search.model.Report"/>
 		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchEntity"/>
-		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchEntityCluster"/>
+		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchEntityCluster"/> -->
 		
-		<!-- reportManager end -->
-		<!-- System end -->
-        <mapping class="com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata"/>
-        <mapping class="com.huge.ihos.bm.budgetModel.model.BudgetModel"/>
-        <mapping class="com.huge.ihos.bm.budgetUpdata.model.BudgetModelXf"/>
     </session-factory>
 
 </hibernate-configuration>

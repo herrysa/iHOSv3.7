@@ -16,19 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 
-import net.sf.json.JSONObject;
-
+import com.huge.ihos.bm.budgetModel.model.BmModelProcess;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
 import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
 import com.huge.ihos.bm.index.model.BudgetIndex;
 import com.huge.ihos.bm.index.service.BudgetIndexManager;
-import com.huge.ihos.system.configuration.dictionary.model.DictionaryItem;
 import com.huge.ihos.system.configuration.syvariable.service.VariableManager;
 import com.huge.ihos.system.context.ContextUtil;
-import com.huge.ihos.system.context.UserContext;
 import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.systemManager.menu.model.MenuButton;
 import com.huge.ihos.system.systemManager.organization.model.Branch;
@@ -424,7 +423,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
         this.subClassList = this.getDictionaryItemManager().getAllItemsByCode( "subClass" );
         this.jjDeptTypeList = khDeptTypeManager.getAllExceptDisable();
         this.dgroupList = this.getDictionaryItemManager().getAllItemsByCode("dgroup");
-        List<MenuButton> menuButtons = this.getMenuButtons();
+        List<MenuButton> menuButtons = this.getMenuButtons("12010101");
 		//menuButtons.get(0).setEnable(false);
 		try {
 			setMenuButtonsToJson(menuButtons);
@@ -452,6 +451,26 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		if(modelId!=null&&!"".equals(modelId)){
 			budgetModel = budgetModelManager.get(modelId);
 			departments = budgetModel.getDepartments();
+		}
+		return SUCCESS;
+	}
+	
+	public Set<BmModelProcess> modelProcesss;
+	
+	public Set<BmModelProcess> getModelProcesss() {
+		return modelProcesss;
+	}
+	public void setModelProcesss(Set<BmModelProcess> modelProcesss) {
+		this.modelProcesss = modelProcesss;
+	}
+	public String modelProcessGridList() {
+		log.debug("enter list method!");
+		try {
+			budgetModel = budgetModelManager.get(modelId);
+			modelProcesss = budgetModel.getBmModelProcesses();
+
+		} catch (Exception e) {
+			log.error("List Error", e);
 		}
 		return SUCCESS;
 	}

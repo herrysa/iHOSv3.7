@@ -14,6 +14,8 @@ import javax.sql.DataSource;
 
 import net.sf.json.JSONObject;
 
+import org.hibernate.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -929,6 +931,51 @@ public class QueryAction
 			return ajaxForward(false,e.getMessage(),false);
 		}
 		return ajaxForward(returnMessage);
+    }
+    
+    String rsStr;
+    String selectTreeSql;
+    public String getSelectTreeSql() {
+		return selectTreeSql;
+	}
+
+	public void setSelectTreeSql(String selectTreeSql) {
+		this.selectTreeSql = selectTreeSql;
+	}
+
+	public String getRsStr() {
+		return rsStr;
+	}
+
+	public void setRsStr(String rsStr) {
+		this.rsStr = rsStr;
+	}
+    public String getSelectStrBySql(){
+    	try {
+    		rsStr = "";
+    		if(selectTreeSql!=null&&!"".equals(selectTreeSql)){
+    			SearchUtils su = new SearchUtils();
+    			selectTreeSql = su.realSQL( selectTreeSql );
+    			Query query = this.getUserManager().getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(selectTreeSql);
+                query.setResultTransformer(Transformers.TO_LIST);
+                List rs = query.list();
+                Iterator it = rs.iterator();
+                while (it.hasNext()) {
+                	List l = (List) it.next();
+                	rsStr += l.get(0);	
+                	if(l.size()>1){
+                		rsStr += ","+l.get(1);	
+                	}
+                	rsStr += ";";
+				}
+    		}
+    		if(!rsStr.equals("")){
+    			rsStr = rsStr.substring(0, rsStr.length()-1);
+    		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return SUCCESS;
     }
     
     public String getHeadLeve() {

@@ -22,6 +22,8 @@ import net.sf.json.JSONObject;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.huge.ihos.excel.ColumnDefine;
@@ -36,6 +38,7 @@ import com.huge.ihos.system.oa.bylaw.model.ByLaw;
 import com.huge.ihos.system.oa.bylaw.service.ByLawManager;
 import com.huge.ihos.system.reportManager.search.model.Search;
 import com.huge.ihos.system.reportManager.search.service.QueryManager;
+import com.huge.ihos.system.reportManager.search.util.SearchUtils;
 import com.huge.service.UtilOptService;
 import com.huge.util.DateUtil;
 import com.huge.util.ExcelUtil;
@@ -307,6 +310,8 @@ public class UnitOptAction
         }
 
     }
+    
+    
     
     public String downLoadExel(){
     	try {

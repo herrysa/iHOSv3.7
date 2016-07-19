@@ -12,9 +12,8 @@ jQuery(document).ready(function() {
 		datatype : "json",
 		mtype : "GET",
 		colModel : [
-			{name : 'departmentId',index : 'departmentId',align : 'left',width:100,label : '<s:text name="department.departmentId" />',hidden : false,key : true,highsearch:true},
+			{name : 'departmentId',index : 'departmentId',align : 'left',width:100,label : '<s:text name="department.departmentId" />',hidden : true,key : true,highsearch:true},
 			{name : 'name',index : 'name',align : 'left',width:120,label : '<s:text name="department.name" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'shortnName',index : 'shortnName',align : 'left',width:120,label : '<s:text name="department.shortnName" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'deptCode',index : 'deptCode',align : 'left',width:100,label : '<s:text name="department.deptCode" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'org.orgname',index : 'org.orgname',align : 'left',width:130,label : '<s:text name="department.orgCode" />',hidden : false,highsearch:true},
 			{name : 'branch.branchName',index : 'branch.branchName',align : 'left',width:130,label : '<s:text name="department.branchCode" />',hidden : false,highsearch:true},
@@ -26,8 +25,8 @@ jQuery(document).ready(function() {
 			{name : 'parentDept.name',index : 'parentDept.name',align : 'left',width:100,label : '<s:text name="department.parentDeptName" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'subClass',index : 'subClass',align : 'center',width:100,label : '<s:text name="department.subClass" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'cnCode',index : 'cnCode',align : 'left',width:100,label : '<s:text name="department.cnCode" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'jjDeptType.khDeptTypeName',index : 'jjDeptType.khDeptTypeName',align : 'center',width:100,label : '<s:text name="department.jjDeptType" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'internalCode',index : 'internalCode',align : 'left',width:100,label : '<s:text name="department.internalCode" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'jjDeptType.khDeptTypeName',index : 'jjDeptType.khDeptTypeName',align : 'center',width:100,label : '<s:text name="department.jjDeptType" />',hidden : true, sortable:true,highsearch:true},
+			{name : 'internalCode',index : 'internalCode',align : 'left',width:100,label : '<s:text name="department.internalCode" />',hidden : true, sortable:true,highsearch:true},
 			{name : 'manager',index : 'manager',align : 'left',width:100,label : '<s:text name="department.manager" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'cbLeaf',index : 'cbLeaf',align : 'center',width:50,label : '<s:text name="department.cbLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
 			{name : 'xmLeaf',index : 'xmLeaf',align : 'center',width:50,label : '<s:text name="department.xmLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
@@ -88,6 +87,7 @@ jQuery(document).ready(function() {
 		var url = "bmDepartmentList?navTabId=bmsDepartment_gridtable&modelId="+sid;
 		var winTitle='选择部门';
 		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 700,height : 500});
+		stopPropagation();
 	});
 });
 </script>
@@ -115,14 +115,17 @@ jQuery(document).ready(function() {
 		<div id="bmsDepartment_buttonBar" class="panelBar">
 			<ul class="toolBar">
 				<li>
-					<a id=budgetModel_selectDepartment class="settingbutton"  href="javaScript:"><span>选择部门</span></a>
+					<a id=budgetModel_selectDepartment class="addbutton"  href="javaScript:"><span>添加部门</span></a>
+				</li>
+				<li>
+					<a id=budgetModel_selectDepartment class="delbutton"  href="javaScript:"><span>删除部门</span></a>
 				</li>
 			</ul>
 		</div>
-		<div id="bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=150 tablecontainer="budgetModel_layout-south" extraHeight=145>
+		<div id="bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=130>
 			<table id="bmsDepartment_gridtable"></table>
 		</div>
-		<div class="panelBar" id="bmsDepartment_pageBar">
+		<!-- <div class="panelBar" id="bmsDepartment_pageBar">
 			<div class="pages">
 				<span>显示</span> <select id="bmsDepartment_gridtable_numPerPage">
 					<option value="20">20</option>
@@ -137,6 +140,6 @@ jQuery(document).ready(function() {
 				targetType="navTab" totalCount="200" numPerPage="20"
 				pageNumShown="10" currentPage="1"></div>
 
-		</div>
+		</div> -->
 	</div>
 </div>

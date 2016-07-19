@@ -8,14 +8,28 @@
 			jQuery("#budgetModelForm").attr("action","saveBudgetModel?popup=true&navTabId="+'${navTabId}&entityIsNew=${entityIsNew}');
 			jQuery("#budgetModelForm").submit();
 		});*/
+		tabResize();
 	});
 </script>
 </head>
 
-<div class="page">
-	<div class="pageContent">
-		<form id="budgetModelForm" method="post"	action="saveBudgetModel?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
-			<div class="pageFormContent" layoutH="56">
+<div class="page" id="bmModelFormPage" style="height:100%">
+	<div class="pageContent" style="height:100%">
+		<div class="tabs" currentIndex="0" eventType="click" id="bmModelFormTabs" tabcontainer="bmModelFormPage" extraHeight=10 extraWidth=2>
+			<div class="tabsHeader">
+				<div class="tabsHeaderContent">
+					<ul>
+						<li><a href="#"><span>主要信息</span> </a></li>
+						<li><a href="budgetDepartmentList?modelId=${budgetModel.modelId}" class="j-ajax" ><span>预算部门</span> </a></li>
+						<li><a href="modelProcessList?modelId=${budgetModel.modelId}" class="j-ajax" ><span>审核流程</span> </a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="bmDeptTabsContent" class="tabsContent"
+				style="height: 250px;padding:0px">
+				<div>
+					<form id="budgetModelForm" method="post"	action="saveBudgetModel?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
+			<div class="pageFormContent" layoutH="130">
 				<div class="unit">
 					<s:if test="%{entityIsNew}">
 						<s:textfield key="budgetModel.modelId" cssClass="required" notrepeat='预算模板ID已存在' validatorParam="from BudgetModel entity where entity.modelId=%value%"/>
@@ -99,6 +113,14 @@
 				</ul>
 			</div>
 		</form>
+				</div>
+				<div></div>
+				<div></div>
+			</div>
+			<div class="tabsFooter">
+				<div class="tabsFooterContent"></div>
+			</div>
+		</div>
 	</div>
 </div>
 

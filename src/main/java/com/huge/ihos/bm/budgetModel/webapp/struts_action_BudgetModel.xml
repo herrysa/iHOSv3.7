@@ -77,6 +77,19 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+		
+		<action name="modelProcessList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelProcess.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelProcess.jsp</result>
+		</action>
+		
+		<action name="modelProcessGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="modelProcessGridList">
+			<result type="json">
+				<param name="includeProperties">modelProcesss.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 
 	</package>
 

@@ -2016,6 +2016,9 @@ function makeUserTag(containerId,userTag,field,initValueString,title,validate,re
 		}
 		tagStr += "</select>";
 		jQuery("#"+containerId,"#"+form).append(tagStr);
+		if(userTag=='stringSelectR'){
+			jQuery("input[name='"+field+"'","#"+form).val(jQuery("select[name='"+field+"_exclude_']","#"+form).val());
+		}
 		jQuery("select[name='"+field+"_exclude_']","#"+form).change(function(){
 			jQuery("input[name='"+field+"']","#"+form).val(jQuery(this).val());
 		});
@@ -2059,6 +2062,9 @@ function makeUserTag(containerId,userTag,field,initValueString,title,validate,re
 				}
 				tagStr += "</select>";
 				jQuery("#"+containerId,"#"+form).append(tagStr);
+				if(userTag=='sqlSelectR'){
+					jQuery("input[name='"+field+"'","#"+form).val(jQuery("select[name='"+field+"_exclude_']","#"+form).val());
+				}
 				jQuery("select[name='"+field+"_exclude_']","#"+form).change(function(){
 					jQuery("input[name='"+field+"']","#"+form).val(jQuery(this).val());
 				});

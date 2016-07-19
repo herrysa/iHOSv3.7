@@ -222,8 +222,8 @@ function bmDepartmentGridReload(){
 				}
 		        return true;
 			};
-			bmDepartment_toolButtonBar.addFunctionAdd('50010201');
-			bmDepartment_toolButtonBar.addBeforeCall('50010201',function(e,$this,param){
+			bmDepartment_toolButtonBar.addFunctionAdd('1201010101');
+			bmDepartment_toolButtonBar.addBeforeCall('1201010101',function(e,$this,param){
 				var bmDepartmentTreeObj = $.fn.zTree.getZTreeObj('bmDepartmentLeftTree');
 				var selectedNodes = bmDepartmentTreeObj.getSelectedNodes();
 				if(selectedNodes){
@@ -242,7 +242,7 @@ function bmDepartmentGridReload(){
 				return bmDepartment_function.optBeforeCall(e,$this,param);
 	    	},{});
 			//删除
-			bmDepartment_toolButtonBar.addCallBody('50010202',function(e,$this,param) {
+			bmDepartment_toolButtonBar.addCallBody('1201010102',function(e,$this,param) {
 				var sid = jQuery(bmDepartmentGridIdString).jqGrid("getGridParam","selarrrow");
 				var urlString = "departmentGridEdit?id="+sid+"&navTabId=bmDepartment_gridtable&oper=del";
 				alertMsg.confirm("确认删除？",{
@@ -259,11 +259,11 @@ function bmDepartmentGridReload(){
 					}
 				});
 			});//addFunctionDel('50010202');
-			bmDepartment_toolButtonBar.addBeforeCall('50010202',function(e,$this,param){
+			bmDepartment_toolButtonBar.addBeforeCall('1201010102',function(e,$this,param){
 				return bmDepartment_function.optBeforeCall(e,$this,param);
 	    	},{});
 			
-			bmDepartment_toolButtonBar.addFunctionEdit('50010203');
+			bmDepartment_toolButtonBar.addFunctionEdit('1201010103');
 // 			department_toolButtonBar.addBeforeCall('50010203',function(e,$this,param){
 // 				return department_function.optBeforeCall(e,$this,param);
 // 	    	},{});
@@ -280,6 +280,8 @@ function bmDepartmentGridReload(){
 				url = encodeURI(url);
 				$.pdialog.open(url,"viewInterLoggerList",winTitle, {ifr:true,mask:true,resizable:true,maxable:true,width : 685,height : 450});
 			},{});
+			
+			
 			//设置表格列
 			var bmDepartment_setColShowButton = {id:'50010288',buttonLabel:'<s:text name="button.setColShow" />',className:"settlebutton",show:true,enable:true,
 	   			callBody:function(){

@@ -81,7 +81,7 @@
     jQuery("#budgetModel_gridtable_add_c").click(function(){
         var url = "editBudgetModel?navTabId=budgetModel_gridtable";
 		var winTitle='<s:text name="budgetModelNew.title"/>';
-		$.pdialog.open(url,'addBudgetModel',winTitle, {mask:true,width : 600,height : 400});
+		$.pdialog.open(url,'addBudgetModel',winTitle, {mask:true,width : 630,height : 450});
     });
     jQuery("#budgetModel_gridtable_edit_c").click(function(){
 		var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
@@ -91,7 +91,7 @@
 		}
         var url = "editBudgetModel?navTabId=budgetModel_gridtable&modelId="+sid;
 		var winTitle='<s:text name="budgetModelNew.title"/>';
-		$.pdialog.open(url,'editBudgetModel',winTitle, {mask:true,width : 600,height : 400});
+		$.pdialog.open(url,'editBudgetModel',winTitle, {mask:true,width : 630,height : 450});
     });
     jQuery("#budgetModel_gridtable_editReport").click(function(){
     	var fullHeight = jQuery("#container").innerHeight();

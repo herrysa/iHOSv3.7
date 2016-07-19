@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div id="bmDeptTabsContent" class="tabsContent"
-			style="height: 250px;padding:0px">
+			style="height: 750px;padding:0px">
 			<div></div>
 			<div></div>
 		</div>

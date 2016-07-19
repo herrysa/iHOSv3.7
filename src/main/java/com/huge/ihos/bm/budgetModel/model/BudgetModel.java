@@ -5,10 +5,13 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -43,6 +46,9 @@ public class BudgetModel extends BaseObject {
 	private String reportXml ;
 	
 	private Set<Department> departments;
+	
+	private Set<BmModelProcess> bmModelProcesses;
+
 	@Id
 	@Column(name="modelId",length=20)
 	public String getModelId() {
@@ -161,7 +167,7 @@ public class BudgetModel extends BaseObject {
 		this.reportXml = reportXml;
 	}
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable( name = "bm_model_dept", joinColumns = { @JoinColumn( name = "modelId" ) }, inverseJoinColumns = @JoinColumn( name = "deptId" ) )
 	public Set<Department> getDepartments() {
 		return departments;
@@ -170,8 +176,15 @@ public class BudgetModel extends BaseObject {
 	public void setDepartments(Set<Department> departments) {
 		this.departments = departments;
 	}
-	
-	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="modelId")
+	public Set<BmModelProcess> getBmModelProcesses() {
+		return bmModelProcesses;
+	}
+
+	public void setBmModelProcesses(Set<BmModelProcess> bmModelProcesses) {
+		this.bmModelProcesses = bmModelProcesses;
+	}
 	
 	@Transient
 	public String getDepartment() {

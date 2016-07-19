@@ -501,6 +501,12 @@
             </result>
         </action>
         
+        <action name="getSelectStrBySql" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryAction" method="getSelectStrBySql">
+        	<result name="success" type="json">
+                <param name="includeProperties">records,total,rsStr</param>
+            </result>
+        </action>
+        
 	</package>
 
 </struts>

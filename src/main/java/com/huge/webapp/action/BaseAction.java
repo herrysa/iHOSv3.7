@@ -735,6 +735,13 @@ public class BaseAction
     	menuButtons = menuButtonManager.getMenuButtonsInRight(menuId, ""+user.getId());
     	return menuButtons;
     }
+    
+    public List<MenuButton> getMenuButtons(String menuId){
+    	User user = this.getSessionUser();
+    	menuButtons = menuButtonManager.getMenuButtonsInRight(menuId, ""+user.getId());
+    	return menuButtons;
+    }
+    
     /**
      * 根据期间禁用按钮
      * @return
