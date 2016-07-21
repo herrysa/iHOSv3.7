@@ -129,6 +129,8 @@ public class GlobalParamAction extends JqGridBaseAction {
 					globalParam.setSubSystemId("人力资源管理系统");
 				} else if ("GZ".equalsIgnoreCase(subSystem)) {
 					globalParam.setSubSystemId("薪资管理系统");
+				}else if ("BM".equalsIgnoreCase(subSystem)) {
+					globalParam.setSubSystemId("全面预算管理系统");
 				}
 			}
 			this.setEntityIsNew(true);

@@ -43,7 +43,7 @@ public class ContextUtil extends HttpServlet{
 	
 	private static DogService dogService = null;
     private static String[] subsystemIds ;
-    private static int dogType = 1; //1虚拟狗；2实体狗
+    private static int dogType = 2; //1虚拟狗；2实体狗
     
     private static Map<String,Map<String,Boolean>> dogMenusMap ;
     private static Map<String, Set<Map<String,Object>>> sysRootMenuMap;

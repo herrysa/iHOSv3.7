@@ -124,6 +124,13 @@
 			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelProcessForm.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelProcessForm.jsp</result>
 		</action>
+		<action name="findBmModelProcess" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="findBmModelProcess">
+			<result type="json">
+				<param name="includeProperties">bmModelProcess,message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 
 	</package>
 

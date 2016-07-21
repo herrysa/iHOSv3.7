@@ -102,7 +102,7 @@
 		<mapping class="com.huge.ihos.system.reportManager.search.model.Report"/>
 		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchEntity"/>
 		<mapping class="com.huge.ihos.system.reportManager.search.model.SearchEntityCluster"/> -->
-		
+		<mapping class="com.huge.ihos.bm.budgetModel.model.BmModelProcessLog"/>
     </session-factory>
 
 </hibernate-configuration>

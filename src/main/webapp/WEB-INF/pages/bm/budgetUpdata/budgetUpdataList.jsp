@@ -19,14 +19,28 @@
 			mtype : "GET",
         	colModel:[
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetUpdata.updataId" />',hidden:true,key:true},
+			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetUpdata.modelCode" />',hidden:false,width:100},
+			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetUpdata.periodYear" />',hidden:false,width:70},
+			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false,width:250},
+			{name:'modelXfId.modelId.modelTypeTxt',index:'modelXfId.modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetUpdata.budgetType" />',hidden:false,width:70},
+			{name:'modelXfId.modelId.periodType',index:'modelXfId.modelId.periodType',align:'left',label : '<s:text name="budgetUpdata.periodType" />',hidden:false,width:70},
 			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetUpdata.state" />',hidden:false,formatter : 'select',editoptions : {value : '0:上报中;1:已确认;2:科室已审核;3:已上报'}},
-			{name:'operator.name',index:'operator.name',align:'left',label : '<s:text name="budgetUpdata.operator" />',hidden:false},
-			{name:'optDate',index:'optDate',align:'center',label : '<s:text name="budgetUpdata.optDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
-			{name:'checker.name',index:'checker.name',align:'left',label : '<s:text name="budgetUpdata.checker" />',hidden:false},
-			{name:'checkDate',index:'checkDate',align:'center',label : '<s:text name="budgetUpdata.checkDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
-			{name:'submitter.name',index:'submitter.name',align:'left',label : '<s:text name="budgetUpdata.submitter" />',hidden:false},
-			{name:'submitDate',index:'submitDate',align:'center',label : '<s:text name="budgetUpdata.submitDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}}
+			<c:forEach items="${processColumns}" var="pc">
+			{
+				name : "${pc.code }",
+				index : "${pc.code }",
+				label : "${pc.name }",
+				width : 100,
+				sortable:false,
+				/* <c:if test="${dc.columnType=='varchar'}">
+					formatter:stringFormatter,
+				</c:if> */
+				<c:if test="${pc.dataType=='date'}">
+					align:"center",
+					formatter:'date',formatoptions:{newformat : 'Y-m-d'}
+				</c:if>
+			},
+			</c:forEach>
 			],
         	jsonReader : {
 				root : "budgetUpdatas", // (2)
@@ -53,8 +67,8 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
         	onSelectRow: function(rowid) {
        		},
 		 	gridComplete:function(){
@@ -66,7 +80,69 @@
        		} 
 
     	});
+		jQuery("#${random}budgetUpdata_gridtable_ok").click(function(){
+			var state = "${businessProcessStep.state }";
+			var sid = jQuery("#${random}budgetUpdata_gridtable").jqGrid('getGridParam','selarrrow');
+	    	if(sid.length==0){
+	    		alertMsg.error("请选择要审核的预算记录！");
+	    		return ;
+	    	}
+	    	$.get("changeUpdataState", {
+				"_" : $.now(),updataId:sid,state:state,navTabId:'${random}budgetUpdata_gridtable'
+			}, function(data) {
+				formCallBack(data);
+			});
+		});
+		
   	});
+	function bmProcessFuction(opt){
+		var stepCode = "${businessProcessStep.stepCode }";
+		var sid = jQuery("#${random}budgetUpdata_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择要审核的预算记录！");
+    		return ;
+    	}
+    	var modelCode = null;
+    	for(var i in sid){
+    		var id = sid[i];
+    		var rowData = jQuery("#${random}budgetUpdata_gridtable").jqGrid('getRowData',id);
+    		var newModelCode = rowData['modelXfId.modelId.modelCode'];
+    		if(!modelCode){
+    			modelCode = newModelCode;
+    		}else{
+    			if(modelCode!= newModelCode){
+    				alertMsg.error("一次只能审核一种预算模板的记录！");
+    				return ;
+    			}
+    		}
+    	}
+    	$.get("findBmModelProcess", {
+			"_" : $.now(),modelCode:modelCode,stepCode:stepCode
+		}, function(data) {
+			//formCallBack(data);
+			if(data.bmModelProcess!=null){
+				var stepInfo = data.bmModelProcess.stepInfo;
+				if(stepInfo=='true'){
+					var url = "#DIA_inline?inlineId=${random}stepInfoDiv";
+					$.pdialog.open(url, 'importSearch', "审核原因", {
+						mask : false,
+						width : 400,
+						height : 200
+					});
+				}else{
+					dealBmProcessFunction(modelCode,stepCode,opt);
+				}
+			}
+		});
+	}
+	
+	function dealBmProcessFunction(modelCode,stepCode,opt){
+		$.get("findBmModelProcess", {
+			"_" : $.now(),modelCode:modelCode,stepCode:stepCode
+		}, function(data) {
+			formCallBack(data);
+		});
+	}
 </script>
 
 <div class="page">
@@ -126,6 +202,14 @@
 				<li><a id="${random}budgetUpdata_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
+				<s:if test="upType==1">
+					<li><a id="${random}budgetUpdata_gridtable_ok" class="delbutton"  href="javaScript:bmProcessFuction('ok')"><span>${businessProcessStep.okName }</span>
+					</a>
+					</li>
+					<li><a id="${random}budgetUpdata_gridtable_no" class="delbutton"  href="javaScript:bmProcessFuction('no')"><span>${businessProcessStep.noName }</span>
+					</a>
+					</li>
+				</s:if>
 				<%-- <li><a id="${random}budgetUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
 					</span>
@@ -161,5 +245,28 @@
 			targetType="navTab" totalCount="200" numPerPage="20"
 			pageNumShown="10" currentPage="1">
 		</div>
+	</div>
+	<div id="${random}stepInfoDiv" style="display: none">
+		<form>
+			<div class="pageContent">
+				<s:textarea></s:textarea>
+			</div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive">
+							<div class="buttonContent">
+								<button type="button">提交</button>
+							</div>
+						</div>
+					</li>
+					<li><div class="button">
+							<div class="buttonContent">
+								<button type="button" class="close">取消</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</form>
 	</div>
 </div>

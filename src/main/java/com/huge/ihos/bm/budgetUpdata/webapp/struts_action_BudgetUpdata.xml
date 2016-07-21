@@ -7,7 +7,7 @@
 
 	<package name="budgetUpdata" extends="default"	namespace="/">
 
-		<action name="budgetUpdataList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction">
+		<action name="budgetUpdataList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction" method="budgetUpdateList">
 			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataList.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataList.jsp</result>
 		</action>

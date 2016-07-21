@@ -56,6 +56,8 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	private List<BudgetModel> budgetModels;
 	private BudgetModel budgetModel;
 	private String modelId;
+	private String modelCode;
+
 	private String stepCode;
 	private String bmProcessId;
 	
@@ -70,6 +72,12 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	}
 	public void setStepCode(String stepCode) {
 		this.stepCode = stepCode;
+	}
+	public String getModelCode() {
+		return modelCode;
+	}
+	public void setModelCode(String modelCode) {
+		this.modelCode = modelCode;
 	}
 
 	private BudgetIndexManager budgetIndexManager;
@@ -729,6 +737,21 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			e.printStackTrace();
 		}
 		return SUCCESS;
+	}
+	
+	public String findBmModelProcess(){
+		try {
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("EQS_budgetModel.modelCode",modelCode));
+        	filters.add(new PropertyFilter("EQS_stepCode",stepCode));
+            okStepList = bmModelProcessManager.getByFilters(filters);
+            if(okStepList!=null&&okStepList.size()>0){
+            	bmModelProcess = okStepList.get(0);
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return SUCCESS;
 	}
 }
 

@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import com.huge.ihos.bm.budgetModel.model.BmModelProcess;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
+import com.huge.ihos.bm.budgetUpdata.model.BmProcessColumn;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
 import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessStep;
@@ -43,7 +45,25 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	private String state;
 	private String upType;
 	private String stepCode;
+	private BusinessProcessStep businessProcessStep;
+	public BusinessProcessStep getBusinessProcessStep() {
+		return businessProcessStep;
+	}
+
+	public void setBusinessProcessStep(BusinessProcessStep businessProcessStep) {
+		this.businessProcessStep = businessProcessStep;
+	}
+
+	private BmModelProcess bmModelProcess;
 	
+	public BmModelProcess getBmModelProcess() {
+		return bmModelProcess;
+	}
+
+	public void setBmModelProcess(BmModelProcess bmModelProcess) {
+		this.bmModelProcess = bmModelProcess;
+	}
+
 	public String getStepCode() {
 		return stepCode;
 	}
@@ -119,6 +139,48 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	public void prepare() throws Exception {
 		this.clearSessionMessages();
 	}
+	List<BmProcessColumn> processColumns;
+	public List<BmProcessColumn> getProcessColumns() {
+		return processColumns;
+	}
+
+	public void setProcessColumns(List<BmProcessColumn> processColumns) {
+		this.processColumns = processColumns;
+	}
+
+	public String budgetUpdateList(){
+		try {
+			if(stepCode!=null&&!"".equals(stepCode)){
+				businessProcessStep = businessProcessStepManager.get(stepCode);
+			}
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("OAS_state",""));
+        	filters.add(new PropertyFilter("LTI_state",""+businessProcessStep.getState()));
+        	List<BusinessProcessStep> beforeStepList = businessProcessStepManager.getByFilters(filters);
+        	processColumns = new ArrayList<BmProcessColumn>();
+        	for(BusinessProcessStep bps : beforeStepList){
+        		BmProcessColumn bpc_pserson = new BmProcessColumn();
+        		bpc_pserson.setCode("person_"+bps.getStepCode());
+        		bpc_pserson.setName(bps.getStepName());
+        		bpc_pserson.setDataType("string");
+        		processColumns.add(bpc_pserson);
+        		BmProcessColumn bpc_time = new BmProcessColumn();
+        		bpc_time.setCode("date_"+bps.getStepCode());
+        		bpc_time.setName(bps.getStepName()+"时间");
+        		bpc_time.setDataType("date");
+        		processColumns.add(bpc_time);
+        		BmProcessColumn bpc_info = new BmProcessColumn();
+        		bpc_info.setCode("info_"+bps.getStepCode());
+        		bpc_info.setName("审核信息");
+        		bpc_info.setDataType("string");
+        		processColumns.add(bpc_info);
+        	}
+		} catch (Exception e) {
+			log.error("List Error", e);
+		}
+		return SUCCESS;
+	}
+	
 	public String budgetUpdataGridList() {
 		log.debug("enter list method!");
 		try {
