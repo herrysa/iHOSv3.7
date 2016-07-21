@@ -56,7 +56,22 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	private List<BudgetModel> budgetModels;
 	private BudgetModel budgetModel;
 	private String modelId;
+	private String stepCode;
+	private String bmProcessId;
 	
+	public String getBmProcessId() {
+		return bmProcessId;
+	}
+	public void setBmProcessId(String bmProcessId) {
+		this.bmProcessId = bmProcessId;
+	}
+	public String getStepCode() {
+		return stepCode;
+	}
+	public void setStepCode(String stepCode) {
+		this.stepCode = stepCode;
+	}
+
 	private BudgetIndexManager budgetIndexManager;
 	private VariableManager variableManager;
 	private DepartmentManager departmentManager;
@@ -163,6 +178,45 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				budgetModel.setModifier(UserContextUtil.getContextUser().getPersonName());
 				budgetModel.setModifydate(Calendar.getInstance().getTime());
 			}
+			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
+			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode","bmCheck"));
+			processStepFilters.add(new PropertyFilter("OAS_state",""));
+			List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
+			if(bmCheckStep.size()!=0){
+				Map<String, BmModelProcess> bmModelProcessMap = new HashMap<String, BmModelProcess>();
+				for(BusinessProcessStep step : bmCheckStep){
+					BmModelProcess bmModelProcess = new BmModelProcess();
+					bmModelProcess.setStepCode(step.getStepCode());
+					bmModelProcess.setStepName(step.getStepName());
+					bmModelProcess.setState(step.getState());
+					bmModelProcess.setStepInfo(step.getStepInfo());
+					bmModelProcess.setOkName(step.getOkName());
+					bmModelProcess.setNoName(step.getNoName());
+					bmModelProcess.setUnionCheck(step.getUnionCheck());
+					bmModelProcess.setBudgetModel(budgetModel);
+					bmModelProcess.setCondition(step.getCondition());
+					bmModelProcess.setIsEnd(step.getIsEnd());
+					bmModelProcess.setRoleId(bmModelProcess.getRoleId());
+					bmModelProcess.setRoleName(step.getRoleName());
+					bmModelProcess = bmModelProcessManager.save(bmModelProcess);
+					bmModelProcessMap.put(step.getStepCode(), bmModelProcess);
+				}
+				for(BusinessProcessStep step : bmCheckStep){
+					BmModelProcess bmModelProcess = bmModelProcessMap.get(step.getStepCode());
+					BmModelProcess bmModelProcessOk = null;
+					BmModelProcess bmModelProcessNo = null;
+					if(step.getOkStep()!=null){
+						bmModelProcessOk = bmModelProcessMap.get(step.getOkStep().getStepCode());
+					}
+					if(step.getNoStep()!=null){
+						bmModelProcessNo = bmModelProcessMap.get(step.getNoStep().getStepCode());
+					}
+					bmModelProcess.setOkStep(bmModelProcessOk);
+					bmModelProcess.setNoStep(bmModelProcessNo);
+					bmModelProcessManager.save(bmModelProcess);
+				}
+			}
+			
 			budgetModelManager.save(budgetModel);
 		} catch (Exception dre) {
 			gridOperationMessage = dre.getMessage();
@@ -538,6 +592,139 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				return ajaxForward(true, "初始化成功！", false);
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
+	public String selectedBpsToModel(){
+		try {
+			budgetModel = budgetModelManager.get(modelId);
+			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
+			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode","bmCheck"));
+			processStepFilters.add(new PropertyFilter("INS_stepCode",stepCode));
+			processStepFilters.add(new PropertyFilter("OAS_state",""));
+			List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
+			Map<String, BmModelProcess> bmModelProcessMap = new HashMap<String, BmModelProcess>();
+			for(BusinessProcessStep step : bmCheckStep){
+				BmModelProcess bmModelProcess = new BmModelProcess();
+				bmModelProcess.setStepCode(step.getStepCode());
+				bmModelProcess.setStepName(step.getStepName());
+				bmModelProcess.setState(step.getState());
+				bmModelProcess.setStepInfo(step.getStepInfo());
+				bmModelProcess.setOkName(step.getOkName());
+				bmModelProcess.setNoName(step.getNoName());
+				bmModelProcess.setUnionCheck(step.getUnionCheck());
+				bmModelProcess.setBudgetModel(budgetModel);
+				bmModelProcess.setCondition(step.getCondition());
+				bmModelProcess.setIsEnd(step.getIsEnd());
+				bmModelProcess.setRoleId(bmModelProcess.getRoleId());
+				bmModelProcess.setRoleName(step.getRoleName());
+				bmModelProcess = bmModelProcessManager.save(bmModelProcess);
+				bmModelProcessMap.put(step.getStepCode(), bmModelProcess);
+			}
+			for(BusinessProcessStep step : bmCheckStep){
+				BmModelProcess bmModelProcess = bmModelProcessMap.get(step.getStepCode());
+				BmModelProcess bmModelProcessOk = null;
+				BmModelProcess bmModelProcessNo = null;
+				if(step.getOkStep()!=null){
+					bmModelProcessOk = bmModelProcessMap.get(step.getOkStep().getStepCode());
+					if(bmModelProcessOk==null){
+						List<PropertyFilter> okStepFilters = new ArrayList<PropertyFilter>();
+						okStepFilters.add(new PropertyFilter("EQS_budgetModel.modelId",modelId));
+						okStepFilters.add(new PropertyFilter("EQS_stepCode",step.getOkStep().getStepCode()));
+						List<BmModelProcess> okModelProcesses = bmModelProcessManager.getByFilters(okStepFilters);
+						if(okModelProcesses.size()>0){
+							bmModelProcessOk = okModelProcesses.get(0);
+						}
+					}
+				}
+				if(step.getNoStep()!=null){
+					bmModelProcessNo = bmModelProcessMap.get(step.getNoStep().getStepCode());
+					if(bmModelProcessNo==null){
+						List<PropertyFilter> noStepFilters = new ArrayList<PropertyFilter>();
+						noStepFilters.add(new PropertyFilter("EQS_budgetModel.modelId",modelId));
+						noStepFilters.add(new PropertyFilter("EQS_stepCode",step.getOkStep().getStepCode()));
+						List<BmModelProcess> noModelProcesses = bmModelProcessManager.getByFilters(noStepFilters);
+						if(noModelProcesses.size()>0){
+							bmModelProcessNo = noModelProcesses.get(0);
+						}
+					}
+				}
+				bmModelProcess.setOkStep(bmModelProcessOk);
+				bmModelProcess.setNoStep(bmModelProcessNo);
+				bmModelProcessManager.save(bmModelProcess);
+			}
+			return ajaxForward(true,"添加预算审批流程步骤成功！",true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"添加预算审批流程步骤失败！",false);
+		}
+	}
+	public String delBmModelProcess(){
+		try {
+			List<PropertyFilter> stepFilters = new ArrayList<PropertyFilter>();
+			stepFilters.add(new PropertyFilter("INS_bmProcessId",bmProcessId));
+			List<BmModelProcess> modelProcesses = bmModelProcessManager.getByFilters(stepFilters);
+			for(BmModelProcess bmp : modelProcesses){
+				BmModelProcess bmModelProcessOk = bmp.getOkStep();
+				BmModelProcess bmModelProcessNo = bmp.getNoStep();
+				if(bmModelProcessOk!=null){
+					return ajaxForward(false,bmp.getStepName()+"同意后步骤不为空，不能删除！",false);
+				}
+				if(bmModelProcessNo!=null){
+					return ajaxForward(false,bmp.getStepName()+"否决后步骤不为空，不能删除！",false);
+				}
+				bmModelProcessManager.remove(bmp.getBmProcessId());
+			}
+			return ajaxForward(true,"删除预算审批流程步骤成功！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"删除预算审批流程步骤失败！",false);
+		}
+	}
+	
+	BmModelProcess bmModelProcess;
+	
+	public BmModelProcess getBmModelProcess() {
+		return bmModelProcess;
+	}
+	public void setBmModelProcess(BmModelProcess bmModelProcess) {
+		this.bmModelProcess = bmModelProcess;
+	}
+	List<BmModelProcess> okStepList;
+	List<BmModelProcess> noStepList;
+	public List<BmModelProcess> getOkStepList() {
+		return okStepList;
+	}
+
+	public void setOkStepList(List<BmModelProcess> okStepList) {
+		this.okStepList = okStepList;
+	}
+
+	public List<BmModelProcess> getNoStepList() {
+		return noStepList;
+	}
+
+	public void setNoStepList(List<BmModelProcess> noStepList) {
+		this.noStepList = noStepList;
+	}
+	public String editBmModelProcess(){
+		try {
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			BmModelProcess endModelProcessStep = new BmModelProcess();
+			endModelProcessStep.setStepCode("end");
+			endModelProcessStep.setStepName("结束");
+			bmModelProcess = bmModelProcessManager.get(bmProcessId);
+			filters.add(new PropertyFilter("OAS_state",""));
+        	filters.add(new PropertyFilter("GTI_state",""+bmModelProcess.getState()));
+            okStepList = bmModelProcessManager.getByFilters(filters);
+            okStepList.add(endModelProcessStep);
+        	filters.clear();
+            filters.add(new PropertyFilter("LTI_state",""+bmModelProcess.getState()));
+            filters.add(new PropertyFilter("OAS_state",""));
+            noStepList = bmModelProcessManager.getByFilters(filters);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

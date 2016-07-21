@@ -18,6 +18,9 @@ import org.dom4j.Element;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
+import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessStep;
+import com.huge.ihos.system.configuration.businessprocess.service.BusinessProcessStepManager;
+import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.util.UUIDGenerator;
 import com.huge.util.XMLUtil;
@@ -39,6 +42,23 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	private String xfId;
 	private String state;
 	private String upType;
+	private String stepCode;
+	
+	public String getStepCode() {
+		return stepCode;
+	}
+
+	public void setStepCode(String stepCode) {
+		this.stepCode = stepCode;
+	}
+
+	private BusinessProcessStepManager businessProcessStepManager;
+	
+	public void setBusinessProcessStepManager(
+			BusinessProcessStepManager businessProcessStepManager) {
+		this.businessProcessStepManager = businessProcessStepManager;
+	}
+
 	public String getUpType() {
 		return upType;
 	}
@@ -111,6 +131,14 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 					filters.add(new PropertyFilter("INS_department.departmentId",depts));
 				}
 				filters.add(new PropertyFilter("NEI_state","4"));
+			}else if("1".equals(upType)){
+				bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+				List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
+				processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+				processStepFilters.add(new PropertyFilter("EQS_stepCode",stepCode));
+				List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
+				BusinessProcessStep businessProcessStep = bmCheckStep.get(0);
+				filters.add(new PropertyFilter("EQI_state",""+businessProcessStep.getState()));
 			}else{
 				filters.add(new PropertyFilter("EQS_modelXfId.xfId",xfId));
 				filters.add(new PropertyFilter("EQI_state",state));
@@ -118,6 +146,11 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			JQueryPager pagedRequests = null;
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
 					PagerFactory.JQUERYTYPE, getRequest());
+			String sortCriterion = pagedRequests.getSortCriterion();
+			if(sortCriterion!=null){
+				sortCriterion = sortCriterion.replace("modelXfId..modelId.modelName", "modelXfId.modelId.modelId");
+				pagedRequests.setSortCriterion(sortCriterion);
+			}
 			pagedRequests = budgetUpdataManager
 					.getBudgetUpdataCriteria(pagedRequests,filters);
 			this.budgetUpdatas = (List<BudgetUpdata>) pagedRequests.getList();
@@ -313,6 +346,38 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			}else{
 				return ajaxForward(false,"确认失败！",false);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"确认失败！",false);
+		}
+		return ajaxForward(true,"确认成功！",false);
+	}
+	
+	String bmCheckProcessCode;
+	public String getBmCheckProcessCode() {
+		return bmCheckProcessCode;
+	}
+
+	public void setBmCheckProcessCode(String bmCheckProcessCode) {
+		this.bmCheckProcessCode = bmCheckProcessCode;
+	}
+
+	List<BusinessProcessStep> bmCheckSteps;
+	public List<BusinessProcessStep> getBmCheckSteps() {
+		return bmCheckSteps;
+	}
+
+	public void setBmCheckSteps(List<BusinessProcessStep> bmCheckSteps) {
+		this.bmCheckSteps = bmCheckSteps;
+	}
+
+	public String bmUpdataCheck(){
+		try {
+			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
+			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+			processStepFilters.add(new PropertyFilter("OAS_state",""));
+			bmCheckSteps = businessProcessStepManager.getByFilters(processStepFilters);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ajaxForward(false,"确认失败！",false);

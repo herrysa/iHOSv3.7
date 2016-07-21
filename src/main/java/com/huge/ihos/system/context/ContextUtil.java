@@ -458,7 +458,7 @@ public class ContextUtil extends HttpServlet{
 			Map<String,String> subsSystemParam = dsGlobalParamMap.get(subSystemCodeStr);
 			if(subsSystemParam==null){
 				subsSystemParam = new HashMap<String, String>();
-				//dsGlobalParamMap.put(subSystemCodeStr, subsSystemParam);
+				dsGlobalParamMap.put(subSystemCodeStr, subsSystemParam);
 			}
 			subsSystemParam.put(paramKey, paramValue);
 		}

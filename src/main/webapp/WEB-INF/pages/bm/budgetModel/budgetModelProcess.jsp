@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
 		mtype : "GET",
     	colModel:[
 		{name:'bmProcessId',index:'bmProcessId',align:'center',label : '<s:text name="modelProcess.bmProcessId" />',hidden:true,key:true},
-		{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="modelProcess.stepCode" />',hidden:false},
+		{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="modelProcess.stepCode" />',hidden:true},
 		{name:'stepName',index:'stepName',align:'center',label : '<s:text name="modelProcess.stepName" />',hidden:false},
 		{name:'roleId',index:'roleId',align:'center',label : '<s:text name="modelProcess.roleId" />',hidden:true},
 		{name:'okName',index:'okName',align:'center',label : '<s:text name="modelProcess.okName" />',hidden:false},
@@ -20,7 +20,7 @@ jQuery(document).ready(function() {
 		{name:'state',index:'state',align:'center',label : '<s:text name="modelProcess.state" />',hidden:false,formatter:'integer'},
 		{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="modelProcess.stepInfo" />',hidden:false,formatter:'checkbox'},
 		{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="modelProcess.unionCheck" />',hidden:false,formatter:'checkbox'},
-		{name:'condition',index:'condition',align:'center',label : '<s:text name="modelProcess.condition" />',hidden:false},
+		{name:'condition',index:'condition',align:'center',label : '<s:text name="modelProcess.condition" />',hidden:true},
 		{name:'remark',index:'remark',align:'center',label : '<s:text name="modelProcess.remark" />',hidden:false}
 		],
     	jsonReader : {
@@ -57,7 +57,7 @@ jQuery(document).ready(function() {
 	});
 	jQuery("#modelProcess_gridtable_refresh").click(function(){
 		$.ajax({
-            url: 'refreshModelProcess?modelId=${modelId}',
+            url: 'refreshModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}',
             type: 'post',
             dataType: 'json',
             async:false,
@@ -70,9 +70,18 @@ jQuery(document).ready(function() {
         });
 	});
 	jQuery("#modelProcess_gridtable_add_c").click(function(){
-		var url = "selectBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}";
+		var ids = jQuery(modelProcessGridIdString).jqGrid('getDataIDs');
+		var stepCode ="";
+		for(var i in ids){
+			var id = ids[i];
+			var rowData = jQuery(modelProcessGridIdString).jqGrid('getRowData',id);
+			alert(json2str(rowData));
+			stepCode += rowData['stepCode']+",";
+		}
+		var url = "selectBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}&stepCode="+stepCode;
 		var winTitle='选择预算审批流程';
 		$.pdialog.open(url,'addBmModelProcess',winTitle, {mask:true,width : 500,height : 450});
+		stopPropagation();
 	});
 	jQuery("#modelProcess_gridtable_del_c").click(function(){
 		var sid = jQuery("#modelProcess_gridtable").jqGrid('getGridParam','selarrrow');
@@ -80,7 +89,7 @@ jQuery(document).ready(function() {
 			alertMsg.error("请选择一条记录！");
 			return;
 		}
-		var url = "delBmModelProcess?navTabId=modelProcess_gridtable&bmProcessId"+sid;
+		var url = "delBmModelProcess?navTabId=modelProcess_gridtable&bmProcessId="+sid;
 		$.ajax({
             url: url,
             type: 'post',
@@ -94,6 +103,17 @@ jQuery(document).ready(function() {
             }
         });
 	});
+	jQuery("#modelProcess_gridtable_edit_c").click(function(){
+		var sid = jQuery("#modelProcess_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid.length==0){
+			alertMsg.error("请选择一条记录！");
+			return;
+		}
+		var url = "editBmModelProcess?navTabId=modelProcess_gridtable&bmProcessId="+sid;
+		var winTitle='修改预算审批流程';
+		$.pdialog.open(url,'editBmModelProcess',winTitle, {mask:true,width : 500,height : 450});
+		stopPropagation();
+	});
 });
 </script>
 
@@ -105,6 +125,9 @@ jQuery(document).ready(function() {
 				</a>
 				</li>
 				<li><a id="modelProcess_gridtable_add_c" class="addbutton" href="javaScript:" ><span>添加</span>
+				</a>
+				</li>
+				<li><a id="modelProcess_gridtable_edit_c" class="changebutton"  href="javaScript:"><span>修改</span>
 				</a>
 				</li>
 				<li><a id="modelProcess_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>

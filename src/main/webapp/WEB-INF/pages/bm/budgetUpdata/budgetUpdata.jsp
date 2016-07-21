@@ -78,6 +78,14 @@
         	sortorder: 'asc',
         	//caption:'<s:text name="bmUpdataList.title" />',
         	height:300,
+        	grouping:true,
+    	   	groupingView : {
+    	   		groupField : ['modelXfId.modelId.modelName'],
+    	   		//groupSummary : [true],
+    			groupColumnShow : [true],
+    			groupText : ['<b>{0}</b> (记录数:{1}) '],
+    			groupDataSorted :[false]
+    	   	},
         	gridview:true,
         	rownumbers:true,
         	loadui: "disable",
@@ -109,7 +117,7 @@
     	}
 		$.pdialog.open('openBmReport?updataId='+sid,'bmReport',"预算上报", {mask:true,width : fullWidth,height : fullHeight});
     });
-    jQuery("#bmUpdata_gridtable_confirm").click(function(){
+    jQuery("#bmUpdata_gridtable_comfirm").click(function(){
     	var sid = jQuery("#bmUpdata_gridtable").jqGrid('getGridParam','selarrrow');
     	if(sid.length==0){
     		alertMsg.error("请选择记录！");
@@ -120,6 +128,24 @@
 		}, function(data) {
 			formCallBack(data);
 		});
+    });
+    
+    jQuery("#bmUpdata_gridtable_groupByDept").click(function(){
+    	var txt = jQuery(this).find("span").eq(0).text();
+    	if(txt.indexOf("部门")!=-1){
+    		jQuery('#bmUpdata_gridtable').jqGrid('setGridParam', {
+    			groupingView : {
+        	   		groupField : ['department.name']}
+    		}).trigger("reloadGrid");
+        	jQuery(this).find("span").eq(0).text("按预算模板填报");
+    	}else{
+    		jQuery('#bmUpdata_gridtable').jqGrid('setGridParam', {
+    			groupingView : {
+        	   		groupField : ['modelXfId.modelId.modelName']}
+    		}).trigger("reloadGrid");
+        	jQuery(this).find("span").eq(0).text("按预算部门填报");
+    	}
+    	
     });
   	});
 </script>
@@ -178,6 +204,9 @@
 				</a>
 				</li>
 				<li><a id="bmUpdata_gridtable_comfirm" class="delbutton"  href="javaScript:"><span>确认</span>
+				</a>
+				</li>
+				<li><a id="bmUpdata_gridtable_groupByDept" class="delbutton"  href="javaScript:"><span>按预算部门填报</span>
 				</a>
 				</li>
 				<%-- <li><a id="bmUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
