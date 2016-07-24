@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
 	var modelProcessGridIdString = "#modelProcess_gridtable";
 	var modelProcessGrid = jQuery(modelProcessGridIdString);
 	modelProcessGrid.jqGrid({
-		url : "modelProcessGridList?modelId=${modelId}",
+		url : "modelProcessGridList?filter_EQS_budgetModel.modelId=${modelId}",
 		editurl:"modelProcessGridEdit",
 		datatype : "json",
 		mtype : "GET",
@@ -103,6 +103,21 @@ jQuery(document).ready(function() {
             }
         });
 	});
+	jQuery("#modelProcess_gridtable_delAll_c").click(function(){
+		var url = "delAllBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}";
+		$.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            async:false,
+            error: function(data){
+            alertMsg.error("系统错误！");
+            },
+            success: function(data){
+            	formCallBack(data);
+            }
+        });
+	});
 	jQuery("#modelProcess_gridtable_edit_c").click(function(){
 		var sid = jQuery("#modelProcess_gridtable").jqGrid('getGridParam','selarrrow');
 		if(sid.length==0){
@@ -131,6 +146,9 @@ jQuery(document).ready(function() {
 				</a>
 				</li>
 				<li><a id="modelProcess_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
+				</a>
+				</li>
+				<li><a id="modelProcess_gridtable_delAll_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
 			</ul>

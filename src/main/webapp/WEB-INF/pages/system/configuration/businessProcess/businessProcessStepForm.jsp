@@ -66,7 +66,7 @@
 				jQuery("#businessProcessStep_role").treeselect({
 					optType : "single",
 					dataType : 'sql',
-					sql : "select id,name,'' parent from role",
+					sql : "select name id,chName name,'' parent from role",
 					exceptnullparent : true,
 					lazy : false,
 					minWidth : '180px',

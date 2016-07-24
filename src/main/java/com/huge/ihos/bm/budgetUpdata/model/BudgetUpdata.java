@@ -1,6 +1,7 @@
 package com.huge.ihos.bm.budgetUpdata.model;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -37,6 +39,17 @@ public class BudgetUpdata extends BaseObject {
 	private Integer state ;		//0:上报中;9:已过期
 	private String periodYear;
 	
+	private Map checkMap;
+	
+	@Transient
+	public Map getCheckMap() {
+		return checkMap;
+	}
+
+	public void setCheckMap(Map checkMap) {
+		this.checkMap = checkMap;
+	}
+
 	@Id
 	@Column(name = "updataId", length = 32, nullable = false)
 	@GenericGenerator(name = "uuid", strategy = "uuid")

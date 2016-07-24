@@ -13,7 +13,15 @@
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-{name:'code',index:'code',align:'center',label : '<s:text name="reportFunction.code" />',hidden:false,key:true},{name:'category',index:'category',align:'center',label : '<s:text name="reportFunction.category" />',hidden:false},{name:'dataType',index:'dataType',align:'center',label : '<s:text name="reportFunction.dataType" />',hidden:false},{name:'funcSql',index:'funcSql',align:'center',label : '<s:text name="reportFunction.funcSql" />',hidden:false},{name:'name',index:'name',align:'center',label : '<s:text name="reportFunction.name" />',hidden:false},{name:'params',index:'params',align:'center',label : '<s:text name="reportFunction.params" />',hidden:false},{name:'remark',index:'remark',align:'center',label : '<s:text name="reportFunction.remark" />',hidden:false},{name:'rsType',index:'rsType',align:'center',label : '<s:text name="reportFunction.rsType" />',hidden:false}        	],
+			{name:'code',index:'code',align:'left',label : '<s:text name="reportFunction.code" />',hidden:false,key:true,width:100},
+			{name:'name',index:'name',align:'left',label : '<s:text name="reportFunction.name" />',hidden:false,width:150},
+			{name:'category',index:'category',align:'left',label : '<s:text name="reportFunction.category" />',hidden:false,width:100},
+			{name:'dataType',index:'dataType',align:'left',label : '<s:text name="reportFunction.dataType" />',hidden:false,width:100},
+			{name:'params',index:'params',align:'left',label : '<s:text name="reportFunction.params" />',hidden:false,width:200},
+			{name:'funcSql',index:'funcSql',align:'left',label : '<s:text name="reportFunction.funcSql" />',hidden:false,width:250},
+			{name:'remark',index:'remark',align:'left',label : '<s:text name="reportFunction.remark" />',hidden:false,width:200},
+			{name:'rsType',index:'rsType',align:'left',label : '<s:text name="reportFunction.rsType" />',hidden:false}
+			],
         	jsonReader : {
 				root : "reportFunctions", // (2)
 				page : "page",
@@ -32,17 +40,17 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
         	onSelectRow: function(rowid) {
        		},
 		 	gridComplete:function(){
            	//if(jQuery(this).getDataIDs().length>0){
            	//  jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
            	// }
+           	gridContainerResize('reportFunction','div');
            	var dataTest = {"id":"reportFunction_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
-      	   	makepager("reportFunction_gridtable");
        		} 
 
     	});
@@ -60,54 +68,28 @@
 						<input type="text" name="filter_EQS_code"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='reportFunction.category'/>:
-						<input type="text" name="filter_EQS_category"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='reportFunction.dataType'/>:
-						<input type="text" name="filter_EQS_dataType"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='reportFunction.funcSql'/>:
-						<input type="text" name="filter_EQS_funcSql"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
 						<s:text name='reportFunction.name'/>:
 						<input type="text" name="filter_EQS_name"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='reportFunction.params'/>:
-						<input type="text" name="filter_EQS_params"/>
+						<s:text name='reportFunction.category'/>:
+						<input type="text" name="filter_EQS_category"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='reportFunction.remark'/>:
 						<input type="text" name="filter_EQS_remark"/>
 					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='reportFunction.rsType'/>:
-						<input type="text" name="filter_EQS_rsType"/>
-					</label>
-				</form>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(reportFunction_search_form,reportFunction_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('reportFunction_search_form','reportFunction_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
-				</div>
-				<div class="subBar">
-					<ul>
-						<li><div class="buttonActive">
-								<div class="buttonContent">
-									<button type="button" onclick="propertyFilterSearch(reportFunction_search_form,reportFunction_gridtable)"><s:text name='button.search'/></button>
-								</div>
-							</div>
-						</li>
-					</ul>
+				</form>
 				</div>
 			</div>
 	</div>
 	<div class="pageContent">
-		<div class="panelBar">
+		<div id="reportFunction_buttonBar" class="panelBar">
 			<ul class="toolBar">
 				<li><a id="reportFunction_gridtable_add" class="addbutton" href="javaScript:" ><span><fmt:message
 								key="button.add" />
@@ -125,7 +107,7 @@
 			
 			</ul>
 		</div>
-		<div id="reportFunction_gridtable_div" layoutH="120" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div id="reportFunction_gridtable_div" class="grid-wrapdiv" buttonBar="optId:code;width:600;height:400">
 			<input type="hidden" id="reportFunction_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="reportFunction_gridtable_addTile">
 				<s:text name="reportFunctionNew.title"/>
@@ -139,7 +121,7 @@
 			<!--<div id="reportFunctionPager"></div>-->
 		</div>
 	</div>
-	<div class="panelBar">
+	<div id="reportFunction_pageBar" class="panelBar">
 		<div class="pages">
 			<span><s:text name="pager.perPage" /></span> <select id="reportFunction_gridtable_numPerPage">
 				<option value="20">20</option>

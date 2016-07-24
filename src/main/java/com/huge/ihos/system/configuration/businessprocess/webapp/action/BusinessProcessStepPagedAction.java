@@ -97,10 +97,10 @@ public class BusinessProcessStepPagedAction extends JqGridBaseAction implements 
 			if(businessProcessStep.getOkStep()!=null&&"".equals(businessProcessStep.getOkStep().getStepCode())){
 				businessProcessStep.setOkStep(null);
 			}
-			if(businessProcessStep.getOkStep()!=null&&"end".equals(businessProcessStep.getOkStep().getStepCode())){
+			/*if(businessProcessStep.getOkStep()!=null&&"end".equals(businessProcessStep.getOkStep().getStepCode())){
 				businessProcessStep.setOkStep(null);
 				businessProcessStep.setIsEnd(true);
-			}
+			}*/
 			if(businessProcessStep.getNoStep()!=null&&"".equals(businessProcessStep.getNoStep().getStepCode())){
 				businessProcessStep.setNoStep(null);
 			}
@@ -132,9 +132,9 @@ public class BusinessProcessStepPagedAction extends JqGridBaseAction implements 
     public String edit() {
     	
     	List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
-    	BusinessProcessStep endBusinessProcessStep = new BusinessProcessStep();
+    	/*BusinessProcessStep endBusinessProcessStep = new BusinessProcessStep();
         endBusinessProcessStep.setStepCode("end");
-        endBusinessProcessStep.setStepName("结束");
+        endBusinessProcessStep.setStepName("结束");*/
         if (stepCode != null) {
         	businessProcessStep = businessProcessStepManager.get(stepCode);
         	processId = businessProcessStep.getBusinessProcess().getProcessCode();
@@ -144,7 +144,7 @@ public class BusinessProcessStepPagedAction extends JqGridBaseAction implements 
         	filters.add(new PropertyFilter("OAS_state",""));
         	filters.add(new PropertyFilter("GTI_state",""+businessProcessStep.getState()));
             okStepList = businessProcessStepManager.getByFilters(filters);
-            okStepList.add(endBusinessProcessStep);
+            //okStepList.add(endBusinessProcessStep);
         	filters.clear();
             filters.add(new PropertyFilter("LTI_state",""+businessProcessStep.getState()));
             filters.add(new PropertyFilter("OAS_state",""));
@@ -155,7 +155,7 @@ public class BusinessProcessStepPagedAction extends JqGridBaseAction implements 
         	businessProcessStep.setBusinessProcess(businessProcess);
         	businessProcessStep.setStepCode(businessProcess.getProcessCode());
             okStepList = new ArrayList<BusinessProcessStep>();
-            okStepList.add(endBusinessProcessStep);
+            //okStepList.add(endBusinessProcessStep);
         	filters.clear();
             filters.add(new PropertyFilter("OAS_state",""));
             noStepList = businessProcessStepManager.getByFilters(filters);

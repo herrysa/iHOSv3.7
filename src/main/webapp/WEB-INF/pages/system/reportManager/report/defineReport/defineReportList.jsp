@@ -13,12 +13,13 @@
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-{name:'code',index:'code',align:'center',label : '<s:text name="defineReport.code" />',hidden:false,key:true},
-{name:'name',index:'name',align:'center',label : '<s:text name="defineReport.name" />',hidden:false},
-{name:'type',index:'type',align:'center',label : '<s:text name="defineReport.type" />',hidden:false}, 
-{name:'isSys',index:'isSys',align:'center',label : '<s:text name="defineReport.isSys" />',hidden:false}, 
-{name:'remark',index:'remark',align:'center',label : '<s:text name="defineReport.remark" />',hidden:false}
-],
+			{name:'code',index:'code',align:'left',label : '<s:text name="defineReport.code" />',hidden:false,key:true,width:100},
+			{name:'name',index:'name',align:'left',label : '<s:text name="defineReport.name" />',hidden:false,width:150},
+			{name:'type',index:'type',align:'left',label : '<s:text name="defineReport.type" />',hidden:false,width:100}, 
+			{name:'searchName',index:'searchName',align:'left',label : '<s:text name="defineReport.searchName" />',hidden:false,width:100}, 
+			{name:'isSys',index:'isSys',align:'center',label : '<s:text name="defineReport.isSys" />',hidden:true,width:70}, 
+			{name:'remark',index:'remark',align:'left',label : '<s:text name="defineReport.remark" />',hidden:false,width:200}
+			],
         	jsonReader : {
 				root : "defineReports", // (2)
 				page : "page",
@@ -37,21 +38,20 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
         	onSelectRow: function(rowid) {
        		},
 		 	gridComplete:function(){
            	//if(jQuery(this).getDataIDs().length>0){
            	//  jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
            	// }
+           		gridContainerResize('defineReport','div');
            	var dataTest = {"id":"defineReport_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
-      	   	makepager("defineReport_gridtable");
        		} 
 
     	});
-    jQuery(defineReportGrid).jqGrid('bindKeys');
     
     jQuery("#defineReport_gridtable_report").click(function(){
     	var fullHeight = jQuery("#container").innerHeight();
@@ -85,34 +85,24 @@
 						<input type="text" name="filter_EQS_name"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='defineReport.remark'/>:
-						<input type="text" name="filter_EQS_remark"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
 						<s:text name='defineReport.type'/>:
 						<input type="text" name="filter_EQS_type"/>
 					</label>
-				</form>
+					<label style="float:none;white-space:nowrap" >
+						<s:text name='defineReport.remark'/>:
+						<input type="text" name="filter_EQS_remark"/>
+					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(defineReport_search_form,defineReport_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('defineReport_search_form','defineReport_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
-				</div>
-				<div class="subBar">
-					<ul>
-						<li><div class="buttonActive">
-								<div class="buttonContent">
-									<button type="button" onclick="propertyFilterSearch(defineReport_search_form,defineReport_gridtable)"><s:text name='button.search'/></button>
-								</div>
-							</div>
-						</li>
-					</ul>
+				</form>
 				</div>
 			</div>
 	</div>
 	<div class="pageContent">
-		<div class="panelBar">
+		<div id="defineReport_buttonBar" class="panelBar">
 			<ul class="toolBar">
 				<li><a id="defineReport_gridtable_add" class="addbutton" href="javaScript:" ><span><fmt:message
 								key="button.add" />
@@ -127,14 +117,14 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="defineReport_gridtable_report" class="changebutton"  href="javaScript:"
+				<li><a id="defineReport_gridtable_report" class="reportbutton"  href="javaScript:"
 					><span>编辑报表
 					</span>
 				</a>
 				</li>
 			</ul>
 		</div>
-		<div id="defineReport_gridtable_div" layoutH="120" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div id="defineReport_gridtable_div"  class="grid-wrapdiv" buttonBar="optId:code;width:500;height:300">
 			<input type="hidden" id="defineReport_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="defineReport_gridtable_addTile">
 				<s:text name="defineReportNew.title"/>
@@ -148,7 +138,7 @@
 			<!--<div id="defineReportPager"></div>-->
 		</div>
 	</div>
-	<div class="panelBar">
+	<div id="defineReport_pageBar" class="panelBar">
 		<div class="pages">
 			<span><s:text name="pager.perPage" /></span> <select id="defineReport_gridtable_numPerPage">
 				<option value="20">20</option>

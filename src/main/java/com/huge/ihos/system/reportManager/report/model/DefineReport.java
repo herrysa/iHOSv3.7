@@ -18,6 +18,7 @@ public class DefineReport extends BaseObject{
 	private String code;
 	private String name;
 	private String type;
+	private String searchName;
 	private Boolean isSys;
 	private String report;
 	private String remark;
@@ -68,6 +69,14 @@ public class DefineReport extends BaseObject{
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	@Column
+	public String getSearchName() {
+		return searchName;
+	}
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
 	@Override
 	public int hashCode() {

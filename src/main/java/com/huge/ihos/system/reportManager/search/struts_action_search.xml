@@ -336,6 +336,14 @@
 				 <param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+		<action name="queryListForSupcan" class="com.huge.ihos.system.reportManager.search.webapp.action.QueryAction" method="queryList">
+			<result type="json">
+				<param name="includeProperties">queryList.*</param>
+		<!-- 		<param name="excludeProperties">searchOptions.*\.search</param> -->
+								<param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
          <action name="pub"  class="com.huge.ihos.system.reportManager.search.webapp.action.QueryPublicAction"  method="executePublic">
 			<result type="json" name="success">
 			<param name="includeProperties">jsonStatus,jsonMessages,jsonCode,allParam,message,statusCode,callbackType,navTabId</param>

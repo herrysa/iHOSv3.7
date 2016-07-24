@@ -18,7 +18,9 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 
 import com.huge.ihos.system.reportManager.report.model.ReportFunc;
+import com.huge.ihos.system.reportManager.report.model.ReportFunction;
 import com.huge.ihos.system.reportManager.report.service.DefineReportManager;
+import com.huge.ihos.system.reportManager.report.service.ReportFunctionManager;
 import com.huge.util.TestTimer;
 import com.huge.util.XMLUtil;
 import com.huge.webapp.action.BaseAction;
@@ -29,6 +31,12 @@ public class ReportAction extends BaseAction{
 
 	public void setDefineReportManager(DefineReportManager defineReportManager) {
 		this.defineReportManager = defineReportManager;
+	}
+	
+	private ReportFunctionManager reportFunctionManager;
+
+	public void setReportFunctionManager(ReportFunctionManager reportFunctionManager) {
+		this.reportFunctionManager = reportFunctionManager;
 	}
 	
 	String sqlResult = "";
@@ -114,7 +122,11 @@ public class ReportAction extends BaseAction{
 			}
 		}
 		Map<String, String> funcMap = new HashMap<String, String>();
-		funcMap.put("sourcepayinSum", "select sum(amount) from v_sourcepayin where checkPeriod BETWEEN ? and ? and kdDeptId=?");
+		List<ReportFunction> functions = reportFunctionManager.getAll();
+		for(ReportFunction reportFunction :functions){
+			funcMap.put(reportFunction.getCode(),reportFunction.getFuncSql());
+		}
+		//funcMap.put("sourcepayinSum", "select sum(amount) from v_sourcepayin where checkPeriod BETWEEN ? and ? and kdDeptId=?");
 		List<ReportFunc> funcList = parseFunc(result,funcMap);
 		defineReportManager.getFuncValue(funcList);
 		String returnXml = funcToXml(funcList);

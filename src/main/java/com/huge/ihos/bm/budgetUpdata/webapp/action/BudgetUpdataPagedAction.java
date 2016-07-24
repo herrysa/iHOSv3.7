@@ -3,6 +3,8 @@ package com.huge.ihos.bm.budgetUpdata.webapp.action;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,10 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 
 import com.huge.ihos.bm.budgetModel.model.BmModelProcess;
+import com.huge.ihos.bm.budgetModel.model.BmModelProcessLog;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
+import com.huge.ihos.bm.budgetModel.service.BmModelProcessLogManager;
+import com.huge.ihos.bm.budgetModel.service.BmModelProcessManager;
 import com.huge.ihos.bm.budgetUpdata.model.BmProcessColumn;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
@@ -24,6 +29,9 @@ import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessS
 import com.huge.ihos.system.configuration.businessprocess.service.BusinessProcessStepManager;
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
+import com.huge.ihos.system.systemManager.organization.model.Department;
+import com.huge.ihos.system.systemManager.organization.model.Person;
+import com.huge.ihos.system.systemManager.user.model.User;
 import com.huge.util.UUIDGenerator;
 import com.huge.util.XMLUtil;
 import com.huge.webapp.action.JqGridBaseAction;
@@ -46,6 +54,18 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	private String upType;
 	private String stepCode;
 	private BusinessProcessStep businessProcessStep;
+	private BmModelProcess bmModelProcess;
+	private BmModelProcessManager bmModelProcessManager;
+	public void setBmModelProcessManager(BmModelProcessManager bmModelProcessManager) {
+		this.bmModelProcessManager = bmModelProcessManager;
+	}
+
+	private BmModelProcessLogManager bmModelProcessLogManager;
+	public void setBmModelProcessLogManager(
+			BmModelProcessLogManager bmModelProcessLogManager) {
+		this.bmModelProcessLogManager = bmModelProcessLogManager;
+	}
+
 	public BusinessProcessStep getBusinessProcessStep() {
 		return businessProcessStep;
 	}
@@ -54,7 +74,6 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 		this.businessProcessStep = businessProcessStep;
 	}
 
-	private BmModelProcess bmModelProcess;
 	
 	public BmModelProcess getBmModelProcess() {
 		return bmModelProcess;
@@ -216,6 +235,23 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			pagedRequests = budgetUpdataManager
 					.getBudgetUpdataCriteria(pagedRequests,filters);
 			this.budgetUpdatas = (List<BudgetUpdata>) pagedRequests.getList();
+			if("1".equals(upType)){
+				for(BudgetUpdata budgetUpdataTemp :budgetUpdatas){
+					String uid = budgetUpdataTemp.getUpdataId();
+					List<PropertyFilter> logfilters = PropertyFilter.buildFromHttpRequest(getRequest());
+					logfilters.add(new PropertyFilter("EQS_updataId",uid));
+					logfilters.add(new PropertyFilter("OAD_optTime",""));
+					List<BmModelProcessLog> bmModelProcessLogs = bmModelProcessLogManager.getByFilters(logfilters);
+					Map checkMap = new HashMap<String, Object>();
+					for(BmModelProcessLog bmModelProcessLog : bmModelProcessLogs){
+						checkMap.put("person_"+bmModelProcessLog.getStepCode(), bmModelProcessLog.getPersonName());
+						checkMap.put("date_"+bmModelProcessLog.getStepCode(), bmModelProcessLog.getOptTime());
+						checkMap.put("info_"+bmModelProcessLog.getStepCode(), bmModelProcessLog.getInfo());
+					}
+					budgetUpdataTemp.setCheckMap(checkMap);
+				}
+			}
+			
 			records = pagedRequests.getTotalNumberOfRows();
 			total = pagedRequests.getTotalNumberOfPages();
 			page = pagedRequests.getPageNumber();
@@ -445,6 +481,60 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			return ajaxForward(false,"确认失败！",false);
 		}
 		return ajaxForward(true,"确认成功！",false);
+	}
+	
+	private String bmProcessId;
+	private String opt;
+	
+
+	public String getOpt() {
+		return opt;
+	}
+
+	public void setOpt(String opt) {
+		this.opt = opt;
+	}
+
+	public String getBmProcessId() {
+		return bmProcessId;
+	}
+
+	public void setBmProcessId(String bmProcessId) {
+		this.bmProcessId = bmProcessId;
+	}
+
+	public String optUpdataState(){
+		try {
+			List<PropertyFilter> updataFilters = new ArrayList<PropertyFilter>();
+			updataFilters.add(new PropertyFilter("INS_updataId",updataId));
+			bmModelProcess = bmModelProcessManager.get(bmProcessId);
+			budgetUpdatas = budgetUpdataManager.getByFilters(updataFilters);
+			User user = UserContextUtil.getContextUser();
+			Person person = user.getPerson();
+			Department dept = person.getDepartment();
+			for(BudgetUpdata budgetUpdata : budgetUpdatas){
+				budgetUpdata.setState(bmModelProcess.getState());
+				budgetUpdataManager.save(budgetUpdata);
+				BmModelProcessLog bmModelProcessLog = new BmModelProcessLog();
+				bmModelProcessLog.setInfo(this.getMessage());
+				bmModelProcessLog.setOptTime(Calendar.getInstance().getTime());
+				bmModelProcessLog.setPersonId(person.getPersonId());
+				bmModelProcessLog.setPersonName(person.getName());
+				bmModelProcessLog.setDeptId(person.getPersonId());
+				bmModelProcessLog.setDeptName(dept.getName());
+				bmModelProcessLog.setState(bmModelProcess.getState());
+				bmModelProcessLog.setStepCode(bmModelProcess.getStepCode());
+				bmModelProcessLog.setOperation(opt);
+				bmModelProcessLog.setModelId(bmModelProcess.getBudgetModel().getModelId());
+				bmModelProcessLog.setUpdataId(budgetUpdata.getUpdataId());
+				bmModelProcessLogManager.save(bmModelProcessLog);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"审核失败！",false);
+		}
+		return ajaxForward(true,"审核成功！",false);
 	}
 }
 

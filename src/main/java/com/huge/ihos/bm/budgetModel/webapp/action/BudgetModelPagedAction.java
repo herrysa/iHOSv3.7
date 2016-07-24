@@ -531,19 +531,26 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		return SUCCESS;
 	}
 	
-	public Set<BmModelProcess> modelProcesss;
+	public List<BmModelProcess> modelProcesss;
 	
-	public Set<BmModelProcess> getModelProcesss() {
+	public List<BmModelProcess> getModelProcesss() {
 		return modelProcesss;
 	}
-	public void setModelProcesss(Set<BmModelProcess> modelProcesss) {
+	public void setModelProcesss(List<BmModelProcess> modelProcesss) {
 		this.modelProcesss = modelProcesss;
 	}
 	public String modelProcessGridList() {
 		log.debug("enter list method!");
 		try {
-			budgetModel = budgetModelManager.get(modelId);
-			modelProcesss = budgetModel.getBmModelProcesses();
+			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(getRequest());
+			JQueryPager pagedRequests = null;
+			pagedRequests = (JQueryPager) pagerFactory.getPager(
+					PagerFactory.JQUERYTYPE, getRequest());
+			pagedRequests = bmModelProcessManager.getBudgetModelCriteria(pagedRequests,filters);
+			this.modelProcesss = (List<BmModelProcess>) pagedRequests.getList();
+			records = pagedRequests.getTotalNumberOfRows();
+			total = pagedRequests.getTotalNumberOfPages();
+			page = pagedRequests.getPageNumber();
 
 		} catch (Exception e) {
 			log.error("List Error", e);
@@ -554,7 +561,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public String refreshModelProcess(){
 		try {
 			budgetModel = budgetModelManager.get(modelId);
-			modelProcesss = budgetModel.getBmModelProcesses();
+			Set<BmModelProcess> modelProcesss = budgetModel.getBmModelProcesses();
 			if(modelProcesss!=null&&modelProcesss.size()>0){
 				return ajaxForward(false, "改模板已经初始化！", false);
 			}else{
@@ -684,6 +691,27 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				if(bmModelProcessNo!=null){
 					return ajaxForward(false,bmp.getStepName()+"否决后步骤不为空，不能删除！",false);
 				}
+				List<PropertyFilter> stepFilters2 = new ArrayList<PropertyFilter>();
+				stepFilters2.add(new PropertyFilter("EQS_okStep.bmProcessId",bmp.getBmProcessId()));
+				stepFilters2.add(new PropertyFilter("EQS_noStep.bmProcessId",bmp.getBmProcessId()));
+				List<BmModelProcess> modelProcesses2 = bmModelProcessManager.getByFilters(stepFilters2);
+				if(modelProcesses2!=null&&modelProcesses2.size()>0){
+					return ajaxForward(false,bmp.getStepName()+"步骤还在使用，不能删除！",false);
+				}
+				bmModelProcessManager.remove(bmp.getBmProcessId());
+			}
+			return ajaxForward(true,"删除预算审批流程步骤成功！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"删除预算审批流程步骤失败！",false);
+		}
+	}
+	public String delAllBmModelProcess(){
+		try {
+			List<PropertyFilter> stepFilters = new ArrayList<PropertyFilter>();
+			stepFilters.add(new PropertyFilter("EQS_budgetModel.modelId",modelId));
+			List<BmModelProcess> modelProcesses = bmModelProcessManager.getByFilters(stepFilters);
+			for(BmModelProcess bmp : modelProcesses){
 				bmModelProcessManager.remove(bmp.getBmProcessId());
 			}
 			return ajaxForward(true,"删除预算审批流程步骤成功！",false);
@@ -721,14 +749,14 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public String editBmModelProcess(){
 		try {
 			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
-			BmModelProcess endModelProcessStep = new BmModelProcess();
+			/*BmModelProcess endModelProcessStep = new BmModelProcess();
 			endModelProcessStep.setStepCode("end");
-			endModelProcessStep.setStepName("结束");
+			endModelProcessStep.setStepName("结束");*/
 			bmModelProcess = bmModelProcessManager.get(bmProcessId);
 			filters.add(new PropertyFilter("OAS_state",""));
         	filters.add(new PropertyFilter("GTI_state",""+bmModelProcess.getState()));
             okStepList = bmModelProcessManager.getByFilters(filters);
-            okStepList.add(endModelProcessStep);
+            //okStepList.add(endModelProcessStep);
         	filters.clear();
             filters.add(new PropertyFilter("LTI_state",""+bmModelProcess.getState()));
             filters.add(new PropertyFilter("OAS_state",""));
@@ -737,6 +765,15 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			e.printStackTrace();
 		}
 		return SUCCESS;
+	}
+	public String saveBmModelProcess(){
+		try {
+			bmModelProcessManager.save(bmModelProcess);
+			return ajaxForward("保存成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ajaxForward(false,"保存失败！",false);
 	}
 	
 	public String findBmModelProcess(){

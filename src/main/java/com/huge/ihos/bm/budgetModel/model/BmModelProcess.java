@@ -229,9 +229,7 @@ public class BmModelProcess extends BaseObject{
 				+ ((condition == null) ? 0 : condition.hashCode());
 		result = prime * result + ((isEnd == null) ? 0 : isEnd.hashCode());
 		result = prime * result + ((noName == null) ? 0 : noName.hashCode());
-		result = prime * result + ((noStep == null) ? 0 : noStep.hashCode());
 		result = prime * result + ((okName == null) ? 0 : okName.hashCode());
-		result = prime * result + ((okStep == null) ? 0 : okStep.hashCode());
 		result = prime * result + ((remark == null) ? 0 : remark.hashCode());
 		result = prime * result + ((roleId == null) ? 0 : roleId.hashCode());
 		result = prime * result
@@ -301,20 +299,10 @@ public class BmModelProcess extends BaseObject{
 				return false;
 		} else if (!noName.equals(other.noName))
 			return false;
-		if (noStep == null) {
-			if (other.noStep != null)
-				return false;
-		} else if (!noStep.equals(other.noStep))
-			return false;
 		if (okName == null) {
 			if (other.okName != null)
 				return false;
 		} else if (!okName.equals(other.okName))
-			return false;
-		if (okStep == null) {
-			if (other.okStep != null)
-				return false;
-		} else if (!okStep.equals(other.okStep))
 			return false;
 		if (remark == null) {
 			if (other.remark != null)
@@ -365,8 +353,7 @@ public class BmModelProcess extends BaseObject{
 				+ ", checkDeptName=" + checkDeptName + ", checkPersonId="
 				+ checkPersonId + ", checkPersonName=" + checkPersonName
 				+ ", stepCode=" + stepCode + ", stepName=" + stepName
-				+ ", state=" + state + ", okStep=" + okStep + ", noStep="
-				+ noStep + ", okName=" + okName + ", noName=" + noName
+				+ ", state=" + state + ", okName=" + okName + ", noName=" + noName
 				+ ", stepInfo=" + stepInfo + ", unionCheck=" + unionCheck
 				+ ", isEnd=" + isEnd + ", condition=" + condition + ", remark="
 				+ remark + ", roleId=" + roleId + ", roleName=" + roleName

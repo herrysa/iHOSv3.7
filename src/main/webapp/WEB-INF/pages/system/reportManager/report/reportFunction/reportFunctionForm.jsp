@@ -17,7 +17,17 @@
 		<form id="reportFunctionForm" method="post"	action="saveReportFunction?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
 			<div class="pageFormContent" layoutH="56">
 				<div class="unit">
-				<s:textfield key="reportFunction.code" required="true" cssClass="validate[required]"/>
+				<s:if test="%{entityIsNew}">
+						<s:textfield key="reportFunction.code" cssClass="required" notrepeat='报表编码已存在' validatorParam="from DefineReport entity where entity.code=%value%"/>
+					</s:if>
+					<s:else>
+						<s:textfield key="reportFunction.code" readonly="true" cssClass="required"/>
+					</s:else>
+				</div>
+				<div class="unit">
+				<s:textfield id="reportFunction_name" key="reportFunction.name" name="reportFunction.name" cssClass="required				
+				
+				       "/>
 				</div>
 				<div class="unit">
 				<s:textfield id="reportFunction_category" key="reportFunction.category" name="reportFunction.category" cssClass="				
@@ -30,30 +40,25 @@
 				       "/>
 				</div>
 				<div class="unit">
-				<s:textfield id="reportFunction_funcSql" key="reportFunction.funcSql" name="reportFunction.funcSql" cssClass="				
-				
-				       "/>
-				</div>
-				<div class="unit">
-				<s:textfield id="reportFunction_name" key="reportFunction.name" name="reportFunction.name" cssClass="				
-				
-				       "/>
-				</div>
-				<div class="unit">
 				<s:textfield id="reportFunction_params" key="reportFunction.params" name="reportFunction.params" cssClass="				
 				
-				       "/>
+				       " style="width:350px;"/>
 				</div>
 				<div class="unit">
-				<s:textfield id="reportFunction_remark" key="reportFunction.remark" name="reportFunction.remark" cssClass="				
+				<s:textarea id="reportFunction_funcSql" key="reportFunction.funcSql" name="reportFunction.funcSql" cssClass="				
 				
-				       "/>
+				       " style="width:350px;height:100px"/>
 				</div>
 				<div class="unit">
+				<s:textarea id="reportFunction_remark" key="reportFunction.remark" name="reportFunction.remark" cssClass="				
+				
+				       " style="width:350px;height:30px"/>
+				</div>
+				<%-- <div class="unit">
 				<s:textfield id="reportFunction_rsType" key="reportFunction.rsType" name="reportFunction.rsType" cssClass="				
 				
 				       "/>
-				</div>
+				</div> --%>
 			
 			</div>
 			<div class="formBar">

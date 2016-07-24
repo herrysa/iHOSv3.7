@@ -81,6 +81,18 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>	
 		</action>
+		
+		<action name="getReportFunctionXml" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="getReportFunctionXml">
+		</action>
+		<action name="getReportDataSourceXml" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="getReportDataSourceXml">
+		</action>
+		<action name="getReportDsdescXml" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="getReportDsdescXml">
+		</action>
+		
+		<action name="sReport" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="showDefineReport">
+			<result name="input">/WEB-INF/pages/system/reportManager/report/defineReport/showDefineReport.jsp</result>
+			<result name="success">/WEB-INF/pages/system/reportManager/report/defineReport/showDefineReport.jsp</result>
+		</action>
 
 	</package>
 

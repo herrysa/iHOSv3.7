@@ -93,7 +93,13 @@
 				formCallBack(data);
 			});
 		});
-		
+		jQuery("#${random}stepInfoDiv_confirm").click(function(){
+			var bmProcessId = jQuery("#${random}stepInfoDiv").data("bmProcessId");
+			var opt = jQuery("#${random}stepInfoDiv").data("opt");
+			var info = jQuery("textarea[name='stepInfoDiv_info']","#${random}stepInfoDiv_form").val();
+			dealBmProcessFunction(bmProcessId,opt,info);
+			$.pdialog.closeCurrentDiv('${random}stepInfoDiv');
+		});
   	});
 	function bmProcessFuction(opt){
 		var stepCode = "${businessProcessStep.stepCode }";
@@ -116,32 +122,50 @@
     			}
     		}
     	}
+    	
     	$.get("findBmModelProcess", {
 			"_" : $.now(),modelCode:modelCode,stepCode:stepCode
 		}, function(data) {
 			//formCallBack(data);
 			if(data.bmModelProcess!=null){
 				var stepInfo = data.bmModelProcess.stepInfo;
-				if(stepInfo=='true'){
+				var bmProcessId = "";
+				if(opt=='ok'){
+					bmProcessId = data.bmModelProcess.okStep.bmProcessId;
+				}else{
+					bmProcessId = data.bmModelProcess.noStep.bmProcessId;
+				}
+				if(stepInfo==true){
 					var url = "#DIA_inline?inlineId=${random}stepInfoDiv";
+					jQuery("#${random}stepInfoDiv").data("bmProcessId",bmProcessId);
+					jQuery("#${random}stepInfoDiv").data("opt",opt);
 					$.pdialog.open(url, 'importSearch', "审核原因", {
 						mask : false,
 						width : 400,
 						height : 200
 					});
 				}else{
-					dealBmProcessFunction(modelCode,stepCode,opt);
+					dealBmProcessFunction(bmProcessId,opt);
 				}
 			}
 		});
 	}
 	
-	function dealBmProcessFunction(modelCode,stepCode,opt){
-		$.get("findBmModelProcess", {
-			"_" : $.now(),modelCode:modelCode,stepCode:stepCode
-		}, function(data) {
-			formCallBack(data);
+	function dealBmProcessFunction(bmProcessId,opt,info){
+		if(!info){
+			info = "";
+		}
+		alertMsg.confirm("确认操作？", {
+			okCall: function(){
+				var sid = jQuery("#${random}budgetUpdata_gridtable").jqGrid('getGridParam','selarrrow');
+				$.get("optUpdataState", {
+					"_" : $.now(),bmProcessId:bmProcessId,opt:opt,updataId:sid,message:info
+				}, function(data) {
+					formCallBack(data);
+				});
+			}
 		});
+		
 	}
 </script>
 
@@ -249,13 +273,17 @@
 	<div id="${random}stepInfoDiv" style="display: none">
 		<form>
 			<div class="pageContent">
-				<s:textarea></s:textarea>
+				<form id="${random}stepInfoDiv_form" method="post"	action="" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
+				<div class="pageFormContent" layoutH="50">
+				<s:textarea name="stepInfoDiv_info" style="height:90%;width:90%"></s:textarea>
+				</div>
+				</form>
 			</div>
 			<div class="formBar">
 				<ul>
 					<li><div class="buttonActive">
 							<div class="buttonContent">
-								<button type="button">提交</button>
+								<button id="${random}stepInfoDiv_confirm" type="button">确定</button>
 							</div>
 						</div>
 					</li>

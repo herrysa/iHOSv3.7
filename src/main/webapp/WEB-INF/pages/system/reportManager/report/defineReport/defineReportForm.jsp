@@ -17,7 +17,12 @@
 		<form id="defineReportForm" method="post"	action="saveDefineReport?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
 			<div class="pageFormContent" layoutH="56">
 				<div class="unit">
-				<s:textfield key="defineReport.code" cssClass="required"/>
+					<s:if test="%{entityIsNew}">
+						<s:textfield key="defineReport.code" cssClass="required" notrepeat='报表编码已存在' validatorParam="from DefineReport entity where entity.code=%value%"/>
+					</s:if>
+					<s:else>
+						<s:textfield key="defineReport.code" readonly="true" cssClass="required"/>
+					</s:else>
 				</div>
 				<div class="unit">
 				<s:textfield id="defineReport_name" key="defineReport.name" name="defineReport.name" cssClass="				
@@ -28,6 +33,26 @@
 				<s:textfield id="defineReport_type" key="defineReport.type" name="defineReport.type" cssClass="				
 				
 				       "/>
+				<div class="unit">
+				<s:textfield id="defineReport_searchName" key="defineReport.searchName" name="defineReport.searchName" cssClass="				
+				
+				       " style="width:300px;"/>
+				<script>
+					/* jQuery("#defineReport_searchName").treeselect({
+						optType : "multi",
+						dataType : 'sql',
+						idId : 'defineReport_searchName',
+						sql : "SELECT searchName id,title name,1 parent FROM t_search ORDER BY searchId asc",
+						exceptnullparent : true,
+						initSelect : "${defineReport.searchName}",
+						lazy : false,
+						minWidth : '180px',
+						selectParent : false,
+						callback : {
+						}
+					}); */
+					</script>
+				       </div>
 				<div class="unit">
 				<s:textarea id="defineReport_remark" key="defineReport.remark" name="defineReport.remark" style="width:300px;height:50px" cssClass="				
 				
