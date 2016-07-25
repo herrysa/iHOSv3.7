@@ -7,7 +7,7 @@
 
 	<package name="budgetModel" extends="default"	namespace="/">
 
-		<action name="budgetModelList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction">
+		<action name="budgetModelList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction" method="budgetModelList">
 			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelList.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelList.jsp</result>
 		</action>

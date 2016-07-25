@@ -131,11 +131,11 @@
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.modelType'/>:
-						<input type="text" name="filter_EQS_modelType"/>
+						<s:select list="modelTypeList" key="filter_EQS_modelType" listKey="displayContent" listValue="value" headerKey="" headerValue="--" theme="simple"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.periodType'/>:
-						<input type="text" name="filter_EQS_periodType"/>
+						<s:select list="#{'月度':'月度','季度':'季度','半年':'半年','年度':'年度'}" name="filter_EQS_periodType" headerKey="" headerValue="--" theme="simple"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.creator'/>:
@@ -155,7 +155,7 @@
 					</label> --%>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.disabled'/>:
-						<input type="text" name="filter_EQS_disabled"/>
+						<s:select list="#{'true':'是','false':'否'}" name="filter_EQS_disabled" headerKey="" headerValue="--" theme="simple"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.remark'/>:
@@ -186,7 +186,7 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModel_gridtable_editReport" class="changebutton"  href="javaScript:"
+				<li><a id="budgetModel_gridtable_editReport" class="reportbutton"  href="javaScript:"
 					><span>编辑模板
 					</span>
 				</a>

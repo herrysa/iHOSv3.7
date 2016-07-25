@@ -19,6 +19,12 @@ var budgetReportDefine = {
 				//grid.func("SetAutoCalc","0");
 				//grid.func("CallFunc","2");
 				grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
+				//grid.func("Swkrntpomzqa", "1, 2"); 
+				grid.func("SetAutoCalc","10000");
+				setTimeout(function(){
+					grid.func("CallFunc","64");
+					grid.func("CallFunc","163");
+				},300);
 			},
 			"Toolbar":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
@@ -189,99 +195,18 @@ var budgetReportDefine = {
  			console.log(sss);
  		});
  	});
- 	function sourcepayinSum1(checkperiod1,checkperiod2,deptId,chargeType){
- 		//return checkperiod1;
- 		console.log(chargeType);
- 		var sum;
- 		var sql = "select sum(amount) from v_sourcepayin where checkPeriod BETWEEN '"+checkperiod1+"' and '"+checkperiod2+"' and kdDeptId='"+deptId+"'";
- 		$.ajax({
-            url: 'getBySql?sql='+sql,
-            type: 'post',
-            dataType: 'json',
-            async:false,
-            error: function(data){
-            alertMsg.error("系统错误！");
-            },
-            success: function(data){
-            	console.log(data.sqlResult);
-            	sum = data.sqlResult;
-            }
-        });
- 		
- 		return sum;
- 	}
- 	var batchCell = {time:0,pretreatment:0,cellLength:0,cellNum:0,over:0,rs:{},
- 		start:function(){
- 			debugger;
-	 		batchCell.timer=setInterval(function(){
-	 			console.log(batchCell.pretreatment);
-	 			if(batchCell.pretreatment=3){
-	 				batchCell.doAjax();
-	 				clearInterval(batchCell.timer);
-	 			}else{
-	 				if(batchCell.cellLength>batchCell.cellNum){
-	 					batchCell.cellNum = batchCell.cell.length;
-	 				}else{
-	 					batchCell.pretreatment++;
-	 				}
-	 			}
-	 		},0);
- 		},
- 		doAjax:function(){
- 			console.log("a");
- 			$.ajax({
- 	            url: 'getListBySql?sql='+batchCell.sql,
- 	            type: 'post',
- 	            dataType: 'json',
- 	            async:false,
- 	            error: function(data){
- 	            alertMsg.error("系统错误！");
- 	            },
- 	            success: function(data){
- 	            	console.log(this.pretreatment);
- 	            	var grid = eval("(budgetReport_gridtable_${random})");
- 	            	var sqlMap = data.sqlMap;
- 	            	if(sqlMap){
- 	            		for(var i in sqlMap){
- 	            			var rs = sqlMap[i];
- 	            			batchCell.rs[rs.k] = rs.v;
- 	            		}
- 	            		batchCell.over = 1;
- 	            	}
- 	            }
- 	        });
- 		}
- 	};
- 	
- 	function xxx(){
- 		
- 	}
- 	
- 	function batchSourcepayinSum(key,checkperiod1,checkperiod2,chargeType){
- 		var sql = "select kdDeptId k,sum(amount) v from v_sourcepayin where checkPeriod BETWEEN '"+checkperiod1+"' and '"+checkperiod2+"' GROUP BY kdDeptId";
- 		batchCell.pretreatment = 1;
- 		batchCell.sql = sql;
- 		if(batchCell.over==0){
- 			batchCell.doAjax();
- 		}
- 		var sum;
- 		debugger;
- 		while(true){
- 			console.log("w");
- 			if(batchCell.over==1){
- 				var value = batchCell.rs[key];
- 				if(value){
- 					return value;
- 				}else{
- 					return "";
- 				}
- 			}
- 		}
- 	}
  	
  	function sv(str){
  		var sysVarStr = '${fns:getAllVariableStr()}';
  		var sysVarJson = eval("("+sysVarStr+")");
+ 		if("${budgetUpdata.updataId}"){
+ 			sysVarJson['%BMMODEL_DEPTCODE%'] = "${budgetUpdata.department.deptCode}";
+ 			sysVarJson['%BMMODEL_DEPTNAME%'] = "${budgetUpdata.department.name}";
+ 			sysVarJson['%BMMODEL_MODELCODE%'] = "${budgetUpdata.modelXfId.modelId.modelCode}";
+ 			sysVarJson['%BMMODEL_MODELNAME%'] = "${budgetUpdata.modelXfId.modelId.modelName}";
+ 			sysVarJson['%BMMODEL_MODELTYPE%'] = "${budgetUpdata.modelXfId.modelId.modelTypeTxt}";
+ 			sysVarJson['%BMMODEL_PERIODTYPE%'] = "${budgetUpdata.modelXfId.modelId.periodType}";
+ 		}
  		var varIndex = 0;
  		for(var vName in sysVarJson){
  			var vValue = sysVarJson[vName];

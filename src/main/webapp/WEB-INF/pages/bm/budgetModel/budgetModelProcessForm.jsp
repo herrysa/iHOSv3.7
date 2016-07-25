@@ -29,7 +29,7 @@
 				<div class="unit">
 				<s:textfield id="bmModelProcess_state" key="bmModelProcess.state" name="bmModelProcess.state" cssClass="				
 				digits
-				       "/>
+				       " readonly="true"/>
 				</div>
 				<div class="unit">
 				<s:textfield id="bmModelProcess_okName" key="bmModelProcess.okName" name="bmModelProcess.okName" cssClass="				
@@ -66,20 +66,7 @@
 				<s:hidden id="bmModelProcess_role_id" name="bmModelProcess.roleId"/>
 				<s:textfield id="bmModelProcess_role" key="bmModelProcess.roleName" name="bmModelProcess.roleName" cssClass="				
 				
-				       "/>
-				<script>
-				jQuery("#bmModelProcess_role").treeselect({
-					optType : "single",
-					dataType : 'sql',
-					sql : "select id,name,'' parent from role",
-					exceptnullparent : true,
-					lazy : false,
-					minWidth : '180px',
-					selectParent : false,
-					callback : {
-					}
-				});
-				</script>
+				       " readonly="true"/>
 				</div>
 				<div class="unit">
 				<s:hidden id="bmModelProcess_checkDeptName_id" name="bmModelProcess.checkDeptId"/>
@@ -90,7 +77,7 @@
 				jQuery("#bmModelProcess_checkDeptName").treeselect({
 					optType : "single",
 					dataType : 'sql',
-					sql : "select deptId id,name,'parent_id' parent from t_department ",
+					sql : "select deptId id,name,parentDept_id parent from t_department where disabled=0 order by deptCode asc",
 					exceptnullparent : true,
 					lazy : false,
 					minWidth : '180px',
@@ -101,7 +88,7 @@
 				</script>
 				</div>
 				<div class="unit">
-				<s:hidden id="bmModelProcess_checkPersonName_id" name="bmModelProcess_checkPersonId"/>
+				<s:hidden id="bmModelProcess_checkPersonName_id" name="bmModelProcess.checkPersonId"/>
 				<s:textfield id="bmModelProcess_checkPersonName" key="bmModelProcess.checkPersonName" name="bmModelProcess.checkPersonName" cssClass="				
 				
 				       "/>
@@ -109,7 +96,7 @@
 				jQuery("#bmModelProcess_checkPersonName").treeselect({
 					optType : "single",
 					dataType : 'sql',
-					sql : "select id,name,'' parent from role",
+					sql : "select personId id,name,dept_id parent,personCode code from t_person where disabled=0 union select deptId id,name,parentDept_id parent,deptCode code from t_department where disabled=0 and leaf=1 order by code asc",
 					exceptnullparent : true,
 					lazy : false,
 					minWidth : '180px',

@@ -19,16 +19,16 @@
 			mtype : "GET",
         	colModel:[
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetUpdata.updataId" />',hidden:true,key:true},
-			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetUpdata.modelCode" />',hidden:false,width:100},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetUpdata.periodYear" />',hidden:false,width:70},
+			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetUpdata.modelCode" />',hidden:false,width:100},
 			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false,width:250},
 			{name:'modelXfId.modelId.modelTypeTxt',index:'modelXfId.modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetUpdata.budgetType" />',hidden:false,width:70},
 			{name:'modelXfId.modelId.periodType',index:'modelXfId.modelId.periodType',align:'left',label : '<s:text name="budgetUpdata.periodType" />',hidden:false,width:70},
 			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false},
 			<c:forEach items="${processColumns}" var="pc">
 			{
-				name : "${pc.code }",
-				index : "${pc.code }",
+				name : "checkMap.${pc.code }",
+				index : "checkMap.${pc.code }",
 				label : "${pc.name }",
 				width : 100,
 				sortable:false,
@@ -55,7 +55,7 @@
         	sortorder: 'asc',
         	grouping:true,
     	   	groupingView : {
-    	   		groupField : ['department.name'],
+    	   		groupField : ['modelXfId.modelId.modelName'],
     	   		//groupSummary : [true],
     			groupColumnShow : [true],
     			groupText : ['<b>{0}</b> (记录数:{1}) '],
@@ -75,6 +75,7 @@
            	//if(jQuery(this).getDataIDs().length>0){
            	//  jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
            	// }
+           	gridContainerResize('${random}budgetUpdata','div',0,35);
            	var dataTest = {"id":"${random}budgetUpdata_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
        		} 
@@ -100,6 +101,24 @@
 			dealBmProcessFunction(bmProcessId,opt,info);
 			$.pdialog.closeCurrentDiv('${random}stepInfoDiv');
 		});
+		jQuery("#${random}budgetUpdata_gridtable_groupByDept").click(function(){
+	    	var txt = jQuery(this).find("span").eq(0).text();
+	    	var optType = "审批";
+	    	if(txt.indexOf("部门")!=-1){
+	    		jQuery('#${random}budgetUpdata_gridtable').jqGrid('setGridParam', {
+	    			groupingView : {
+	        	   		groupField : ['department.name']}
+	    		}).trigger("reloadGrid");
+	        	jQuery(this).find("span").eq(0).text("按预算模板"+optType);
+	    	}else{
+	    		jQuery('#${random}budgetUpdata_gridtable').jqGrid('setGridParam', {
+	    			groupingView : {
+	        	   		groupField : ['modelXfId.modelId.modelName']}
+	    		}).trigger("reloadGrid");
+	        	jQuery(this).find("span").eq(0).text("按预算部门"+optType);
+	    	}
+	    	
+	    });
   	});
 	function bmProcessFuction(opt){
 		var stepCode = "${businessProcessStep.stepCode }";
@@ -159,7 +178,7 @@
 			okCall: function(){
 				var sid = jQuery("#${random}budgetUpdata_gridtable").jqGrid('getGridParam','selarrrow');
 				$.get("optUpdataState", {
-					"_" : $.now(),bmProcessId:bmProcessId,opt:opt,updataId:sid,message:info
+					"_" : $.now(),bmProcessId:bmProcessId,opt:opt,updataId:sid,message:info,navTabId:'${random}budgetUpdata_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				});
@@ -194,10 +213,10 @@
 						<s:text name='${random}budgetUpdata.optDate'/>:
 						<input type="text" name="filter_EQS_optDate"/>
 					</label> --%>
-					<label style="float:none;white-space:nowrap" >
+					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='budgetUpdata.state'/>:
 						<input type="text" name="filter_EQS_state"/>
-					</label>
+					</label> --%>
 					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='${random}budgetUpdata.submitDate'/>:
 						<input type="text" name="filter_EQS_submitDate"/>
@@ -216,24 +235,29 @@
 			</div>
 	</div>
 	<div class="pageContent">
-		<div class="panelBar">
+		<div id="${random}budgetUpdata_buttonBar" class="panelBar">
 			<ul class="toolBar">
 				<%-- <li><a id="${random}budgetUpdata_gridtable_add" class="addbutton" href="javaScript:" ><span><fmt:message
 								key="button.add" />
 					</span>
 				</a>
 				</li> --%>
+				<%-- <s:if test="upType==1">
 				<li><a id="${random}budgetUpdata_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
+				</s:if> --%>
 				<s:if test="upType==1">
-					<li><a id="${random}budgetUpdata_gridtable_ok" class="delbutton"  href="javaScript:bmProcessFuction('ok')"><span>${businessProcessStep.okName }</span>
+					<li><a id="${random}budgetUpdata_gridtable_ok" class="checkbutton"  href="javaScript:bmProcessFuction('ok')"><span>${businessProcessStep.okName }</span>
 					</a>
 					</li>
 					<li><a id="${random}budgetUpdata_gridtable_no" class="delbutton"  href="javaScript:bmProcessFuction('no')"><span>${businessProcessStep.noName }</span>
 					</a>
 					</li>
 				</s:if>
+				<li><a id="${random}budgetUpdata_gridtable_groupByDept" class="settingbutton"  href="javaScript:"><span>按预算部门审批</span>
+				</a>
+				</li>
 				<%-- <li><a id="${random}budgetUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
 					</span>
@@ -242,7 +266,7 @@
 			
 			</ul>
 		</div>
-		<div id="${random}budgetUpdata_gridtable_div" layoutH="90" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div id="${random}budgetUpdata_gridtable_div" class="grid-wrapdiv" buttonBar="width:500;height:300">
 			<input type="hidden" id="${random}budgetUpdata_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="${random}budgetUpdata_gridtable_addTile">
 				<s:text name="budgetUpdataNew.title"/>
@@ -256,7 +280,7 @@
 			<!--<div id="${random}budgetUpdataPager"></div>-->
 		</div>
 	</div>
-	<div class="panelBar">
+	<div id="${random}budgetUpdata_pageBar" class="panelBar">
 		<div class="pages">
 			<span><s:text name="pager.perPage" /></span> <select id="${random}budgetUpdata_gridtable_numPerPage">
 				<option value="20">20</option>

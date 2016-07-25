@@ -126,7 +126,7 @@ jQuery(document).ready(function() {
 		}
 		var url = "editBmModelProcess?navTabId=modelProcess_gridtable&bmProcessId="+sid;
 		var winTitle='修改预算审批流程';
-		$.pdialog.open(url,'editBmModelProcess',winTitle, {mask:true,width : 500,height : 450});
+		$.pdialog.open(url,'editBmModelProcess',winTitle, {mask:true,width : 550,height : 500});
 		stopPropagation();
 	});
 });
@@ -148,7 +148,7 @@ jQuery(document).ready(function() {
 				<li><a id="modelProcess_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
-				<li><a id="modelProcess_gridtable_delAll_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
+				<li><a id="modelProcess_gridtable_delAll_c" class="delbutton"  href="javaScript:"><span>全部删除</span>
 				</a>
 				</li>
 			</ul>

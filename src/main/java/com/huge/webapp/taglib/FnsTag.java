@@ -134,7 +134,8 @@ public class FnsTag {
 		if(userContext!=null){
 			Map sysVarMap = userContext.getSysVars();
 			JSONObject sysVarJson = JSONObject.fromObject(sysVarMap);
-			return sysVarJson.toString();
+			String varStr =  sysVarJson.toString();
+			return varStr;
 		}else{
 			return "";
 		}

@@ -30,6 +30,7 @@ import com.huge.ihos.bm.index.model.BudgetIndex;
 import com.huge.ihos.bm.index.service.BudgetIndexManager;
 import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessStep;
 import com.huge.ihos.system.configuration.businessprocess.service.BusinessProcessStepManager;
+import com.huge.ihos.system.configuration.dictionary.model.DictionaryItem;
 import com.huge.ihos.system.configuration.syvariable.service.VariableManager;
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
@@ -135,6 +136,20 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public void prepare() throws Exception {
 		this.clearSessionMessages();
 	}
+	
+	
+	List<Map<String, Object>> modelTypeList;
+	public List<Map<String, Object>> getModelTypeList() {
+		return modelTypeList;
+	}
+	public void setModelTypeList(List<Map<String, Object>> modelTypeList) {
+		this.modelTypeList = modelTypeList;
+	}
+	public String budgetModelList(){
+		modelTypeList = ContextUtil.getAllItemsByCode("bmModelType");
+		return SUCCESS;
+	}
+	
 	public String budgetModelGridList() {
 		log.debug("enter list method!");
 		try {

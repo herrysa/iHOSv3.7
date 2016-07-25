@@ -59,11 +59,14 @@
         	colModel:[
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="bmUpdata.updataId" />',hidden:true,key:true},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetUpdata.periodYear" />',hidden:false,width:70},
-			{name:'modelXfId.modelId.modelName',index:'modelXfId..modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false,width:250},
+			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.modelCode" />',hidden:false,width:250},
+			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false,width:250},
 			{name:'modelXfId.modelId.modelTypeTxt',index:'modelXfId.modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetUpdata.budgetType" />',hidden:false,width:70},
 			{name:'modelXfId.modelId.periodType',index:'modelXfId.modelId.periodType',align:'left',label : '<s:text name="budgetUpdata.periodType" />',hidden:false,width:70},
-			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false,width:200},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetUpdata.state" />',hidden:false,formatter : 'select',editoptions : {value : '0:上报中;1:已确认;2:科室已审核;3:已上报'},width:70}
+			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false,width:150},
+			{name:'operator.name',index:'operator.name',align:'left',label : '<s:text name="budgetUpdata.operator" />',hidden:false,width:100},
+			{name:'optDate',index:'optDate',align:'left',label : '<s:text name="budgetUpdata.optDate" />',hidden:false,align:"center",
+				formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:100}
 			],
         	jsonReader : {
 				root : "budgetUpdatas", // (2)
@@ -124,7 +127,7 @@
     		return ;
     	}
     	$.get("confirmBmUpdata", {
-			"_" : $.now(),updataId:sid
+			"_" : $.now(),updataId:sid,navTabId:'bmUpdata_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
