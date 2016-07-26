@@ -1,7 +1,9 @@
 package com.huge.ihos.system.reportManager.report.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,26 +37,18 @@ public class DefineReportManagerImpl extends GenericManagerImpl<DefineReport, St
 
 	@Override
 	public void getFuncValue(List<ReportFunc> funcList) {
-		int thredNum = 10;
-		double eachLength = Math.ceil(funcList.size()/10);
-		List<Thread> threads = new ArrayList<Thread>();
-		for(int i=0;i<thredNum;i++){
-			BathFuncThread bathFuncThread = new BathFuncThread((int)(i*eachLength), (int)((i+1)*eachLength-1), funcList);
-			Thread thread = new Thread(bathFuncThread);
-			thread.start();
-			threads.add(thread);
+		ExecutorService fixedThreadPool = Executors.newFixedThreadPool(10); 
+		for(ReportFunc reportFunc : funcList){
+			BathFuncThread bathFuncThread = new BathFuncThread(reportFunc);
+			fixedThreadPool.execute(bathFuncThread);
 		}
-		for(Thread thread : threads){
-			try {
-				thread.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		fixedThreadPool.shutdown();
+		try {
+			while(!fixedThreadPool.awaitTermination(1000, TimeUnit.MILLISECONDS)){
 			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		
-		/*for(ReportFunc reportFunc : funcList){
-			defineReportDao.getFuncValue(reportFunc);
-		}*/
 		
 	}
     

@@ -22,15 +22,16 @@ import net.sf.json.JSONObject;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import com.huge.ihos.bm.budgetModel.model.BmModelDept;
 import com.huge.ihos.bm.budgetModel.model.BmModelProcess;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
+import com.huge.ihos.bm.budgetModel.service.BmModelDeptManager;
 import com.huge.ihos.bm.budgetModel.service.BmModelProcessManager;
 import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
 import com.huge.ihos.bm.index.model.BudgetIndex;
 import com.huge.ihos.bm.index.service.BudgetIndexManager;
 import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessStep;
 import com.huge.ihos.system.configuration.businessprocess.service.BusinessProcessStepManager;
-import com.huge.ihos.system.configuration.dictionary.model.DictionaryItem;
 import com.huge.ihos.system.configuration.syvariable.service.VariableManager;
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
@@ -58,6 +59,26 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	private BudgetModel budgetModel;
 	private String modelId;
 	private String modelCode;
+	private String deptId;
+	private List<Map<String, Object>> bmDepartmentNodes;
+	
+	private BmModelDeptManager bmModelDeptManager;
+
+	public void setBmModelDeptManager(BmModelDeptManager bmModelDeptManager) {
+		this.bmModelDeptManager = bmModelDeptManager;
+	}
+	public String getDeptId() {
+		return deptId;
+	}
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+	public List<Map<String, Object>> getBmDepartmentNodes() {
+		return bmDepartmentNodes;
+	}
+	public void setBmDepartmentNodes(List<Map<String, Object>> bmDepartmentNodes) {
+		this.bmDepartmentNodes = bmDepartmentNodes;
+	}
 
 	private String stepCode;
 	private String bmProcessId;
@@ -538,10 +559,31 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public void setDepartments(Set<Department> departments) {
 		this.departments = departments;
 	}
+	
+	List<BmModelDept> bmModelDepts;
+	
+	public List<BmModelDept> getBmModelDepts() {
+		return bmModelDepts;
+	}
+	public void setBmModelDepts(List<BmModelDept> bmModelDepts) {
+		this.bmModelDepts = bmModelDepts;
+	}
 	public String bmsDepartmentGridList(){
-		if(modelId!=null&&!"".equals(modelId)){
-			budgetModel = budgetModelManager.get(modelId);
-			departments = budgetModel.getDepartments();
+		log.debug("enter list method!");
+		try {
+			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(getRequest());
+			JQueryPager pagedRequests = null;
+			pagedRequests = (JQueryPager) pagerFactory.getPager(
+					PagerFactory.JQUERYTYPE, getRequest());
+			pagedRequests = budgetModelManager
+					.getBudgetModelCriteria(pagedRequests,filters);
+			this.bmModelDepts = (List<BmModelDept>) pagedRequests.getList();
+			records = pagedRequests.getTotalNumberOfRows();
+			total = pagedRequests.getTotalNumberOfPages();
+			page = pagedRequests.getPageNumber();
+
+		} catch (Exception e) {
+			log.error("List Error", e);
 		}
 		return SUCCESS;
 	}
@@ -803,7 +845,44 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	return SUCCESS;
+		return SUCCESS;
+	}
+	
+	public String getBmDepartmentTree(){
+		try {
+			bmDepartmentNodes = new ArrayList<Map<String,Object>>();
+            List<Map<String, Object>> deptList = budgetModelManager.getBySqlToMap("select * from v_bm_department ORDER BY deptCode asc");
+            for(Map<String, Object> dept : deptList){
+            	Map<String, Object> deptNode = new HashMap<String, Object>();
+            	deptNode.put("id", dept.get("deptId"));
+            	deptNode.put("name", dept.get("name"));
+            	deptNode.put("pId", dept.get("parentDept_id"));
+            	bmDepartmentNodes.add(deptNode);
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
+	public String saveBmDepartment(){
+		try {
+			budgetModel = budgetModelManager.get(modelId);
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("INS_departmentId",deptId));
+			List<Department> departments = departmentManager.getByFilters(filters);
+			bmModelDeptManager.executeSql("delete from bm_model_dept where modelId='"+modelId+"'");
+			for(Department department : departments){
+				BmModelDept bmModelDept = new BmModelDept();
+				bmModelDept.setBmModel(budgetModel);
+				bmModelDept.setBmDepartment(department);
+				bmModelDeptManager.save(bmModelDept);
+			}
+			return ajaxForward(true,"保存成功！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"保存失败！",false);
+		}
 	}
 }
 

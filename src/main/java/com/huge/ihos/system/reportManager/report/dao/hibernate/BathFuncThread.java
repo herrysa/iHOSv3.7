@@ -11,29 +11,21 @@ import com.huge.webapp.util.SpringContextHelper;
 
 public class BathFuncThread implements Runnable{
 
-	int start=0,end=0;
+	/*int start=0,end=0;
 	List<ReportFunc> funcList;
 	
 	public BathFuncThread(int start,int end,List<ReportFunc> funcList){
 		this.start = start;
 		this.end = end;
 		this.funcList = funcList;
+	}*/
+	ReportFunc reportFunc;
+	public BathFuncThread(ReportFunc reportFunc){
+		this.reportFunc = reportFunc;
 	}
 	
 	@Override
 	public void run() {
-		if(funcList.size()<end){
-			end = funcList.size()-1;
-		}
-		for(int i=start;i<=end;i++){
-			//System.out.println(i);
-			ReportFunc reportFunc = funcList.get(i);
-			getFuncValue(reportFunc);
-		}
-		
-	}
-	
-	public void getFuncValue(ReportFunc reportFunc) {
 		String rs;
 		try {
 			DataSource dataSource = SpringContextHelper.getDataSource();
@@ -43,6 +35,6 @@ public class BathFuncThread implements Runnable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
-
 }

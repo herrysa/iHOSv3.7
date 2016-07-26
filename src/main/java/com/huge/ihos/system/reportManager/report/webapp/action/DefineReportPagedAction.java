@@ -393,13 +393,13 @@ public class DefineReportPagedAction extends JqGridBaseAction implements Prepara
 	        	defineReport = defineReportManager.get(code);
 	        	defineReport.setReport(reportXml);
 	        	defineReportManager.save(defineReport);
-	        	return ajaxForward("保存成功！");
+	        	return ajaxForward(true,"保存成功！",false);
 	        } else {
-	        	return ajaxForward(false, "保存失败！");
+	        	return ajaxForward(false, "保存失败！",false);
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ajaxForward(false, "保存失败！");
+			return ajaxForward(false, "保存失败！",false);
 		}
 		
 	}

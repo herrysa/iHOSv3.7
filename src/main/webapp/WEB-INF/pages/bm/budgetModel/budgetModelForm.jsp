@@ -14,8 +14,8 @@
 </head>
 
 <div class="page" id="bmModelFormPage" style="height:100%">
-	<div class="pageContent" style="height:100%">
-		<div class="tabs" currentIndex="0" eventType="click" id="bmModelFormTabs" tabcontainer="bmModelFormPage" extraHeight=10 extraWidth=2>
+	<div class="pageContent" style="height:100%;overflow: hidden;">
+		<div class="tabs" currentIndex="0" eventType="click" id="bmModelFormTabs" tabcontainer="bmModelFormPage" extraHeight=1 extraWidth=2>
 			<div class="tabsHeader">
 				<div class="tabsHeaderContent">
 					<ul>
@@ -29,7 +29,7 @@
 				style="height: 250px;padding:0px">
 				<div>
 					<form id="budgetModelForm" method="post"	action="saveBudgetModel?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
-			<div class="pageFormContent" layoutH="130">
+			<div class="pageFormContent" layoutH="93">
 				<div class="unit">
 					<s:if test="%{entityIsNew}">
 						<s:textfield key="budgetModel.modelId" cssClass="required" notrepeat='预算模板ID已存在' validatorParam="from BudgetModel entity where entity.modelId=%value%"/>

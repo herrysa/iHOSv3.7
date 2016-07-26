@@ -153,7 +153,7 @@ jQuery(document).ready(function() {
 				</li>
 			</ul>
 		</div>
-		<div id="modelProcess_gridtable_div" layoutH="90" class="grid-wrapdiv">
+		<div id="modelProcess_gridtable_div" layoutH="63" class="grid-wrapdiv">
  			<table id="modelProcess_gridtable"></table>
 		</div>
 	</div>

@@ -67,8 +67,8 @@
 		</action>
 		
 		<action name="budgetDepartmentList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="budgetDepartmentList">
-			<result name="success">/WEB-INF/pages/bm/budgetDept/budgetDepartment.jsp</result>
-			<result name="input">/WEB-INF/pages/bm/budgetDept/budgetDepartment.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/bmModelDepartment.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetModel/bmModelDepartment.jsp</result>
 		</action>
 		<action name="bmsDepartmentGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="bmsDepartmentGridList">
 			<result type="json">
@@ -145,7 +145,26 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
-
+		
+		<action name="selectBmModelDepartment" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetModel/selectBudgetDept.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/selectBudgetDept.jsp</result>
+		</action>
+		
+		<action name="getBmDepartmentTree" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="getBmDepartmentTree">
+			<result type="json">
+				<param name="includeProperties">bmDepartmentNodes.*,message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="saveBmDepartment" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="saveBmDepartment">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 	</package>
 
 </struts>

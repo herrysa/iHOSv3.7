@@ -7,7 +7,7 @@ var bmsDepartmentGridIdString="#bmsDepartment_gridtable";
 jQuery(document).ready(function() { 
 	var bmsDepartmentGrid = jQuery(bmsDepartmentGridIdString);
 	bmsDepartmentGrid.jqGrid({
-		url : "bmsDepartmentGridList?1=1&modelId=${modelId}",
+		url : "bmsDepartmentGridList?1=1&filter_EQS_bmModel.modelId=${modelId}",
 		editurl : "",
 		datatype : "json",
 		mtype : "GET",
@@ -84,7 +84,7 @@ jQuery(document).ready(function() {
 			alertMsg.error("请选择模板。");
 			return;
 		}
-		var url = "bmDepartmentList?navTabId=bmsDepartment_gridtable&modelId="+sid;
+		var url = "selectBmModelDepartment?modelId=${modelId}&navTabId=bmsDepartment_gridtable&deptId="+sid;
 		var winTitle='选择部门';
 		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 700,height : 500});
 		stopPropagation();

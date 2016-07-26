@@ -139,11 +139,16 @@
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.creator'/>:
-						<input type="text" name="filter_EQS_creator"/>
+						<input type="text" name="filter_LIKES_creator"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.createDate'/>:
-						<input type="text" name="filter_EQS_createDate"/>
+						从<input type="text" name="filter_GED_createDate" class="input-mini" type="text" 
+									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
+									value="" size="8"/>
+						到<input type="text" name="filter_LED_createDate" class="input-mini" type="text" 
+									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
+									value="" size="8"/>
 					</label>
 					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.modifier'/>:
