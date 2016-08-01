@@ -82,6 +82,10 @@
             </result>
 		</action>
 		
+		<action name="bmUpdataQuery" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction" method="bmUpdataQuery">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataList.jsp</result>
+		</action>
 	</package>
 
 </struts>

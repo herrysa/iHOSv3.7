@@ -9,12 +9,34 @@
 			jQuery("#budgetIndexForm").submit();
 		});*/
 	});
+	function saveBudgetIndexCallback(data){
+		formCallBack(data);
+		if(data.statusCode!=200){
+			return;
+		}
+		var indexNode = data.indexNode;
+		var zTree = $.fn.zTree.getZTreeObj("budgetIndexTreeLeft"); 
+		if("${entityIsNew}"=="true"){
+			var parentNode = zTree.getNodeByParam("id", indexNode.pId, null);
+			node = zTree.addNodes(parentNode,indexNode);
+			var indexNodeList = data.indexNodeList;
+			indexNode = zTree.getNodeByParam("id", indexNode.id, null);
+			for(var i in indexNodeList){
+				var iNode = indexNodeList[i];
+				zTree.addNodes(indexNode,iNode);
+			}
+		}else{
+			var oldNode = zTree.getNodeByParam("id", indexNode.id, null);
+			oldNode.name = indexNode.name;
+			zTree.updateNode(oldNode);
+		}
+	}
 </script>
 </head>
 
 <div class="page">
 	<div class="pageContent">
-		<form id="budgetIndexForm" method="post"	action="saveBudgetIndex?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
+		<form id="budgetIndexForm" method="post"	action="saveBudgetIndex?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,saveBudgetIndexCallback);">
 			<div class="pageFormContent" layoutH="56">
 				<div class="unit">
 					<s:if test="%{entityIsNew}">
@@ -54,6 +76,13 @@
 						minWidth : '180px',
 						selectParent : false,
 						callback : {
+							afterClick:function(treeId,vi,v){
+								$.post("findBudgetType",{budgetTypeCode:vi},function(data){
+									var budgetTypeNode = data.budgetTypeNode;
+									jQuery("#budgetIndex_warningPercent").val(budgetTypeNode.warningPercent);
+									jQuery("select[name='budgetIndex.exceedBudgetType']").val(budgetTypeNode.exceedBudgetType);
+								});
+							}
 						}
 					});
 					</script>

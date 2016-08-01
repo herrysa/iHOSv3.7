@@ -35,7 +35,7 @@
 						<s:textfield key="budgetModel.modelId" cssClass="required" notrepeat='预算模板ID已存在' validatorParam="from BudgetModel entity where entity.modelId=%value%"/>
 					</s:if>
 					<s:else>
-						<s:textfield key="budgetModel.modelId" readonly="true" cssClass="required"/>
+						<s:textfield key="budgetModel.modelId"  cssClass="required"/>
 					</s:else>
 				</div>
 				<div class="unit">
@@ -63,7 +63,7 @@
 					<label><s:text name="budgetModel.periodType"/>:</label>
 					<s:select list="#{'月度':'月度','季度':'季度','半年':'半年','年度':'年度'}" key="budgetModel.periodType" headerKey="" headerValue="--" theme="simple"></s:select>
 				</div>
-				<div class="unit">
+				<%-- <div class="unit">
 				<s:hidden id="budgetModel_dept_id"  name="budgetModel.department"/>
 				<label><s:text name="budgetModel.department"/>:</label>
 				<s:textarea id="budgetModel_dept" style="width:350px;height:30px" cssClass="				
@@ -83,7 +83,7 @@
 						}
 					});
 					</script>
-				</div>
+				</div> --%>
 				<div class="unit">
 					<label><s:text name="budgetModel.disabled"/>:</label>
 					<s:checkbox id="budgetModel_disabled" key="budgetModel.disabled" name="budgetModel.disabled" theme="simple"/>

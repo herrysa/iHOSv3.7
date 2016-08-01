@@ -20,6 +20,15 @@ public class BmModelProcessLogPagedAction extends JqGridBaseAction implements Pr
 	private List<BmModelProcessLog> bmModelProcessLogs;
 	private BmModelProcessLog bmModelProcessLog;
 	private String logId;
+	private String updataId;
+
+	public String getUpdataId() {
+		return updataId;
+	}
+
+	public void setUpdataId(String updataId) {
+		this.updataId = updataId;
+	}
 
 	public BmModelProcessLogManager getBmModelProcessLogManager() {
 		return bmModelProcessLogManager;
@@ -29,7 +38,7 @@ public class BmModelProcessLogPagedAction extends JqGridBaseAction implements Pr
 		this.bmModelProcessLogManager = bmModelProcessLogManager;
 	}
 
-	public List<BmModelProcessLog> getbmModelProcessLogs() {
+	public List<BmModelProcessLog> getBmModelProcessLogs() {
 		return bmModelProcessLogs;
 	}
 

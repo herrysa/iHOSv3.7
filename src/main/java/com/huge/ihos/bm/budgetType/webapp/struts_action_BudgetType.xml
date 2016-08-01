@@ -34,7 +34,7 @@
 		<!-- called when clicking save on the edit form -->
 		<action name="saveBudgetType" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"			method="save">
 			<result name="success" type="json">
-                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                <param name="includeProperties">budgetTypeNode.*,message,statusCode,callbackType,navTabId</param>
                    <param name="noCache">true</param>
 				 <param name="ignoreHierarchy">false</param>
             </result>
@@ -43,6 +43,13 @@
 		<action name="getBudgetTypeTree" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"			method="getBudgetTypeTree">
 			<result name="success" type="json">
                 <param name="includeProperties">budgetTypeTreeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="findBudgetType" class="com.huge.ihos.bm.budgetType.webapp.action.BudgetTypePagedAction"			method="findBudgetType">
+			<result name="success" type="json">
+                <param name="includeProperties">budgetTypeNode.*,message</param>
                    <param name="noCache">true</param>
 				 <param name="ignoreHierarchy">false</param>
             </result>

@@ -34,7 +34,7 @@
 		<!-- called when clicking save on the edit form -->
 		<action name="saveBudgetIndex" class="com.huge.ihos.bm.index.webapp.action.BudgetIndexPagedAction"			method="save">
 			<result name="success" type="json">
-                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                <param name="includeProperties">indexNode.*,indexNodeList.*,message,statusCode,callbackType,navTabId</param>
                    <param name="noCache">true</param>
 				 <param name="ignoreHierarchy">false</param>
             </result>

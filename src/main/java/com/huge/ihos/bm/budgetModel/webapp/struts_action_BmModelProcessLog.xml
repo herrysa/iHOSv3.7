@@ -8,8 +8,8 @@
 	<package name="bmModelProcessLog" extends="default"	namespace="/">
 
 		<action name="bmModelProcessLogList" class="com.huge.ihos.bm.budgetModel.webapp.action.BmModelProcessLogPagedAction">
-			<result name="input">/WEB-INF/pages/bmModelProcessLog/bmModelProcessLogList.jsp</result>
-			<result name="success">/WEB-INF/pages/bmModelProcessLog/bmModelProcessLogList.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetModel/bmModelProcessLogList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/bmModelProcessLogList.jsp</result>
 		</action>
 		<action name="bmModelProcessLogGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BmModelProcessLogPagedAction"		method="bmModelProcessLogGridList">
 			<result type="json">
@@ -27,8 +27,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editBmModelProcessLog" class="com.huge.ihos.bm.budgetModel.webapp.action.BmModelProcessLogPagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/bmModelProcessLog/bmModelProcessLogForm.jsp</result>
-			<result name="input">/WEB-INF/pages/bmModelProcessLog/bmModelProcessLogForm.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/bmModelProcessLogForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetModel/bmModelProcessLogForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->

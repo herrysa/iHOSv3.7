@@ -31,6 +31,13 @@
 			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelForm.jsp</result>
 		</action>
 
+		<action name="delBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="delBudgetModel">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 		<!-- called when clicking save on the edit form -->
 		<action name="saveBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="save">
 			<result name="success" type="json">
@@ -72,7 +79,8 @@
 		</action>
 		<action name="bmsDepartmentGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="bmsDepartmentGridList">
 			<result type="json">
-				<param name="includeProperties">departments.*,records,total,page</param>
+				<param name="includeProperties">bmModelDepts.*,records,total,page</param>
+				<param name="excludeProperties">bmModelDepts.*\.bmModel</param>
 				<param name="noCache">true</param>
 				<param name="ignoreHierarchy">false</param>
 			</result>
@@ -86,6 +94,7 @@
 		<action name="modelProcessGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="modelProcessGridList">
 			<result type="json">
 				<param name="includeProperties">modelProcesss.*,records,total,page</param>
+				<param name="excludeProperties">modelProcesss.*\.budgetModel</param>
 				<param name="noCache">true</param>
 				<param name="ignoreHierarchy">false</param>
 			</result>
@@ -99,7 +108,7 @@
 			</result>
 		</action>
 		
-		<action name="selectBmModelProcess" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction">
+		<action name="selectBmModelProcess" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction" method="selectBmModelProcess">
 			<result name="input">/WEB-INF/pages/bm/budgetModel/selectBusinessProcess.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetModel/selectBusinessProcess.jsp</result>
 		</action>
@@ -159,6 +168,29 @@
 			</result>
 		</action>
 		<action name="saveBmDepartment" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="saveBmDepartment">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="delBmModelDepartment" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="delBmModelDepartment">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="copyBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="copyBudgetModel">
+			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelForm.jsp</result>
+		</action>
+		
+		<action name="editBmDepartment" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction" method="editBmDepartment">
+			<result name="input">/WEB-INF/pages/bm/budgetDept/bmDepartmentForm.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetDept/bmDepartmentForm.jsp</result>
+		</action>
+		<action name="checkBmModelProcess" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"		method="checkBmModelProcess">
 			<result type="json">
 				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
 				<param name="noCache">true</param>

@@ -27,17 +27,23 @@
 			mtype : "GET",
         	colModel:[
 			{name:'xfId',index:'xfId',align:'center',label : '<s:text name="budgetModelXf.xfId" />',hidden:true,key:true},
-			{name:'modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelXf.modelCode" />',hidden:false},
-			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelXf.model" />',hidden:false},
-			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelXf.periodYear" />',hidden:false},
-			{name:'modelId.modelTypeTxt',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelXf.budgetType" />',hidden:false},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelXf.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'}},
-			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelXf.xfDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
-			{name:'xfNum',index:'xfNum',align:'right',label : '<s:text name="budgetModelXf.xfNum" />',hidden:false},
-			{name:'updataingNum',index:'updataingNum',align:'right',label : '<s:text name="budgetModelXf.updatating" />',hidden:false},
-			{name:'confirmNum',index:'confirmNum',align:'right',label : '<s:text name="budgetModelXf.confirmed" />',hidden:false},
-			{name:'checkedNum',index:'checkedNum',align:'right',label : '<s:text name="budgetModelXf.checked" />',hidden:false},
-			{name:'submitedNum',index:'submitedNum',align:'right',label : '<s:text name="budgetModelXf.updatated" />',hidden:false}
+			{name:'modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelXf.modelCode" />',hidden:false,width:100},
+			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelXf.model" />',hidden:false,width:200},
+			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelXf.periodYear" />',hidden:false,width:70},
+			{name:'modelId.modelTypeTxt',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelXf.budgetType" />',hidden:false,width:100},
+			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelXf.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:70},
+			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelXf.xfDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:70},
+			{name:'xfNum',index:'xfNum',align:'right',label : '<s:text name="budgetModelXf.xfNum" />',hidden:false,width:60},
+			<c:forEach items="${bsStepList}" var="pc">
+			{
+				name : "stepMap.${pc.stepCode }",
+				index : "stepMap.${pc.stepCode }",
+				label : "${pc.stepName }",
+				width : 80,
+				sortable:false,
+				align:"right"
+			},
+			</c:forEach>
 			],
         	jsonReader : {
 				root : "budgetModelXfs", // (2)
@@ -57,8 +63,8 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
 			ondblClickRow:function(){
 				//budgetModelXfLayout.optDblclick();
 			},
@@ -82,14 +88,18 @@
      	    	 for (i=0;i<rowNum;i++){
      	    		var id = rowIds[i];
      	    	 	var hrefUrl = "budgetUpdataList?xfId="+id;
-			    	var updataingNum = ret[i]["updataingNum"];
-			    	var confirmNum = ret[i]["confirmNum"];
-			    	var checkedNum = ret[i]["checkedNum"];
-			    	var submitedNum = ret[i]["submitedNum"];
-			    	setCellText(jQuery(this)[0],id,'updataingNum','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=0\')" target="navTab">'+updataingNum+"</a>")
-			    	setCellText(jQuery(this)[0],id,'confirmNum','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=1\')" target="navTab">'+confirmNum+"</a>")
-			    	setCellText(jQuery(this)[0],id,'checkedNum','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=2\')" target="navTab">'+checkedNum+"</a>")
-			    	setCellText(jQuery(this)[0],id,'submitedNum','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=3\')" target="navTab">'+submitedNum+"</a>")
+			    	var state = ret[i]["state"];
+			    	if(state=="1"){
+              		  	setCellText(this,id,'state','<span style="color:red" >上报中</span>');
+              	  	}else if(state=="2"){
+              		  	setCellText(this,id,'state','<span style="color:blue" >已上报</span>');
+              	  	}else if(state=="3"){
+              		  	setCellText(this,id,'state','<span style="color:gray" >已过期</span>');
+              	  	}
+			    	<c:forEach items="${bsStepList}" var="pc">
+			    	var cellText = ret[i]["stepMap.${pc.stepCode }"];
+			    	setCellText(jQuery(this)[0],id,'stepMap.${pc.stepCode }','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=${pc.state }\')" target="navTab">'+cellText+"</a>")
+					</c:forEach>
      	    	 }
      	     }
        		} 
@@ -161,19 +171,25 @@
 				<div class="searchContent">
 				<form id="budgetModelXf_search_form" >
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelXf.model'/>:
-						<input type="text" name="filter_EQS_model"/>
+						<s:text name='budgetModelXf.modelCode'/>:
+						<input type="text" name="filter_LIKES_modelId.modelCode"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelXf.xfDate'/>:
-						<input type="text" name="filter_EQD_xfDate" class="Wdate"  style="height:15px"
-				              			 onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
-				              			 value="<fmt:formatDate value="${hrPersonSnap.birthday}" pattern="yyyy-MM-dd"/>"
-				              			 onFocus="WdatePicker({skin:'ext',isShowClear:true,readOnly:true,onpicked:calPersonAge(this)})" />
+						模板名称:
+						<input type="text" name="filter_LIKES_modelId.modelName"/>
+					</label>
+					<label style="float:none;white-space:nowrap" >
+						<s:text name='budgetModelXf.xfDate'/>:从
+						<input type="text" name="filter_GED_xfDate" name="filter_GED_createDate" class="input-mini" type="text" 
+									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
+									value="" size="8"/>
+						到&nbsp;<input type="text" name="filter_LED_xfDate" name="filter_GED_createDate" class="input-mini" type="text" 
+									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
+									value="" size="8"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelXf.state'/>:
-						<s:select list="#{'0':'未上报','1':'上报中','2':'已上报','3':'已过期' }" name="filter_EQS_state" headerKey="" headerValue="--"></s:select>
+						<s:select list="#{'0':'未上报','1':'上报中','2':'已上报','3':'已过期' }" name="filter_EQI_state" headerKey="" headerValue="--"></s:select>
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
@@ -187,14 +203,14 @@
 	<div class="pageContent">
 		<div id="budgetModelXf_buttonBar" class="panelBar">
 			<ul class="toolBar">
-				<li><a id="budgetModelXf_gridtable_refresh" class="addbutton" href="javaScript:" ><span>刷新
+				<li><a id="budgetModelXf_gridtable_refresh" class="initbutton" href="javaScript:" ><span>刷新
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelXf_gridtable_xf" class="delbutton"  href="javaScript:"><span>下发</span>
+				<li><a id="budgetModelXf_gridtable_xf" class="settlebutton"  href="javaScript:"><span>下发</span>
 				</a>
 				</li>
-				<li><a id="budgetModelXf_gridtable_reXf" class="changebutton"  href="javaScript:"
+				<li><a id="budgetModelXf_gridtable_reXf" class="resettlebutton"  href="javaScript:"
 					><span>重新下发
 					</span>
 				</a>
@@ -202,7 +218,7 @@
 			
 			</ul>
 		</div>
-		<div id="budgetModelXf_gridtable_div" layoutH="120" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div id="budgetModelXf_gridtable_div" class="grid-wrapdiv" buttonBar="width:500;height:300">
 			<input type="hidden" id="budgetModelXf_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="budgetModelXf_gridtable_addTile">
 				<s:text name="budgetModelXfNew.title"/>

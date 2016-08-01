@@ -46,11 +46,11 @@
 				// (4)
 			},
 			ondblClickRow:function(){
-				budgetModelLayout.optDblclick();
+				///budgetModelLayout.optDblclick();
 			},
 			onSelectRow: function(rowid) {
 	        	setTimeout(function(){
-	        		budgetModelLayout.optClick();
+	        		//budgetModelLayout.optClick();
 	        	},100);
 	       	},
         	sortname: 'modelCode',
@@ -81,7 +81,7 @@
     jQuery("#budgetModel_gridtable_add_c").click(function(){
         var url = "editBudgetModel?navTabId=budgetModel_gridtable";
 		var winTitle='<s:text name="budgetModelNew.title"/>';
-		$.pdialog.open(url,'addBudgetModel',winTitle, {mask:true,width : 630,height : 450});
+		$.pdialog.open(url,'addBudgetModel',winTitle, {mask:true,width : 730,height : 450});
     });
     jQuery("#budgetModel_gridtable_edit_c").click(function(){
 		var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
@@ -90,8 +90,28 @@
 			return;
 		}
         var url = "editBudgetModel?navTabId=budgetModel_gridtable&modelId="+sid;
-		var winTitle='<s:text name="budgetModelNew.title"/>';
-		$.pdialog.open(url,'editBudgetModel',winTitle, {mask:true,width : 630,height : 450});
+		var winTitle='<s:text name="budgetModelEdit.title"/>';
+		$.pdialog.open(url,'editBudgetModel',winTitle, {mask:true,width : 730,height : 450});
+    });
+    jQuery("#budgetModel_gridtable_del_c").click(function(){
+		var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid==null){       	
+			alertMsg.error("请选择一条记录。");
+			return;
+		}
+        var url = "delBudgetModel?navTabId=budgetModel_gridtable&modelId="+sid;
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            async:false,
+            error: function(data){
+            alertMsg.error("系统错误！");
+            },
+            success: function(data){
+            	formCallBack(data);
+            }
+        });
     });
     jQuery("#budgetModel_gridtable_editReport").click(function(){
     	var fullHeight = jQuery("#container").innerHeight();
@@ -106,6 +126,16 @@
     		width : fullWidth,
     		height : fullHeight
     	});
+    });
+    jQuery("#budgetModel_gridtable_copy").click(function(){
+    	var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid==null|| sid.length != 1){       	
+			alertMsg.error("请选择一条记录。");
+			return;
+		}
+		var url = "copyBudgetModel?navTabId=bmsDepartment_gridtable&modelId="+sid;
+		var winTitle='<s:text name="budgetModelNew.title"/>';
+		$.pdialog.open(url,'editBudgetModel',winTitle, {mask:true,width : 730,height : 450});
     });
   	});
 </script>
@@ -183,11 +213,16 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModel_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
+				<li><a id="budgetModel_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
 				<li><a id="budgetModel_gridtable_edit_c" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
+					</span>
+				</a>
+				</li>
+				<li><a id="budgetModel_gridtable_copy" class="inheritbutton"  href="javaScript:"
+					><span>复制
 					</span>
 				</a>
 				</li>

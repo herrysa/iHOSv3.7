@@ -15,7 +15,7 @@ import com.huge.model.BaseObject;
 
 @Entity
 @Table( name = "bm_model_process" )
-public class BmModelProcess extends BaseObject{
+public class BmModelProcess extends BaseObject implements Cloneable{
 
 	/**
 	 * 
@@ -39,6 +39,7 @@ public class BmModelProcess extends BaseObject{
 	private String noName;
 	private Boolean stepInfo;
 	private Boolean unionCheck;
+	private Boolean bmDept;
 	private Boolean isEnd;
 	private String condition;
 	private String remark;
@@ -129,6 +130,13 @@ public class BmModelProcess extends BaseObject{
 	}
 	public void setUnionCheck(Boolean unionCheck) {
 		this.unionCheck = unionCheck;
+	}
+	@Column
+	public Boolean getBmDept() {
+		return bmDept;
+	}
+	public void setBmDept(Boolean bmDept) {
+		this.bmDept = bmDept;
 	}
 	
 	@Column(length=100)
@@ -361,5 +369,14 @@ public class BmModelProcess extends BaseObject{
 	}
 	
 	
-	
+	@Override
+	public BmModelProcess clone() {
+		BmModelProcess o = null;
+		try {
+			o = (BmModelProcess) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return o;
+	}
 }

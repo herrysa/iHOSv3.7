@@ -42,6 +42,8 @@ import com.huge.ihos.system.systemManager.organization.service.BranchManager;
 import com.huge.ihos.system.systemManager.organization.service.DepartmentManager;
 import com.huge.ihos.system.systemManager.organization.service.DeptTypeManager;
 import com.huge.ihos.system.systemManager.organization.service.KhDeptTypeManager;
+import com.huge.ihos.system.systemManager.organization.service.OrgManager;
+import com.huge.util.OtherUtil;
 import com.huge.util.XMLUtil;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
@@ -190,6 +192,31 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		}
 		return SUCCESS;
 	}
+	public String delBudgetModel(){
+		try {
+			String[] modelIds = modelId.split(",");
+			budgetModelManager.remove(modelIds);
+			String modelIdsql = "(";
+			for(String m : modelIds){
+				modelIdsql += "'"+m+"'," ;
+			}
+			if(!modelIdsql.equals("(")){
+				modelIdsql = modelIdsql.substring(0, modelIdsql.length()-1);
+				modelIdsql += ")";
+			}else{
+				modelIdsql += "'')";
+			}
+			budgetModelManager.executeSql("delete from bm_model_process where modelId in "+modelIdsql);
+			
+			budgetModelManager.executeSql("delete from bm_model_dept where modelId in "+modelIdsql);
+			
+			return ajaxForward(true,"删除预算模板成功！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"删除预算模板失败！",false);
+		}
+	}
+	
 	public String save(){
 		String error = isValid();
 		if (!error.equalsIgnoreCase(SUCCESS)) {
@@ -223,7 +250,8 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				budgetModel.setModifydate(Calendar.getInstance().getTime());
 			}
 			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
-			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode","bmCheck"));
+			String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
 			processStepFilters.add(new PropertyFilter("OAS_state",""));
 			List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
 			if(bmCheckStep.size()!=0){
@@ -575,8 +603,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			JQueryPager pagedRequests = null;
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
 					PagerFactory.JQUERYTYPE, getRequest());
-			pagedRequests = budgetModelManager
-					.getBudgetModelCriteria(pagedRequests,filters);
+			pagedRequests = bmModelDeptManager.getBmModelDeptCriteria(pagedRequests,filters);
 			this.bmModelDepts = (List<BmModelDept>) pagedRequests.getList();
 			records = pagedRequests.getTotalNumberOfRows();
 			total = pagedRequests.getTotalNumberOfPages();
@@ -623,7 +650,8 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				return ajaxForward(false, "改模板已经初始化！", false);
 			}else{
 				List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
-				processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode","bmCheck"));
+				String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+				processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
 				processStepFilters.add(new PropertyFilter("OAS_state",""));
 				List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
 				if(bmCheckStep.size()==0){
@@ -674,7 +702,8 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		try {
 			budgetModel = budgetModelManager.get(modelId);
 			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
-			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode","bmCheck"));
+			String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
 			processStepFilters.add(new PropertyFilter("INS_stepCode",stepCode));
 			processStepFilters.add(new PropertyFilter("OAS_state",""));
 			List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
@@ -825,6 +854,14 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	}
 	public String saveBmModelProcess(){
 		try {
+			String checkDeptId = bmModelProcess.getCheckDeptId();
+			String checkPersonId = bmModelProcess.getCheckPersonId();
+			if("".equals(checkDeptId)){
+				bmModelProcess.setCheckDeptId(null);
+			}
+			if("".equals(checkPersonId)){
+				bmModelProcess.setCheckPersonId(null);
+			}
 			bmModelProcessManager.save(bmModelProcess);
 			return ajaxForward("保存成功！");
 		} catch (Exception e) {
@@ -883,6 +920,173 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			e.printStackTrace();
 			return ajaxForward(false,"保存失败！",false);
 		}
+	}
+	
+	public String delBmModelDepartment(){
+		try {
+			deptId = deptId.replaceAll(" ", "");
+			String[] ids = deptId.split(",");
+			bmModelDeptManager.remove(ids);
+			return ajaxForward(true,"删除成功！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"删除失败！",false);
+		}
+	}
+	
+	public String copyBudgetModel(){
+		if (modelId != null) {
+        	budgetModel = budgetModelManager.get(modelId);
+        	BudgetModel budgetModel2 = budgetModel.clone();
+        	budgetModel2.setModelId(budgetModel.getModelId()+"copy");
+        	budgetModel2.setModelCode(budgetModel.getModelCode()+"copy");
+        	budgetModel2.setModelName(budgetModel.getModelName()+"copy");
+        	budgetModel2 = budgetModelManager.save(budgetModel2);
+        	
+        	Set<BmModelProcess> bmModelProcesses = budgetModel.getBmModelProcesses();
+        	Map<String, BmModelProcess> proessMap = new HashMap<String, BmModelProcess>();
+        	for(BmModelProcess bmModelProcess : bmModelProcesses){
+        		BmModelProcess bmModelProcess2 = bmModelProcess.clone();
+        		bmModelProcess2.setBmProcessId(null);
+        		bmModelProcess2.setBudgetModel(budgetModel2);
+        		bmModelProcess2.setOkStep(null);
+        		bmModelProcess2.setNoStep(null);
+        		bmModelProcess2 = bmModelProcessManager.save(bmModelProcess2);
+        		proessMap.put(bmModelProcess2.getStepCode(), bmModelProcess2);
+        	}
+        	for(BmModelProcess bmModelProcess : bmModelProcesses){
+        		BmModelProcess bmModelProcessOk = bmModelProcess.getOkStep();
+        		BmModelProcess bmModelProcessNo = bmModelProcess.getNoStep();
+        		String stepCode = bmModelProcess.getStepCode();
+        		BmModelProcess bmModelProcess2 = proessMap.get(stepCode);
+        		if(bmModelProcessOk!=null){
+        			String okStep = bmModelProcessOk.getStepCode();
+        			BmModelProcess bmModelProcessOk2 = proessMap.get(okStep);
+        			bmModelProcess2.setOkStep(bmModelProcessOk2);
+        		}
+        		if(bmModelProcessNo!=null){
+        			String okStep = bmModelProcessNo.getStepCode();
+        			BmModelProcess bmModelProcessNo2 = proessMap.get(okStep);
+        			bmModelProcess2.setOkStep(bmModelProcessNo2);
+        		}
+        		bmModelProcessManager.save(bmModelProcess2);
+        	}
+        	
+        	Set<Department> departments = budgetModel.getDepartments();
+        	for(Department department : departments){
+        		BmModelDept bmModelDept = new BmModelDept();
+				bmModelDept.setBmModel(budgetModel2);
+				bmModelDept.setBmDepartment(department);
+				bmModelDeptManager.save(bmModelDept);
+        	}
+        	
+        	budgetModel = budgetModel2;
+        	
+        	this.setEntityIsNew(false);
+        }
+        modelTypes = ContextUtil.getDicItemsByCode("bmModelType");
+        return SUCCESS;
+	}
+	
+    private Department department;
+    private String departmentId;
+    private String autoPrefixId;
+    private boolean inUse;
+    private Integer editType;
+    
+    private OrgManager orgManager;
+	
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+	public String getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
+	}
+	public String getAutoPrefixId() {
+		return autoPrefixId;
+	}
+	public void setAutoPrefixId(String autoPrefixId) {
+		this.autoPrefixId = autoPrefixId;
+	}
+	public boolean isInUse() {
+		return inUse;
+	}
+	public void setInUse(boolean inUse) {
+		this.inUse = inUse;
+	}
+	public Integer getEditType() {
+		return editType;
+	}
+	public void setEditType(Integer editType) {
+		this.editType = editType;
+	}
+	public void setOrgManager(OrgManager orgManager) {
+		this.orgManager = orgManager;
+	}
+	public String editBmDepartment(){
+		HttpServletRequest req = this.getRequest();
+    	String orgCode = req.getParameter("orgCode");
+		String pDeptId = req.getParameter("pDeptId");
+		this.autoPrefixId = this.getGlobalParamByKey("autoPrefixId");
+        if ( departmentId != null ) {
+            department = departmentManager.get( departmentId );
+            inUse = departmentManager.isInUse(departmentId);
+            this.editType = 1;
+            this.setEntityIsNew( false );
+        }
+        else {
+        	department = new Department();
+        	if(OtherUtil.measureNotNull(orgCode)){
+        		department.setOrg(orgManager.get(orgCode));
+        	}
+        	if(OtherUtil.measureNotNull(pDeptId)){
+        		Department pdDepartment = departmentManager.get(pDeptId);
+        		department.setParentDept(pdDepartment);
+        		department.setOrg(pdDepartment.getOrg());
+        	}
+            this.editType = 0;
+            this.setEntityIsNew( true );
+        }
+        this.deptClassList = this.deptTypeManager.getAllExceptDisable();
+        this.outinList = this.getDictionaryItemManager().getAllItemsByCode( "outin" );
+        this.subClassList = this.getDictionaryItemManager().getAllItemsByCode( "subClass" );
+        this.jjDeptTypeList = khDeptTypeManager.getAllExceptDisable();
+        this.dgroupList = this.getDictionaryItemManager().getAllItemsByCode("dgroup");
+        this.branches = branchManager.getAllAvailable();
+        return SUCCESS;
+	}
+	
+	public String checkBmModelProcess(){
+		try {
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("",""));
+			List<BmModelProcess> bmModelProcesses = bmModelProcessManager.getByFilters(filters);
+			Map<String, BmModelProcess> bmProcessMap = new HashMap<String, BmModelProcess>();
+			for(BmModelProcess bmModelProcess : bmModelProcesses){
+				bmProcessMap.put(bmModelProcess.getStepCode(), bmModelProcess);
+			}
+			return ajaxForward(true,"检查通过！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"检查失败！",false);
+		}
+	}
+	String bmCheckProcessCode;
+	public String getBmCheckProcessCode() {
+		return bmCheckProcessCode;
+	}
+	public void setBmCheckProcessCode(String bmCheckProcessCode) {
+		this.bmCheckProcessCode = bmCheckProcessCode;
+	}
+	public String selectBmModelProcess(){
+		bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+		return SUCCESS;
 	}
 }
 

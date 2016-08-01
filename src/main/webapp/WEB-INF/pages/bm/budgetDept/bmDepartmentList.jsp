@@ -117,8 +117,8 @@ function bmDepartmentGridReload(){
 					{name : 'name',index : 'name',align : 'left',width:120,label : '<s:text name="department.name" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'shortnName',index : 'shortnName',align : 'left',width:120,label : '<s:text name="department.shortnName" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'deptCode',index : 'deptCode',align : 'left',width:100,label : '<s:text name="department.deptCode" />',hidden : false, sortable:true,highsearch:true},
-					{name : 'org.orgname',index : 'org.orgname',align : 'left',width:130,label : '<s:text name="department.orgCode" />',hidden : false,highsearch:true},
-					{name : 'branch.branchName',index : 'branch.branchName',align : 'left',width:130,label : '<s:text name="department.branchCode" />',hidden : false,highsearch:true},
+					{name : 'org.orgname',index : 'org.orgname',align : 'left',width:130,label : '<s:text name="department.orgCode" />',hidden : true,highsearch:true},
+					{name : 'branch.branchName',index : 'branch.branchName',align : 'left',width:130,label : '<s:text name="department.branchCode" />',hidden : true,highsearch:true},
 					{name : 'deptClass',index : 'deptClass',align : 'center',width:70,label : '<s:text name="department.deptClass" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'outin',index : 'outin',align : 'left',width:70,label : '<s:text name="department.outin" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'dgroup',index : 'dgroup',align : 'left',width:70,label : '<s:text name="department.dgroup" />',hidden : false, sortable:true,highsearch:true},
@@ -127,15 +127,15 @@ function bmDepartmentGridReload(){
 					{name : 'parentDept.name',index : 'parentDept.name',align : 'left',width:100,label : '<s:text name="department.parentDeptName" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'subClass',index : 'subClass',align : 'center',width:100,label : '<s:text name="department.subClass" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'cnCode',index : 'cnCode',align : 'left',width:100,label : '<s:text name="department.cnCode" />',hidden : false, sortable:true,highsearch:true},
-					{name : 'jjDeptType.khDeptTypeName',index : 'jjDeptType.khDeptTypeName',align : 'center',width:100,label : '<s:text name="department.jjDeptType" />',hidden : false, sortable:true,highsearch:true},
+					{name : 'jjDeptType.khDeptTypeName',index : 'jjDeptType.khDeptTypeName',align : 'center',width:100,label : '<s:text name="department.jjDeptType" />',hidden : true, sortable:true,highsearch:true},
 					{name : 'internalCode',index : 'internalCode',align : 'left',width:100,label : '<s:text name="department.internalCode" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'manager',index : 'manager',align : 'left',width:100,label : '<s:text name="department.manager" />',hidden : false, sortable:true,highsearch:true},
 					{name : 'cbLeaf',index : 'cbLeaf',align : 'center',width:50,label : '<s:text name="department.cbLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
 					{name : 'xmLeaf',index : 'xmLeaf',align : 'center',width:50,label : '<s:text name="department.xmLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
 					{name : 'crLeaf',index : 'crLeaf',align : 'center',width:50,label : '<s:text name="department.crLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
 					{name : 'zcLeaf',index : 'zcLeaf',align : 'center',width:50,label : '<s:text name="department.zcLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
-					{name : 'ysDeptName',index : 'ysDeptName',align : 'left',width:100,label : '<s:text name="department.ysName" />',hidden : true, sortable:true,highsearch:true},
-					{name : 'ysLeaf',index : 'ysLeaf',align : 'center',width:50,label : '<s:text name="department.ysLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
+					{name : 'ysDeptName',index : 'ysDeptName',align : 'left',width:100,label : '<s:text name="department.ysName" />',hidden : false, sortable:true,highsearch:true},
+					{name : 'ysLeaf',index : 'ysLeaf',align : 'center',width:50,label : '<s:text name="department.ysLeaf" />',hidden : false, sortable:true,formatter:'checkbox',highsearch:true},
 					{name : 'jjDeptName',index : 'jjDeptName',align : 'left',width:100,label : '<s:text name="department.jjName" />',hidden : true, sortable:true,highsearch:true},
 					{name : 'jjLeaf',index : 'jjLeaf',align : 'center',width:50,label : '<s:text name="department.jjLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
 					{name : 'yjDeptName',index : 'yjDeptName',align : 'left',width:100,label : '<s:text name="department.yjDeptId" />',hidden : true, sortable:true,highsearch:true},
@@ -204,7 +204,7 @@ function bmDepartmentGridReload(){
 	    		width : 700,
 	    		height : 580,
 	    		base_URL : null,
-	    		optId : null,
+	    		optId : 'departmentId',
 	    		fatherGrid : null,
 	    		extraParam : null,
 	    		selectNone : "请选择记录。",
@@ -417,9 +417,16 @@ function bmDepartmentGridReload(){
 							list="subClassList" cssClass="required" listKey="value"
 							listValue="content" emptyOption="true" theme="simple" name="filter_EQS_subClass"></s:select>
 								</label>
-								<label class="queryarea-label"><fmt:message key='department.jjDeptType' />：
+								<%-- <label class="queryarea-label"><fmt:message key='department.jjDeptType' />：
 									<s:select name="filter_EQS_jjDeptType.khDeptTypeId"  list="jjDeptTypeList" cssClass="required"  listKey="khDeptTypeId" listValue="khDeptTypeName"   emptyOption="true" theme="simple"></s:select>
-								</label>
+								</label> --%>
+								<label class="queryarea-label">
+								<s:text name='department.ysLeaf'/>:
+					 		<s:select name="filter_EQB_ysLeaf" headerKey="" headerValue="--" 
+								list="#{'1':'是','0':'否' }" listKey="key" listValue="value"
+								emptyOption="false"  maxlength="10" theme="simple">
+							</s:select>
+							</label>
 								<label class="queryarea-label"><fmt:message key='department.disabled' />： 
 									<s:select list="#{'':'--','true':'是','false':'否'}" name="filter_EQB_disabled"></s:select>
 								</label>

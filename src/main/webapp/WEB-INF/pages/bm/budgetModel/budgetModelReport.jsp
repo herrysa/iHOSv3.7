@@ -1,7 +1,6 @@
 <%@ include file="/common/taglibs.jsp"%>
 <%@ page language="java"   pageEncoding="UTF-8"%>
 <script type="text/javascript">
-var reportDefineReportXml = "";
 var budgetReportDefine = {
 		key:"${random}_budgetReport_gridtable",
 		main:{
@@ -50,13 +49,6 @@ var budgetReportDefine = {
 			}
 		}
 	}; 
-	if(reportDefineReportXml){
-		reportDefineReportXml = reportDefineReportXml.replaceAll("&#034;","\"");
-		reportDefineReportXml = reportDefineReportXml.replaceAll("&lt;","<");
-		reportDefineReportXml = reportDefineReportXml.replaceAll("&gt;",">");
-		//alert(reportDefineReportXml);
-		//reportPlanDefine.main.Build = reportDefineReportXml;
-	}
 	
     supcanGridMap.put('budgetReport_gridtable_${random}',budgetReportDefine); 
  	jQuery(document).ready(function(){

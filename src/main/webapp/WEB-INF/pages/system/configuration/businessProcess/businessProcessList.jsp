@@ -78,43 +78,43 @@
 <div class="page">
 	<div id="businessProcess_container">
 	<div id="businessProcess_layout-center" class="pane ui-layout-center" style="padding: 2px">
-	<div id="businessProcess_pageHeader" class="pageHeader">
+		<div id="businessProcess_pageHeader" class="pageHeader">
 			<div class="searchBar">
 				<div class="searchContent">
 				<form id="businessProcess_search_form" >
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcess.processCode'/>:
-						<input type="text" name="filter_EQS_processCode"/>
+						<input type="text" name="filter_LIKES_processCode"/>
 					</label>
-					<%-- <label style="float:none;white-space:nowrap" >
+					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcess.businessTable'/>:
-						<input type="text" name="filter_EQS_businessTable"/>
-					</label> --%>
+						<input type="text" name="filter_LIKES_businessTable"/>
+					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcess.processName'/>:
-						<input type="text" name="filter_EQS_processName"/>
+						<input type="text" name="filter_LIKES_processName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcess.processType'/>:
-						<input type="text" name="filter_EQS_processType"/>
+						<input type="text" name="filter_LIKES_processType"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcess.remark'/>:
-						<input type="text" name="filter_EQS_remark"/>
+						<input type="text" name="filter_LIKES_remark"/>
 					</label>
-					<%-- <label style="float:none;white-space:nowrap" >
+					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcess.stateColumn'/>:
 						<input type="text" name="filter_EQS_stateColumn"/>
-					</label> --%>
+					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(businessProcess_search_form,businessProcess_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('businessProcess_search_form','businessProcess_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
 				</form>
 				</div>
 			</div>
-	</div>
+	</div> 
 	<div class="pageContent">
 		<div id="businessProcess_buttonBar" class="panelBar">
 			<ul class="toolBar">
@@ -134,7 +134,7 @@
 			
 			</ul>
 		</div>
-		<div id="businessProcess_gridtable_div" layoutH="120" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div id="businessProcess_gridtable_div" class="grid-wrapdiv" buttonBar="optId:processCode;width:500;height:300">
 			<input type="hidden" id="businessProcess_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="businessProcess_gridtable_addTile">
 				<s:text name="businessProcessNew.title"/>

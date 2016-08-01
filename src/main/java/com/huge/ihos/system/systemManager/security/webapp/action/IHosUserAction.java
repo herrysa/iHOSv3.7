@@ -811,7 +811,7 @@ public class IHosUserAction
     		}
     		String businessDate = systemVariable.getBusinessDate();
     		
-    		if(ContextUtil.versionType==1){
+    		if(ContextUtil.versionType==1||ContextUtil.versionType==2){
     			Date busDate = DateUtil.convertStringToDate(businessDate);
     			if(ContextUtil.maxDate!=-9&&ContextUtil.maxDate<busDate.getTime()){
     				return ajaxForward(false,"期间错误，请重新选择！",false);

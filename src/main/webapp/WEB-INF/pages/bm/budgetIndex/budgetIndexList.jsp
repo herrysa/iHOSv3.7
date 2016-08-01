@@ -132,6 +132,24 @@
 		$.pdialog.open(url,'editBudgetIndex',winTitle, {mask:true,width : 500,height : 450});
     });
     
+    jQuery("#budgetIndex_gridtable_del_c").click(function(){
+    	var sid = jQuery("#budgetIndex_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择一条记录！");
+    		return;
+    	}
+    	$.post("budgetIndexGridEdit", {
+    		"_" : $.now(),id:sid,oper:'del',navTabId:'budgetIndex_gridtable'
+		}, function(data) {
+			formCallBack(data);
+			var zTree = $.fn.zTree.getZTreeObj("budgetIndexTreeLeft"); 
+			for(var i in sid){
+				var oldNode = zTree.getNodeByParam("id", sid[i], null);
+				zTree.removeNode(oldNode);
+			}
+		});
+    });
+    
     jQuery("#budgetIndex_gridtable_reload").click(function(){
     	var zTree = $.fn.zTree.getZTreeObj("budgetIndexTreeLeft");
 		var treeNodes = zTree.getSelectedNodes();
@@ -235,7 +253,7 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetIndex_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
+				<li><a id="budgetIndex_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
 				<li><a id="budgetIndex_gridtable_edit_c" class="changebutton"  href="javaScript:"

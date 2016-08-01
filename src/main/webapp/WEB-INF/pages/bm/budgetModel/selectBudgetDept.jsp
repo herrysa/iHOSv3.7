@@ -38,8 +38,18 @@ jQuery(document).ready(function() {
 		var bmDepartmentTree = $.fn.zTree.init($("#bmDepartmentTree"),
 				ztreesetting_budgetDept, bmDepartmentTreeData);
 		var nodes = bmDepartmentTree.getNodes();
-		bmDepartmentTree.expandNode(nodes[0], true, false, true);
-		bmDepartmentTree.selectNode(nodes[0]);
+		//bmDepartmentTree.expandNode(nodes[0], true, false, true);
+		//bmDepartmentTree.selectNode(nodes[0]);
+		var deptId = "${deptId}";
+		var deptIdArr = null;
+		deptIdArr = deptId.split(",");
+		for(var i in deptIdArr){
+			var nodeId = deptIdArr[i];
+			if(nodeId){
+				var node = bmDepartmentTree.getNodeByParam("id",nodeId,null);
+				bmDepartmentTree.checkNode(node, true);
+			}
+		}
 		
 	});
 	
@@ -48,12 +58,15 @@ jQuery(document).ready(function() {
 		var nodes = bmDepartmentTree.getCheckedNodes();
 		var s = "";
 		for ( var i = 0; i < nodes.length; i++) {
-			s += nodes[i].id+",";
+			var node = nodes[i];
+			if(!node.isParent){
+				s += node.id+",";
+			}
 		}
 		$.get("saveBmDepartment", {
-			"_" : $.now(),deptId:s,modelId:"${modelId}"
+			"_" : $.now(),deptId:s,modelId:"${modelId}",navTabId:'bmsDepartment_gridtable'
 		}, function(data) {
-			
+			formCallBack(data);
 		});
 	});
 });

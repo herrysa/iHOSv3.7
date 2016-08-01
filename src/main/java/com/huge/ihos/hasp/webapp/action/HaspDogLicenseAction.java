@@ -99,8 +99,10 @@ public class HaspDogLicenseAction
 
         try {
             license = this.dogService.getLicense();
-
-            license.setProducts( this.fillProductFromMenu( license.getProducts() ) );
+            if(license!=null){
+            	
+            	license.setProducts( this.fillProductFromMenu( license.getProducts() ) );
+            }
 
         }
         catch ( AppException e ) {

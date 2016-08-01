@@ -10,18 +10,25 @@ jQuery(document).ready(function() {
 		datatype : "json",
 		mtype : "GET",
     	colModel:[
-		{name:'bmProcessId',index:'bmProcessId',align:'center',label : '<s:text name="modelProcess.bmProcessId" />',hidden:true,key:true},
-		{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="modelProcess.stepCode" />',hidden:true},
-		{name:'stepName',index:'stepName',align:'center',label : '<s:text name="modelProcess.stepName" />',hidden:false},
-		{name:'roleId',index:'roleId',align:'center',label : '<s:text name="modelProcess.roleId" />',hidden:true},
-		{name:'okName',index:'okName',align:'center',label : '<s:text name="modelProcess.okName" />',hidden:false},
-		{name:'noName',index:'noName',align:'center',label : '<s:text name="modelProcess.noName" />',hidden:false},
-		{name:'roleName',index:'roleName',align:'center',label : '<s:text name="modelProcess.roleName" />',hidden:false},
-		{name:'state',index:'state',align:'center',label : '<s:text name="modelProcess.state" />',hidden:false,formatter:'integer'},
-		{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="modelProcess.stepInfo" />',hidden:false,formatter:'checkbox'},
-		{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="modelProcess.unionCheck" />',hidden:false,formatter:'checkbox'},
-		{name:'condition',index:'condition',align:'center',label : '<s:text name="modelProcess.condition" />',hidden:true},
-		{name:'remark',index:'remark',align:'center',label : '<s:text name="modelProcess.remark" />',hidden:false}
+		{name:'bmProcessId',index:'bmProcessId',align:'left',label : '<s:text name="modelProcess.bmProcessId" />',hidden:true,key:true},
+		{name:'stepCode',index:'stepCode',align:'left',label : '<s:text name="modelProcess.stepCode" />',hidden:true,width:100},
+		{name:'stepName',index:'stepName',align:'left',label : '<s:text name="modelProcess.stepName" />',hidden:false,width:100},
+		{name:'roleId',index:'roleId',align:'left',label : '<s:text name="modelProcess.roleId" />',hidden:true,width:100},
+		{name:'okName',index:'okName',align:'left',label : '<s:text name="modelProcess.okName" />',hidden:false,width:100},
+		{name:'noName',index:'noName',align:'left',label : '<s:text name="modelProcess.noName" />',hidden:false,width:100},
+		{name:'okStep.stepName',index:'okStep.stepName',align:'left',label : '<s:text name="modelProcess.okStep" />',hidden:false,width:100},
+		{name:'noStep.stepName',index:'noStep.stepName',align:'left',label : '<s:text name="modelProcess.noStep" />',hidden:false,width:100},
+		{name:'roleName',index:'roleName',align:'left',label : '<s:text name="modelProcess.roleName" />',hidden:false,width:100},
+		{name:'checkDeptName',index:'checkDeptName',align:'left',label : '<s:text name="modelProcess.checkDept" />',hidden:false,width:100},
+		{name:'checkDeptName',index:'checkDeptName',align:'left',label : '<s:text name="modelProcess.checkDept" />',hidden:false,width:100},
+		{name:'checkPersonName',index:'checkPersonName',align:'left',label : '<s:text name="modelProcess.checkPerson" />',hidden:false,width:100},
+		{name:'state',index:'state',align:'right',label : '<s:text name="modelProcess.state" />',hidden:false,formatter:'integer',width:60},
+		{name:'isEnd',index:'isEnd',align:'center',label : '<s:text name="modelProcess.isEnd" />',hidden:false,formatter:'checkbox',width:70},
+		{name:'condition',index:'condition',align:'center',label : '<s:text name="modelProcess.condition" />',hidden:false,width:100},
+		{name:'bmDept',index:'bmDept',align:'center',label : '<s:text name="modelProcess.bmDept" />',hidden:false,formatter:'checkbox',width:70},
+		{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="modelProcess.unionCheck" />',hidden:false,formatter:'checkbox',width:70},
+		{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="modelProcess.stepInfo" />',hidden:false,formatter:'checkbox',width:70},
+		{name:'remark',index:'remark',align:'left',label : '<s:text name="modelProcess.remark" />',hidden:false,width:200}
 		],
     	jsonReader : {
 			root : "modelProcesss", // (2)
@@ -41,8 +48,8 @@ jQuery(document).ready(function() {
     	loadui: "disable",
     	multiselect: true,
 		multiboxonly:true,
-		shrinkToFit:true,
-		autowidth:true,
+		shrinkToFit:false,
+		autowidth:false,
     	onSelectRow: function(rowid) {
    		},
 	 	gridComplete:function(){
@@ -75,12 +82,11 @@ jQuery(document).ready(function() {
 		for(var i in ids){
 			var id = ids[i];
 			var rowData = jQuery(modelProcessGridIdString).jqGrid('getRowData',id);
-			alert(json2str(rowData));
 			stepCode += rowData['stepCode']+",";
 		}
 		var url = "selectBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}&stepCode="+stepCode;
 		var winTitle='选择预算审批流程';
-		$.pdialog.open(url,'addBmModelProcess',winTitle, {mask:true,width : 500,height : 450});
+		$.pdialog.open(url,'addBmModelProcess',winTitle, {mask:true,width : 600,height : 450});
 		stopPropagation();
 	});
 	jQuery("#modelProcess_gridtable_del_c").click(function(){
@@ -126,8 +132,23 @@ jQuery(document).ready(function() {
 		}
 		var url = "editBmModelProcess?navTabId=modelProcess_gridtable&bmProcessId="+sid;
 		var winTitle='修改预算审批流程';
-		$.pdialog.open(url,'editBmModelProcess',winTitle, {mask:true,width : 550,height : 500});
+		$.pdialog.open(url,'editBmModelProcess',winTitle, {mask:true,width : 600,height : 500});
 		stopPropagation();
+	});
+	jQuery("#modelProcess_gridtable_process_check").click(function(){
+		var url = "checkBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}";
+		$.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            async:false,
+            error: function(data){
+            alertMsg.error("系统错误！");
+            },
+            success: function(data){
+            	formCallBack(data);
+            }
+        });
 	});
 });
 </script>
@@ -136,7 +157,7 @@ jQuery(document).ready(function() {
 	<div class="pageContent">
 		<div id="modelProcess_buttonBar" class="panelBar">
 			<ul class="toolBar">
-				<li><a id="modelProcess_gridtable_refresh" class="changebutton"  href="javaScript:"><span>初始化</span>
+				<li><a id="modelProcess_gridtable_refresh" class="initbutton"  href="javaScript:"><span>初始化</span>
 				</a>
 				</li>
 				<li><a id="modelProcess_gridtable_add_c" class="addbutton" href="javaScript:" ><span>添加</span>
@@ -151,6 +172,9 @@ jQuery(document).ready(function() {
 				<li><a id="modelProcess_gridtable_delAll_c" class="delbutton"  href="javaScript:"><span>全部删除</span>
 				</a>
 				</li>
+				<!-- <li><a id="modelProcess_gridtable_process_check" class="delbutton"  href="javaScript:"><span>流程检查</span>
+				</a>
+				</li> -->
 			</ul>
 		</div>
 		<div id="modelProcess_gridtable_div" layoutH="63" class="grid-wrapdiv">

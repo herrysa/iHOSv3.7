@@ -9,12 +9,28 @@
 			jQuery("#budgetTypeForm").submit();
 		});*/
 	});
+	function saveBudgetTypeCallback(data){
+		formCallBack(data);
+		if(data.statusCode!=200){
+			return;
+		}
+		var budgetTypeNode = data.budgetTypeNode;
+		var zTree = $.fn.zTree.getZTreeObj("budgetTypeTreeLeft"); 
+		if("${entityIsNew}"=="true"){
+			var parentNode = zTree.getNodeByParam("id", budgetTypeNode.pId, null);
+			node = zTree.addNodes(parentNode,budgetTypeNode);
+		}else{
+			var oldNode = zTree.getNodeByParam("id", budgetTypeNode.id, null);
+			oldNode.name = budgetTypeNode.name;
+			zTree.updateNode(oldNode);
+		}
+	}
 </script>
 </head>
 
 <div class="page">
 	<div class="pageContent">
-		<form id="budgetTypeForm" method="post"	action="saveBudgetType?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
+		<form id="budgetTypeForm" method="post"	action="saveBudgetType?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,saveBudgetTypeCallback);">
 			<div class="pageFormContent" layoutH="56">
 				<div class="unit">
 					<s:if test="%{entityIsNew}">

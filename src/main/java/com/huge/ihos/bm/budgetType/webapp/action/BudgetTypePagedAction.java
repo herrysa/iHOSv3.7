@@ -27,8 +27,18 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
 
 	private String budgetTypeCode;
 	private String parentId;
+	
+	private Map<String, Object> budgetTypeNode;
 
 	
+	public Map<String, Object> getBudgetTypeNode() {
+		return budgetTypeNode;
+	}
+
+	public void setBudgetTypeNode(Map<String, Object> budgetTypeNode) {
+		this.budgetTypeNode = budgetTypeNode;
+	}
+
 	public String getParentId() {
 		return parentId;
 	}
@@ -109,7 +119,11 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
 			if("-1".equals(parentBudgetType.getBudgetTypeCode())){
 				budgetType.setParentId(null);
 			}
-			budgetTypeManager.save(budgetType);
+			budgetType = budgetTypeManager.save(budgetType);
+			budgetTypeNode = new HashMap<String, Object>();
+			budgetTypeNode.put("id", budgetType.getBudgetTypeCode());
+			budgetTypeNode.put("name", budgetType.getBudgetTypeCode()+" "+budgetType.getBudgetTypeName());
+			budgetTypeNode.put("pId", budgetType.getParentId().getBudgetTypeCode());
 		} catch (Exception dre) {
 			gridOperationMessage = dre.getMessage();
 			return ajaxForwardError(gridOperationMessage);
@@ -158,7 +172,7 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
 				StringTokenizer ids = new StringTokenizer(id,
 						",");
 				while (ids.hasMoreTokens()) {
-					String removeId = ids.nextToken();
+					String removeId = ids.nextToken().trim();
 					log.debug("Delete Customer " + removeId);
 					BudgetType budgetType = budgetTypeManager.get(removeId);
 					budgetTypeManager.remove(removeId);
@@ -198,7 +212,7 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
 		for(BudgetType budgetType : budgetTypes){
 			Map<String, String> budgetTypeTemp = new HashMap<String, String>();
 			budgetTypeTemp.put("id", budgetType.getBudgetTypeCode());
-			budgetTypeTemp.put("name", budgetType.getBudgetTypeName());
+			budgetTypeTemp.put("name", budgetType.getBudgetTypeCode()+" "+budgetType.getBudgetTypeName());
 			if(budgetType.getParentId()==null||"".equals(budgetType.getParentId().getBudgetTypeCode())){
 				budgetTypeTemp.put("pId", "-1");
 			}else{
@@ -216,6 +230,23 @@ public class BudgetTypePagedAction extends JqGridBaseAction implements Preparabl
 
 		return SUCCESS;
 
+	}
+	
+	public String findBudgetType(){
+		try {
+			if (budgetTypeCode!=null) {
+				budgetType = budgetTypeManager.get(budgetTypeCode);
+				budgetTypeNode = new HashMap<String, Object>();
+				budgetTypeNode.put("exceedBudgetType", budgetType.getExceedBudgetType());
+				budgetTypeNode.put("warningPercent", budgetType.getWarningPercent());
+				return ajaxForward(true, "", false);
+			}else{
+				return ajaxForward(false, "", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false, e.getMessage(), false);
+		}
 	}
 }
 

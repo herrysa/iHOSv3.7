@@ -133,7 +133,7 @@
  	        <result name="success">/WEB-INF/pages/system/systemManager/organization/departmentForm.jsp</result>
  	        <result name="input">/WEB-INF/pages/system/systemManager/organization/departmentForm.jsp</result>
  	    </action>
-        
+ 	    
         <!--  called when clicking save on the edit form -->
         <action name="saveDepartment" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction" method="save">
            <result name="success" type="json">

@@ -7,7 +7,7 @@
 
 	<package name="budgetModelXf" extends="default"	namespace="/">
 
-		<action name="budgetModelXfList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction">
+		<action name="budgetModelXfList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction" method="budgetModelXfList">
 			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfList.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfList.jsp</result>
 		</action>

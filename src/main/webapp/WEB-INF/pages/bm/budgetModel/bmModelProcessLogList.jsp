@@ -8,12 +8,25 @@
 	jQuery(document).ready(function() { 
 		var bmModelProcessLogGrid = jQuery(bmModelProcessLogGridIdString);
     	bmModelProcessLogGrid.jqGrid({
-    		url : "bmModelProcessLogGridList",
+    		url : "bmModelProcessLogGridList?filter_EQS_updataId=${updataId}",
     		editurl:"bmModelProcessLogGridEdit",
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-{name:'logId',index:'logId',align:'center',label : '<s:text name="bmModelProcessLog.logId" />',hidden:false,key:true},{name:'deptId',index:'deptId',align:'center',label : '<s:text name="bmModelProcessLog.deptId" />',hidden:false},{name:'deptName',index:'deptName',align:'center',label : '<s:text name="bmModelProcessLog.deptName" />',hidden:false},{name:'info',index:'info',align:'center',label : '<s:text name="bmModelProcessLog.info" />',hidden:false},{name:'modelId',index:'modelId',align:'center',label : '<s:text name="bmModelProcessLog.modelId" />',hidden:false},{name:'operation',index:'operation',align:'center',label : '<s:text name="bmModelProcessLog.operation" />',hidden:false},{name:'optTime',index:'optTime',align:'center',label : '<s:text name="bmModelProcessLog.optTime" />',hidden:false,formatter:'date'},{name:'personId',index:'personId',align:'center',label : '<s:text name="bmModelProcessLog.personId" />',hidden:false},{name:'personName',index:'personName',align:'center',label : '<s:text name="bmModelProcessLog.personName" />',hidden:false},{name:'state',index:'state',align:'center',label : '<s:text name="bmModelProcessLog.state" />',hidden:false,formatter:'integer'},{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="bmModelProcessLog.stepCode" />',hidden:false},{name:'updataId',index:'updataId',align:'center',label : '<s:text name="bmModelProcessLog.updataId" />',hidden:false}        	],
+			{name:'logId',index:'logId',align:'center',label : '<s:text name="bmModelProcessLog.logId" />',hidden:true,key:true},
+			{name:'deptId',index:'deptId',align:'center',label : '<s:text name="bmModelProcessLog.deptId" />',hidden:true},
+			{name:'deptName',index:'deptName',align:'left',label : '<s:text name="bmModelProcessLog.dept" />',hidden:false,width:150},
+			{name:'personName',index:'personName',align:'left',label : '<s:text name="bmModelProcessLog.person" />',hidden:false,width:100},
+			{name:'modelId',index:'modelId',align:'left',label : '<s:text name="bmModelProcessLog.modelId" />',hidden:false,width:150},
+			{name:'stepName',index:'stepName',align:'left',label : '<s:text name="bmModelProcessLog.stepName" />',hidden:false,width:100},
+			{name:'operation',index:'operation',align:'left',label : '<s:text name="bmModelProcessLog.operation" />',hidden:false,width:60},
+			{name:'optTime',index:'optTime',align:'center',label : '<s:text name="bmModelProcessLog.optTime" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
+			{name:'info',index:'info',align:'left',label : '<s:text name="bmModelProcessLog.info" />',hidden:false,width:150},
+			{name:'personId',index:'personId',align:'left',label : '<s:text name="bmModelProcessLog.personId" />',hidden:true},
+			{name:'state',index:'state',align:'right',label : '<s:text name="bmModelProcessLog.state" />',hidden:false,formatter:'integer',width:60},
+			{name:'stepCode',index:'stepCode',align:'left',label : '<s:text name="bmModelProcessLog.stepCode" />',hidden:true},
+			{name:'updataId',index:'updataId',align:'left',label : '<s:text name="bmModelProcessLog.updataId" />',hidden:true} 
+			],
         	jsonReader : {
 				root : "bmModelProcessLogs", // (2)
 				page : "page",
@@ -22,9 +35,9 @@
 				repeatitems : false
 				// (4)
 			},
-        	sortname: 'logId',
+        	sortname: 'optTime',
         	viewrecords: true,
-        	sortorder: 'desc',
+        	sortorder: 'asc',
         	//caption:'<s:text name="bmModelProcessLogList.title" />',
         	height:300,
         	gridview:true,
@@ -32,8 +45,8 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
         	onSelectRow: function(rowid) {
        		},
 		 	gridComplete:function(){
@@ -47,6 +60,9 @@
 
     	});
     jQuery(bmModelProcessLogGrid).jqGrid('bindKeys');
+    jQuery("#bmModelProcessLog_gridtable_graph").click(function(){
+    	alert("敬请期待！");
+    });
   	});
 </script>
 
@@ -56,88 +72,47 @@
 				<div class="searchContent">
 				<form id="bmModelProcessLog_search_form" >
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.logId'/>:
-						<input type="text" name="filter_EQS_logId"/>
+						<s:text name='bmModelProcessLog.dept'/>:
+						<input type="text" name="filter_LIKES_deptName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.deptId'/>:
-						<input type="text" name="filter_EQS_deptId"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.deptName'/>:
-						<input type="text" name="filter_EQS_deptName"/>
+						<s:text name='bmModelProcessLog.person'/>:
+						<input type="text" name="filter_LIKES_personName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmModelProcessLog.info'/>:
-						<input type="text" name="filter_EQS_info"/>
+						<input type="text" name="filter_LIKES_info"/>
 					</label>
-					<label style="float:none;white-space:nowrap" >
+					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='bmModelProcessLog.modelId'/>:
 						<input type="text" name="filter_EQS_modelId"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.operation'/>:
-						<input type="text" name="filter_EQS_operation"/>
-					</label>
+					</label> --%>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmModelProcessLog.optTime'/>:
-						<input type="text" name="filter_EQS_optTime"/>
+						从<input type="text" name="filter_GED_optTime" class="input-mini" type="text" 
+									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
+									value="" size="8"/>
+						到&nbsp;<input type="text" name="filter_LED_optTime" class="input-mini" type="text" 
+									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
+									value="" size="8"/>
 					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.personId'/>:
-						<input type="text" name="filter_EQS_personId"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.personName'/>:
-						<input type="text" name="filter_EQS_personName"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.state'/>:
-						<input type="text" name="filter_EQS_state"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.stepCode'/>:
-						<input type="text" name="filter_EQS_stepCode"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmModelProcessLog.updataId'/>:
-						<input type="text" name="filter_EQS_updataId"/>
-					</label>
-				</form>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(bmModelProcessLog_search_form,bmModelProcessLog_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('bmModelProcessLog_search_form','bmModelProcessLog_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
-				</div>
-				<div class="subBar">
-					<ul>
-						<li><div class="buttonActive">
-								<div class="buttonContent">
-									<button type="button" onclick="propertyFilterSearch(bmModelProcessLog_search_form,bmModelProcessLog_gridtable)"><s:text name='button.search'/></button>
-								</div>
-							</div>
-						</li>
-					</ul>
+				</form>
 				</div>
 			</div>
 	</div>
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a id="bmModelProcessLog_gridtable_add" class="addbutton" href="javaScript:" ><span><fmt:message
-								key="button.add" />
-					</span>
+				
+				<li><a id="bmModelProcessLog_gridtable_graph" class="previewbutton"  href="javaScript:"><span>流程图</span>
 				</a>
 				</li>
-				<li><a id="bmModelProcessLog_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
-				</a>
-				</li>
-				<li><a id="bmModelProcessLog_gridtable_edit" class="changebutton"  href="javaScript:"
-					><span><s:text name="button.edit" />
-					</span>
-				</a>
-				</li>
+				
 			
 			</ul>
 		</div>

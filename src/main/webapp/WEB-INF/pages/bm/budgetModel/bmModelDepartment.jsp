@@ -12,45 +12,29 @@ jQuery(document).ready(function() {
 		datatype : "json",
 		mtype : "GET",
 		colModel : [
-			{name : 'departmentId',index : 'departmentId',align : 'left',width:100,label : '<s:text name="department.departmentId" />',hidden : true,key : true,highsearch:true},
-			{name : 'name',index : 'name',align : 'left',width:120,label : '<s:text name="department.name" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'deptCode',index : 'deptCode',align : 'left',width:100,label : '<s:text name="department.deptCode" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'org.orgname',index : 'org.orgname',align : 'left',width:130,label : '<s:text name="department.orgCode" />',hidden : false,highsearch:true},
-			{name : 'branch.branchName',index : 'branch.branchName',align : 'left',width:130,label : '<s:text name="department.branchCode" />',hidden : false,highsearch:true},
-			{name : 'deptClass',index : 'deptClass',align : 'center',width:70,label : '<s:text name="department.deptClass" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'outin',index : 'outin',align : 'left',width:70,label : '<s:text name="department.outin" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'dgroup',index : 'dgroup',align : 'left',width:70,label : '<s:text name="department.dgroup" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'clevel',index : 'clevel',align : 'center',width:50,label : '<s:text name="department.clevel" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'leaf',index : 'leaf',align : 'center',width:50,label : '<s:text name="department.leaf" />',hidden : false, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'parentDept.name',index : 'parentDept.name',align : 'left',width:100,label : '<s:text name="department.parentDeptName" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'subClass',index : 'subClass',align : 'center',width:100,label : '<s:text name="department.subClass" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'cnCode',index : 'cnCode',align : 'left',width:100,label : '<s:text name="department.cnCode" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'jjDeptType.khDeptTypeName',index : 'jjDeptType.khDeptTypeName',align : 'center',width:100,label : '<s:text name="department.jjDeptType" />',hidden : true, sortable:true,highsearch:true},
-			{name : 'internalCode',index : 'internalCode',align : 'left',width:100,label : '<s:text name="department.internalCode" />',hidden : true, sortable:true,highsearch:true},
-			{name : 'manager',index : 'manager',align : 'left',width:100,label : '<s:text name="department.manager" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'cbLeaf',index : 'cbLeaf',align : 'center',width:50,label : '<s:text name="department.cbLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'xmLeaf',index : 'xmLeaf',align : 'center',width:50,label : '<s:text name="department.xmLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'crLeaf',index : 'crLeaf',align : 'center',width:50,label : '<s:text name="department.crLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'zcLeaf',index : 'zcLeaf',align : 'center',width:50,label : '<s:text name="department.zcLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'ysDeptName',index : 'ysDeptName',align : 'left',width:100,label : '<s:text name="department.ysName" />',hidden : true, sortable:true,highsearch:true},
-			{name : 'ysLeaf',index : 'ysLeaf',align : 'center',width:50,label : '<s:text name="department.ysLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'jjDeptName',index : 'jjDeptName',align : 'left',width:100,label : '<s:text name="department.jjName" />',hidden : true, sortable:true,highsearch:true},
-			{name : 'jjLeaf',index : 'jjLeaf',align : 'center',width:50,label : '<s:text name="department.jjLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'yjDeptName',index : 'yjDeptName',align : 'left',width:100,label : '<s:text name="department.yjDeptId" />',hidden : true, sortable:true,highsearch:true},
-			{name : 'note',index : 'note',align : 'left',width:120,label : '<s:text name="department.note" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'disabled',index : 'disabled',align : 'center',width:50,label : '<s:text name="department.disabled" />',hidden : false, sortable:true,formatter:'checkbox',highsearch:true},
-			{name : 'orgCode',index : 'orgCode',align : 'center',width:50,label : '<s:text name="department.orgCode" />',hidden : true},
-			{name : 'branchCode',index : 'branchCode',align : 'center',width:50,label : '<s:text name="department.branchCode" />',hidden : true},
-			{name : 'phone',index : 'phone',align : 'center',width:50,label : '<s:text name="department.phone" />',hidden : true, sortable:true,highsearch:true}
+			{name : 'bmDeptId',index : 'bmDeptId',align : 'left',width:100,label : '<s:text name="bmDepartment.bmDeptId" />',hidden : true,key : true},
+			{name : 'bmDepartment.departmentId',index : 'departmentId',align : 'left',width:100,label : '<s:text name="department.departmentId" />',hidden : true,highsearch:true},
+			{name : 'bmDepartment.deptCode',index : 'deptCode',align : 'left',width:100,label : '<s:text name="department.deptCode" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.name',index : 'name',align : 'left',width:120,label : '<s:text name="department.name" />',hidden : false, sortable:true,highsearch:true},
+			/* {name : 'bmDepartment.org.orgname',index : 'org.orgname',align : 'left',width:130,label : '<s:text name="department.orgCode" />',hidden : false,highsearch:true},
+			{name : 'bmDepartment.branch.branchName',index : 'branch.branchName',align : 'left',width:130,label : '<s:text name="department.branchCode" />',hidden : false,highsearch:true}, */
+			{name : 'bmDepartment.deptClass',index : 'deptClass',align : 'center',width:70,label : '<s:text name="department.deptClass" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.outin',index : 'outin',align : 'left',width:70,label : '<s:text name="department.outin" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.dgroup',index : 'dgroup',align : 'left',width:70,label : '<s:text name="department.dgroup" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.clevel',index : 'clevel',align : 'center',width:50,label : '<s:text name="department.clevel" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.subClass',index : 'subClass',align : 'center',width:100,label : '<s:text name="department.subClass" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.cnCode',index : 'cnCode',align : 'left',width:100,label : '<s:text name="department.cnCode" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.ysDeptName',index : 'ysDeptName',align : 'left',width:100,label : '<s:text name="department.ysName" />',hidden : true, sortable:true,highsearch:true},
+			{name : 'bmDepartment.ysLeaf',index : 'ysLeaf',align : 'center',width:50,label : '<s:text name="department.ysLeaf" />',hidden : true, sortable:true,formatter:'checkbox',highsearch:true},
 			],
 		jsonReader : {
-			root : "departments", // (2)
+			root : "bmModelDepts", // (2)
 			page : "page",
 			total : "total",
 			records : "records", // (3)
 			repeatitems : false
 		},
-		sortname : 'orgCode,deptCode',
+		sortname : 'bmDepartment.deptCode',
 		viewrecords : true,
 		sortorder : 'asc',
 		height : 300,
@@ -78,16 +62,31 @@ jQuery(document).ready(function() {
 			jQuery.publish("onLoadSelect", dataTest, null);
 		}
 	});
-	jQuery("#budgetModel_selectDepartment").click(function(){
-		var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
-		if(sid==null|| sid.length != 1){       	
-			alertMsg.error("请选择模板。");
-			return;
+	jQuery("#bmsDepartment_selectDepartment").click(function(){
+		var sid = jQuery("#bmsDepartment_gridtable").jqGrid('getDataIDs');
+		var deptId = "";
+		for(var i in sid){
+			var id = sid[i];
+			var rowData = jQuery("#bmsDepartment_gridtable").jqGrid('getRowData',id);
+			deptId += rowData['bmDepartment.departmentId']+",";
 		}
-		var url = "selectBmModelDepartment?modelId=${modelId}&navTabId=bmsDepartment_gridtable&deptId="+sid;
+		var url = "selectBmModelDepartment?modelId=${modelId}&navTabId=bmsDepartment_gridtable&deptId="+deptId;
 		var winTitle='选择部门';
 		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 700,height : 500});
 		stopPropagation();
+	});
+	jQuery("#bmsDepartment_delDepartment").click(function(){
+		var sid = jQuery("#bmsDepartment_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid==null|| sid.length == 0){       	
+			alertMsg.error("请选择部门。");
+			return;
+		}
+		$.post("delBmModelDepartment", {
+			"_" : $.now(),navTabId:'bmsDepartment_gridtable',deptId:sid
+		}, function(data) {
+			formCallBack(data);
+			
+		});
 	});
 });
 </script>
@@ -98,11 +97,16 @@ jQuery(document).ready(function() {
 			<div class="searchBar">
 				<div class="searchContent">
 					<label class="queryarea-label">
-						<s:text name="department.branchCode"></s:text>
+						<s:text name="department.deptCode"></s:text>
+						<input type="text" name="filter_LIKES_bmDepartment.deptCode"/>
+					</label>
+					<label class="queryarea-label">
+						<s:text name="department.name"></s:text>
+						<input type="text" name="filter_LIKES_bmDepartment.name"/>
 					</label>
 				<div class="buttonActive" style="float:right">
 					<div class="buttonContent">
-						<button type="button" onclick="departmentGridReload()">
+						<button type="button" onclick="propertyFilterSearch('bmsDepartment_search_form','bmsDepartment_gridtable')">
 							<fmt:message key='button.search' />
 						</button>
 					</div>
@@ -115,10 +119,10 @@ jQuery(document).ready(function() {
 		<div id="bmsDepartment_buttonBar" class="panelBar">
 			<ul class="toolBar">
 				<li>
-					<a id=budgetModel_selectDepartment class="addbutton"  href="javaScript:"><span>添加部门</span></a>
+					<a id=bmsDepartment_selectDepartment class="addbutton"  href="javaScript:"><span>添加部门</span></a>
 				</li>
 				<li>
-					<a id=budgetModel_selectDepartment class="delbutton"  href="javaScript:"><span>删除部门</span></a>
+					<a id=bmsDepartment_delDepartment class="delbutton"  href="javaScript:"><span>删除部门</span></a>
 				</li>
 			</ul>
 		</div>

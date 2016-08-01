@@ -8,21 +8,21 @@
 	jQuery(document).ready(function() { 
 		var businessProcessStepGrid = jQuery(businessProcessStepGridIdString);
     	businessProcessStepGrid.jqGrid({
-    		url : "businessProcessStepGridList",
+    		url : "businessProcessStepGridList?filter_EQS_businessProcess.processCode=${processId}",
     		editurl:"businessProcessStepGridEdit",
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-			{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="businessProcessStep.stepCode" />',hidden:false,key:true},
-			{name:'stepName',index:'stepName',align:'center',label : '<s:text name="businessProcessStep.stepName" />',hidden:false},
-			{name:'roleId',index:'roleId',align:'center',label : '<s:text name="businessProcessStep.roleId" />',hidden:true},
-			{name:'okName',index:'okName',align:'center',label : '<s:text name="businessProcessStep.okName" />',hidden:false},
-			{name:'noName',index:'noName',align:'center',label : '<s:text name="businessProcessStep.noName" />',hidden:false},
-			{name:'roleName',index:'roleName',align:'center',label : '<s:text name="businessProcessStep.roleName" />',hidden:false},
-			{name:'state',index:'state',align:'center',label : '<s:text name="businessProcessStep.state" />',hidden:false,formatter:'integer'},
+			{name:'stepCode',index:'stepCode',align:'left',label : '<s:text name="businessProcessStep.stepCode" />',hidden:false,key:true},
+			{name:'stepName',index:'stepName',align:'left',label : '<s:text name="businessProcessStep.stepName" />',hidden:false},
+			{name:'roleId',index:'roleId',align:'left',label : '<s:text name="businessProcessStep.roleId" />',hidden:true},
+			{name:'okName',index:'okName',align:'left',label : '<s:text name="businessProcessStep.okName" />',hidden:false},
+			{name:'noName',index:'noName',align:'left',label : '<s:text name="businessProcessStep.noName" />',hidden:false},
+			{name:'roleName',index:'roleName',align:'left',label : '<s:text name="businessProcessStep.roleName" />',hidden:false},
+			{name:'state',index:'state',align:'right',label : '<s:text name="businessProcessStep.state" />',hidden:false,formatter:'integer'},
 			{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="businessProcessStep.stepInfo" />',hidden:false,formatter:'checkbox'},
 			{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="businessProcessStep.unionCheck" />',hidden:false,formatter:'checkbox'},
-			{name:'condition',index:'condition',align:'center',label : '<s:text name="businessProcessStep.condition" />',hidden:false},
+			{name:'condition',index:'condition',align:'left',label : '<s:text name="businessProcessStep.condition" />',hidden:false},
 			{name:'remark',index:'remark',align:'center',label : '<s:text name="businessProcessStep.remark" />',hidden:false}
 			],
         	jsonReader : {
@@ -71,7 +71,7 @@
     	}
     	var url = "editBusinessProcessStep?navTabId=businessProcessStep_gridtable&processId=${processId}";
 		var winTitle='<s:text name="businessProcessStepNew.title"/>';
-		$.pdialog.open(url,'addBusinessProcessStep',winTitle, {mask:true,width : 500,height : 450});
+		$.pdialog.open(url,'addBusinessProcessStep',winTitle, {mask:true,width : 550,height : 450});
     });
     jQuery("#businessProcessStep_gridtable_edit_c").click(function(){
     	var sid = jQuery("#businessProcessStep_gridtable").jqGrid('getGridParam','selarrrow');
@@ -85,27 +85,27 @@
     	}
     	var url = "editBusinessProcessStep?navTabId=businessProcessStep_gridtable&processId=${processId}&stepCode="+sid;
 		var winTitle='<s:text name="businessProcessStepEdit.title"/>';
-		$.pdialog.open(url,'editBusinessProcessStep',winTitle, {mask:true,width : 500,height : 450});
+		$.pdialog.open(url,'editBusinessProcessStep',winTitle, {mask:true,width : 550,height : 450});
     });
   	});
 </script>
 
 <div class="page">
-	<div id="businessProcessStep_pageHeader" class="pageHeader">
+	<%-- <div id="businessProcessStep_pageHeader" class="pageHeader">
 			<div class="searchBar">
 				<div class="searchContent">
 				<form id="businessProcessStep_search_form" >
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcessStep.stepCode'/>:
-						<input type="text" name="filter_EQS_stepCode"/>
+						<input type="text" name="filter_LIKES_stepCode"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcessStep.stepName'/>:
-						<input type="text" name="filter_EQS_stepName"/>
+						<input type="text" name="filter_LIKES_stepName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcessStep.roleName'/>:
-						<input type="text" name="filter_EQS_roleName"/>
+						<input type="text" name="filter_LIKES_roleName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcessStep.state'/>:
@@ -113,17 +113,17 @@
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='businessProcessStep.remark'/>:
-						<input type="text" name="filter_EQS_remark"/>
+						<input type="text" name="filter_LIKES_remark"/>
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(businessProcessStep_search_form,businessProcessStep_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('businessProcessStep_search_form','businessProcessStep_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
 					</form>
 				</div>
 			</div>
-	</div>
+	</div> --%>
 	<div class="pageContent">
 		<div id="businessProcessStep_buttonBar" class="panelBar">
 			<ul class="toolBar">
@@ -143,7 +143,7 @@
 			
 			</ul>
 		</div>
-		<div id="businessProcessStep_gridtable_div" layoutH="120" class="grid-wrapdiv" buttonBar="width:500;height:300" tablecontainer="businessProcess_layout-south" extraHeight=145>
+		<div id="businessProcessStep_gridtable_div" layoutH="180" class="grid-wrapdiv" buttonBar="width:500;height:300" tablecontainer="businessProcess_layout-south" extraHeight=105>
 			<input type="hidden" id="businessProcessStep_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="businessProcessStep_gridtable_addTile">
 				<s:text name="businessProcessStepNew.title"/>

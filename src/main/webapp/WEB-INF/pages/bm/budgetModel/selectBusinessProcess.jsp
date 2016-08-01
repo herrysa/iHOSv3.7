@@ -8,22 +8,22 @@
 	jQuery(document).ready(function() { 
 		var bpsGrid = jQuery(bpsGridIdString);
     	bpsGrid.jqGrid({
-    		url : "businessProcessStepGridList?filter_EQS_businessProcess.processCode=bmCheck&filter_NIS_stepCode=${stepCode}",
+    		url : "businessProcessStepGridList?filter_EQS_businessProcess.processCode=${bmCheckProcessCode}&filter_NIS_stepCode=${stepCode}", 
     		editurl:"businessProcessStepGridEdit",
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-			{name:'stepCode',index:'stepCode',align:'center',label : '<s:text name="bps.stepCode" />',hidden:false,key:true},
-			{name:'stepName',index:'stepName',align:'center',label : '<s:text name="bps.stepName" />',hidden:false},
-			{name:'roleId',index:'roleId',align:'center',label : '<s:text name="bps.roleId" />',hidden:true},
-			{name:'okName',index:'okName',align:'center',label : '<s:text name="bps.okName" />',hidden:false},
-			{name:'noName',index:'noName',align:'center',label : '<s:text name="bps.noName" />',hidden:false},
-			{name:'roleName',index:'roleName',align:'center',label : '<s:text name="bps.roleName" />',hidden:false},
-			{name:'state',index:'state',align:'center',label : '<s:text name="bps.state" />',hidden:false,formatter:'integer'},
-			{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="bps.stepInfo" />',hidden:false,formatter:'checkbox'},
-			{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="bps.unionCheck" />',hidden:false,formatter:'checkbox'},
-			{name:'condition',index:'condition',align:'center',label : '<s:text name="bps.condition" />',hidden:false},
-			{name:'remark',index:'remark',align:'center',label : '<s:text name="bps.remark" />',hidden:false}
+			{name:'stepCode',index:'stepCode',align:'left',label : '<s:text name="bps.stepCode" />',hidden:false,key:true,width:100},
+			{name:'stepName',index:'stepName',align:'left',label : '<s:text name="bps.stepName" />',hidden:false,width:150},
+			{name:'okName',index:'okName',align:'left',label : '<s:text name="bps.okName" />',hidden:false,width:100},
+			{name:'noName',index:'noName',align:'left',label : '<s:text name="bps.noName" />',hidden:false,width:100},
+			{name:'roleId',index:'roleId',align:'left',label : '<s:text name="bps.roleId" />',hidden:true},
+			{name:'roleName',index:'roleName',align:'left',label : '<s:text name="bps.roleName" />',hidden:false,width:150},
+			{name:'state',index:'state',align:'right',label : '<s:text name="bps.state" />',hidden:false,formatter:'integer',width:70},
+			{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="bps.stepInfo" />',hidden:false,formatter:'checkbox',width:70},
+			{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="bps.unionCheck" />',hidden:false,formatter:'checkbox',width:70},
+			{name:'condition',index:'condition',align:'left',label : '<s:text name="bps.condition" />',hidden:false,width:100},
+			{name:'remark',index:'remark',align:'left',label : '<s:text name="bps.remark" />',hidden:false,width:200}
 			],
         	jsonReader : {
 				root : "businessProcessSteps", // (2)
@@ -43,8 +43,8 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
         	onSelectRow: function(rowid) {
        		},
 		 	gridComplete:function(){
@@ -90,7 +90,7 @@
 				</li>
 			</ul>
 		</div>
-		<div id="bps_gridtable_div" layoutH="120" class="grid-wrapdiv" buttonBar="width:500;height:300" tablecontainer="businessProcess_layout-south" extraHeight=145>
+		<div id="bps_gridtable_div" layoutH="60" class="grid-wrapdiv" buttonBar="width:500;height:300" >
 			<div id="load_bps_gridtable" class='loading ui-state-default ui-state-active' style="display:none"></div>
  			<table id="bps_gridtable"></table>
 		</div>

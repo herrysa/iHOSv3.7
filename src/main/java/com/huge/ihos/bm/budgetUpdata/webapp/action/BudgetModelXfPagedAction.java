@@ -2,7 +2,9 @@ package com.huge.ihos.bm.budgetUpdata.webapp.action;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -12,9 +14,11 @@ import com.huge.ihos.bm.budgetUpdata.model.BudgetModelXf;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetModelXfManager;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
+import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessStep;
+import com.huge.ihos.system.configuration.businessprocess.service.BusinessProcessStepManager;
+import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.systemManager.organization.model.Department;
-import com.huge.ihos.system.systemManager.organization.model.Person;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -33,6 +37,13 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	
 	private BudgetModelManager budgetModelManager;
 	private BudgetUpdataManager budgetUpdataManager;
+	
+	private BusinessProcessStepManager businessProcessStepManager;
+	
+	public void setBusinessProcessStepManager(
+			BusinessProcessStepManager businessProcessStepManager) {
+		this.businessProcessStepManager = businessProcessStepManager;
+	}
 
 	public void setBudgetUpdataManager(BudgetUpdataManager budgetUpdataManager) {
 		this.budgetUpdataManager = budgetUpdataManager;
@@ -73,6 +84,28 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	public void prepare() throws Exception {
 		this.clearSessionMessages();
 	}
+	List<BusinessProcessStep> bsStepList;
+	public List<BusinessProcessStep> getBsStepList() {
+		return bsStepList;
+	}
+
+	public void setBsStepList(List<BusinessProcessStep> bsStepList) {
+		this.bsStepList = bsStepList;
+	}
+
+	public String budgetModelXfList(){
+		try {
+			String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+			filters.add(new PropertyFilter("OAS_state",""));
+			bsStepList = businessProcessStepManager.getByFilters(filters);
+			
+		} catch (Exception e) {
+			log.error("List Error", e);
+		}
+		return SUCCESS;
+	}
 	public String budgetModelXfGridList() {
 		log.debug("enter list method!");
 		try {
@@ -83,6 +116,22 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			pagedRequests = budgetModelXfManager
 					.getBudgetModelXfCriteria(pagedRequests,filters);
 			this.budgetModelXfs = (List<BudgetModelXf>) pagedRequests.getList();
+			for(BudgetModelXf budgetModelXf : budgetModelXfs){
+				String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+				List<PropertyFilter> bsStepfilters = new ArrayList<PropertyFilter>();
+				bsStepfilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+				bsStepfilters.add(new PropertyFilter("OAS_state",""));
+				bsStepList = businessProcessStepManager.getByFilters(bsStepfilters);
+				Map<String, Object> stepMap = new HashMap<String, Object>();
+				for(BusinessProcessStep businessProcessStep : bsStepList){
+					String stepSql = "select count(*) count from bm_updata up where up.modelXfId='"+budgetModelXf.getXfId()+"' and up.state="+businessProcessStep.getState();
+					List<Map<String,Object>> rsList = budgetModelXfManager.getBySqlToMap(stepSql);
+					if(rsList!=null&rsList.size()>0){
+						stepMap.put(businessProcessStep.getStepCode(),rsList.get(0).get("count"));
+					}
+				}
+				budgetModelXf.setStepMap(stepMap);
+			}
 			records = pagedRequests.getTotalNumberOfRows();
 			total = pagedRequests.getTotalNumberOfPages();
 			page = pagedRequests.getPageNumber();
@@ -202,7 +251,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 						bmmXf = new BudgetModelXf();
 						bmmXf.setModelId(bmm);
 						bmmXf.setPeriodYear(periodYear);
-						bmmXf.setState(0);
+						bmmXf.setState(1);
 						bmmXf.setXfDate(Calendar.getInstance().getTime());
 						bmmXf = budgetModelXfManager.save(bmmXf);
 					}else{

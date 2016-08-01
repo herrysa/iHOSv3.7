@@ -51,10 +51,19 @@ public class DepartmentAction
     private Department department;
 
     private String departmentId;
+    private String sysType;
 
 
 
-    private List deptClassList;
+    public String getSysType() {
+		return sysType;
+	}
+
+	public void setSysType(String sysType) {
+		this.sysType = sysType;
+	}
+
+	private List deptClassList;
 
     private List outinList;
 

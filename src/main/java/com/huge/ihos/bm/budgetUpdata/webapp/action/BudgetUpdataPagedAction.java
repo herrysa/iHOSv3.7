@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,7 +25,6 @@ import com.huge.ihos.bm.budgetModel.model.BmModelProcessLog;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
 import com.huge.ihos.bm.budgetModel.service.BmModelProcessLogManager;
 import com.huge.ihos.bm.budgetModel.service.BmModelProcessManager;
-import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
 import com.huge.ihos.bm.budgetUpdata.model.BmProcessColumn;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
@@ -172,12 +173,14 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 
 	public String budgetUpdateList(){
 		try {
+			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+			filters.add(new PropertyFilter("OAS_state",""));
 			if(stepCode!=null&&!"".equals(stepCode)){
 				businessProcessStep = businessProcessStepManager.get(stepCode);
+				filters.add(new PropertyFilter("LTI_state",""+businessProcessStep.getState()));
 			}
-			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
-			filters.add(new PropertyFilter("OAS_state",""));
-        	filters.add(new PropertyFilter("LTI_state",""+businessProcessStep.getState()));
         	List<BusinessProcessStep> beforeStepList = businessProcessStepManager.getByFilters(filters);
         	processColumns = new ArrayList<BmProcessColumn>();
         	for(BusinessProcessStep bps : beforeStepList){
@@ -228,7 +231,20 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 				User user = UserContextUtil.getContextUser();
 				Person person = user.getPerson();
 				Department department = person.getDepartment();
-				filters.add(new PropertyFilter("SQS_updataId","updataId in (SELECT updataId from bm_updata u LEFT JOIN bm_model_xf x on u.modelXfId=x.xfId LEFT JOIN bm_model_process p on x.modelId=p.modelId where p.stepCode='"+stepCode+"' and ((checkDeptId like '%"+department.getDepartmentId()+"%' and p.checkPersonId is null) or (p.checkPersonId like '%"+person.getPersonId()+"%')))"));
+				String depts = UserContextUtil.findUserDataPrivilegeSql("bmDept_dp", "2");
+				String bmDeptCheckSql = "";
+				if(depts.startsWith("SELECT")||depts.startsWith("select")){
+					
+				}else{
+					bmDeptCheckSql = "(p.bmDept=1 and u.deptId in "+depts+") or ";
+				}
+				String checkSql = "updataId in (SELECT updataId from bm_updata u LEFT JOIN bm_model_xf x on u.modelXfId=x.xfId LEFT JOIN bm_model_process p on x.modelId=p.modelId where p.stepCode='"+stepCode+"' and ("+bmDeptCheckSql+"(p.checkDeptId like '%"+department.getDepartmentId()+"%' and p.checkPersonId is null) or (p.checkPersonId like '%"+person.getPersonId()+"%')))";
+				String hasCheckedSql = "updataId not in (SELECT log.updataId from bm_process_log log LEFT JOIN bm_model_process p on p.modelId=log.modelId and p.stepCode=log.stepCode where p.stepCode='"+stepCode+"' and ((p.checkDeptId like '%"+department.getDepartmentId()+"%' and p.checkPersonId is null and log.logState=1 and log.deptId='"+department.getDepartmentId()+"') or (p.checkPersonId like '%"+person.getPersonId()+"%' and log.logState=1 and log.personId='"+person.getPersonId()+"')))";
+				
+				filters.add(new PropertyFilter("SQS_updataId",checkSql));
+				filters.add(new PropertyFilter("SQS_updataId",hasCheckedSql));
+				
+			}else if("2".equals(upType)){//预算审批查询
 				
 			}else{
 				filters.add(new PropertyFilter("EQS_modelXfId.xfId",xfId));
@@ -245,7 +261,7 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			pagedRequests = budgetUpdataManager
 					.getBudgetUpdataCriteria(pagedRequests,filters);
 			this.budgetUpdatas = (List<BudgetUpdata>) pagedRequests.getList();
-			if("1".equals(upType)){
+			if("1".equals(upType)||"2".equals(upType)){
 				for(BudgetUpdata budgetUpdataTemp :budgetUpdatas){
 					String uid = budgetUpdataTemp.getUpdataId();
 					List<PropertyFilter> logfilters = PropertyFilter.buildFromHttpRequest(getRequest());
@@ -479,10 +495,12 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 						bmModelProcessLog.setDeptId(person.getPersonId());
 						bmModelProcessLog.setDeptName(dept.getName());
 						bmModelProcessLog.setState(0);
+						bmModelProcessLog.setLogState(1);
 						bmModelProcessLog.setStepCode(bmModelProcess.getStepCode());
-						bmModelProcessLog.setOperation("ok");
+						bmModelProcessLog.setOperation(bmModelProcess.getOkName());
 						bmModelProcessLog.setModelId(modelId);
 						bmModelProcessLog.setUpdataId(budgetUpdata.getUpdataId());
+						bmModelProcessLogManager.executeSql("update bm_process_log set logState=0 where state<>"+bmModelProcess.getState()+" and updataId='"+budgetUpdata.getUpdataId()+"'");
 						bmModelProcessLogManager.save(bmModelProcessLog);
 					}
 				}
@@ -584,20 +602,97 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			Person person = user.getPerson();
 			Department dept = person.getDepartment();
 			for(BudgetUpdata budgetUpdata : budgetUpdatas){
-				budgetUpdata.setState(bmModelProcess.getState());
-				budgetUpdataManager.save(budgetUpdata);
+				if("ok".equals(opt)){
+				while(true){
+					boolean exeStep = true;
+					String condition = bmModelProcess.getCondition();
+					if(condition!=null&&!"".equals(condition)){
+						String[] conditionArr = condition.split(",");
+						String updataDetailSql = "select * from bm_updatadetail where updataId='"+budgetUpdata.getUpdataId()+"'";
+						List<Map<String, Object>> updataDetails = budgetUpdataManager.getBySqlToMap(updataDetailSql);
+						for(Map<String, Object> updataDetail : updataDetails){
+							String indexCode = updataDetail.get("indexCode").toString();
+							Object bmValue = updataDetail.get("bmvalue");
+							for(String c : conditionArr){
+								if(c.contains(indexCode)){
+									if(bmValue!=null){
+										String v = bmValue.toString();
+										c = c.replace(indexCode, v);
+										ScriptEngineManager manager = new ScriptEngineManager();  
+								        ScriptEngine engine = manager.getEngineByName("js");  
+								        Object result = engine.eval(c);
+								        if(result!=null&&"false".equals(result.toString())){
+								        	exeStep = false;
+								        	bmModelProcess = bmModelProcess.getOkStep();
+								        }
+									}
+								}
+							}
+						}
+					}
+					if(exeStep){
+						break;
+					}
+				}
+				
+				boolean checkOver = false;
+				Boolean unionCheck = bmModelProcess.getUnionCheck();
+				String checkDeptId = bmModelProcess.getCheckDeptId();
+				String checkPsersonId = bmModelProcess.getCheckPersonId();
+				if(unionCheck!=null&&unionCheck==true){
+					if(checkPsersonId==null||"".equals(checkPsersonId)){
+						List<PropertyFilter> processLogFilters = new ArrayList<PropertyFilter>();
+						processLogFilters.add(new PropertyFilter("EQS_updataId",budgetUpdata.getUpdataId()));
+						processLogFilters.add(new PropertyFilter("INS_deptId",checkDeptId));
+						processLogFilters.add(new PropertyFilter("EQI_logState","1"));
+						List<BmModelProcessLog> processLogList = bmModelProcessLogManager.getByFilters(processLogFilters);
+						String[] deptArr = checkDeptId.split(",");
+						if(processLogList.size()==deptArr.length-1){
+							checkOver = true;
+						}
+					}else{
+						List<PropertyFilter> processLogFilters = new ArrayList<PropertyFilter>();
+						processLogFilters.add(new PropertyFilter("EQS_updataId",budgetUpdata.getUpdataId()));
+						processLogFilters.add(new PropertyFilter("INS_personId",checkPsersonId));
+						processLogFilters.add(new PropertyFilter("EQI_logState","1"));
+						List<BmModelProcessLog> processLogList = bmModelProcessLogManager.getByFilters(processLogFilters);
+						String[] personArr = checkPsersonId.split(",");
+						if(processLogList.size()==personArr.length-1){
+							checkOver = true;
+						}
+					}
+				}else{
+					checkOver = true;
+				}
+				
+				if(checkOver){
+					BmModelProcess bmModelProcessOk = bmModelProcess.getOkStep();
+					budgetUpdata.setState(bmModelProcessOk.getState());
+					budgetUpdataManager.save(budgetUpdata);
+				}
+				}else{
+					BmModelProcess bmModelProcessNo = bmModelProcess.getNoStep();
+					budgetUpdata.setState(bmModelProcessNo.getState());
+					budgetUpdataManager.save(budgetUpdata);
+				}
 				BmModelProcessLog bmModelProcessLog = new BmModelProcessLog();
 				bmModelProcessLog.setInfo(this.getMessage());
 				bmModelProcessLog.setOptTime(Calendar.getInstance().getTime());
 				bmModelProcessLog.setPersonId(person.getPersonId());
 				bmModelProcessLog.setPersonName(person.getName());
-				bmModelProcessLog.setDeptId(person.getPersonId());
+				bmModelProcessLog.setDeptId(dept.getDepartmentId());
 				bmModelProcessLog.setDeptName(dept.getName());
 				bmModelProcessLog.setState(bmModelProcess.getState());
+				bmModelProcessLog.setLogState(1);
 				bmModelProcessLog.setStepCode(bmModelProcess.getStepCode());
-				bmModelProcessLog.setOperation(opt);
+				if("ok".equals(opt)){
+					bmModelProcessLog.setOperation(bmModelProcess.getOkName());
+				}else{
+					bmModelProcessLog.setOperation(bmModelProcess.getNoName());
+				}
 				bmModelProcessLog.setModelId(bmModelProcess.getBudgetModel().getModelId());
 				bmModelProcessLog.setUpdataId(budgetUpdata.getUpdataId());
+				bmModelProcessLogManager.executeSql("update bm_process_log set logState=0 where state<>"+bmModelProcess.getState()+" and updataId='"+budgetUpdata.getUpdataId()+"'");
 				bmModelProcessLogManager.save(bmModelProcessLog);
 			}
 			
@@ -606,6 +701,40 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			return ajaxForward(false,"审核失败！",false);
 		}
 		return ajaxForward(true,"审核成功！",false);
+	}
+	
+	public String bmUpdataQuery(){
+		try {
+			upType = "2";
+			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+			filters.add(new PropertyFilter("OAS_state",""));
+        	List<BusinessProcessStep> beforeStepList = businessProcessStepManager.getByFilters(filters);
+        	processColumns = new ArrayList<BmProcessColumn>();
+        	for(BusinessProcessStep bps : beforeStepList){
+        		BmProcessColumn bpc_pserson = new BmProcessColumn();
+        		bpc_pserson.setCode("person_"+bps.getStepCode());
+        		bpc_pserson.setName(bps.getStepName());
+        		bpc_pserson.setDataType("string");
+        		processColumns.add(bpc_pserson);
+        		BmProcessColumn bpc_time = new BmProcessColumn();
+        		bpc_time.setCode("date_"+bps.getStepCode());
+        		bpc_time.setName(bps.getStepName()+"时间");
+        		bpc_time.setDataType("date");
+        		processColumns.add(bpc_time);
+        		if(bps.getState()!=0){
+        			BmProcessColumn bpc_info = new BmProcessColumn();
+        			bpc_info.setCode("info_"+bps.getStepCode());
+        			bpc_info.setName("审核信息");
+        			bpc_info.setDataType("string");
+        			processColumns.add(bpc_info);
+        		}
+        	}
+		} catch (Exception e) {
+			log.error("List Error", e);
+		}
+		return SUCCESS;
 	}
 }
 

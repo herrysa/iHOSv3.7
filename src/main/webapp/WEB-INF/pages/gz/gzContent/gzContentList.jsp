@@ -461,7 +461,7 @@
 {name:'duty',index:'duty',width:'80px',align:'left',text : '<s:text name="gzContent.duty" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'educationalLevel',index:'educationalLevel',width:'80px',align:'left',text : '<s:text name="gzContent.educationalLevel" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'salaryNumber',index:'salaryNumber',width:'80px',align:'left',text : '<s:text name="gzContent.salaryNumber" />',isHide:"absHide",editable:false,dataType:'string'},
-{name:'idNumber',index:'idNumber',width:'80px',align:'left',text : '<s:text name="gzContent.idNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+{name:'idNumber',index:'idNumber',width:'80px',align:'left',text : '<s:text name="gzContent.idNumber" />',isHide:false,editable:false,dataType:'string'},
 {name:'jobTitle',index:'jobTitle',width:'80px',align:'left',text : '<s:text name="gzContent.jobTitle" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'postType',index:'postType',width:'80px',align:'left',text : '<s:text name="gzContent.postType" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'ratio',index:'ratio',width:'80px',align:'left',text : '<s:text name="gzContent.ratio" />',isHide:"absHide",editable:false,dataType:'double'},

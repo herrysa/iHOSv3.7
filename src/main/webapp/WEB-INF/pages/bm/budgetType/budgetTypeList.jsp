@@ -128,6 +128,23 @@
 		var winTitle='<s:text name="budgetTypeEdit.title"/>';
 		$.pdialog.open(url,'editBudgetType',winTitle, {mask:true,width : 500,height : 400});
     });
+    jQuery("#budgetType_gridtable_del_c").click(function(){
+    	var sid = jQuery("#budgetType_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择一条记录！");
+    		return;
+    	}
+    	$.post("budgetTypeGridEdit", {
+    		"_" : $.now(),id:sid,oper:'del',navTabId:'budgetType_gridtable'
+		}, function(data) {
+			formCallBack(data);
+			var zTree = $.fn.zTree.getZTreeObj("budgetTypeTreeLeft"); 
+			for(var i in sid){
+				var oldNode = zTree.getNodeByParam("id", sid[i], null);
+				zTree.removeNode(oldNode);
+			}
+		});
+    });
     
   	});
 	function budgetTypeReload(){
@@ -205,7 +222,7 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetType_gridtable_del" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
+				<li><a id="budgetType_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
 				</a>
 				</li>
 				<li><a id="budgetType_gridtable_edit_c" class="changebutton"  href="javaScript:"

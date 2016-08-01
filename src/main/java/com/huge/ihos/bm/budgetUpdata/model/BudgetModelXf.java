@@ -1,7 +1,7 @@
 package com.huge.ihos.bm.budgetUpdata.model;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -19,8 +17,6 @@ import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
-import com.huge.ihos.bm.index.model.BudgetIndex;
-import com.huge.ihos.system.systemManager.organization.model.Department;
 import com.huge.model.BaseObject;
 
 @Entity
@@ -42,6 +38,15 @@ public class BudgetModelXf extends BaseObject {
 	private Integer checkedNum;
 	private Integer submitedNum;
 	
+	private Map<String,Object> stepMap;
+	
+	@Transient
+	public Map<String, Object> getStepMap() {
+		return stepMap;
+	}
+	public void setStepMap(Map<String, Object> stepMap) {
+		this.stepMap = stepMap;
+	}
 	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId)")
 	public Integer getXfNum() {
 		return xfNum;

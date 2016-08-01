@@ -135,6 +135,7 @@ public class FnsTag {
 			Map sysVarMap = userContext.getSysVars();
 			JSONObject sysVarJson = JSONObject.fromObject(sysVarMap);
 			String varStr =  sysVarJson.toString();
+			varStr = varStr.replaceAll("\\'", "\\\\'");
 			return varStr;
 		}else{
 			return "";

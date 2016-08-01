@@ -22,7 +22,7 @@ import com.huge.model.BaseObject;
 
 @Entity
 @Table( name = "bm_model" )
-public class BudgetModel extends BaseObject {
+public class BudgetModel extends BaseObject implements Cloneable{
 	
 	/**
 	 * 
@@ -304,5 +304,14 @@ public class BudgetModel extends BaseObject {
 				+ ", remark=" + remark + "]";
 	}
 
-	
+	@Override
+	public BudgetModel clone() {
+		BudgetModel o = null;
+		try {
+			o = (BudgetModel) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return o;
+	}
 }

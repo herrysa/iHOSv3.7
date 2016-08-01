@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -26,7 +27,16 @@ public class BmModelProcessLog {
 	private String personId;
 	private String personName;
 	private Integer state;
+	private Integer logState;
+	private String stepName;
 	
+	@Formula("(SELECT p.stepName FROM bm_model_process p WHERE p.modelId=modelId and p.stepCode=stepCode)")
+	public String getStepName() {
+		return stepName;
+	}
+	public void setStepName(String stepName) {
+		this.stepName = stepName;
+	}
 	@Id
 	@Column(name = "logId", length = 32, nullable = false)
 	@GenericGenerator(name = "uuid", strategy = "uuid")
@@ -62,7 +72,7 @@ public class BmModelProcessLog {
 		this.stepCode = stepCode;
 	}
 	
-	@Column(length=5)
+	@Column(length=20)
 	public String getOperation() {
 		return operation;
 	}
@@ -124,6 +134,14 @@ public class BmModelProcessLog {
 	}
 	public void setState(Integer state) {
 		this.state = state;
+	}
+	
+	@Column
+	public Integer getLogState() {
+		return logState;
+	}
+	public void setLogState(Integer logState) {
+		this.logState = logState;
 	}
 	@Override
 	public int hashCode() {

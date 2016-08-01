@@ -167,8 +167,16 @@
 						<input type="text" name="filter_EQS_checker"/>
 					</label> --%>
 					<label style="float:none;white-space:nowrap" >
+						预算模板编码:
+						<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode"/>
+					</label>
+					<label style="float:none;white-space:nowrap" >
+						预算模板名称:
+						<input type="text" name="filter_LIKES_modelXfId.modelId.modelName"/>
+					</label>
+					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetUpdata.department'/>:
-						<input type="text" name="filter_EQS_department"/>
+						<input type="text" name="filter_LIKES_department.name"/>
 					</label>
 					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='bmUpdata.operator'/>:
@@ -178,10 +186,6 @@
 						<s:text name='bmUpdata.optDate'/>:
 						<input type="text" name="filter_EQS_optDate"/>
 					</label> --%>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetUpdata.state'/>:
-						<input type="text" name="filter_EQS_state"/>
-					</label>
 					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='bmUpdata.submitDate'/>:
 						<input type="text" name="filter_EQS_submitDate"/>
@@ -192,7 +196,7 @@
 					</label> --%>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch(bmUpdata_search_form,bmUpdata_gridtable)"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('bmUpdata_search_form','bmUpdata_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
 				</form>
@@ -202,14 +206,14 @@
 	<div id="bmUpdata_buttonBar" class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				 <li><a id="bmUpdata_gridtable_up" class="addbutton" href="javaScript:" ><span>填报
+				 <li><a id="bmUpdata_gridtable_up" class="reportbutton" href="javaScript:" ><span>填报
 					</span>
 				</a>
 				</li>
-				<li><a id="bmUpdata_gridtable_comfirm" class="delbutton"  href="javaScript:"><span>确认</span>
+				<li><a id="bmUpdata_gridtable_comfirm" class="addbutton"  href="javaScript:"><span>确认</span>
 				</a>
 				</li>
-				<li><a id="bmUpdata_gridtable_groupByDept" class="delbutton"  href="javaScript:"><span>按预算部门填报</span>
+				<li><a id="bmUpdata_gridtable_groupByDept" class="openbutton"  href="javaScript:"><span>按预算部门填报</span>
 				</a>
 				</li>
 				<%-- <li><a id="bmUpdata_gridtable_edit" class="changebutton"  href="javaScript:"

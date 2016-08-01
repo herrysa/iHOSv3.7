@@ -9,8 +9,10 @@
 		var url = "budgetUpdataGridList?1=1";
 		if(upType=="1"){
 			url += "&upType="+upType+"&stepCode=${stepCode}";
+		}else if(upType=="2"){
+			url += "&upType="+upType;
 		}else{
-			url += "xfId=${xfId}&state=${state}";
+			url += "&xfId=${xfId}&state=${state}";
 		}
 		budgetUpdataGrid${random}.jqGrid({
     		url : url,
@@ -75,7 +77,11 @@
            	//if(jQuery(this).getDataIDs().length>0){
            	//  jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
            	// }
-           	gridContainerResize('${random}budgetUpdata','div',0,35);
+           	var extraHeight = 35;
+           	if("${upType}"==2){
+           		extraHeight = 1;
+           	}
+           	gridContainerResize('${random}budgetUpdata','div',0,extraHeight);
            	var dataTest = {"id":"${random}budgetUpdata_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
        		} 
@@ -104,6 +110,9 @@
 		jQuery("#${random}budgetUpdata_gridtable_groupByDept").click(function(){
 	    	var txt = jQuery(this).find("span").eq(0).text();
 	    	var optType = "审批";
+	    	if("${upType}"!=1){
+	    		optType = "查询";
+	    	}
 	    	if(txt.indexOf("部门")!=-1){
 	    		jQuery('#${random}budgetUpdata_gridtable').jqGrid('setGridParam', {
 	    			groupingView : {
@@ -118,6 +127,16 @@
 	        	jQuery(this).find("span").eq(0).text("按预算部门"+optType);
 	    	}
 	    	
+	    });
+	    jQuery("#${random}budgetUpdata_gridtable_log").click(function(){
+			var sid = jQuery("#${random}budgetUpdata_gridtable").jqGrid('getGridParam','selarrrow');
+			if(sid==null|| sid.length != 1){       	
+				alertMsg.error("请选择一条记录。");
+				return;
+			}
+	        var url = "bmModelProcessLogList?navTabId=${random}budgetUpdata_gridtable&updataId="+sid;
+			var winTitle='预算审批日志';
+			$.pdialog.open(url,'bmCheckLog',winTitle, {mask:true,width : 730,height : 450});
 	    });
   	});
 	function bmProcessFuction(opt){
@@ -148,12 +167,12 @@
 			//formCallBack(data);
 			if(data.bmModelProcess!=null){
 				var stepInfo = data.bmModelProcess.stepInfo;
-				var bmProcessId = "";
-				if(opt=='ok'){
+				var bmProcessId = data.bmModelProcess.bmProcessId;
+				/* if(opt=='ok'){
 					bmProcessId = data.bmModelProcess.okStep.bmProcessId;
 				}else{
 					bmProcessId = data.bmModelProcess.noStep.bmProcessId;
-				}
+				} */
 				if(stepInfo==true){
 					var url = "#DIA_inline?inlineId=${random}stepInfoDiv";
 					jQuery("#${random}stepInfoDiv").data("bmProcessId",bmProcessId);
@@ -202,8 +221,16 @@
 						<input type="text" name="filter_EQS_checker"/>
 					</label> --%>
 					<label style="float:none;white-space:nowrap" >
+						预算模板编码:
+						<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode"/>
+					</label>
+					<label style="float:none;white-space:nowrap" >
+						预算模板名称:
+						<input type="text" name="filter_LIKES_modelXfId.modelId.modelName"/>
+					</label>
+					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetUpdata.department'/>:
-						<input type="text" name="filter_EQS_department"/>
+						<input type="text" name="filter_LIKES_department.name"/>
 					</label>
 					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='${random}budgetUpdata.operator'/>:
@@ -255,7 +282,12 @@
 					</a>
 					</li>
 				</s:if>
-				<li><a id="${random}budgetUpdata_gridtable_groupByDept" class="settingbutton"  href="javaScript:"><span>按预算部门审批</span>
+				<s:elseif test="upType==2">
+					<li><a id="${random}budgetUpdata_gridtable_log" class="openbutton"  href="javaScript:bmProcessFuction('no')"><span>审批日志</span>
+					</a>
+					</li>
+				</s:elseif>
+				<li><a id="${random}budgetUpdata_gridtable_groupByDept" class="settingbutton"  href="javaScript:"><span>按预算部门<s:if test="upType==1">审批</s:if><s:else>查询</s:else></span>
 				</a>
 				</li>
 				<%-- <li><a id="${random}budgetUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
