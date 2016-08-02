@@ -35,7 +35,7 @@
 						<s:textfield key="budgetModel.modelId" cssClass="required" notrepeat='预算模板ID已存在' validatorParam="from BudgetModel entity where entity.modelId=%value%"/>
 					</s:if>
 					<s:else>
-						<s:textfield key="budgetModel.modelId"  cssClass="required"/>
+						<s:textfield key="budgetModel.modelId"  readOnly="true" cssClass="required"/>
 					</s:else>
 				</div>
 				<div class="unit">

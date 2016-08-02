@@ -249,6 +249,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				budgetModel.setModifier(UserContextUtil.getContextUser().getPersonName());
 				budgetModel.setModifydate(Calendar.getInstance().getTime());
 			}
+			budgetModel = budgetModelManager.save(budgetModel);
 			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
 			String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
 			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
@@ -289,7 +290,6 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				}
 			}
 			
-			budgetModelManager.save(budgetModel);
 		} catch (Exception dre) {
 			gridOperationMessage = dre.getMessage();
 			return ajaxForwardError(gridOperationMessage);
