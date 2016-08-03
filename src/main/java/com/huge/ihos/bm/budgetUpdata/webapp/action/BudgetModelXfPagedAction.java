@@ -280,5 +280,14 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		
 		return ajaxForward("下发成功！");
 	}
+	
+	public String bmHzList(){
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
 }
 

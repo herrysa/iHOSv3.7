@@ -50,6 +50,25 @@
 				       " style="width:350px;height:100px"/>
 				</div>
 				<div class="unit">
+					<s:hidden id="reportFunction_subSystem_id" name="reportFunction.subSystem"/>
+					<label><s:text name="reportFunction.subSystem"/>:</label>
+					<s:textfield id="reportFunction_subSystem" theme="simple"/>
+					<script>
+					jQuery("#reportFunction_subSystem").treeselect({
+						optType : "single",
+						dataType : 'sql',
+						sql : "SELECT code id,menu.menuName name,'1' parent FROM sy_model m left join t_menu menu on m.menuId=menu.menuId",
+						exceptnullparent : true,
+						initSelect : "${reportFunction.subSystem}",
+						lazy : false,
+						minWidth : '280px',
+						selectParent : false,
+						callback : {
+						}
+					});
+					</script>
+				</div>
+				<div class="unit">
 				<s:textarea id="reportFunction_remark" key="reportFunction.remark" name="reportFunction.remark" cssClass="				
 				
 				       " style="width:350px;height:30px"/>

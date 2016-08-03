@@ -197,6 +197,13 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+		
+		<action name="getBmReportFunctionXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getReportFunctionXml">
+		</action>
+		<action name="getBmReportDataSourceXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getReportDataSourceXml">
+		</action>
+		<action name="getBmReportDsdescXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getReportDsdescXml">
+		</action>
 	</package>
 
 </struts>

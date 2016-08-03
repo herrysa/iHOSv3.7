@@ -24,6 +24,15 @@ public class ReportFunction extends BaseObject{
 	private String funcSql;
 	private String remark;
 	
+	private String subSystem;
+	
+	@Column(length=20)
+	public String getSubSystem() {
+		return subSystem;
+	}
+	public void setSubSystem(String subSystem) {
+		this.subSystem = subSystem;
+	}
 	@Id
 	public String getCode() {
 		return code;

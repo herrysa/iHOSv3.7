@@ -4,7 +4,7 @@
 var budgetReportDefine = {
 		key:"${random}_budgetReport_gridtable",
 		main:{
-			SetSource : '${ctx}/home/supcan/userdefine/datasource.xml',
+			SetSource : 'getBmReportDataSourceXml?modelId=${modelId}',
 			//Build : '${ctx}/home/supcan/userdefine/blank.xml',
 			Build : 'getBmReportXml?modelId=${modelId}',
 			Load :''
@@ -14,7 +14,7 @@ var budgetReportDefine = {
 			},
 			"Opened":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
-				grid.func("AddUserFunctions", "${ctx}/home/supcan/userdefine/func.xml");
+				grid.func("AddUserFunctions", "getBmReportFunctionXml");
 				grid.func("SetAutoCalc","0");
 				grid.func("CallFunc","2");
 				grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");

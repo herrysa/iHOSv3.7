@@ -54,6 +54,11 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
+		
+		<action name="bmHzList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction" method="bmHzList">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelHzList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelHzList.jsp</result>
+		</action>
 
 	</package>
 

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -41,6 +42,9 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	private Boolean disabled ;
 	private String remark ;
 	private String department ;
+	
+	private Boolean isHz;
+	private BudgetModel hzModelId;
 	
 	private String reportXml ;
 	
@@ -199,6 +203,25 @@ public class BudgetModel extends BaseObject implements Cloneable{
 
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+	
+	@Column
+	public Boolean getIsHz() {
+		return isHz;
+	}
+
+	public void setIsHz(Boolean isHz) {
+		this.isHz = isHz;
+	}
+
+	@ManyToOne
+	@JoinColumn(name="hzModelId")
+	public BudgetModel getHzModelId() {
+		return hzModelId;
+	}
+
+	public void setHzModelId(BudgetModel hzModelId) {
+		this.hzModelId = hzModelId;
 	}
 
 	@Override

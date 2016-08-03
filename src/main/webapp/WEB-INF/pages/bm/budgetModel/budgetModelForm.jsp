@@ -85,6 +85,38 @@
 					</script>
 				</div> --%>
 				<div class="unit">
+					<label><s:text name="budgetModel.isHz"/>:</label>
+					<s:checkbox id="budgetModel_isHz" key="budgetModel.isHz" name="budgetModel.disabled" theme="simple"/>
+					<script>
+						jQuery("#budgetModel_isHz").click(function(){
+							var checked = jQuery(this).attr("checked");
+							if(checked=="checked"){
+								jQuery("#budgetModel_hzModelId_div").show();
+							}else{
+								jQuery("#budgetModel_hzModelId_div").hide();
+							}
+						});
+					</script>
+				</div>
+				<div id="budgetModel_hzModelId_div" class="unit">
+					<s:hidden id="budgetModel_hzModelId_id" name="budgetModel.hzModelId.modelId"/>
+					<s:textfield id="budgetModel_hzModelId" key="budgetModel.hzModelId" name="budgetModel.hzModelId.modelName" style="width:350px"/>
+					<script>
+					jQuery("#budgetModel_hzModelId").treeselect({
+						optType : "single",
+						dataType : 'sql',
+						sql : "SELECT modelId id,modelCode+' '+modelName name,'1' parent FROM bm_model where modelId<>'${budgetModel.modelId}' and disabled=0 ORDER BY modelCode asc",
+						exceptnullparent : true,
+						initSelect : "${budgetModel.hzModelId.modelId}",
+						lazy : false,
+						minWidth : '280px',
+						selectParent : false,
+						callback : {
+						}
+					});
+					</script>
+				</div>
+				<div class="unit">
 					<label><s:text name="budgetModel.disabled"/>:</label>
 					<s:checkbox id="budgetModel_disabled" key="budgetModel.disabled" name="budgetModel.disabled" theme="simple"/>
 				</div>

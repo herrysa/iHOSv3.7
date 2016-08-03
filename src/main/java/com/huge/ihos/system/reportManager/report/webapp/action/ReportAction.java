@@ -105,7 +105,7 @@ public class ReportAction extends BaseAction{
 		BufferedReader br = null;
 		String result = "";
 		try {
-			br = new BufferedReader(new InputStreamReader((ServletInputStream)request.getInputStream()));
+			br = new BufferedReader(new InputStreamReader((ServletInputStream)request.getInputStream(),"UTF-8"));
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				result += line+"\r\n";
