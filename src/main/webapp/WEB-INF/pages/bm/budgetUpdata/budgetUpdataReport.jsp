@@ -5,7 +5,7 @@ var reportDefineReportXml = "";
 var budgetReportDefine = {
 		key:"${random}_budgetReport_gridtable",
 		main:{
-			SetSource : '${ctx}/home/supcan/userdefine/datasource.xml',
+			SetSource : 'getBmReportDataSourceXml?modelId=${modelId}',
 			//Build : '${ctx}/home/supcan/userdefine/blank.xml',
 			Build : 'getBmUpdataReportXml?updataId=${updataId}',
 			Load :''
@@ -15,7 +15,7 @@ var budgetReportDefine = {
 			},
 			"Opened":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
-				grid.func("AddUserFunctions", "${ctx}/home/supcan/userdefine/func.xml");
+				grid.func("AddUserFunctions", "getBmReportFunctionXml");
 				//grid.func("SetAutoCalc","0");
 				//grid.func("CallFunc","2");
 				grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
@@ -29,21 +29,6 @@ var budgetReportDefine = {
 			"Toolbar":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
 				if(p1=="104"){
-					var reportXml = grid.func("GetFileXML", "");
-					console.log(reportXml);
-					$.ajax({
-			            url: 'saveBmReportXml',
-			            type: 'post',
-			            dataType: 'json',
-			            data :{modelId:'${modelId}',reportXml:reportXml},
-			            async:false,
-			            error: function(data){
-			            alertMsg.error("系统错误！");
-			            },
-			            success: function(data){
-			            	formCallBack(data);
-			            }
-			        });
 					grid.func("CancelEvent", "");
 				}
 			}
@@ -54,81 +39,42 @@ var budgetReportDefine = {
 				
 				grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}");
 				grid.func("SelectCell", "");
+				if("${reportType}"=="show"){
+					grid.func("Swkrntpomzqa", "1, 2"); 
+				}
 			}
 		}
 	}; 
-	if(reportDefineReportXml){
-		reportDefineReportXml = reportDefineReportXml.replaceAll("&#034;","\"");
-		reportDefineReportXml = reportDefineReportXml.replaceAll("&lt;","<");
-		reportDefineReportXml = reportDefineReportXml.replaceAll("&gt;",">");
-		//alert(reportDefineReportXml);
-		//reportPlanDefine.main.Build = reportDefineReportXml;
-	}
 	
     supcanGridMap.put('budgetReport_gridtable_${random}',budgetReportDefine); 
  	jQuery(document).ready(function(){
- 		//reportPlanDefine.main.Build = initreportColModel();
- 		//alert(reportPlanDefine.main.Build);
- 		tabResize();
- 		
  		//uploadDesigntime、uploadRuntime
- 		insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadRuntime","100%");
+ 		insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadRuntime","99%");
  		
  		var grid = eval("(budgetReport_gridtable_${random})");
- 		var ztreesetting_bmReport = {
-				view : {
-					dblClickExpand : false,
-					showLine : true,
-					selectedMulti : false
-				},
-				callback : {
-					onClick : selectIndexToCell
-				},
-				data : {
-					key : {
-						name : "name"
-					},
-					simpleData : {
-						enable : true,
-						idKey : "id",
-						pIdKey : "pId"
-					}
-				}
-		};
- 		var cellIndexMap = {};
- 		function selectIndexToCell(event, treeId, treeNode, clickFlag) { 
-			var grid = eval("(budgetReport_gridtable_${random})");
-			var subIndexs = treeNode.children;
-			if(subIndexs!=null&&subIndexs.length!=0){
-				for(var i=0;i<subIndexs.length;i++){
-					var childNode = subIndexs[i];
-					var cell = grid.func("GetCurrentCell",""+i);
-					grid.func("SetCellData",cell+" \r\n{index."+childNode.name+"}");
-					cellIndexMap[cell] = childNode.id;
-				}
-			}else{
-				var cell = grid.func("GetCurrentCell",""+0);
-				grid.func("SetCellData",cell+" \r\n{index."+treeNode.name+"}");
-				cellIndexMap[cell] = treeNode.id;
-			}
-			
- 		}
- 		$.get("getBudgetIndexTree", {
-			"_" : $.now()
-		}, function(data) {
-			var budgetIndexTreeData = data.budgetIndexTreeNodes;
-			var budgetIndexTree = $.fn.zTree.init($("#bmReportIndexTree"),
-					ztreesetting_bmReport, budgetIndexTreeData);
-			var nodes = budgetIndexTree.getNodes();
-			budgetIndexTree.expandNode(nodes[0], true, false, true);
-			budgetIndexTree.selectNode(nodes[0]);
-			
-		});
- 		setTimeout(function(){
- 		//grid.func("build",reportDefineReportXml);
- 			//jQuery("#${random}_budgetReport_gridtable_container").css("overflow","hidden");
- 		},200);
- 		
+ 		jQuery("#${random}_freshReportData").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			grid.func("SetAutoCalc","10000");
+			grid.func("CallFunc","64");
+			grid.func("CallFunc","163");
+ 		});
+ 		jQuery("#${random}_reBm").click(function(){
+ 			if(!"${xfId}"){
+ 				alertMsg.error("当前没有上报中的预算！");
+ 				return ;
+ 			}
+ 			
+ 	    	alertMsg.confirm("确认驳回预算？驳回后,之前填报的数据将作废！", {
+ 				okCall: function(){
+ 					jQuery.post("budgetModel_Xf", {
+ 						"_" : $.now(),xfId:"${xfId}",xfType:'2',navTabId:'budgetModelXf_gridtable'
+ 					}, function(data) {
+ 						formCallBack(data);
+ 					},"json");
+ 					
+ 				}
+ 			});
+ 		});
  		jQuery("#${random}_editBudgetModelReport").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
  	 		grid.func("SetAutoCalc","0");
@@ -194,6 +140,12 @@ var budgetReportDefine = {
  			var sss = grid.func("GetUploadXML");
  			console.log(sss);
  		});
+ 		jQuery("#${random}_userdefine").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			grid.func("SetProp","WorkMode \r\n uploadDesigntime");
+ 			var a = grid.func("GetProp","WorkMode");
+ 			alert(a);
+ 		});
  	});
  	
  	function sv(str){
@@ -206,6 +158,11 @@ var budgetReportDefine = {
  			sysVarJson['%BMMODEL_MODELNAME%'] = "${budgetUpdata.modelXfId.modelId.modelName}";
  			sysVarJson['%BMMODEL_MODELTYPE%'] = "${budgetUpdata.modelXfId.modelId.modelTypeTxt}";
  			sysVarJson['%BMMODEL_PERIODTYPE%'] = "${budgetUpdata.modelXfId.modelId.periodType}";
+ 			<c:forEach items="${processLogs}" var="pl">
+ 			sysVarJson['${pl.label_name}'] = '${pl.label_value}';
+ 			sysVarJson['${pl.person_name}'] = '${pl.person_value}';
+ 			sysVarJson['${pl.optDate_name}'] = '${pl.optDate_value}';
+ 			</c:forEach>
  		}
  		var varIndex = 0;
  		for(var vName in sysVarJson){
@@ -219,11 +176,29 @@ var budgetReportDefine = {
 	<div id="${random}_bmReportContent" class="pageContent" style="height: 100%;">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a id="${random}_saveBmReportData" class="changebutton"  href="javaScript:"
+				<s:if test="reportType!='show'">
+				<li><a id="${random}_saveBmReportData" class="submitbutton"  href="javaScript:"
 					><span>保存
 					</span>
 				</a>
 				</li>
+				<%-- <li><a id="${random}_saveBmReportData" class="submitbutton"  href="javaScript:"
+					><span>引入上该模板次填报数据
+					</span>
+				</a>
+				</li> --%>
+				</s:if>
+				<li><a id="${random}_freshReportData" class="previewbutton"  href="javaScript:"
+					><span>刷新
+					</span>
+				</a>
+				</li>
+				<s:if test="reportType==1">
+				<%-- <li><a id="${random}_userdefine" class="editbutton"  href="javaScript:"><span>编辑汇总表</span></a>
+				</li> --%>
+				<li><a id="${random}_reBm" class="delallbutton"  href="javaScript:"><span>驳回预算</span></a>
+				</li>
+				</s:if>
 				<%-- <li><a id="${random}_submitReport" class="changebutton"  href="javaScript:"
 					><span>提交
 					</span>
@@ -231,7 +206,7 @@ var budgetReportDefine = {
 				</li> --%>
 			</ul>
 		</div>
-		<div id="${random}_budgetReport_gridtable_container" style="height:100%;overflow: hidden;"></div>
+		<div id="${random}_budgetReport_gridtable_container" layoutH=30 style="overflow: hidden;"></div>
 	
 	</div> 
  </div>

@@ -18,6 +18,7 @@
 					'key' : 'budgetModel',
 					'proportion' : 2
 				}, budgetModelChangeData);
+		var initFlag_budgetModel = 0;
 		var budgetModelGrid = jQuery(budgetModelGridIdString);
     	budgetModelGrid.jqGrid({
     		url : "budgetModelGridList",
@@ -25,17 +26,19 @@
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-			{name:'modelId',index:'modelId',align:'left',label : '<s:text name="budgetModel.modelId" />',width:100,hidden:false,key:true},
-			{name:'modelCode',index:'modelCode',align:'left',label : '<s:text name="budgetModel.modelCode" />',width:100,hidden:false},
-			{name:'modelName',index:'modelName',align:'left',label : '<s:text name="budgetModel.modelName" />',width:200,hidden:false},
-			{name:'modelTypeTxt',index:'modelTypeTxt',align:'left',label : '<s:text name="budgetModel.modelType" />',width:100,hidden:false},
-			{name:'periodType',index:'periodType',align:'left',label : '<s:text name="budgetModel.periodType" />',width:100,hidden:false},
-			{name:'creator',index:'creator',align:'left',label : '<s:text name="budgetModel.creator" />',width:100,hidden:false},
-			{name:'createDate',index:'createDate',align:'left',label : '<s:text name="budgetModel.createDate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
-			{name:'modifier',index:'modifier',align:'left',label : '<s:text name="budgetModel.modifier" />',width:100,hidden:false},
-			{name:'modifydate',index:'modifydate',align:'left',label : '<s:text name="budgetModel.modifydate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'}},
-			{name:'disabled',index:'disabled',align:'center',label : '<s:text name="budgetModel.disabled" />',width:100,hidden:false,formatter:'checkbox'},
-			{name:'remark',index:'remark',align:'left',label : '<s:text name="budgetModel.remark" />',width:200,hidden:false}
+			{name:'modelId',index:'modelId',align:'left',label : '<s:text name="budgetModel.modelId" />',width:100,hidden:false,key:true,highsearch:true},
+			{name:'modelCode',index:'modelCode',align:'left',label : '<s:text name="budgetModel.modelCode" />',width:100,hidden:false,highsearch:true},
+			{name:'modelName',index:'modelName',align:'left',label : '<s:text name="budgetModel.modelName" />',width:200,hidden:false,highsearch:true},
+			{name:'modelTypeTxt',index:'modelTypeTxt',align:'left',label : '<s:text name="budgetModel.modelType" />',width:100,hidden:false,highsearch:true},
+			{name:'periodType',index:'periodType',align:'left',label : '<s:text name="budgetModel.periodType" />',width:100,hidden:false,highsearch:true},
+			{name:'creator',index:'creator',align:'left',label : '<s:text name="budgetModel.creator" />',width:100,hidden:false,highsearch:true},
+			{name:'createDate',index:'createDate',align:'left',label : '<s:text name="budgetModel.createDate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},highsearch:true},
+			{name:'modifier',index:'modifier',align:'left',label : '<s:text name="budgetModel.modifier" />',width:100,hidden:false,highsearch:true},
+			{name:'modifydate',index:'modifydate',align:'left',label : '<s:text name="budgetModel.modifydate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},highsearch:true},
+			{name:'isHz',index:'isHz',align:'center',label : '<s:text name="budgetModel.isHz" />',width:100,hidden:false,formatter:'checkbox',highsearch:true},
+			{name:'hzModelId.modelName',index:'hzModelId.modelName',align:'left',label : '<s:text name="budgetModel.hzModelId" />',width:200,hidden:false,highsearch:true},
+			{name:'disabled',index:'disabled',align:'center',label : '<s:text name="budgetModel.disabled" />',width:100,hidden:false,formatter:'checkbox',highsearch:true},
+			{name:'remark',index:'remark',align:'left',label : '<s:text name="budgetModel.remark" />',width:200,hidden:false,highsearch:true}
 			],
         	jsonReader : {
 				root : "budgetModels", // (2)
@@ -74,6 +77,7 @@
            		gridContainerResize('budgetModel','fullLayout');
            		var dataTest = {"id":"budgetModel_gridtable"};
       	   		jQuery.publish("onLoadSelect",dataTest,null);
+      	   		initFlag_budgetModel = initColumn('budgetModel_gridtable','com.huge.ihos.bm.budgetModel.model.BudgetModel',initFlag_budgetModel);
        		} 
 
     	});
@@ -133,9 +137,12 @@
 			alertMsg.error("请选择一条记录。");
 			return;
 		}
-		var url = "copyBudgetModel?navTabId=bmsDepartment_gridtable&modelId="+sid;
+		var url = "copyBudgetModel?navTabId=budgetModel_gridtable&modelId="+sid;
 		var winTitle='<s:text name="budgetModelNew.title"/>';
 		$.pdialog.open(url,'editBudgetModel',winTitle, {mask:true,width : 730,height : 450});
+    });
+    jQuery("#budgetModel_gridtable_settle").click(function(){
+    	setColShow('budgetModel_gridtable','com.huge.ihos.bm.budgetModel.model.BudgetModel');
     });
   	});
 </script>
@@ -189,8 +196,12 @@
 						<input type="text" name="filter_EQS_modifydate"/>
 					</label> --%>
 					<label style="float:none;white-space:nowrap" >
+						<s:text name='budgetModel.isHz'/>:
+						<s:select list="#{'true':'是','false':'否'}" name="filter_EQB_isHz" headerKey="" headerValue="--" theme="simple"></s:select>
+					</label>
+					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.disabled'/>:
-						<s:select list="#{'true':'是','false':'否'}" name="filter_EQS_disabled" headerKey="" headerValue="--" theme="simple"></s:select>
+						<s:select list="#{'true':'是','false':'否'}" name="filter_EQB_disabled" headerKey="" headerValue="--" theme="simple"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.remark'/>:
@@ -227,7 +238,12 @@
 				</a>
 				</li>
 				<li><a id="budgetModel_gridtable_editReport" class="reportbutton"  href="javaScript:"
-					><span>编辑模板
+					><span>设计模板
+					</span>
+				</a>
+				</li>
+				<li><a id="budgetModel_gridtable_settle" class="settlebutton"  href="javaScript:"
+					><span>设置表格列
 					</span>
 				</a>
 				</li>

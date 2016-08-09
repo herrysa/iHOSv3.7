@@ -31,11 +31,17 @@
 					<form id="budgetModelForm" method="post"	action="saveBudgetModel?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
 			<div class="pageFormContent" layoutH="93">
 				<div class="unit">
-					<s:if test="%{entityIsNew}">
-						<s:textfield key="budgetModel.modelId" cssClass="required" notrepeat='预算模板ID已存在' validatorParam="from BudgetModel entity where entity.modelId=%value%"/>
+					<s:if test="modelType=='copy'">
+						<s:hidden id="budgetModel_modelId" key="budgetModel.modelId"/>
+						<s:textfield key="budgetModel.modelCopyId" cssClass="required" notrepeat='预算模板ID已存在' oldValue="${budgetModel.modelId}" validatorParam="from BudgetModel entity where entity.modelId=%value%"/>
 					</s:if>
 					<s:else>
-						<s:textfield key="budgetModel.modelId"  readOnly="true" cssClass="required"/>
+						<s:if test="%{entityIsNew}">
+							<s:textfield key="budgetModel.modelId" cssClass="required" notrepeat='预算模板ID已存在' validatorParam="from BudgetModel entity where entity.modelId=%value%"/>
+						</s:if>
+						<s:else>
+							<s:textfield key="budgetModel.modelId"  readOnly="true" cssClass="required"/>
+						</s:else>
 					</s:else>
 				</div>
 				<div class="unit">
@@ -64,6 +70,10 @@
 					<s:select list="#{'月度':'月度','季度':'季度','半年':'半年','年度':'年度'}" key="budgetModel.periodType" headerKey="" headerValue="--" theme="simple"></s:select>
 				</div>
 				<%-- <div class="unit">
+					<label>年度:</label>
+					<s:select list="periodYearList" key="budgetModel.periodYear" theme="simple"></s:select>
+				</div> --%>
+				<%-- <div class="unit">
 				<s:hidden id="budgetModel_dept_id"  name="budgetModel.department"/>
 				<label><s:text name="budgetModel.department"/>:</label>
 				<s:textarea id="budgetModel_dept" style="width:350px;height:30px" cssClass="				
@@ -86,8 +96,14 @@
 				</div> --%>
 				<div class="unit">
 					<label><s:text name="budgetModel.isHz"/>:</label>
-					<s:checkbox id="budgetModel_isHz" key="budgetModel.isHz" name="budgetModel.disabled" theme="simple"/>
+					<s:checkbox id="budgetModel_isHz" key="budgetModel.isHz" name="budgetModel.isHz" theme="simple"/>
 					<script>
+						var isHzChecked = jQuery("#budgetModel_isHz").attr("checked");
+						if(isHzChecked=="checked"){
+							jQuery("#budgetModel_hzModelId_div").show();
+						}else{
+							jQuery("#budgetModel_hzModelId_div").hide();
+						}
 						jQuery("#budgetModel_isHz").click(function(){
 							var checked = jQuery(this).attr("checked");
 							if(checked=="checked"){
@@ -116,10 +132,12 @@
 					});
 					</script>
 				</div>
+				<s:if test="%{!entityIsNew}">
 				<div class="unit">
 					<label><s:text name="budgetModel.disabled"/>:</label>
 					<s:checkbox id="budgetModel_disabled" key="budgetModel.disabled" name="budgetModel.disabled" theme="simple"/>
 				</div>
+				</s:if>
 				<div class="unit">
 				<s:textarea id="budgetModel_remark" key="budgetModel.remark" name="budgetModel.remark" style="width:350px;height:50px" cssClass="				
 				
@@ -138,7 +156,20 @@
 					<li>
 						<div class="button">
 							<div class="buttonContent">
-								<button type="Button" onclick="$.pdialog.closeCurrent();"><s:text name="button.cancel" /></button>
+								<button type="Button" id="cancelBmModelForm"><s:text name="button.cancel" /></button>
+								<script>
+								jQuery("#cancelBmModelForm").click(function(){
+									var modelType = "${modelType}";
+									if(modelType=='copy'){
+									var id = jQuery("#budgetModel_modelId").val();
+									$.post("delBudgetModel?navTabId=budgetModel_gridtable&modelId="+id,{},function(data){
+										$.pdialog.closeCurrent();
+									});
+									}else{
+										$.pdialog.closeCurrent();
+									}
+								});
+								</script>
 							</div>
 						</div>
 					</li>

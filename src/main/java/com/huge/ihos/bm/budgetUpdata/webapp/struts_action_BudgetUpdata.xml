@@ -74,6 +74,11 @@
 			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataCheck.jsp</result>
 		</action>
 		
+		<action name="bmUpdataHzCheck" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction" method="bmUpdataHzCheck">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataHzCheck.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataHzCheck.jsp</result>
+		</action>
+		
 		<action name="optUpdataState" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction"			method="optUpdataState">
 			<result name="success" type="json">
                 <param name="includeProperties">message,statusCode,callbackType,navTabId</param>

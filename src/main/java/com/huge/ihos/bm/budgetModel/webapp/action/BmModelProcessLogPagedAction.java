@@ -5,6 +5,8 @@ import java.util.StringTokenizer;
 
 import com.huge.ihos.bm.budgetModel.model.BmModelProcessLog;
 import com.huge.ihos.bm.budgetModel.service.BmModelProcessLogManager;
+import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
+import com.huge.ihos.bm.budgetUpdata.service.BudgetUpdataManager;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -21,6 +23,11 @@ public class BmModelProcessLogPagedAction extends JqGridBaseAction implements Pr
 	private BmModelProcessLog bmModelProcessLog;
 	private String logId;
 	private String updataId;
+	private BudgetUpdataManager budgetUpdataManager;
+
+	public void setBudgetUpdataManager(BudgetUpdataManager budgetUpdataManager) {
+		this.budgetUpdataManager = budgetUpdataManager;
+	}
 
 	public String getUpdataId() {
 		return updataId;
@@ -65,6 +72,24 @@ public class BmModelProcessLogPagedAction extends JqGridBaseAction implements Pr
 	public void prepare() throws Exception {
 		this.clearSessionMessages();
 	}
+	BudgetUpdata budgetUpdata;
+	public BudgetUpdata getBudgetUpdata() {
+		return budgetUpdata;
+	}
+
+	public void setBudgetUpdata(BudgetUpdata budgetUpdata) {
+		this.budgetUpdata = budgetUpdata;
+	}
+
+	public String bmModelProcessLogList() {
+		try {
+			budgetUpdata = budgetUpdataManager.get(updataId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
 	public String bmModelProcessLogGridList() {
 		log.debug("enter list method!");
 		try {

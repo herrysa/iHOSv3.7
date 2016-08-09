@@ -16,6 +16,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.Formula;
 
 import com.huge.ihos.system.systemManager.organization.model.Department;
@@ -30,6 +31,7 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	 */
 	private static final long serialVersionUID = 3671575311016423934L;
 	private String modelId;
+	private String modelCopyId;
 	private String modelCode;
 	private String modelName;
 	private String modelType;
@@ -42,6 +44,7 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	private Boolean disabled ;
 	private String remark ;
 	private String department ;
+	private String periodYear;
 	
 	private Boolean isHz;
 	private BudgetModel hzModelId;
@@ -62,6 +65,15 @@ public class BudgetModel extends BaseObject implements Cloneable{
 		this.modelId = modelId;
 	}
 
+	@Transient
+	public String getModelCopyId() {
+		return modelCopyId;
+	}
+
+	public void setModelCopyId(String modelCopyId) {
+		this.modelCopyId = modelCopyId;
+	}
+	
 	@Column(name="modelCode",length=20)
 	public String getModelCode() {
 		return modelCode;
@@ -170,6 +182,7 @@ public class BudgetModel extends BaseObject implements Cloneable{
 		this.reportXml = reportXml;
 	}
 	
+	@JSON(serialize=false)
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable( name = "bm_model_dept", joinColumns = { @JoinColumn( name = "modelId" ) }, inverseJoinColumns = @JoinColumn( name = "deptId" ) )
 	public Set<Department> getDepartments() {
@@ -179,6 +192,8 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	public void setDepartments(Set<Department> departments) {
 		this.departments = departments;
 	}
+	
+	@JSON(serialize=false)
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="modelId")
 	@OrderBy("state asc")
@@ -205,7 +220,7 @@ public class BudgetModel extends BaseObject implements Cloneable{
 		this.department = department;
 	}
 	
-	@Column
+	@Column(name="isHz")
 	public Boolean getIsHz() {
 		return isHz;
 	}
@@ -222,6 +237,15 @@ public class BudgetModel extends BaseObject implements Cloneable{
 
 	public void setHzModelId(BudgetModel hzModelId) {
 		this.hzModelId = hzModelId;
+	}
+	
+	@Column
+	public String getPeriodYear() {
+		return periodYear;
+	}
+
+	public void setPeriodYear(String periodYear) {
+		this.periodYear = periodYear;
 	}
 
 	@Override

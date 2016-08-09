@@ -30,6 +30,9 @@ public class BmModelProcessLog {
 	private Integer logState;
 	private String stepName;
 	
+	private Integer updataState;
+	private String opt;
+	
 	@Formula("(SELECT p.stepName FROM bm_model_process p WHERE p.modelId=modelId and p.stepCode=stepCode)")
 	public String getStepName() {
 		return stepName;
@@ -142,6 +145,22 @@ public class BmModelProcessLog {
 	}
 	public void setLogState(Integer logState) {
 		this.logState = logState;
+	}
+	
+	@Column
+	public Integer getUpdataState() {
+		return updataState;
+	}
+	public void setUpdataState(Integer updataState) {
+		this.updataState = updataState;
+	}
+	
+	@Column(length=5)
+	public String getOpt() {
+		return opt;
+	}
+	public void setOpt(String opt) {
+		this.opt = opt;
 	}
 	@Override
 	public int hashCode() {

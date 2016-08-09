@@ -21,7 +21,7 @@
 		budgetModelXfLayout = makeLayout({'baseName':'budgetModelXf','tableIds':'budgetModelXf_gridtable;budgetUpdata_gridtable','proportion':2,'key':'xfId'},budgetModelXfChangeData);
 		
     	budgetModelXfGrid.jqGrid({
-    		url : "budgetModelXfGridList",
+    		url : "budgetModelXfGridList?filter_EQB_modelId.isHz=false",
     		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
@@ -39,7 +39,7 @@
 				name : "stepMap.${pc.stepCode }",
 				index : "stepMap.${pc.stepCode }",
 				label : "${pc.stepName }",
-				width : 80,
+				width : 120,
 				sortable:false,
 				align:"right"
 			},
@@ -159,7 +159,7 @@
 		
 	}
 	function bmUpdataZhuanqu(url){
-		$.pdialog.open(url, "bmupdataList", "上报科室明细",{width:800,height:600});
+		$.pdialog.open(url, "bmupdataList", "上报状况明细",{width:800,height:600});
 	}
 </script>
 
@@ -190,6 +190,10 @@
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelXf.state'/>:
 						<s:select list="#{'0':'未上报','1':'上报中','2':'已上报','3':'已过期' }" name="filter_EQI_state" headerKey="" headerValue="--"></s:select>
+					</label>
+					<label style="float:none;white-space:nowrap" >
+						年度:
+						<s:select list="yearList" headerKey="" headerValue="--" name="filter_EQS_periodYear" listKey="periodYear" listValue="periodYear"></s:select>
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">

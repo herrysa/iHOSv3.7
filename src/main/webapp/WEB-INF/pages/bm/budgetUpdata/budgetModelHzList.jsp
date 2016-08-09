@@ -6,24 +6,28 @@
 	var budgetModelHzGridIdString="#budgetModelHz_gridtable";
 	
 	var budgetModelHzLayout;
-	jQuery(document).ready(function() { 
+	jQuery(document).ready(function() {
 		var budgetModelHzGrid = jQuery(budgetModelHzGridIdString);
     	budgetModelHzGrid.jqGrid({
-    		url : "budgetModelHzGridList?filter_modelId.isHz=true",
-    		editurl:"budgetModelHzGridEdit",
+    		url : "budgetModelXfGridList?filter_EQB_modelId.isHz=true",
+    		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
 			{name:'xfId',index:'xfId',align:'center',label : '<s:text name="budgetModelHz.xfId" />',hidden:true,key:true},
+			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetModelHz.xfId" />',hidden:true},
 			{name:'modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelHz.modelCode" />',hidden:false,width:100},
-			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelHz.model" />',hidden:false,width:200},
+			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelHz.model" />',hidden:false,width:250},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelHz.periodYear" />',hidden:false,width:70},
 			{name:'modelId.modelTypeTxt',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelHz.budgetType" />',hidden:false,width:100},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelHz.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:70},
-			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelHz.xfDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:70}
+			{name:'deptName',index:'deptName',align:'left',label : '汇总部门',hidden:false,width:200},
+			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelHz.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未汇总;1:汇总中;2:已汇总;3:已过期'},width:70},
+			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelHz.HzDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
+			{name:'bmXf.state',index:'bmXf.state',align:'center',label : '被汇总预算状态',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:120},
+			{name:'bmXf.xfDate',index:'bmXf.xfDate',align:'center',label : '被汇总预算下发时间',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:120},
 			],
         	jsonReader : {
-				root : "budgetModelHzs", // (2)
+				root : "budgetModelXfs", // (2)
 				page : "page",
 				total : "total",
 				records : "records", // (3)
@@ -66,12 +70,20 @@
      	    		var id = rowIds[i];
      	    	 	var hrefUrl = "budgetUpdataList?xfId="+id;
 			    	var state = ret[i]["state"];
+			    	var xfstate = ret[i]["bmXf.state"];
 			    	if(state=="1"){
-              		  	setCellText(this,id,'state','<span style="color:red" >上报中</span>');
+              		  	setCellText(this,id,'state','<span style="color:red" >汇总中</span>');
               	  	}else if(state=="2"){
-              		  	setCellText(this,id,'state','<span style="color:blue" >已上报</span>');
+              		  	setCellText(this,id,'state','<span style="color:blue" >已汇总</span>');
               	  	}else if(state=="3"){
               		  	setCellText(this,id,'state','<span style="color:gray" >已过期</span>');
+              	  	}
+			    	if(xfstate=="1"){
+              		  	setCellText(this,id,'bmXf.state','<span style="color:red" >上报中</span>');
+              	  	}else if(xfstate=="2"){
+              		  	setCellText(this,id,'bmXf.state','<span style="color:blue" >已上报</span>');
+              	  	}else if(xfstate=="3"){
+              		  	setCellText(this,id,'bmXf.state','<span style="color:gray" >已过期</span>');
               	  	}
 			    	<c:forEach items="${bsStepList}" var="pc">
 			    	var cellText = ret[i]["stepMap.${pc.stepCode }"];
@@ -85,7 +97,7 @@
     jQuery(budgetModelHzGrid).jqGrid('bindKeys');
     
     jQuery("#budgetModelHz_gridtable_refresh").click(function(){
-    	$.get("budgetModelHzRefresh", {
+    	$.get("budgetModelXfRefresh", {
 			"_" : $.now(),navTabId:'budgetModelHz_gridtable'
 		}, function(data) {
 			formCallBack(data);
@@ -121,7 +133,39 @@
 			}
 		});
     });
-  	});
+    
+    jQuery("#budgetModelHz_gridtable_hzReport").click(function(){
+    	var fullHeight = jQuery("#container").innerHeight();
+    	var fullWidth = jQuery("#container").innerWidth();
+    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0||sid.length>1){
+    		alertMsg.error("请选择一条记录！");
+    		return;
+    	}
+    	var rowData = jQuery("#budgetModelHz_gridtable").jqGrid('getRowData',sid);
+    	var updataId = rowData['updataId'];
+    	$.pdialog.open('openBmReport?reportType=1&updataId='+updataId,'bmReport',"预算汇总", {mask:true,width : fullWidth,height : fullHeight});
+      	});
+    
+    
+    jQuery("#budgetModelHz_gridtable_comfirm").click(function(){
+    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	var rowData = jQuery("#budgetModelHz_gridtable").jqGrid('getRowData',sid);
+    	var updataId = rowData['updataId'];
+    	$.get("confirmBmUpdata", {
+			"_" : $.now(),updataId:updataId,navTabId:'budgetModelHz_gridtable'
+		}, function(data) {
+			formCallBack(data);
+		});
+    });
+    
+    
+    });
+    
 	function setCellText(grid,rowid,colName,cellTxt){
 		 var  tr,cm = grid.p.colModel, iCol = 0, cCol = cm.length;
         for (; iCol<cCol; iCol++) {
@@ -156,7 +200,7 @@
 						<input type="text" name="filter_LIKES_modelId.modelName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='budgetModelHz.xfDate'/>:从
+						<s:text name='budgetModelHz.HzDate'/>:从
 						<input type="text" name="filter_GED_xfDate" name="filter_GED_createDate" class="input-mini" type="text" 
 									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
 									value="" size="8"/>
@@ -166,7 +210,7 @@
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelHz.state'/>:
-						<s:select list="#{'0':'未上报','1':'上报中','2':'已上报','3':'已过期' }" name="filter_EQI_state" headerKey="" headerValue="--"></s:select>
+						<s:select list="#{'0':'未汇总','1':'已汇总','3':'已过期' }" name="filter_EQI_state" headerKey="" headerValue="--"></s:select>
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
@@ -184,11 +228,20 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelHz_gridtable_xf" class="settlebutton"  href="javaScript:"><span>下发</span>
+				<li><a id="budgetModelHz_gridtable_xf" class="settlebutton"  href="javaScript:"><span>生成汇总表</span>
 				</a>
 				</li>
-				<li><a id="budgetModelHz_gridtable_reXf" class="resettlebutton"  href="javaScript:"
+				<!-- <li><a id="budgetModelHz_gridtable_reXf" class="resettlebutton"  href="javaScript:"
 					><span>重新下发
+					</span>
+				</a>
+				</li> -->
+				<li><a id="budgetModelHz_gridtable_hzReport" class="reportbutton"  href="javaScript:"
+					><span>汇总表
+					</span>
+				</a>
+				</li>
+				<li><a id="budgetModelHz_gridtable_comfirm" class="addbutton" href="javaScript:" ><span>确定
 					</span>
 				</a>
 				</li>

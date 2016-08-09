@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.huge.model.BaseObject;
@@ -177,6 +178,7 @@ public class BmModelProcess extends BaseObject implements Cloneable{
 		this.isEnd = isEnd;
 	}
 	
+	@JSON(serialize=false)
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="modelId")
 	public BudgetModel getBudgetModel() {

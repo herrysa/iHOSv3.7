@@ -15,17 +15,17 @@
         	colModel:[
 			{name:'logId',index:'logId',align:'center',label : '<s:text name="bmModelProcessLog.logId" />',hidden:true,key:true},
 			{name:'deptId',index:'deptId',align:'center',label : '<s:text name="bmModelProcessLog.deptId" />',hidden:true},
-			{name:'deptName',index:'deptName',align:'left',label : '<s:text name="bmModelProcessLog.dept" />',hidden:false,width:150},
-			{name:'personName',index:'personName',align:'left',label : '<s:text name="bmModelProcessLog.person" />',hidden:false,width:100},
-			{name:'modelId',index:'modelId',align:'left',label : '<s:text name="bmModelProcessLog.modelId" />',hidden:false,width:150},
-			{name:'stepName',index:'stepName',align:'left',label : '<s:text name="bmModelProcessLog.stepName" />',hidden:false,width:100},
-			{name:'operation',index:'operation',align:'left',label : '<s:text name="bmModelProcessLog.operation" />',hidden:false,width:60},
-			{name:'optTime',index:'optTime',align:'center',label : '<s:text name="bmModelProcessLog.optTime" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
-			{name:'info',index:'info',align:'left',label : '<s:text name="bmModelProcessLog.info" />',hidden:false,width:150},
-			{name:'personId',index:'personId',align:'left',label : '<s:text name="bmModelProcessLog.personId" />',hidden:true},
-			{name:'state',index:'state',align:'right',label : '<s:text name="bmModelProcessLog.state" />',hidden:false,formatter:'integer',width:60},
-			{name:'stepCode',index:'stepCode',align:'left',label : '<s:text name="bmModelProcessLog.stepCode" />',hidden:true},
-			{name:'updataId',index:'updataId',align:'left',label : '<s:text name="bmModelProcessLog.updataId" />',hidden:true} 
+			{name:'deptName',index:'deptName',align:'left',label : '<s:text name="bmModelProcessLog.dept" />',hidden:true,width:150,sortable:false},
+			{name:'personName',index:'personName',align:'left',label : '<s:text name="bmModelProcessLog.person" />',hidden:false,width:100,sortable:false},
+			{name:'modelId',index:'modelId',align:'left',label : '<s:text name="bmModelProcessLog.modelId" />',hidden:true,width:150,sortable:false},
+			{name:'stepName',index:'stepName',align:'left',label : '<s:text name="bmModelProcessLog.stepName" />',hidden:false,width:150,sortable:false},
+			{name:'operation',index:'operation',align:'left',label : '<s:text name="bmModelProcessLog.operation" />',hidden:false,width:80,sortable:false},
+			{name:'optTime',index:'optTime',align:'center',label : '<s:text name="bmModelProcessLog.optTime" />',hidden:false,sortable:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
+			{name:'info',index:'info',align:'left',label : '<s:text name="bmModelProcessLog.info" />',hidden:false,width:200,sortable:false},
+			{name:'personId',index:'personId',align:'left',label : '<s:text name="bmModelProcessLog.personId" />',hidden:true,sortable:false},
+			{name:'state',index:'state',align:'right',label : '<s:text name="bmModelProcessLog.state" />',hidden:true,formatter:'integer',width:60,sortable:false},
+			{name:'stepCode',index:'stepCode',align:'left',label : '<s:text name="bmModelProcessLog.stepCode" />',hidden:true,sortable:false},
+			{name:'updataId',index:'updataId',align:'left',label : '<s:text name="bmModelProcessLog.updataId" />',hidden:true,sortable:false} 
 			],
         	jsonReader : {
 				root : "bmModelProcessLogs", // (2)
@@ -71,11 +71,11 @@
 			<div class="searchBar">
 				<div class="searchContent">
 				<form id="bmModelProcessLog_search_form" >
-					<label style="float:none;white-space:nowrap" >
+					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='bmModelProcessLog.dept'/>:
 						<input type="text" name="filter_LIKES_deptName"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
+					</label> --%>
+					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='bmModelProcessLog.person'/>:
 						<input type="text" name="filter_LIKES_personName"/>
 					</label>
@@ -83,10 +83,10 @@
 						<s:text name='bmModelProcessLog.info'/>:
 						<input type="text" name="filter_LIKES_info"/>
 					</label>
-					<%-- <label style="float:none;white-space:nowrap" >
+					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmModelProcessLog.modelId'/>:
 						<input type="text" name="filter_EQS_modelId"/>
-					</label> --%>
+					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmModelProcessLog.optTime'/>:
 						从<input type="text" name="filter_GED_optTime" class="input-mini" type="text" 
@@ -95,12 +95,24 @@
 						到&nbsp;<input type="text" name="filter_LED_optTime" class="input-mini" type="text" 
 									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
 									value="" size="8"/>
+					</label> --%>
+					<label style="float:none;white-space:nowrap" >
+						模板编码:
+						<input type="text" readonly="readonly" value="${budgetUpdata.modelXfId.modelId.modelCode}"/>
 					</label>
-					<div class="buttonActive" style="float:right">
+					<label style="float:none;white-space:nowrap" >
+						模板名称:
+						<input type="text" readonly="readonly" style="width:200px" value="${budgetUpdata.modelXfId.modelId.modelName}"/>
+					</label>
+					<label style="float:none;white-space:nowrap" >
+						上报部门:
+						<input type="text" readonly="readonly" value="${budgetUpdata.department.name}"/>
+					</label>
+					<%-- <div class="buttonActive" style="float:right">
 						<div class="buttonContent">
 							<button type="button" onclick="propertyFilterSearch('bmModelProcessLog_search_form','bmModelProcessLog_gridtable')"><s:text name='button.search'/></button>
 						</div>
-					</div>
+					</div> --%>
 				</form>
 				</div>
 			</div>
@@ -116,7 +128,7 @@
 			
 			</ul>
 		</div>
-		<div id="bmModelProcessLog_gridtable_div" layoutH="120" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div id="bmModelProcessLog_gridtable_div" layoutH="90" class="grid-wrapdiv" buttonBar="width:500;height:300">
 			<input type="hidden" id="bmModelProcessLog_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="bmModelProcessLog_gridtable_addTile">
 				<s:text name="bmModelProcessLogNew.title"/>

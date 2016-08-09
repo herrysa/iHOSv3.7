@@ -141,11 +141,13 @@ public class BusinessProcessStepPagedAction extends JqGridBaseAction implements 
         	BusinessProcess businessProcess = businessProcessManager.get(processId);
         	businessProcessStep.setBusinessProcess(businessProcess);
         	this.setEntityIsNew(false);
+        	filters.add(new PropertyFilter("EQS_businessProcess.processCode",processId));
         	filters.add(new PropertyFilter("OAS_state",""));
         	filters.add(new PropertyFilter("GTI_state",""+businessProcessStep.getState()));
             okStepList = businessProcessStepManager.getByFilters(filters);
             //okStepList.add(endBusinessProcessStep);
         	filters.clear();
+        	filters.add(new PropertyFilter("EQS_businessProcess.processCode",processId));
             filters.add(new PropertyFilter("LTI_state",""+businessProcessStep.getState()));
             filters.add(new PropertyFilter("OAS_state",""));
             noStepList = businessProcessStepManager.getByFilters(filters);
@@ -157,6 +159,7 @@ public class BusinessProcessStepPagedAction extends JqGridBaseAction implements 
             okStepList = new ArrayList<BusinessProcessStep>();
             //okStepList.add(endBusinessProcessStep);
         	filters.clear();
+        	filters.add(new PropertyFilter("EQS_businessProcess.processCode",processId));
             filters.add(new PropertyFilter("OAS_state",""));
             noStepList = businessProcessStepManager.getByFilters(filters);
         	this.setEntityIsNew(true);

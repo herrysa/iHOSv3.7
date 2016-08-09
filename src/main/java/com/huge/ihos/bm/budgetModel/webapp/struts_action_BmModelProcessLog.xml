@@ -7,7 +7,7 @@
 
 	<package name="bmModelProcessLog" extends="default"	namespace="/">
 
-		<action name="bmModelProcessLogList" class="com.huge.ihos.bm.budgetModel.webapp.action.BmModelProcessLogPagedAction">
+		<action name="bmModelProcessLogList" class="com.huge.ihos.bm.budgetModel.webapp.action.BmModelProcessLogPagedAction" method="bmModelProcessLogList">
 			<result name="input">/WEB-INF/pages/bm/budgetModel/bmModelProcessLogList.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetModel/bmModelProcessLogList.jsp</result>
 		</action>

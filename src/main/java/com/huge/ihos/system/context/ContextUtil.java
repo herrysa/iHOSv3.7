@@ -39,9 +39,8 @@ public class ContextUtil extends HttpServlet{
 	public static String herpType = "S1";// S：单个单位版；M:多单位版；G：集团版
 	public static int orgNum = 1;		// 允许的单位数量
 	public static String orgName;
-	public static int versionType = 2;// 0：发行版;1:演示版;2:期间限制版
-	//public static Long maxDate = 1412006400000L;
-	public static Long maxDate = 1472631206347L;
+	public static int versionType = 0;// 1:演示版；0：发行版
+	public static Long maxDate = 1472631053621L;
 	
 	private static DogService dogService = null;
     private static String[] subsystemIds ;
@@ -906,7 +905,5 @@ public class ContextUtil extends HttpServlet{
 		calendar.set(Calendar.MONTH, 7);
 		calendar.set(Calendar.DAY_OF_MONTH, 31);
 		System.out.println(calendar.getTimeInMillis());
-		System.out.println(Boolean.valueOf("1"));
-		System.out.println(Boolean.getBoolean("1"));
 	}
 }

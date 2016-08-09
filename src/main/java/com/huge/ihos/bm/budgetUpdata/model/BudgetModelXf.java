@@ -38,6 +38,32 @@ public class BudgetModelXf extends BaseObject {
 	private Integer checkedNum;
 	private Integer submitedNum;
 	
+	private String deptName;
+	private String updataId;
+	
+	private BudgetModelXf bmXf;
+	
+	@Transient
+	public BudgetModelXf getBmXf() {
+		return bmXf;
+	}
+	public void setBmXf(BudgetModelXf bmXf) {
+		this.bmXf = bmXf;
+	}
+	@Formula("(select top 1 up.updataId from bm_updata up where up.modelXfId=xfId )")
+	public String getUpdataId() {
+		return updataId;
+	}
+	public void setUpdataId(String updataId) {
+		this.updataId = updataId;
+	}
+	@Formula("(select top 1 dept.name from bm_updata up left join t_department dept on up.deptId=dept.deptId where up.modelXfId=xfId )")
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 	private Map<String,Object> stepMap;
 	
 	@Transient
@@ -53,38 +79,6 @@ public class BudgetModelXf extends BaseObject {
 	}
 	public void setXfNum(Integer xfNum) {
 		this.xfNum = xfNum;
-	}
-	
-	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=0)")
-	public Integer getUpdataingNum() {
-		return updataingNum;
-	}
-	public void setUpdataingNum(Integer updataingNum) {
-		this.updataingNum = updataingNum;
-	}
-	
-	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=1)")
-	public Integer getConfirmNum() {
-		return confirmNum;
-	}
-	public void setConfirmNum(Integer confirmNum) {
-		this.confirmNum = confirmNum;
-	}
-	
-	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=2)")
-	public Integer getCheckedNum() {
-		return checkedNum;
-	}
-	public void setCheckedNum(Integer checkedNum) {
-		this.checkedNum = checkedNum;
-	}
-	
-	@Formula("(select count(*) from bm_updata up where up.modelXfId=xfId and up.state=3)")
-	public Integer getSubmitedNum() {
-		return submitedNum;
-	}
-	public void setSubmitedNum(Integer submitedNum) {
-		this.submitedNum = submitedNum;
 	}
 	@Id
 	@Column(name = "xfId", length = 32, nullable = false)

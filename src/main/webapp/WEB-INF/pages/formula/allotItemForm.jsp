@@ -53,7 +53,7 @@
 											+ data[i].cnCode + ","
 											+ data[i].name + ":"
 											+ data[i].departmentId,
-										branchCode : data[i].branch.branchCode,
+										branchCode : data[i].branch?data[i].branch.branchCode:"",
 										orgCode : data[i].org.orgCode
 									};
 								rows[rows.length] = {

@@ -52,7 +52,7 @@
 		}); */
 		jQuery("#bmUpdataType_expandTree").text("展开");
     	bmUpdataGrid.jqGrid({
-    		url : "budgetUpdataGridList?upType=0",
+    		url : "budgetUpdataGridList?filter_EQB_modelXfId.modelId.isHz=false&upType=0",
     		editurl:"budgetUpdataGridEdit",
 			datatype : "json",
 			mtype : "GET",

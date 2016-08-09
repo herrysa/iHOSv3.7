@@ -244,17 +244,17 @@ var budgetReportDefine = {
 					</span>
 				</a>
 				</li>
-				<li><a id="${random}_showBudgetModelReport" class="changebutton"  href="javaScript:"
+				<li><a id="${random}_showBudgetModelReport" class="previewbutton"  href="javaScript:"
 					><span>预览
 					</span>
 				</a>
 				</li>
-				<li><a id="${random}_submitReport" class="changebutton"  href="javaScript:"
+				<%-- <li><a id="${random}_submitReport" class="submitbutton"  href="javaScript:"
 					><span>提交
 					</span>
 				</a>
-				</li>
-				<li><a id="${random}_saveBudgetModelReport" class="changebutton"  href="javaScript:"
+				</li> --%>
+				<li><a id="${random}_saveBudgetModelReport" class="savebutton"  href="javaScript:"
 					><span>保存
 					</span>
 				</a>

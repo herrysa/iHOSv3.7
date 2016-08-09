@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
 import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
+import com.huge.ihos.bm.budgetUpdata.model.BmProcessColumn;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetModelXf;
 import com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata;
 import com.huge.ihos.bm.budgetUpdata.service.BudgetModelXfManager;
@@ -92,6 +93,16 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	public void setBsStepList(List<BusinessProcessStep> bsStepList) {
 		this.bsStepList = bsStepList;
 	}
+	
+	List<Map<String,Object>> yearList;
+
+	public List<Map<String,Object>> getYearList() {
+		return yearList;
+	}
+
+	public void setYearList(List<Map<String,Object>> yearList) {
+		this.yearList = yearList;
+	}
 
 	public String budgetModelXfList(){
 		try {
@@ -100,7 +111,13 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			filters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
 			filters.add(new PropertyFilter("OAS_state",""));
 			bsStepList = businessProcessStepManager.getByFilters(filters);
-			
+			for(BusinessProcessStep businessProcessStep : bsStepList){
+				if(businessProcessStep.getIsEnd()==null||!businessProcessStep.getIsEnd()){
+					businessProcessStep.setStepName(businessProcessStep.getStepName()+"中");
+				}
+			}
+			String yearSql = "select period_year periodYear from bm_model_xf group by period_year ORDER BY period_year DESC";
+			yearList = businessProcessStepManager.getBySqlToMap(yearSql);
 		} catch (Exception e) {
 			log.error("List Error", e);
 		}
@@ -131,6 +148,18 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					}
 				}
 				budgetModelXf.setStepMap(stepMap);
+				if(budgetModelXf.getModelId().getIsHz()){
+					BudgetModel hzModel = budgetModelXf.getModelId().getHzModelId();
+					if(hzModel!=null){
+						List<PropertyFilter> hzfilters = new ArrayList<PropertyFilter>();
+						hzfilters.add(new PropertyFilter("EQS_modelId.modelId",hzModel.getModelId()));
+						hzfilters.add(new PropertyFilter("NEI_state","3"));
+						List<BudgetModelXf> budgetModelXfs = budgetModelXfManager.getByFilters(hzfilters);
+						if(budgetModelXfs!=null&&budgetModelXfs.size()>0){
+							budgetModelXf.setBmXf(budgetModelXfs.get(0));
+						}
+					}
+				}
 			}
 			records = pagedRequests.getTotalNumberOfRows();
 			total = pagedRequests.getTotalNumberOfPages();
@@ -203,7 +232,14 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		List<PropertyFilter> modelfilters = new ArrayList<PropertyFilter>();
 		modelfilters.add(new PropertyFilter("EQB_disabled", "false"));
 		String periodYear = UserContextUtil.getUserContext().getPeriodYear();
-		modelfilters.add(new PropertyFilter("SQS_modelId", "modelId not in (select modelId from bm_model_xf where period_year='"+periodYear+"')"));
+		String periodYearNum = ContextUtil.getGlobalParamByKey("periodYearNum");
+		if(periodYearNum!=null){
+			int y = Integer.parseInt(periodYearNum);
+			int year = Integer.parseInt(periodYear);
+			periodYear = ""+(year+y);
+		}
+		//modelfilters.add(new PropertyFilter("SQS_modelId.modelId", "modelId not in (select modelId from bm_model_xf where period_year='"+periodYear+"')"));
+		modelfilters.add(new PropertyFilter("SQS_modelId", "this_.modelId not in (select xf.modelId from bm_model_xf xf where xf.period_year='"+periodYear+"')"));
 		List<BudgetModel> budgetModels = budgetModelManager.getByFilters(modelfilters);
 		for(BudgetModel bmm :budgetModels){
 			BudgetModelXf budgetModelXf = new BudgetModelXf();
@@ -230,14 +266,20 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		if(xfId!=null&&!"".equals(xfId)){
 			List<PropertyFilter> xfModelfilters = new ArrayList<PropertyFilter>();
 			String periodYear = UserContextUtil.getUserContext().getPeriodYear();
-			xfModelfilters.add(new PropertyFilter("EQS_periodYear", periodYear));
+			String periodYearNum = ContextUtil.getGlobalParamByKey("periodYearNum");
+			if(periodYearNum!=null){
+				int y = Integer.parseInt(periodYearNum);
+				int year = Integer.parseInt(periodYear);
+				periodYear = ""+(year+y);
+			}
+			//xfModelfilters.add(new PropertyFilter("EQS_periodYear", periodYear));
 			xfModelfilters.add(new PropertyFilter("INS_xfId", xfId));
 			List<BudgetModelXf> xfBudgetModelXfs = budgetModelXfManager.getByFilters(xfModelfilters);
 			for(BudgetModelXf bmmXf :xfBudgetModelXfs){
 				BudgetModel bmm = bmmXf.getModelId();
 				int state = bmmXf.getState();
 				if(state>0){
-					if("1".equals(xfType)){
+					if("1".equals(xfType)||"2".equals(xfType)){
 						List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
 						updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",bmmXf.getXfId()));
 						List<BudgetUpdata> budgetUpdataList = budgetUpdataManager.getByFilters(updatafilters);
@@ -259,6 +301,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					}
 				}else{
 					bmmXf.setState(1);
+					bmmXf.setXfDate(Calendar.getInstance().getTime());
 				}
 				Set<Department> departments = bmm.getDepartments();
 				List<BudgetUpdata> budgetUpdatas = new ArrayList<BudgetUpdata>();
@@ -277,13 +320,54 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			}
 			budgetModelXfManager.saveAll(xfBudgetModelXfs);
 		}
-		
-		return ajaxForward("下发成功！");
+		if(!"2".equals(xfType)){
+			return ajaxForward("下发成功！");
+		}else{
+			return ajaxForward(true,"驳回成功！",false);
+		}
 	}
 	
+	
+	List<BmProcessColumn> processColumns;
+	public List<BmProcessColumn> getProcessColumns() {
+		return processColumns;
+	}
+
+	public void setProcessColumns(List<BmProcessColumn> processColumns) {
+		this.processColumns = processColumns;
+	}
 	public String bmHzList(){
 		try {
-			
+			/*String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmHzCheckProcess");
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+			filters.add(new PropertyFilter("OAS_state",""));
+        	List<BusinessProcessStep> beforeStepList = businessProcessStepManager.getByFilters(filters);
+        	processColumns = new ArrayList<BmProcessColumn>();
+        	int i=0;
+        	for(BusinessProcessStep bps : beforeStepList){
+        		if(i==beforeStepList.size()-1){
+        			break;
+        		}
+        		BmProcessColumn bpc_pserson = new BmProcessColumn();
+        		bpc_pserson.setCode("person_"+bps.getStepCode());
+        		bpc_pserson.setName(bps.getStepName());
+        		bpc_pserson.setDataType("string");
+        		processColumns.add(bpc_pserson);
+        		BmProcessColumn bpc_time = new BmProcessColumn();
+        		bpc_time.setCode("date_"+bps.getStepCode());
+        		bpc_time.setName(bps.getStepName()+"时间");
+        		bpc_time.setDataType("date");
+        		processColumns.add(bpc_time);
+        		if(bps.getState()!=0){
+        			BmProcessColumn bpc_info = new BmProcessColumn();
+        			bpc_info.setCode("info_"+bps.getStepCode());
+        			bpc_info.setName("审核信息");
+        			bpc_info.setDataType("string");
+        			processColumns.add(bpc_info);
+        		}
+        		i++;
+        	}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

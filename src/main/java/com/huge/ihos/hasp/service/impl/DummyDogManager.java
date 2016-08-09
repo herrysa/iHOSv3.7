@@ -12,7 +12,7 @@ public class DummyDogManager
     public String getHospitalName()
         throws AppException {
         // TODO Auto-generated method stub
-        return "Dummy";
+        return "演示医院";
     }
 
     @Override
@@ -30,6 +30,7 @@ public class DummyDogManager
     public String[] getAllowedSubSystem()
         throws AppException {
         String[] dummySubSys = { "00", "01", "0201","0202", "03", "04", "05", "0601","0602","0603","0604", "40" ,"50", "60","90","10","09","11","12" };
+        //String[] dummySubSys = { "00", "01", "0201","0202", "0601","0602","0603","0604", "40" ,"50", "60","90","10","11" };
         return dummySubSys;
     }
 

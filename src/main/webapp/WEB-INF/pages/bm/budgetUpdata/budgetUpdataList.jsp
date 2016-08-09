@@ -9,10 +9,18 @@
 		var url = "budgetUpdataGridList?1=1";
 		if(upType=="1"){
 			url += "&upType="+upType+"&stepCode=${stepCode}";
+			if("${hz}"=="1"){
+				url += "&filter_EQB_modelXfId.modelId.isHz=true";
+			}else{
+				url += "&filter_EQB_modelXfId.modelId.isHz=false";
+			}
 		}else if(upType=="2"){
-			url += "&upType="+upType;
+			url += "&filter_EQB_modelXfId.modelId.isHz=false&upType="+upType;
 		}else{
-			url += "&xfId=${xfId}&state=${state}";
+			url += "&filter_EQB_modelXfId.modelId.isHz=false&xfId=${xfId}&state=${state}";
+		}
+		if("${bmCheckProcessCode}"){
+			url += "&bmCheckProcessCode=${bmCheckProcessCode}"
 		}
 		budgetUpdataGrid${random}.jqGrid({
     		url : url,
@@ -32,7 +40,7 @@
 				name : "checkMap.${pc.code }",
 				index : "checkMap.${pc.code }",
 				label : "${pc.name }",
-				width : 100,
+				width : 150,
 				sortable:false,
 				/* <c:if test="${dc.columnType=='varchar'}">
 					formatter:stringFormatter,
@@ -81,7 +89,7 @@
            	if("${upType}"==2){
            		extraHeight = 1;
            	}
-           	gridContainerResize('${random}budgetUpdata','div',0,extraHeight);
+           	//gridContainerResize('${random}budgetUpdata','div',0,extraHeight);
            	var dataTest = {"id":"${random}budgetUpdata_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
        		} 
@@ -103,7 +111,7 @@
 		jQuery("#${random}stepInfoDiv_confirm").click(function(){
 			var bmProcessId = jQuery("#${random}stepInfoDiv").data("bmProcessId");
 			var opt = jQuery("#${random}stepInfoDiv").data("opt");
-			var info = jQuery("textarea[name='stepInfoDiv_info']","#${random}stepInfoDiv_form").val();
+			var info = jQuery("textarea[name='stepInfoDiv_info']",".dialogContent").val();
 			dealBmProcessFunction(bmProcessId,opt,info);
 			$.pdialog.closeCurrentDiv('${random}stepInfoDiv');
 		});
@@ -138,6 +146,17 @@
 			var winTitle='预算审批日志';
 			$.pdialog.open(url,'bmCheckLog',winTitle, {mask:true,width : 730,height : 450});
 	    });
+	    
+	    jQuery("#${random}budgetUpdata_gridtable_showReport").click(function(){
+			var sid = jQuery("#${random}budgetUpdata_gridtable").jqGrid('getGridParam','selarrrow');
+			if(sid==null|| sid.length != 1){       	
+				alertMsg.error("请选择一条记录。");
+				return;
+			}
+			var fullHeight = jQuery("#container").innerHeight();
+	    	var fullWidth = jQuery("#container").innerWidth();
+			$.pdialog.open('openBmReport?reportType=show&updataId='+sid,'bmReport',"预算上报", {mask:true,width : fullWidth,height : fullHeight});
+	    });
   	});
 	function bmProcessFuction(opt){
 		var stepCode = "${businessProcessStep.stepCode }";
@@ -165,9 +184,9 @@
 			"_" : $.now(),modelCode:modelCode,stepCode:stepCode
 		}, function(data) {
 			//formCallBack(data);
-			if(data.bmModelProcess!=null){
-				var stepInfo = data.bmModelProcess.stepInfo;
-				var bmProcessId = data.bmModelProcess.bmProcessId;
+			if(data.maprs!=null){
+				var stepInfo = data.maprs.stepInfo;
+				var bmProcessId = data.maprs.bmProcessId;
 				/* if(opt=='ok'){
 					bmProcessId = data.bmModelProcess.okStep.bmProcessId;
 				}else{
@@ -222,11 +241,21 @@
 					</label> --%>
 					<label style="float:none;white-space:nowrap" >
 						预算模板编码:
-						<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode"/>
+						<s:if test="budgetModel!=null">
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode" readonly="true" value="${budgetModel.modelCode}"/>
+						</s:if>
+						<s:else>
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode"/>
+						</s:else>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						预算模板名称:
-						<input type="text" name="filter_LIKES_modelXfId.modelId.modelName"/>
+						<s:if test="budgetModel!=null">
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelName" readonly="true" value="${budgetModel.modelName}"/>
+						</s:if>
+						<s:else>
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelName"/>
+						</s:else>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetUpdata.department'/>:
@@ -281,15 +310,23 @@
 					<li><a id="${random}budgetUpdata_gridtable_no" class="delbutton"  href="javaScript:bmProcessFuction('no')"><span>${businessProcessStep.noName }</span>
 					</a>
 					</li>
+					<li><a id="${random}budgetUpdata_gridtable_showReport" class="reportbutton"  href="javaScript:"><span>查看报表</span>
+					</a>
+					</li>
 				</s:if>
 				<s:elseif test="upType==2">
 					<li><a id="${random}budgetUpdata_gridtable_log" class="openbutton"  href="javaScript:bmProcessFuction('no')"><span>审批日志</span>
 					</a>
 					</li>
+					<li><a id="${random}budgetUpdata_gridtable_showReport" class="reportbutton"  href="javaScript:"><span>查看报表</span>
+					</a>
+					</li>
 				</s:elseif>
+				<s:elseif test="upType==1||upType==2">
 				<li><a id="${random}budgetUpdata_gridtable_groupByDept" class="settingbutton"  href="javaScript:"><span>按预算部门<s:if test="upType==1">审批</s:if><s:else>查询</s:else></span>
 				</a>
 				</li>
+				</s:elseif>
 				<%-- <li><a id="${random}budgetUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
 					</span>
@@ -298,7 +335,7 @@
 			
 			</ul>
 		</div>
-		<div id="${random}budgetUpdata_gridtable_div" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div id="${random}budgetUpdata_gridtable_div" layoutH=90 class="grid-wrapdiv" buttonBar="width:500;height:300">
 			<input type="hidden" id="${random}budgetUpdata_gridtable_navTabId" value="${sessionScope.navTabId}">
 			<label style="display: none" id="${random}budgetUpdata_gridtable_addTile">
 				<s:text name="budgetUpdataNew.title"/>
