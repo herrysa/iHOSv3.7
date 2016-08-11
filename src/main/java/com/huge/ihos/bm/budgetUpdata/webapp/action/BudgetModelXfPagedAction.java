@@ -195,9 +195,39 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
         }
         return SUCCESS;
     }
+    
+    public String budgetModelXfDel(){
+    	String msg = "下发";
+    	try {
+    		if("2".equals(xfType)){
+    			msg = "汇总";
+    		}
+    		id = id.replaceAll(" ", "");
+			StringTokenizer ids = new StringTokenizer(id,
+					",");
+			while (ids.hasMoreTokens()) {
+				String removeId = ids.nextToken();
+				List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
+				updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",removeId));
+				List<BudgetUpdata> budgetUpdataList = budgetUpdataManager.getByFilters(updatafilters);
+				for(BudgetUpdata bup : budgetUpdataList){
+					budgetUpdataManager.executeSql("delete bm_updatadetail where updataId='"+bup.getUpdataId()+"'");
+					budgetUpdataManager.executeSql("delete bm_process_log where updataId='"+bup.getUpdataId()+"'");
+					budgetUpdataManager.remove(bup.getUpdataId());
+				}
+				budgetModelXfManager.remove(removeId);
+			}
+			return ajaxForward(true, "预算"+msg+"删除成功！", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(true, "预算"+msg+"删除失败！", false);
+		}
+    }
+    
 	public String budgetModelXfGridEdit() {
 		try {
 			if (oper.equals("del")) {
+				id = id.replaceAll(" ", "");
 				StringTokenizer ids = new StringTokenizer(id,
 						",");
 				while (ids.hasMoreTokens()) {
@@ -239,6 +269,11 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			periodYear = ""+(year+y);
 		}
 		//modelfilters.add(new PropertyFilter("SQS_modelId.modelId", "modelId not in (select modelId from bm_model_xf where period_year='"+periodYear+"')"));
+		boolean isHz = false;
+		if("2".equals(xfType)){
+			isHz = true;
+		}
+		modelfilters.add(new PropertyFilter("EQB_isHz", ""+isHz));
 		modelfilters.add(new PropertyFilter("SQS_modelId", "this_.modelId not in (select xf.modelId from bm_model_xf xf where xf.period_year='"+periodYear+"')"));
 		List<BudgetModel> budgetModels = budgetModelManager.getByFilters(modelfilters);
 		for(BudgetModel bmm :budgetModels){

@@ -38,6 +38,13 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
+		<action name="enabledBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="enabledBudgetModel">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 		<!-- called when clicking save on the edit form -->
 		<action name="saveBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="save">
 			<result name="success" type="json">
@@ -86,7 +93,7 @@
 			</result>
 		</action>
 		
-		<action name="modelProcessList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction">
+		<action name="modelProcessList" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction" method="modelProcessList">
 			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelProcess.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetModel/budgetModelProcess.jsp</result>
 		</action>

@@ -183,7 +183,7 @@ var budgetReportDefine = {
 				</a>
 				</li>
 				<%-- <li><a id="${random}_saveBmReportData" class="submitbutton"  href="javaScript:"
-					><span>引入上该模板次填报数据
+					><span>引入上次该模板填报数据
 					</span>
 				</a>
 				</li> --%>

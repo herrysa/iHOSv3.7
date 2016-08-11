@@ -202,25 +202,48 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public String delBudgetModel(){
 		try {
 			String[] modelIds = modelId.split(",");
-			budgetModelManager.remove(modelIds);
-			String modelIdsql = "(";
-			for(String m : modelIds){
-				modelIdsql += "'"+m+"'," ;
+			for(String mId : modelIds){
+				BudgetModel bmm = budgetModelManager.get(mId);
+				List<Map<String, Object>> rs = budgetModelManager.getBySqlToMap("select * from bm_model_xf where modelId='"+mId+"'");
+				if(rs!=null&&rs.size()>0){
+					return ajaxForward(false,bmm.getModelName()+" 含有下发数据，不能删除！",false);
+				}else{
+					budgetModelManager.executeSql("delete from bm_model_process where modelId = '"+mId+"'");
+					budgetModelManager.executeSql("delete from bm_model_dept where modelId in = '"+mId+"'");
+					budgetModelManager.remove(mId);
+				}
 			}
-			if(!modelIdsql.equals("(")){
-				modelIdsql = modelIdsql.substring(0, modelIdsql.length()-1);
-				modelIdsql += ")";
-			}else{
-				modelIdsql += "'')";
-			}
-			budgetModelManager.executeSql("delete from bm_model_process where modelId in "+modelIdsql);
-			
-			budgetModelManager.executeSql("delete from bm_model_dept where modelId in "+modelIdsql);
-			
 			return ajaxForward(true,"删除预算模板成功！",false);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ajaxForward(false,"删除预算模板失败！",false);
+		}
+	}
+	
+	public String enabledBudgetModel(){
+		String msg = "停用";
+		try {
+			String[] modelIds = modelId.split(",");
+			for(String mId : modelIds){
+				BudgetModel bmm = budgetModelManager.get(mId);
+				if("enabled".equals(oper)){
+					bmm.setDisabled(false);
+					budgetModelManager.save(bmm);
+					msg = "启用";
+				}else if("disabled".equals(oper)){
+					List<Map<String, Object>> rs = budgetModelManager.getBySqlToMap("select * from bm_model_xf where state in (1,2) and modelId='"+mId+"'");
+					if(rs!=null&&rs.size()>0){
+						return ajaxForward(false,bmm.getModelName()+" 正在上报，不能停用！",false);
+					}else{
+						bmm.setDisabled(true);
+						budgetModelManager.save(bmm);
+					}
+				}
+			}
+			return ajaxForward(true,msg+"预算模板成功！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,msg+"预算模板失败！",false);
 		}
 	}
 	
@@ -239,6 +262,9 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			}else{
 				reMsg = "修改预算模板成功！";
 				BudgetModel oldModel = budgetModelManager.get(modelId);
+				if(oldModel.getDisabled()!=null&!oldModel.getDisabled()){
+					budgetModel = oldModel;
+				}
 				budgetModel.setReportXml(oldModel.getReportXml());
 				budgetModel.setModifier(UserContextUtil.getContextUser().getPersonName());
 				budgetModel.setModifydate(Calendar.getInstance().getTime());
@@ -833,6 +859,16 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public void setModelProcesss(List<BmModelProcess> modelProcesss) {
 		this.modelProcesss = modelProcesss;
 	}
+	
+	public String modelProcessList(){
+		try {
+			budgetModel = budgetModelManager.get(modelId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
 	public String modelProcessGridList() {
 		log.debug("enter list method!");
 		try {
@@ -1143,7 +1179,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				bmModelDept.setBmDepartment(department);
 				bmModelDeptManager.save(bmModelDept);
 			}
-			return ajaxForward(true,"保存成功！",false);
+			return ajaxForward(true,"保存成功！",true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ajaxForward(false,"保存失败！",false);

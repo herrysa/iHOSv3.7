@@ -144,6 +144,32 @@
 			}
 		});
     });
+    jQuery("#budgetModelXf_gridtable_del_c").click(function(){
+    	var sid = jQuery("#budgetModelXf_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	for(var i in sid){
+    		var id = sid[i];
+	    	var rowData = jQuery("#budgetModelXf_gridtable").jqGrid('getRowData',id);
+	    	var state = rowData["state"];
+	    	if(state==1||state==2){
+	    		alertMsg.error("只能删除未上报或已过期的下发数据！");
+	    		return ;
+	    	}
+    	}
+    	alertMsg.confirm("确认删除？", {
+			okCall: function(){
+				jQuery.post("budgetModelXfDel?oper=del", {
+					"_" : $.now(),id:sid,navTabId:'budgetModelXf_gridtable'
+				}, function(data) {
+					formCallBack(data);
+				},"json");
+				
+			}
+		});
+    });
   	});
 	function setCellText(grid,rowid,colName,cellTxt){
 		 var  tr,cm = grid.p.colModel, iCol = 0, cCol = cm.length;
@@ -219,7 +245,11 @@
 					</span>
 				</a>
 				</li>
-			
+				<li><a id="budgetModelXf_gridtable_del_c" class="delbutton"  href="javaScript:"
+					><span>删除
+					</span>
+				</a>
+				</li>
 			</ul>
 		</div>
 		<div id="budgetModelXf_gridtable_div" class="grid-wrapdiv" buttonBar="width:500;height:300">

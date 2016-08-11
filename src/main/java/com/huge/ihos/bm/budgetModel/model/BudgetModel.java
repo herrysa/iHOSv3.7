@@ -44,7 +44,7 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	private Boolean disabled ;
 	private String remark ;
 	private String department ;
-	private String periodYear;
+	//private String periodYear;
 	
 	private Boolean isHz;
 	private BudgetModel hzModelId;
@@ -239,14 +239,14 @@ public class BudgetModel extends BaseObject implements Cloneable{
 		this.hzModelId = hzModelId;
 	}
 	
-	@Column
+	/*@Column
 	public String getPeriodYear() {
 		return periodYear;
 	}
 
 	public void setPeriodYear(String periodYear) {
 		this.periodYear = periodYear;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

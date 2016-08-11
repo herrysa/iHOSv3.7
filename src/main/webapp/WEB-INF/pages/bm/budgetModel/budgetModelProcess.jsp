@@ -63,6 +63,10 @@ jQuery(document).ready(function() {
 		
 	});
 	jQuery("#modelProcess_gridtable_refresh").click(function(){
+		if("${budgetModel.disabled}"=="false"){
+			alertMsg.error("模板在启用中，不能修改流程！");
+			return ;
+		}
 		$.ajax({
             url: 'refreshModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}',
             type: 'post',
@@ -77,6 +81,10 @@ jQuery(document).ready(function() {
         });
 	});
 	jQuery("#modelProcess_gridtable_add_c").click(function(){
+		if("${budgetModel.disabled}"=="false"){
+			alertMsg.error("模板在启用中，不能修改流程！");
+			return ;
+		}
 		var ids = jQuery(modelProcessGridIdString).jqGrid('getDataIDs');
 		var stepCode ="";
 		for(var i in ids){
@@ -90,6 +98,10 @@ jQuery(document).ready(function() {
 		stopPropagation();
 	});
 	jQuery("#modelProcess_gridtable_del_c").click(function(){
+		if("${budgetModel.disabled}"=="false"){
+			alertMsg.error("模板在启用中，不能修改流程！");
+			return ;
+		}
 		var sid = jQuery("#modelProcess_gridtable").jqGrid('getGridParam','selarrrow');
 		if(sid.length==0){
 			alertMsg.error("请选择一条记录！");
@@ -110,6 +122,10 @@ jQuery(document).ready(function() {
         });
 	});
 	jQuery("#modelProcess_gridtable_delAll_c").click(function(){
+		if("${budgetModel.disabled}"=="false"){
+			alertMsg.error("模板在启用中，不能修改流程！");
+			return ;
+		}
 		var url = "delAllBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}";
 		$.ajax({
             url: url,
@@ -125,6 +141,10 @@ jQuery(document).ready(function() {
         });
 	});
 	jQuery("#modelProcess_gridtable_edit_c").click(function(){
+		if("${budgetModel.disabled}"=="false"){
+			alertMsg.error("模板在启用中，不能修改流程！");
+			return ;
+		}
 		var sid = jQuery("#modelProcess_gridtable").jqGrid('getGridParam','selarrrow');
 		if(sid.length==0){
 			alertMsg.error("请选择一条记录！");

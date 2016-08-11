@@ -8,6 +8,12 @@
 			jQuery("#budgetModelForm").attr("action","saveBudgetModel?popup=true&navTabId="+'${navTabId}&entityIsNew=${entityIsNew}');
 			jQuery("#budgetModelForm").submit();
 		});*/
+		if("${budgetModel.disabled}"=="false"){
+			jQuery("input","#budgetModelForm").attr("readOnly","true");
+			jQuery("select","#budgetModelForm").attr("disabled","true");
+			jQuery("textarea","#budgetModelForm").attr("readOnly","true");
+			jQuery("input[type=checkbox]","#budgetModelForm").attr("disabled","true");
+		}
 		tabResize();
 	});
 </script>
@@ -132,12 +138,12 @@
 					});
 					</script>
 				</div>
-				<s:if test="%{!entityIsNew}">
+				<%-- <s:if test="%{!entityIsNew}">
 				<div class="unit">
 					<label><s:text name="budgetModel.disabled"/>:</label>
 					<s:checkbox id="budgetModel_disabled" key="budgetModel.disabled" name="budgetModel.disabled" theme="simple"/>
 				</div>
-				</s:if>
+				</s:if> --%>
 				<div class="unit">
 				<s:textarea id="budgetModel_remark" key="budgetModel.remark" name="budgetModel.remark" style="width:350px;height:50px" cssClass="				
 				

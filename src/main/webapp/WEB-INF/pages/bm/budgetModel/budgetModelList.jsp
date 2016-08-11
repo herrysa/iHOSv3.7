@@ -103,18 +103,31 @@
 			alertMsg.error("请选择一条记录。");
 			return;
 		}
+		for(var i in sid){
+			var id = sid[i];
+			var rowData = jQuery("#budgetModel_gridtable").jqGrid('getRowData',id);
+			var disabled = rowData["disabled"];
+			if(disabled!="Yes"){
+				alertMsg.error("只能删除停用的模板。");
+				return;
+			}
+		}
         var url = "delBudgetModel?navTabId=budgetModel_gridtable&modelId="+sid;
-        $.ajax({
-            url: url,
-            type: 'post',
-            dataType: 'json',
-            async:false,
-            error: function(data){
-            alertMsg.error("系统错误！");
-            },
-            success: function(data){
-            	formCallBack(data);
-            }
+        alertMsg.confirm("确认删除？", {
+			okCall: function(){
+		        $.ajax({
+		            url: url,
+		            type: 'post',
+		            dataType: 'json',
+		            async:false,
+		            error: function(data){
+		            alertMsg.error("系统错误！");
+		            },
+		            success: function(data){
+		            	formCallBack(data);
+		            }
+		        });
+			}
         });
     });
     jQuery("#budgetModel_gridtable_editReport").click(function(){
@@ -143,6 +156,46 @@
     });
     jQuery("#budgetModel_gridtable_settle").click(function(){
     	setColShow('budgetModel_gridtable','com.huge.ihos.bm.budgetModel.model.BudgetModel');
+    });
+    jQuery("#budgetModel_gridtable_disabled").click(function(){
+		var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid==null){       	
+			alertMsg.error("请选择一条记录。");
+			return;
+		}
+        var url = "enabledBudgetModel?oper=disabled&navTabId=budgetModel_gridtable&modelId="+sid;
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            async:false,
+            error: function(data){
+            alertMsg.error("系统错误！");
+            },
+            success: function(data){
+            	formCallBack(data);
+            }
+        });
+    });
+    jQuery("#budgetModel_gridtable_enabled").click(function(){
+		var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid==null){       	
+			alertMsg.error("请选择一条记录。");
+			return;
+		}
+        var url = "enabledBudgetModel?oper=enabled&navTabId=budgetModel_gridtable&modelId="+sid;
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            async:false,
+            error: function(data){
+            alertMsg.error("系统错误！");
+            },
+            success: function(data){
+            	formCallBack(data);
+            }
+        });
     });
   	});
 </script>
@@ -229,6 +282,16 @@
 				</li>
 				<li><a id="budgetModel_gridtable_edit_c" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
+					</span>
+				</a>
+				</li>
+				<li><a id="budgetModel_gridtable_enabled" class="enablebutton"  href="javaScript:"
+					><span>启用
+					</span>
+				</a>
+				</li>
+				<li><a id="budgetModel_gridtable_disabled" class="disablebutton"  href="javaScript:"
+					><span>停用
 					</span>
 				</a>
 				</li>

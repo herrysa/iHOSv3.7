@@ -98,7 +98,7 @@
     
     jQuery("#budgetModelHz_gridtable_refresh").click(function(){
     	$.get("budgetModelXfRefresh", {
-			"_" : $.now(),navTabId:'budgetModelHz_gridtable'
+			"_" : $.now(),xfType:2,navTabId:'budgetModelHz_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
@@ -163,6 +163,32 @@
 		});
     });
     
+    jQuery("#budgetModelHz_gridtable_del_c").click(function(){
+    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	for(var i in sid){
+    		var id = sid[i];
+	    	var rowData = jQuery("#budgetModelHz_gridtable").jqGrid('getRowData',id);
+	    	var state = rowData["state"];
+	    	if(state==1||state==2){
+	    		alertMsg.error("只能删除未汇总或已过期的汇总数据！");
+	    		return ;
+	    	}
+    	}
+    	alertMsg.confirm("确认删除？", {
+			okCall: function(){
+				jQuery.post("budgetModelXfDel", {
+					"_" : $.now(),id:sid,xfType:2,navTabId:'budgetModelHz_gridtable'
+				}, function(data) {
+					formCallBack(data);
+				},"json");
+				
+			}
+		});
+    });
     
     });
     
@@ -245,7 +271,11 @@
 					</span>
 				</a>
 				</li>
-			
+				<li><a id="budgetModelHz_gridtable_del_c" class="delbutton"  href="javaScript:"
+					><span>删除
+					</span>
+				</a>
+				</li>
 			</ul>
 		</div>
 		<div id="budgetModelHz_gridtable_div" class="grid-wrapdiv" buttonBar="width:500;height:300">
