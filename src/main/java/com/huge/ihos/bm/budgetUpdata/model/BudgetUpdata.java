@@ -38,6 +38,7 @@ public class BudgetUpdata extends BaseObject {
 	private Date checkDate ;
 	private Integer state ;		//0:上报中;9:已过期
 	private String periodYear;
+	private String updataXml;
 	
 	private Map checkMap;
 	
@@ -155,6 +156,15 @@ public class BudgetUpdata extends BaseObject {
 
 	public void setPeriodYear(String periodYear) {
 		this.periodYear = periodYear;
+	}
+	
+	@Column
+	public String getUpdataXml() {
+		return updataXml;
+	}
+
+	public void setUpdataXml(String updataXml) {
+		this.updataXml = updataXml;
 	}
 
 

@@ -122,10 +122,10 @@
     		alertMsg.error("请选择记录！");
     		return ;
     	}
-    	alertMsg.confirm("确认重新下发？重新下发后,之前填报的数据将作废！", {
+    	alertMsg.confirm("确认重新汇总？重新汇总后,之前汇总的数据将作废！", {
 			okCall: function(){
 				jQuery.post("budgetModel_Xf", {
-					"_" : $.now(),xfId:sid,xfType:'1',navTabId:'budgetModelHz_gridtable'
+					"_" : $.now(),xfId:sid,xfType:'4',navTabId:'budgetModelHz_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				},"json");
@@ -236,7 +236,7 @@
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelHz.state'/>:
-						<s:select list="#{'0':'未汇总','1':'已汇总','3':'已过期' }" name="filter_EQI_state" headerKey="" headerValue="--"></s:select>
+						<s:select list="#{'0':'未汇总','1':'汇总中','2':'已汇总','3':'已过期' }" name="filter_EQI_state" headerKey="" headerValue="--"></s:select>
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
@@ -254,23 +254,22 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelHz_gridtable_xf" class="settlebutton"  href="javaScript:"><span>生成汇总表</span>
+				<li><a id="budgetModelHz_gridtable_xf" class="settlebutton"  href="javaScript:"><span>汇总</span>
 				</a>
 				</li>
-				<!-- <li><a id="budgetModelHz_gridtable_reXf" class="resettlebutton"  href="javaScript:"
-					><span>重新下发
-					</span>
-				</a>
-				</li> -->
-				<li><a id="budgetModelHz_gridtable_hzReport" class="reportbutton"  href="javaScript:"
-					><span>汇总表
+				<li><a id="budgetModelHz_gridtable_reXf" class="resettlebutton"  href="javaScript:"
+					><span>重新汇总
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelHz_gridtable_comfirm" class="addbutton" href="javaScript:" ><span>确定
+				<li><a id="budgetModelHz_gridtable_hzReport" class="previewbutton"  href="javaScript:"
+					><span>查看汇总表
 					</span>
 				</a>
 				</li>
+				<s:if test="needBmHzCheckProcess!='1'">
+				<li><a id="budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
+				</s:if>
 				<li><a id="budgetModelHz_gridtable_del_c" class="delbutton"  href="javaScript:"
 					><span>删除
 					</span>

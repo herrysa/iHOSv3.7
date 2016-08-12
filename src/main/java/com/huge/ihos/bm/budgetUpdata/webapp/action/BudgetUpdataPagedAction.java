@@ -423,11 +423,22 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	public void setProcessLogs(List<Map<String, String>> processLogs) {
 		this.processLogs = processLogs;
 	}
+	
+	public String reportModel;
+	public String getReportModel() {
+		return reportModel;
+	}
+
+	public void setReportModel(String reportModel) {
+		this.reportModel = reportModel;
+	}
 
 	public String openBmReport(){
 		try {
 			budgetUpdata = budgetUpdataManager.get(updataId);
-			BudgetModel budgetModel = budgetUpdata.getModelXfId().getModelId();
+			reportModel = "uploadRuntime";
+			BudgetModelXf budgetModelXf = budgetUpdata.getModelXfId();
+			BudgetModel budgetModel = budgetModelXf.getModelId();
 			modelId = budgetModel.getModelId();
 			if("1".equals(reportType)){
 				String hzModelId = budgetModel.getHzModelId().getModelId();
@@ -441,6 +452,9 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 					}else if(xfs.size()>0){
 						xfId = xfs.get(0).getXfId();
 					}
+				}
+				if(budgetModelXf.getState()==2){
+					reportModel = "report";
 				}
 			}
 			
@@ -498,8 +512,13 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 		try {
 			if(updataId!=null&&!"".equals(updataId)){
 				budgetUpdata = budgetUpdataManager.get(updataId);
-				BudgetModel budgetModel = budgetUpdata.getModelXfId().getModelId();
-	        	reportXml = budgetModel.getReportXml();
+				BudgetModelXf budgetModelXf = budgetUpdata.getModelXfId();
+				BudgetModel budgetModel = budgetModelXf.getModelId();
+				if(budgetModel.getIsHz()!=null&&budgetModel.getIsHz()&&budgetModelXf.getState()==2){
+					reportXml = budgetUpdata.getUpdataXml();
+				}else{
+					reportXml = budgetModel.getReportXml();
+				}
 	        	
 	        }
 			if(reportXml==null){
@@ -573,6 +592,20 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	public String getBmUpdataXml(){
 		try {
 			if(updataId!=null&&!"".equals(updataId)){
+				if("lastUpdata".equals(reportType)){
+					budgetUpdata = budgetUpdataManager.get(updataId);
+					String modelId = budgetUpdata.getModelXfId().getModelId().getModelId();
+					String deptId = budgetUpdata.getDepartment().getDepartmentId();
+					List<PropertyFilter> lastUpdataFilters = new ArrayList<PropertyFilter>();
+					lastUpdataFilters.add(new PropertyFilter("EQS_modelXfId.modelId.modelId",modelId));
+					lastUpdataFilters.add(new PropertyFilter("EQS_department.departmentId",deptId));
+					lastUpdataFilters.add(new PropertyFilter("EQI_modelXfId.state","3"));
+					lastUpdataFilters.add(new PropertyFilter("ODS_modelXfId.xfDate",""));
+					budgetUpdatas = budgetUpdataManager.getByFilters(lastUpdataFilters);
+					if(budgetUpdatas!=null&&budgetUpdatas.size()!=0){
+						updataId = budgetUpdatas.get(0).getUpdataId();
+					}
+				}
 				reportXml = "<WorkSheet name=\"Sheet\" number=\"0\">";
 				List<Map<String, Object>> bmValueList = budgetUpdataManager.getBySqlToMap("select cell,indexCode,bmvalue from bm_updatadetail where updataId='"+updataId+"'");
 				for(Map<String, Object> bmValue : bmValueList){
@@ -775,6 +808,7 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			User user = UserContextUtil.getContextUser();
 			Person person = user.getPerson();
 			Department dept = person.getDepartment();
+			String xfIds = "";
 			for(BudgetUpdata budgetUpdata : budgetUpdatas){
 				if("ok".equals(opt)){
 				while(true){
@@ -843,6 +877,7 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 					BmModelProcess bmModelProcessOk = bmModelProcess.getOkStep();
 					budgetUpdata.setState(bmModelProcessOk.getState());
 					budgetUpdataManager.save(budgetUpdata);
+					xfIds += budgetUpdata.getModelXfId().getXfId()+",";
 				}
 				}else{
 					BmModelProcess bmModelProcessNo = bmModelProcess.getNoStep();
@@ -898,6 +933,10 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
         	
 			List<PropertyFilter> xffilters = new ArrayList<PropertyFilter>();
 			xffilters.add(new PropertyFilter("EQI_state","1"));
+			if(!"".equals(xfIds)){
+				xfIds = xfIds.substring(0, xfIds.length()-1);
+			}
+			xffilters.add(new PropertyFilter("INS_xfId",xfIds));
 			List<BudgetModelXf> budgetModelXfs = budgetModelXfManager.getByFilters(xffilters);
 			for(BudgetModelXf budgetModelXf : budgetModelXfs){
 				List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
@@ -958,6 +997,57 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			log.error("List Error", e);
 		}
 		return SUCCESS;
+	}
+	
+	public String saveBmUpdataXml(){
+		try {
+			if(updataId==null){
+				return ajaxForward(false,"完成预算失败！",false);
+			}
+			if(updataXml==null||"".equals(updataXml)){
+				return ajaxForward(false,"数据错误！",false);
+			}
+			
+			budgetUpdata = budgetUpdataManager.get(updataId);
+			BudgetModelXf budgetModelXf = budgetUpdata.getModelXfId();
+			BudgetModel budgetModel = budgetModelXf.getModelId();
+			BudgetModel budgetHzModel = budgetModel.getHzModelId();
+			if(budgetHzModel==null){
+				List<PropertyFilter> xffilters = new ArrayList<PropertyFilter>();
+				xffilters.add(new PropertyFilter("ODS_xfDate",""));
+				xffilters.add(new PropertyFilter("INS_modelId.modelId",budgetHzModel.getModelId()));
+				List<BudgetModelXf> budgetModelXfs = budgetModelXfManager.getByFilters(xffilters);
+				if(budgetModelXfs!=null&&budgetModelXfs.size()!=0){
+					BudgetModelXf hzBudgetModelXf = budgetModelXfs.get(0);
+					if(hzBudgetModelXf.getState()!=2){
+						return ajaxForward(false,"被上报预算未完成上报！",false);
+					}
+				}
+			}
+			String needBmHzCheckProcess = ContextUtil.getGlobalParamByKey("needBmHzCheckProcess");
+			if("1".equals(needBmHzCheckProcess)){
+				String bmCheckProcessCode2 = ContextUtil.getGlobalParamByKey("bmHzCheckProcess");
+				List<PropertyFilter> filters2 = new ArrayList<PropertyFilter>();
+				filters2.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode2));
+				filters2.add(new PropertyFilter("EQB_isEnd","true"));
+	        	List<BusinessProcessStep> endStepList2 = businessProcessStepManager.getByFilters(filters2);
+	        	int endState2 = 0;
+	        	if(endStepList2!=null&&endStepList2.size()>0){
+	        		endState2 = endStepList2.get(0).getState();
+	        	}
+	        	if(budgetUpdata.getState()!=endState2){
+	        		return ajaxForward(false,"该汇总预算未审批完成！",false);
+	        	}
+			}
+			budgetUpdata.setUpdataXml(updataXml);
+			budgetUpdataManager.save(budgetUpdata);
+			budgetModelXf.setState(2);
+			budgetModelXfManager.save(budgetModelXf);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward("完成预算失败！");
+		}
+		return ajaxForward("完成预算成功！");
 	}
 }
 

@@ -14,17 +14,20 @@ var budgetReportDefine = {
 			"Load":function( id,p1, p2, p3, p4){
 			},
 			"Opened":function( id,p1, p2, p3, p4){
-				var grid = eval("("+id+")");
-				grid.func("AddUserFunctions", "getBmReportFunctionXml");
-				//grid.func("SetAutoCalc","0");
-				//grid.func("CallFunc","2");
-				grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
-				//grid.func("Swkrntpomzqa", "1, 2"); 
-				grid.func("SetAutoCalc","10000");
-				setTimeout(function(){
-					grid.func("CallFunc","64");
-					grid.func("CallFunc","163");
-				},300);
+				if("${reportModel}"!="report"){
+					var grid = eval("("+id+")");
+					grid.func("AddUserFunctions", "getBmReportFunctionXml");
+					//grid.func("SetAutoCalc","0");
+					//grid.func("CallFunc","2");
+					grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
+					//grid.func("Swkrntpomzqa", "1, 2"); 
+					grid.func("SetAutoCalc","10000");
+					setTimeout(function(){
+						grid.func("CallFunc","64");
+						grid.func("CallFunc","163");
+					},300);
+				}
+				
 			},
 			"Toolbar":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
@@ -36,10 +39,11 @@ var budgetReportDefine = {
 		callback:{
 			onComplete:function(id){
 				var grid = eval("("+id+")");
-				
-				grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}");
-				grid.func("SelectCell", "");
-				if("${reportType}"=="show"){
+				if("${reportModel}"!="report"){
+					grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}");
+					grid.func("SelectCell", "");
+				}
+				if("${reportType}"=="show"||"${reportModel}"=="report"){
 					grid.func("Swkrntpomzqa", "1, 2"); 
 				}
 			}
@@ -49,8 +53,11 @@ var budgetReportDefine = {
     supcanGridMap.put('budgetReport_gridtable_${random}',budgetReportDefine); 
  	jQuery(document).ready(function(){
  		//uploadDesigntime、uploadRuntime
- 		insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadRuntime","99%");
- 		
+ 		if("${reportModel}"!="report"){
+ 			insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadRuntime","99%");
+ 		}else{
+ 			insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","","99%");
+ 		}
  		var grid = eval("(budgetReport_gridtable_${random})");
  		jQuery("#${random}_freshReportData").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
@@ -135,6 +142,46 @@ var budgetReportDefine = {
 	            }
 	        });
  		});
+ 		jQuery("#${random}_getLastBmReportData").click(function(){
+ 			alertMsg.confirm("确认引入？引入后，当前编辑的数据将被覆盖！", {
+ 				okCall: function(){
+ 					var grid = eval("(budgetReport_gridtable_${random})");
+	 				grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}&reportType=lastUpdata");
+ 				}
+ 			});
+ 		});
+ 		jQuery("#${random}_saveBmReportXml").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var cells = grid.func("FindCell", "left(formula,1)='='"); 
+ 			var cellArr = cells.split(",");
+ 			for(var i in cellArr){
+ 				var cell = cellArr[i];
+ 				var cellTxt = grid.func("GetCellText", cell+"");
+ 				grid.func("SetCellData", cell+"\r\n");
+ 				grid.func("SetCellData", cell+"\r\n"+cellTxt);
+ 			}
+ 			var rows = grid.func("GetRows","");
+ 			for(var row=0;row<rows;row++){
+ 				var isds = grid.func("GetRowProp",row+"\r\nds");
+ 				if(isds==1){
+ 					grid.func("SetRowProp",row+"\r\nds\r\n0");
+ 				}
+ 			}
+ 			var fileXml = grid.func("GetFileXML", "isSaveCalculateResult=true"); 
+ 			$.ajax({
+	            url: 'saveBmUpdataXml',
+	            type: 'post',
+	            dataType: 'json',
+	            data :{updataId:"${updataId}",updataXml:fileXml,navTabId:'budgetModelHz_gridtable'},
+	            async:false,
+	            error: function(data){
+	            alertMsg.error("系统错误！");
+	            },
+	            success: function(data){
+	            	formCallBack(data);
+	            }
+	        });
+ 		});
  		jQuery("#${random}_submitReport").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
  			var sss = grid.func("GetUploadXML");
@@ -177,27 +224,31 @@ var budgetReportDefine = {
 		<div class="panelBar">
 			<ul class="toolBar">
 				<s:if test="reportType!='show'">
-				<li><a id="${random}_saveBmReportData" class="submitbutton"  href="javaScript:"
-					><span>保存
-					</span>
-				</a>
-				</li>
-				<%-- <li><a id="${random}_saveBmReportData" class="submitbutton"  href="javaScript:"
-					><span>引入上次该模板填报数据
-					</span>
-				</a>
-				</li> --%>
+					<s:if test="reportModel!='report'">
+						<li><a id="${random}_saveBmReportData" class="savebutton" href="javaScript:"><span>保存</span></a></li>
+					</s:if>
+					<s:else>
+						<li><a class="savebutton" style='color:#808080;' href="javaScript:"><span>保存</span></a></li>
+					</s:else>
+					<s:if test="reportModel!='report'">
+						<li><a id="${random}_getLastBmReportData" class="importbutton"  href="javaScript:"><span>引入上次填报数据</span></a></li>
+					</s:if>
+					<s:else>
+						<li><a class="importbutton" style='color:#808080;' href="javaScript:"><span>引入上次填报数据</span></a></li>
+					</s:else>
 				</s:if>
-				<li><a id="${random}_freshReportData" class="previewbutton"  href="javaScript:"
-					><span>刷新
-					</span>
-				</a>
-				</li>
+				<li><a id="${random}_freshReportData" class="previewbutton"  href="javaScript:"><span>刷新</span></a></li>
 				<s:if test="reportType==1">
 				<%-- <li><a id="${random}_userdefine" class="editbutton"  href="javaScript:"><span>编辑汇总表</span></a>
 				</li> --%>
 				<li><a id="${random}_reBm" class="delallbutton"  href="javaScript:"><span>驳回预算</span></a>
 				</li>
+					<s:if test="reportModel!='report'">
+						<li><a id="${random}_saveBmReportXml" class="closebutton"  href="javaScript:"><span>完成汇总</span></a></li>
+					</s:if>
+					<s:else>
+						<li><a class="closebutton" style='color:#808080;' href="javaScript:"><span>完成汇总</span></a></li>
+					</s:else>
 				</s:if>
 				<%-- <li><a id="${random}_submitReport" class="changebutton"  href="javaScript:"
 					><span>提交

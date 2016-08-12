@@ -148,7 +148,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					}
 				}
 				budgetModelXf.setStepMap(stepMap);
-				if(budgetModelXf.getModelId().getIsHz()){
+				if(budgetModelXf.getState()!=3&&budgetModelXf.getModelId().getIsHz()){
 					BudgetModel hzModel = budgetModelXf.getModelId().getHzModelId();
 					if(hzModel!=null){
 						List<PropertyFilter> hzfilters = new ArrayList<PropertyFilter>();
@@ -274,6 +274,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			isHz = true;
 		}
 		modelfilters.add(new PropertyFilter("EQB_isHz", ""+isHz));
+		modelfilters.add(new PropertyFilter("EQB_disabled", "false"));
 		modelfilters.add(new PropertyFilter("SQS_modelId", "this_.modelId not in (select xf.modelId from bm_model_xf xf where xf.period_year='"+periodYear+"')"));
 		List<BudgetModel> budgetModels = budgetModelManager.getByFilters(modelfilters);
 		for(BudgetModel bmm :budgetModels){
@@ -298,6 +299,12 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	}
 
 	public String budgetModel_Xf(){
+		String msg = "下发";
+		if("3".equals(xfType)){
+			msg = "汇总";
+		}else if("4".equals(xfType)){
+			msg = "重新汇总";
+		}
 		if(xfId!=null&&!"".equals(xfId)){
 			List<PropertyFilter> xfModelfilters = new ArrayList<PropertyFilter>();
 			String periodYear = UserContextUtil.getUserContext().getPeriodYear();
@@ -313,8 +320,12 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			for(BudgetModelXf bmmXf :xfBudgetModelXfs){
 				BudgetModel bmm = bmmXf.getModelId();
 				int state = bmmXf.getState();
+				Set<Department> departments = bmm.getDepartments();
+				if(departments==null||departments.size()==0){
+					return ajaxForward(false,bmm.getModelName()+" 没有预算部门，无法"+msg+"！",false);
+				}
 				if(state>0){
-					if("1".equals(xfType)||"2".equals(xfType)){
+					if("1".equals(xfType)||"2".equals(xfType)||"4".equals(xfType)){
 						List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
 						updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",bmmXf.getXfId()));
 						List<BudgetUpdata> budgetUpdataList = budgetUpdataManager.getByFilters(updatafilters);
@@ -338,7 +349,6 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					bmmXf.setState(1);
 					bmmXf.setXfDate(Calendar.getInstance().getTime());
 				}
-				Set<Department> departments = bmm.getDepartments();
 				List<BudgetUpdata> budgetUpdatas = new ArrayList<BudgetUpdata>();
 				for(Department dept : departments){
 					BudgetUpdata budgetUpdata = new BudgetUpdata();
@@ -356,7 +366,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			budgetModelXfManager.saveAll(xfBudgetModelXfs);
 		}
 		if(!"2".equals(xfType)){
-			return ajaxForward("下发成功！");
+			return ajaxForward(msg+"成功！");
 		}else{
 			return ajaxForward(true,"驳回成功！",false);
 		}
@@ -371,8 +381,18 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	public void setProcessColumns(List<BmProcessColumn> processColumns) {
 		this.processColumns = processColumns;
 	}
+	public String needBmHzCheckProcess;
+	public String getNeedBmHzCheckProcess() {
+		return needBmHzCheckProcess;
+	}
+
+	public void setNeedBmHzCheckProcess(String needBmHzCheckProcess) {
+		this.needBmHzCheckProcess = needBmHzCheckProcess;
+	}
+
 	public String bmHzList(){
 		try {
+			needBmHzCheckProcess = ContextUtil.getGlobalParamByKey("needBmHzCheckProcess");
 			/*String bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmHzCheckProcess");
 			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
 			filters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));

@@ -91,6 +91,13 @@
 			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataList.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetUpdataList.jsp</result>
 		</action>
+		<action name="saveBmUpdataXml" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction"			method="saveBmUpdataXml">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 	</package>
 
 </struts>

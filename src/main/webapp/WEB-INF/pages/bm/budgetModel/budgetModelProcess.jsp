@@ -20,7 +20,6 @@ jQuery(document).ready(function() {
 		{name:'noStep.stepName',index:'noStep.stepName',align:'left',label : '<s:text name="modelProcess.noStep" />',hidden:false,width:100},
 		{name:'roleName',index:'roleName',align:'left',label : '<s:text name="modelProcess.roleName" />',hidden:false,width:100},
 		{name:'checkDeptName',index:'checkDeptName',align:'left',label : '<s:text name="modelProcess.checkDept" />',hidden:false,width:100},
-		{name:'checkDeptName',index:'checkDeptName',align:'left',label : '<s:text name="modelProcess.checkDept" />',hidden:false,width:100},
 		{name:'checkPersonName',index:'checkPersonName',align:'left',label : '<s:text name="modelProcess.checkPerson" />',hidden:false,width:100},
 		{name:'state',index:'state',align:'right',label : '<s:text name="modelProcess.state" />',hidden:false,formatter:'integer',width:60},
 		{name:'isEnd',index:'isEnd',align:'center',label : '<s:text name="modelProcess.isEnd" />',hidden:false,formatter:'checkbox',width:70},

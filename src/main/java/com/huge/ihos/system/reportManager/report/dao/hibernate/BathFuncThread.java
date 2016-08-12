@@ -30,8 +30,13 @@ public class BathFuncThread implements Runnable{
 		try {
 			DataSource dataSource = SpringContextHelper.getDataSource();
 			JdbcTemplate jtl = new JdbcTemplate(dataSource);
-			rs = jtl.queryForObject(reportFunc.getFunc(), reportFunc.getPara(),String.class);
-			reportFunc.setValue(rs);
+			Object rsObj = jtl.queryForObject(reportFunc.getFunc(), reportFunc.getPara(),Object.class);
+			if(rsObj==null){
+				reportFunc.setValue("");
+			}else{
+				rs = rsObj.toString();
+				reportFunc.setValue(rs);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
