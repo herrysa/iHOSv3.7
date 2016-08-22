@@ -428,5 +428,14 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		}
 		return SUCCESS;
 	}
+	
+	public String bmZnList(){
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
 }
 

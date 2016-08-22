@@ -30,7 +30,7 @@
 			{name:'modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelXf.modelCode" />',hidden:false,width:100},
 			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelXf.model" />',hidden:false,width:200},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelXf.periodYear" />',hidden:false,width:70},
-			{name:'modelId.modelTypeTxt',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelXf.budgetType" />',hidden:false,width:100},
+			{name:'modelId.modelType',index:'modelId.modelType',align:'left',label : '<s:text name="budgetModelXf.budgetType" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '1:科室填报(自下而上);2:预算汇总(自下而上);3:职能代编(自上而下)'},width:150},
 			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelXf.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:70},
 			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelXf.xfDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:70},
 			{name:'xfNum',index:'xfNum',align:'right',label : '<s:text name="budgetModelXf.xfNum" />',hidden:false,width:60},

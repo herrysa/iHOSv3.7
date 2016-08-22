@@ -35,7 +35,7 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	private String modelCode;
 	private String modelName;
 	private String modelType;
-	private String modelTypeTxt;
+	//private String modelTypeTxt;
 	private String periodType;
 	private String creator;
 	private Date createDate;
@@ -101,14 +101,14 @@ public class BudgetModel extends BaseObject implements Cloneable{
 		this.modelType = modelType;
 	}
 	
-	@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='bmModelType' and dItem.value=modelType)")
+	/*@Formula("(SELECT dItem.displayContent FROM t_dictionary_items dItem join t_dictionary dic on dic.dictionaryId=dItem.dictionary_id WHERE dic.code='bmModelType' and dItem.value=modelType)")
 	public String getModelTypeTxt() {
 		return modelTypeTxt;
 	}
 
 	public void setModelTypeTxt(String modelTypeTxt) {
 		this.modelTypeTxt = modelTypeTxt;
-	}
+	}*/
 
 	@Column(name="periodType",length=10)
 	public String getPeriodType() {

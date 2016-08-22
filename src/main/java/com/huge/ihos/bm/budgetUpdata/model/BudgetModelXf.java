@@ -50,14 +50,16 @@ public class BudgetModelXf extends BaseObject {
 	public void setBmXf(BudgetModelXf bmXf) {
 		this.bmXf = bmXf;
 	}
-	@Formula("(select top 1 up.updataId from bm_updata up where up.modelXfId=xfId )")
+	//@Formula("(select top 1 up.updataId from bm_updata up where up.modelXfId=xfId )")
+	@Transient
 	public String getUpdataId() {
 		return updataId;
 	}
 	public void setUpdataId(String updataId) {
 		this.updataId = updataId;
 	}
-	@Formula("(select top 1 dept.name from bm_updata up left join t_department dept on up.deptId=dept.deptId where up.modelXfId=xfId )")
+	//@Formula("(select top 1 dept.name from bm_updata up left join t_department dept on up.deptId=dept.deptId where up.modelXfId=xfId )")
+	@Transient
 	public String getDeptName() {
 		return deptName;
 	}

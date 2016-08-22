@@ -39,7 +39,17 @@ public class BudgetUpdata extends BaseObject {
 	private Integer state ;		//0:上报中;9:已过期
 	private String periodYear;
 	private String updataXml;
+	private Integer deptType;
 	
+	@Column
+	public Integer getDeptType() {
+		return deptType;
+	}
+
+	public void setDeptType(Integer deptType) {
+		this.deptType = deptType;
+	}
+
 	private Map checkMap;
 	
 	@Transient

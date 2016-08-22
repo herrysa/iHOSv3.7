@@ -29,7 +29,7 @@
 			{name:'modelId',index:'modelId',align:'left',label : '<s:text name="budgetModel.modelId" />',width:100,hidden:false,key:true,highsearch:true},
 			{name:'modelCode',index:'modelCode',align:'left',label : '<s:text name="budgetModel.modelCode" />',width:100,hidden:false,highsearch:true},
 			{name:'modelName',index:'modelName',align:'left',label : '<s:text name="budgetModel.modelName" />',width:200,hidden:false,highsearch:true},
-			{name:'modelTypeTxt',index:'modelTypeTxt',align:'left',label : '<s:text name="budgetModel.modelType" />',width:100,hidden:false,highsearch:true},
+			{name:'modelType',index:'modelType',align:'left',label : '<s:text name="budgetModel.modelType" />',width:150,hidden:false,highsearch:true,formatter : 'select',	edittype : 'select',editoptions : {value : '1:科室填报(自下而上);2:预算汇总(自下而上);3:职能代编(自上而下)'}},
 			{name:'periodType',index:'periodType',align:'left',label : '<s:text name="budgetModel.periodType" />',width:100,hidden:false,highsearch:true},
 			{name:'creator',index:'creator',align:'left',label : '<s:text name="budgetModel.creator" />',width:100,hidden:false,highsearch:true},
 			{name:'createDate',index:'createDate',align:'left',label : '<s:text name="budgetModel.createDate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},highsearch:true},

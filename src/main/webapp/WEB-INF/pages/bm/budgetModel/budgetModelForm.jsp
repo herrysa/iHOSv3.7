@@ -69,7 +69,7 @@
 				</div>
 				<div class="unit">
 					<label><s:text name="budgetModel.modelType"/>:</label>
-					<s:select list="modelTypes" key="budgetModel.modelType" listKey="displayContent" listValue="value" headerKey="" headerValue="--" theme="simple"></s:select>
+					<s:select list="#{'1':'科室填报(自下而上)','2':'预算汇总(自下而上)','3':'职能代编(自上而下)'}" key="budgetModel.modelType" headerKey="" headerValue="--" theme="simple"></s:select>
 				</div>
 				<div class="unit">
 					<label><s:text name="budgetModel.periodType"/>:</label>
