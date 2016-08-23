@@ -201,6 +201,59 @@ var budgetReportDefine = {
  			var sss = grid.func("GetUploadXML");
  			console.log(sss);
  		});
+ 		var ${random}_deptCol = "";
+ 		jQuery("#${random}_setDeptCol").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var currentCell = grid.func("GetCurrentCells","");
+ 			alert(currentCell);
+ 			var currentCellArr = currentCell.split(",");
+ 			var srow = 0,scol = 0;
+ 			if(currentCellArr[0]==currentCellArr[2]){
+ 				srow = 1;
+ 			}
+ 			if(currentCellArr[1]==currentCellArr[3]){
+ 				scol = 1;
+ 			}
+ 			if(srow==1&&scol==1){
+ 				alertMsg.error("请唯一行或列！");
+ 				return ;
+ 			}else{
+ 				if(srow==1){
+ 					grid.func("SetProp","deptCol \r\n r_"+currentCellArr[0]);
+ 				}else if(scol==1){
+ 					grid.func("SetProp","deptCol \r\n c_"+currentCellArr[1]);
+ 				}
+ 			}
+ 			
+ 		});
+ 		jQuery("#${random}_setDataCell").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var currentCell = grid.func("GetCurrentCells","");
+ 			var currentCellArr = currentCell.split(",");
+ 			var deptCol = grid.func("GetProp","");
+ 			alert(deptCol);
+ 			for(var row=currentCellArr[0];row<currentCellArr[2];row++){
+ 				for(var col=currentCellArr[1];col<currentCellArr[3];col++){
+ 					var deptId = "";
+ 					if(deptCol.indexOf("r_")){
+ 						deptCol = deptCol.replace("r_","");
+ 						deptId = grid.func("GetCellData",deptCol+" \r\n "+col);
+ 					}else if(deptCol.indexOf("c_")){
+ 						deptCol = deptCol.replace("c_","");
+ 						deptId = grid.func("GetCellData",row+" \r\n "+deptCol);
+ 					}
+ 					
+ 					grid.func("SetCellProp",row+" \r\n "+col+" \r\n "+Alias+" \r\n "+);
+ 	 			}
+ 			}
+ 			
+ 		});
+ 		jQuery("#${random}_cancelDataCell").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var currentCell = grid.func("GetCurrentCells","");
+ 			alert(currentCell);
+ 			
+ 		});
  	});
  	function sourcepayinSum1(checkperiod1,checkperiod2,deptId,chargeType){
  		//return checkperiod1;
@@ -249,11 +302,21 @@ var budgetReportDefine = {
 					</span>
 				</a>
 				</li>
-				<%-- <li><a id="${random}_submitReport" class="submitbutton"  href="javaScript:"
-					><span>提交
+				<li><a id="${random}_setDeptCol" class="submitbutton"  href="javaScript:"
+					><span>设为部门列
 					</span>
 				</a>
-				</li> --%>
+				</li>
+				<li><a id="${random}_setDataCell" class="submitbutton"  href="javaScript:"
+					><span>设为数据项
+					</span>
+				</a>
+				</li>
+				<li><a id="${random}_cancelDataCell" class="submitbutton"  href="javaScript:"
+					><span>取消数据项
+					</span>
+				</a>
+				</li>
 				<li><a id="${random}_saveBudgetModelReport" class="savebutton"  href="javaScript:"
 					><span>保存
 					</span>

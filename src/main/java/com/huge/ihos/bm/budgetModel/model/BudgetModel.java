@@ -1,6 +1,7 @@
 package com.huge.ihos.bm.budgetModel.model;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,7 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.struts2.json.annotations.JSON;
-import org.hibernate.annotations.Formula;
 
 import com.huge.ihos.system.systemManager.organization.model.Department;
 import com.huge.model.BaseObject;
@@ -46,7 +46,7 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	private String department ;
 	//private String periodYear;
 	
-	private Boolean isHz;
+	//private Boolean isHz;
 	private BudgetModel hzModelId;
 	
 	private String reportXml ;
@@ -54,6 +54,42 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	private Set<Department> departments;
 	
 	private Set<BmModelProcess> bmModelProcesses;
+	
+	private BmModelProcess updataProcess;
+	
+	@Transient
+	public BmModelProcess getUpdataProcess() {
+		if(bmModelProcesses!=null){
+			int i=0;
+			Iterator<BmModelProcess> bmpIt = bmModelProcesses.iterator();
+			while(bmpIt.hasNext()){
+				BmModelProcess bmp = bmpIt.next();
+				if(i==0){
+					updataProcess = bmp;
+				}else if(i==2){
+					checkProcess = bmp;
+					break;
+				}
+				i++;
+			}
+		}
+		return updataProcess;
+	}
+
+	public void setUpdataProcess(BmModelProcess updataProcess) {
+		this.updataProcess = updataProcess;
+	}
+
+	private BmModelProcess checkProcess;
+	
+	@Transient
+	public BmModelProcess getCheckProcess() {
+		return checkProcess;
+	}
+
+	public void setCheckProcess(BmModelProcess checkProcess) {
+		this.checkProcess = checkProcess;
+	}
 
 	@Id
 	@Column(name="modelId",length=20)
@@ -220,14 +256,14 @@ public class BudgetModel extends BaseObject implements Cloneable{
 		this.department = department;
 	}
 	
-	@Column(name="isHz")
+	/*@Column(name="isHz")
 	public Boolean getIsHz() {
 		return isHz;
 	}
 
 	public void setIsHz(Boolean isHz) {
 		this.isHz = isHz;
-	}
+	}*/
 
 	@ManyToOne
 	@JoinColumn(name="hzModelId")

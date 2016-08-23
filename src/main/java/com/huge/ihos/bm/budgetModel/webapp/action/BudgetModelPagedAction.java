@@ -209,7 +209,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 					return ajaxForward(false,bmm.getModelName()+" 含有下发数据，不能删除！",false);
 				}else{
 					budgetModelManager.executeSql("delete from bm_model_process where modelId = '"+mId+"'");
-					budgetModelManager.executeSql("delete from bm_model_dept where modelId in = '"+mId+"'");
+					budgetModelManager.executeSql("delete from bm_model_dept where modelId = '"+mId+"'");
 					budgetModelManager.remove(mId);
 				}
 			}
@@ -316,8 +316,10 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			}else{
 				List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
 				String processCode = "bmCheckProcess";
-				if(budgetModel.getIsHz()!=null&&budgetModel.getIsHz()==true){
+				if("2".equals(budgetModel.getModelType())){
 					processCode = "bmHzCheckProcess";
+				}else if("3".equals(budgetModel.getModelType())){
+					processCode = "bmZnCheckProcess";
 				}
 				String bmCheckProcessCode = ContextUtil.getGlobalParamByKey(processCode);
 				processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
@@ -524,30 +526,44 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			deptDs.addAttribute("dataURL", "getDataSourceBySql?sql=select deptId,name from t_department where disabled=0 and leaf=1");
 			if(modelId!=null&&!"".equals(modelId)){
 				budgetModel = budgetModelManager.get(modelId);
-				BudgetModel hzModel = budgetModel.getHzModelId();
-				Set<Department> depts = null;
+				modelType = budgetModel.getModelType();
+				String mc = "";
 				String deptId = "(";
-				if(hzModel!=null){
-					depts = hzModel.getDepartments();
-					for(Department dept : depts){
-						deptId += "'"+dept.getDepartmentId()+"',";
+				Set<Department> depts = null;
+				boolean deptDS = false;
+				if("2".equals(modelType)){
+					BudgetModel hzModel = budgetModel.getHzModelId();
+					if(hzModel!=null){
+						depts = hzModel.getDepartments();
+						mc = hzModel.getModelCode();
 					}
-					if(!"(".equals(deptId)){
-						deptId = deptId.substring(0, deptId.length()-1);
-						deptId += ")";
-					}
+					deptDS = true;
+				}else if("3".equals(modelType)){
+					depts = budgetModel.getDepartments();
+					mc = budgetModel.getModelCode();
+					deptDS = true;
+				}
+				for(Department dept : depts){
+					deptId += "'"+dept.getDepartmentId()+"',";
+				}
+				if(!"(".equals(deptId)){
+					deptId = deptId.substring(0, deptId.length()-1);
+					deptId += ")";
 				}
 				if("(".equals(deptId)){
 					deptId = "('')";
 				}
-				Element Project_search = category.addElement("Project");
-				Project_search.addAttribute("text", "预算数据");
-				Element searchDs = Project_search.addElement("ds");
-				searchDs.setText("预算部门");
-				searchDs.addAttribute("id", hzModel.getModelCode()+"_dept");
-				searchDs.addAttribute("descURL", "getBmReportDsdescXml");
-				searchDs.addAttribute("dataURL", "getDataSourceBySql?sql=select deptId,name from t_department where deptId in "+deptId);
-					
+				if(deptDS){
+					Element Project_search = category.addElement("Project");
+					Project_search.addAttribute("text", "预算数据");
+					Element searchDs = Project_search.addElement("ds");
+					searchDs.setText("预算部门");
+					searchDs.addAttribute("id", mc+"_dept");
+					searchDs.addAttribute("descURL", "getBmReportDsdescXml");
+					searchDs.addAttribute("dataURL", "getDataSourceBySql?sql=select deptId,name from t_department where deptId in "+deptId);
+						
+				}
+				
 			}
 			
 			reportXml = XMLUtil.xmltoString(document);
@@ -897,8 +913,10 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			}else{
 				List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
 				String processCode = "bmCheckProcess";
-				if(budgetModel.getIsHz()!=null&&budgetModel.getIsHz()==true){
+				if("2".equals(budgetModel.getModelType())){
 					processCode = "bmHzCheckProcess";
+				}else if("3".equals(budgetModel.getModelType())){
+					processCode = "bmZnCheckProcess";
 				}
 				String bmCheckProcessCode = ContextUtil.getGlobalParamByKey(processCode);
 				processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
@@ -953,8 +971,10 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			budgetModel = budgetModelManager.get(modelId);
 			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
 			String processCode = "bmCheckProcess";
-			if(budgetModel.getIsHz()!=null&&budgetModel.getIsHz()==true){
+			if("2".equals(budgetModel.getModelType())){
 				processCode = "bmHzCheckProcess";
+			}else if("3".equals(budgetModel.getModelType())){
+				processCode = "bmZnCheckProcess";
 			}
 			String bmCheckProcessCode = ContextUtil.getGlobalParamByKey(processCode);
 			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
@@ -1360,8 +1380,10 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	}
 	public String selectBmModelProcess(){
 		budgetModel = budgetModelManager.get(modelId);
-		if(budgetModel.getIsHz()!=null&&budgetModel.getIsHz()){
+		if("2".equals(budgetModel.getModelType())){
 			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmHzCheckProcess");
+		}else if("3".equals(budgetModel.getModelType())){
+			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmZnCheckProcess");
 		}else{
 			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
 		}

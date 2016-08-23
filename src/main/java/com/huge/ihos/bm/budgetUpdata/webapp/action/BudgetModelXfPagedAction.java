@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import com.huge.ihos.bm.budgetModel.model.BmModelProcess;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
 import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
 import com.huge.ihos.bm.budgetUpdata.model.BmProcessColumn;
@@ -20,6 +21,8 @@ import com.huge.ihos.system.configuration.businessprocess.service.BusinessProces
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.systemManager.organization.model.Department;
+import com.huge.ihos.system.systemManager.organization.service.DepartmentManager;
+import com.huge.ihos.system.systemManager.user.model.User;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -41,6 +44,12 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	
 	private BusinessProcessStepManager businessProcessStepManager;
 	
+	private DepartmentManager departmentManager;
+	
+	public void setDepartmentManager(DepartmentManager departmentManager) {
+		this.departmentManager = departmentManager;
+	}
+
 	public void setBusinessProcessStepManager(
 			BusinessProcessStepManager businessProcessStepManager) {
 		this.businessProcessStepManager = businessProcessStepManager;
@@ -148,7 +157,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					}
 				}
 				budgetModelXf.setStepMap(stepMap);
-				if(budgetModelXf.getState()!=3&&budgetModelXf.getModelId().getIsHz()){
+				if(budgetModelXf.getState()!=3&&"2".equals(budgetModelXf.getModelId().getModelType())){
 					BudgetModel hzModel = budgetModelXf.getModelId().getHzModelId();
 					if(hzModel!=null){
 						List<PropertyFilter> hzfilters = new ArrayList<PropertyFilter>();
@@ -258,6 +267,16 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 
 	}
 	
+	private String modelType;
+	
+	public String getModelType() {
+		return modelType;
+	}
+
+	public void setModelType(String modelType) {
+		this.modelType = modelType;
+	}
+
 	public String budgetModelXfRefresh(){
 		List<PropertyFilter> modelfilters = new ArrayList<PropertyFilter>();
 		modelfilters.add(new PropertyFilter("EQB_disabled", "false"));
@@ -269,27 +288,75 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			periodYear = ""+(year+y);
 		}
 		//modelfilters.add(new PropertyFilter("SQS_modelId.modelId", "modelId not in (select modelId from bm_model_xf where period_year='"+periodYear+"')"));
-		boolean isHz = false;
-		if("2".equals(xfType)){
-			isHz = true;
-		}
-		modelfilters.add(new PropertyFilter("EQB_isHz", ""+isHz));
+		modelfilters.add(new PropertyFilter("EQS_modelType", modelType));
 		modelfilters.add(new PropertyFilter("EQB_disabled", "false"));
 		modelfilters.add(new PropertyFilter("SQS_modelId", "this_.modelId not in (select xf.modelId from bm_model_xf xf where xf.period_year='"+periodYear+"')"));
 		List<BudgetModel> budgetModels = budgetModelManager.getByFilters(modelfilters);
 		for(BudgetModel bmm :budgetModels){
-			BudgetModelXf budgetModelXf = new BudgetModelXf();
-			budgetModelXf.setModelId(bmm);
-			budgetModelXf.setPeriodYear(periodYear);
-			budgetModelXf.setState(0);
-			budgetModelXf.setXfDate(Calendar.getInstance().getTime());
-			budgetModelXfManager.save(budgetModelXf);
+			if("2".equals(bmm.getModelType())||"3".equals(bmm.getModelType())){
+				User user = UserContextUtil.getContextUser();
+				String deptId = user.getPerson().getDepartment().getDepartmentId();
+				BmModelProcess bmp = bmm.getUpdataProcess();
+				String checkDeptId = bmp.getCheckDeptId();
+				if(deptId.equals(checkDeptId)){
+					BudgetModelXf budgetModelXf = new BudgetModelXf();
+					budgetModelXf.setModelId(bmm);
+					budgetModelXf.setPeriodYear(periodYear);
+					budgetModelXf.setState(0);
+					budgetModelXf.setXfDate(Calendar.getInstance().getTime());
+					budgetModelXf = budgetModelXfManager.save(budgetModelXf);
+					Set<Department> departments = bmm.getDepartments();
+					List<BudgetUpdata> budgetUpdatas = new ArrayList<BudgetUpdata>();
+					for(Department dept : departments){
+						BudgetUpdata budgetUpdata = new BudgetUpdata();
+						budgetUpdata.setModelXfId(budgetModelXf);
+						budgetUpdata.setDepartment(dept);
+						budgetUpdata.setPeriodYear(periodYear);
+						budgetUpdata.setState(0);
+						budgetUpdata.setDeptType(0);
+						//Person operator = UserContextUtil.getSessionUser().getPerson();
+						//budgetUpdata.setOperator(operator);
+						//budgetUpdata.setOptDate(Calendar.getInstance().getTime());
+						budgetUpdatas.add(budgetUpdata);
+					}
+					if(checkDeptId!=null){
+						Department department = departmentManager.get(checkDeptId);
+						BudgetUpdata budgetUpdata = new BudgetUpdata();
+						budgetUpdata.setModelXfId(budgetModelXf);
+						budgetUpdata.setDepartment(department);
+						budgetUpdata.setPeriodYear(periodYear);
+						budgetUpdata.setState(0);
+						budgetUpdata.setDeptType(1);
+						budgetUpdatas.add(budgetUpdata);
+					}
+					budgetUpdataManager.saveAll(budgetUpdatas);
+				}else{
+					continue;
+				}
+			}else{
+				BudgetModelXf budgetModelXf = new BudgetModelXf();
+				budgetModelXf.setModelId(bmm);
+				budgetModelXf.setPeriodYear(periodYear);
+				budgetModelXf.setState(0);
+				budgetModelXf.setXfDate(Calendar.getInstance().getTime());
+				budgetModelXfManager.save(budgetModelXf);
+			}
+			
 		}
 		return ajaxForward("刷新成功！");
 	}
 	
 	String xfType ;
+	String msg;
 	
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
 	public String getXfType() {
 		return xfType;
 	}
@@ -300,11 +367,11 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 
 	public String budgetModel_Xf(){
 		String msg = "下发";
-		if("3".equals(xfType)){
+		/*if("3".equals(xfType)){
 			msg = "汇总";
 		}else if("4".equals(xfType)){
 			msg = "重新汇总";
-		}
+		}*/
 		if(xfId!=null&&!"".equals(xfId)){
 			List<PropertyFilter> xfModelfilters = new ArrayList<PropertyFilter>();
 			String periodYear = UserContextUtil.getUserContext().getPeriodYear();
@@ -319,13 +386,27 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 			List<BudgetModelXf> xfBudgetModelXfs = budgetModelXfManager.getByFilters(xfModelfilters);
 			for(BudgetModelXf bmmXf :xfBudgetModelXfs){
 				BudgetModel bmm = bmmXf.getModelId();
+				modelType = bmm.getModelType();
+				if("1".equals(modelType)){
+					msg = "下发";
+				}else if("2".equals(modelType)){
+					msg = "汇总";
+				}else if("3".equals(modelType)){
+					//msg = "汇总";
+				}
+				if(this.msg!=null){
+					msg = this.msg;
+				}
 				int state = bmmXf.getState();
 				Set<Department> departments = bmm.getDepartments();
-				if(departments==null||departments.size()==0){
-					return ajaxForward(false,bmm.getModelName()+" 没有预算部门，无法"+msg+"！",false);
+				if("1".equals(modelType)){
+					if(departments==null||departments.size()==0){
+						return ajaxForward(false,bmm.getModelName()+" 没有预算部门，无法"+msg+"！",false);
+					}
 				}
 				if(state>0){
-					if("1".equals(xfType)||"2".equals(xfType)||"4".equals(xfType)){
+					//xfType:1:下发2：重新下发
+					if("2".equals(xfType)){
 						List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
 						updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",bmmXf.getXfId()));
 						List<BudgetUpdata> budgetUpdataList = budgetUpdataManager.getByFilters(updatafilters);
@@ -343,7 +424,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 						bmmXf.setXfDate(Calendar.getInstance().getTime());
 						bmmXf = budgetModelXfManager.save(bmmXf);
 					}else{
-						return ajaxForward(false,bmm.getModelName()+" 已下发！",false);
+						return ajaxForward(false,bmm.getModelName()+" 已"+msg+"!",false);
 					}
 				}else{
 					bmmXf.setState(1);
@@ -356,20 +437,37 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					budgetUpdata.setDepartment(dept);
 					budgetUpdata.setPeriodYear(periodYear);
 					budgetUpdata.setState(0);
+					budgetUpdata.setDeptType(0);
 					//Person operator = UserContextUtil.getSessionUser().getPerson();
 					//budgetUpdata.setOperator(operator);
 					//budgetUpdata.setOptDate(Calendar.getInstance().getTime());
 					budgetUpdatas.add(budgetUpdata);
 				}
+				
+				String checkDeptId = null;
+				if("2".equals(modelType)||"3".equals(modelType)){
+					BmModelProcess bmp = bmm.getUpdataProcess();
+					checkDeptId = bmp.getCheckDeptId();
+				}
+				if(checkDeptId!=null){
+					String[] checkDeptIdArr = checkDeptId.split(",");
+					for(String deptId : checkDeptIdArr){
+						Department department = departmentManager.get(deptId);
+						BudgetUpdata budgetUpdata = new BudgetUpdata();
+						budgetUpdata.setModelXfId(bmmXf);
+						budgetUpdata.setDepartment(department);
+						budgetUpdata.setPeriodYear(periodYear);
+						budgetUpdata.setState(0);
+						budgetUpdata.setDeptType(1);
+						budgetUpdatas.add(budgetUpdata);
+					}
+				}
+				
 				budgetUpdataManager.saveAll(budgetUpdatas);
 			}
 			budgetModelXfManager.saveAll(xfBudgetModelXfs);
 		}
-		if(!"2".equals(xfType)){
-			return ajaxForward(msg+"成功！");
-		}else{
-			return ajaxForward(true,"驳回成功！",false);
-		}
+		return ajaxForward(msg+"成功！");
 	}
 	
 	
@@ -429,13 +527,5 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		return SUCCESS;
 	}
 	
-	public String bmZnList(){
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return SUCCESS;
-	}
 }
 

@@ -265,6 +265,16 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 	public void setBudgetModel(BudgetModel budgetModel) {
 		this.budgetModel = budgetModel;
 	}
+	
+	public String modelType;
+
+	public String getModelType() {
+		return modelType;
+	}
+
+	public void setModelType(String modelType) {
+		this.modelType = modelType;
+	}
 
 	public String budgetUpdataGridList() {
 		log.debug("enter list method!");
@@ -316,6 +326,11 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 					String checkSql = "updataId in (SELECT updataId from bm_updata u LEFT JOIN bm_model_xf x on u.modelXfId=x.xfId LEFT JOIN bm_model_process p on x.modelId=p.modelId where 1=1 and ("+bmDeptCheckSql+"(p.checkDeptId like '%"+department.getDepartmentId()+"%' and p.checkPersonId is null) or (p.checkPersonId like '%"+person.getPersonId()+"%')))";
 					filters.add(new PropertyFilter("SQS_updataId",checkSql));
 				}
+			}else if("3".equals(upType)){//汇总或职能代编
+				User user = UserContextUtil.getContextUser();
+				String deptId = user.getPerson().getDepartment().getDepartmentId();
+				filters.add(new PropertyFilter("EQS_department.departmentId",deptId));
+				filters.add(new PropertyFilter("EQS_modelXfId.modelId.modelType",modelType));
 			}else{
 				filters.add(new PropertyFilter("EQS_modelXfId.xfId",xfId));
 				filters.add(new PropertyFilter("EQI_state",state));
@@ -514,8 +529,12 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 				budgetUpdata = budgetUpdataManager.get(updataId);
 				BudgetModelXf budgetModelXf = budgetUpdata.getModelXfId();
 				BudgetModel budgetModel = budgetModelXf.getModelId();
-				if(budgetModel.getIsHz()!=null&&budgetModel.getIsHz()&&budgetModelXf.getState()==2){
-					reportXml = budgetUpdata.getUpdataXml();
+				if(budgetModelXf.getState()==2){
+					if("2".equals(budgetModel.getModelType())||"3".equals(budgetModel.getModelType())){
+						reportXml = budgetUpdata.getUpdataXml();
+					}else{
+						reportXml = budgetModel.getReportXml();
+					}
 				}else{
 					reportXml = budgetModel.getReportXml();
 				}
@@ -941,12 +960,12 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			for(BudgetModelXf budgetModelXf : budgetModelXfs){
 				List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
 				updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",budgetModelXf.getXfId()));
-				Boolean isHz = budgetModelXf.getModelId().getIsHz();
+				/*Boolean isHz = budgetModelXf.getModelId().getIsHz();
 				if(isHz!=null&&isHz==true){
 					updatafilters.add(new PropertyFilter("NEI_state",""+endState));
 				}else{
 					updatafilters.add(new PropertyFilter("NEI_state",""+endState2));
-				}
+				}*/
 				List<BudgetUpdata> budgetUpdatas = budgetUpdataManager.getByFilters(updatafilters);
 				if(budgetUpdatas.size()==0){
 					budgetModelXf.setState(2);
@@ -1048,6 +1067,15 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			return ajaxForward("完成预算失败！");
 		}
 		return ajaxForward("完成预算成功！");
+	}
+	
+	public String bmZnList(){
+		try {
+			modelType = "3";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
 	}
 }
 

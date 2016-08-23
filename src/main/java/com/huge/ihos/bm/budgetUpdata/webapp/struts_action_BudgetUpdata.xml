@@ -98,6 +98,11 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
+		
+		<action name="bmZnList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetUpdataPagedAction" method="bmZnList">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelZnList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelZnList.jsp</result>
+		</action>
 	</package>
 
 </struts>

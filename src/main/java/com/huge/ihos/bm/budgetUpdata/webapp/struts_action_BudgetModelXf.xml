@@ -66,10 +66,6 @@
 			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelHzList.jsp</result>
 		</action>
 		
-		<action name="bmZnList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction" method="bmZnList">
-			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelZnList.jsp</result>
-			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelZnList.jsp</result>
-		</action>
 
 	</package>
 

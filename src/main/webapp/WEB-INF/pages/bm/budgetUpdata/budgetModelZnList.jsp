@@ -9,30 +9,30 @@
 	jQuery(document).ready(function() {
 		var budgetModelZnGrid = jQuery(budgetModelZnGridIdString);
     	budgetModelZnGrid.jqGrid({
-    		url : "budgetModelXfGridList?filter_EQB_modelId.modelType=3",
+    		url : "budgetUpdataGridList?1=1&upType=3&modelType=3",
     		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-			{name:'xfId',index:'xfId',align:'center',label : '<s:text name="budgetModelZn.xfId" />',hidden:true,key:true},
+			{name:'modelXfId.xfId',index:'modelXfId.xfId',align:'center',label : '<s:text name="budgetModelZn.xfId" />',hidden:true,key:true},
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetModelZn.xfId" />',hidden:true},
-			{name:'modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelZn.modelCode" />',hidden:false,width:100},
-			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelZn.model" />',hidden:false,width:250},
+			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetModelZn.modelCode" />',hidden:false,width:100},
+			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetModelZn.model" />',hidden:false,width:250},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelZn.periodYear" />',hidden:false,width:70},
-			{name:'modelId.modelType',index:'modelId.modelType',align:'left',label : '<s:text name="budgetModelZn.budgetType" />',hidden:true,width:100},
-			{name:'deptName',index:'deptName',align:'left',label : '代编部门',hidden:false,width:200},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelZn.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未汇总;1:汇总中;2:已汇总;3:已过期'},width:70},
-			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelZn.ZnDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
+			{name:'modelXfId.modelId.modelType',index:'modelXfId.modelId.modelType',align:'left',label : '<s:text name="budgetModelZn.budgetType" />',hidden:true,width:100},
+			{name:'department.name',index:'department.name',align:'left',label : '代编部门',hidden:false,width:200},
+			{name:'modelXfId.state',index:'modelXfId.state',align:'center',label : '<s:text name="budgetModelZn.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:70},
+			{name:'modelXfId.xfDate',index:'modelXfId.xfDate',align:'center',label : '<s:text name="budgetModelZn.ZnDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
 			],
         	jsonReader : {
-				root : "budgetModelXfs", // (2)
+				root : "budgetUpdatas", // (2)
 				page : "page",
 				total : "total",
 				records : "records", // (3)
 				repeatitems : false
 				// (4)
 			},
-        	sortname: 'xfDate',
+        	sortname: 'modelXfId.xfDate',
         	viewrecords: true,
         	sortorder: 'desc',
         	//caption:'<s:text name="budgetModelZnList.title" />',
@@ -89,7 +89,7 @@
     
     jQuery("#budgetModelZn_gridtable_refresh").click(function(){
     	$.get("budgetModelXfRefresh", {
-			"_" : $.now(),xfType:2,navTabId:'budgetModelZn_gridtable'
+			"_" : $.now(),modelType:3,navTabId:'budgetModelZn_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
@@ -245,16 +245,11 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelZn_gridtable_xf" class="settlebutton"  href="javaScript:"><span>汇总</span>
+				<li><a id="budgetModelZn_gridtable_xf" class="settlebutton"  href="javaScript:"><span>填报</span>
 				</a>
 				</li>
 				<li><a id="budgetModelZn_gridtable_reXf" class="resettlebutton"  href="javaScript:"
-					><span>重新汇总
-					</span>
-				</a>
-				</li>
-				<li><a id="budgetModelZn_gridtable_ZnReport" class="previewbutton"  href="javaScript:"
-					><span>查看汇总表
+					><span>重新填报
 					</span>
 				</a>
 				</li>
