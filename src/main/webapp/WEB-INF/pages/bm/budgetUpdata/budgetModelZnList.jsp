@@ -125,7 +125,7 @@
 		});
     });
     
-    jQuery("#budgetModelZn_gridtable_ZnReport").click(function(){
+    jQuery("#budgetModelZn_gridtable_report").click(function(){
     	var fullHeight = jQuery("#container").innerHeight();
     	var fullWidth = jQuery("#container").innerWidth();
     	var sid = jQuery("#budgetModelZn_gridtable").jqGrid('getGridParam','selarrrow');
@@ -135,7 +135,7 @@
     	}
     	var rowData = jQuery("#budgetModelZn_gridtable").jqGrid('getRowData',sid);
     	var updataId = rowData['updataId'];
-    	$.pdialog.open('openBmReport?reportType=1&updataId='+updataId,'bmReport',"预算汇总", {mask:true,width : fullWidth,height : fullHeight});
+    	$.pdialog.open('openBmReport?modelType=3&updataId='+updataId,'bmReport',"职能代编填报预算", {mask:true,width : fullWidth,height : fullHeight});
       	});
     
     
@@ -245,7 +245,7 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelZn_gridtable_xf" class="settlebutton"  href="javaScript:"><span>填报</span>
+				<li><a id="budgetModelZn_gridtable_report" class="settlebutton"  href="javaScript:"><span>填报</span>
 				</a>
 				</li>
 				<li><a id="budgetModelZn_gridtable_reXf" class="resettlebutton"  href="javaScript:"

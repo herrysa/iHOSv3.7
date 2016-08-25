@@ -304,7 +304,8 @@ public class UpCostPagedAction extends CBBaseAction {
 				while (iterator.hasNext()) {
 					MenuButton button = iterator.next();
 					button.setRandom(this.getRandom());
-					if (getLoginPeriodClosed() || !this.getLoginPeriodStarted()) {
+					//if (getLoginPeriodClosed() || !this.getLoginPeriodStarted()) {
+					if (getLoginPeriodClosed()) {
 						button.setEnable(false);
 					}
 					if("01030209".equals(button.getId()) || "01030309".equals(button.getId())) {
@@ -732,14 +733,19 @@ public class UpCostPagedAction extends CBBaseAction {
 					} else {
 						upCosts = upCostManager.getBycheckPeriodAndDept(checkPeriod, depts, upItemId, 0);
 					}
+					Map<String, Boolean> upCostDeptMap = new HashMap<String, Boolean>();
+					for (UpCost upCost : upCosts) {
+						upCostDeptMap.put(upCost.getDeptId().getDepartmentId(), true);
+					}
 					for (Department department : departments) {
-						for (UpCost upCost : upCosts) {
+						Boolean deptIsIn = upCostDeptMap.get(department.getDepartmentId());
+						/*for (UpCost upCost : upCosts) {
 							if (upCost.getDeptId().getDepartmentId().equals(department.getDepartmentId())) {
 								isIn = true;
 								break;
 							}
-						}
-						if (isIn) {
+						}*/
+						if (deptIsIn!=null&&deptIsIn) {
 							continue;
 						}
 						UpCost upCost = new UpCost();
@@ -783,20 +789,24 @@ public class UpCostPagedAction extends CBBaseAction {
 				//List<Department> departments = jjDeptMapManager.getByOperatorId(user.getPerson().getPersonId());
 				List<Department> departments = null;
 				//TODO有问题，得经理回来拿方案
+				Map<String, Boolean> upCostPersonMap = new HashMap<String, Boolean>();
+				for (UpCost upCost : upCosts) {
+					upCostPersonMap.put(upCost.getPersonId().getPersonId(), true);
+				}
 				departments = departmentManager.getAllDeptByDeptIds(depts);
 				for (Department department : departments) {
 					List<Department> departments_Cb = departmentManager.getByJjDept(department);
 					for (Department department_cb : departments_Cb) {
 						List<PersonUpCost> persons = personUpCostManager.getPersonsByView("v_upcost_person", department_cb);
 						for (PersonUpCost person : persons) {
-							for (UpCost upCost : upCosts) {
+							Boolean personIsIn = upCostPersonMap.get(person.getPersonId());
+							/*for (UpCost upCost : upCosts) {
 								if (upCost.getPersonId().getPersonId().equals(person.getPersonId())) {
 									isIn = true;
 									break;
 								}
-							}
-							if (isIn) {
-								isIn = false;
+							}*/
+							if (personIsIn!=null&&personIsIn) {
 								continue;
 							}
 							UpCost upCost = new UpCost();

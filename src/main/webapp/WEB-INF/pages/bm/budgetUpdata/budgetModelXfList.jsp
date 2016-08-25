@@ -21,7 +21,7 @@
 		budgetModelXfLayout = makeLayout({'baseName':'budgetModelXf','tableIds':'budgetModelXf_gridtable;budgetUpdata_gridtable','proportion':2,'key':'xfId'},budgetModelXfChangeData);
 		
     	budgetModelXfGrid.jqGrid({
-    		url : "budgetModelXfGridList?filter_EQB_modelId.isHz=false",
+    		url : "budgetModelXfGridList?filter_EQS_modelId.modelType=1",
     		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
@@ -109,7 +109,7 @@
     
     jQuery("#budgetModelXf_gridtable_refresh").click(function(){
     	$.get("budgetModelXfRefresh", {
-			"_" : $.now(),navTabId:'budgetModelXf_gridtable'
+			"_" : $.now(),modelType:'1',navTabId:'budgetModelXf_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
@@ -137,6 +137,24 @@
 			okCall: function(){
 				jQuery.post("budgetModel_Xf", {
 					"_" : $.now(),xfId:sid,xfType:'1',navTabId:'budgetModelXf_gridtable'
+				}, function(data) {
+					formCallBack(data);
+				},"json");
+				
+			}
+		});
+    });
+    
+    jQuery("#budgetModelXf_gridtable_gq").click(function(){
+    	var sid = jQuery("#budgetModelXf_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	alertMsg.confirm("确认作废？", {
+			okCall: function(){
+				jQuery.post("budgetModel_gq", {
+					"_" : $.now(),xfId:sid,navTabId:'budgetModelXf_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				},"json");
@@ -242,6 +260,11 @@
 				</li>
 				<li><a id="budgetModelXf_gridtable_reXf" class="resettlebutton"  href="javaScript:"
 					><span>重新下发
+					</span>
+				</a>
+				</li>
+				<li><a id="budgetModelXf_gridtable_gq" class="resettlebutton"  href="javaScript:"
+					><span>作废
 					</span>
 				</a>
 				</li>

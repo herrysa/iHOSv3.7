@@ -9,32 +9,32 @@
 	jQuery(document).ready(function() {
 		var budgetModelHzGrid = jQuery(budgetModelHzGridIdString);
     	budgetModelHzGrid.jqGrid({
-    		url : "budgetModelXfGridList?filter_EQB_modelId.isHz=true",
+    		url : "budgetUpdataGridList?1=1&upType=3&modelType=2",
     		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-			{name:'xfId',index:'xfId',align:'center',label : '<s:text name="budgetModelHz.xfId" />',hidden:true,key:true},
+			{name:'modelXfId.xfId',index:'modelXfId.xfId',align:'center',label : '<s:text name="budgetModelHz.xfId" />',hidden:true,key:true},
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetModelHz.xfId" />',hidden:true},
-			{name:'modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelHz.modelCode" />',hidden:false,width:100},
-			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelHz.model" />',hidden:false,width:250},
+			{name:'modelXfId.modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelHz.modelCode" />',hidden:false,width:100},
+			{name:'modelXfId.modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelHz.model" />',hidden:false,width:250},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelHz.periodYear" />',hidden:false,width:70},
-			{name:'modelId.modelTypeTxt',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelHz.budgetType" />',hidden:false,width:100},
-			{name:'deptName',index:'deptName',align:'left',label : '汇总部门',hidden:false,width:200},
-			{name:'state',index:'state',align:'center',label : '<s:text name="budgetModelHz.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未汇总;1:汇总中;2:已汇总;3:已过期'},width:70},
-			{name:'xfDate',index:'xfDate',align:'center',label : '<s:text name="budgetModelHz.HzDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
-			{name:'bmXf.state',index:'bmXf.state',align:'center',label : '被汇总预算状态',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:120},
-			{name:'bmXf.xfDate',index:'bmXf.xfDate',align:'center',label : '被汇总预算下发时间',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:120},
+			{name:'modelXfId.modelId.modelType',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelHz.budgetType" />',hidden:false,width:100},
+			{name:'department.name',index:'department.name',align:'left',label : '汇总部门',hidden:false,width:200},
+			{name:'modelXfId.state',index:'modelXfId.state',align:'center',label : '<s:text name="budgetModelHz.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未汇总;1:汇总中;2:已汇总;3:已过期'},width:70},
+			{name:'modelXfId.xfDate',index:'modelXfId.xfDate',align:'center',label : '<s:text name="budgetModelHz.HzDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
+			{name:'modelXfId.bmXf.state',index:'modelXfId.bmXf.state',align:'center',label : '被汇总预算状态',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:120},
+			{name:'modelXfId.bmXf.xfDate',index:'modelXfId.bmXf.xfDate',align:'center',label : '被汇总预算下发时间',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:120},
 			],
         	jsonReader : {
-				root : "budgetModelXfs", // (2)
+				root : "budgetUpdatas", // (2)
 				page : "page",
 				total : "total",
 				records : "records", // (3)
 				repeatitems : false
 				// (4)
 			},
-        	sortname: 'xfDate',
+        	sortname: 'modelXfId.xfDate',
         	viewrecords: true,
         	sortorder: 'desc',
         	//caption:'<s:text name="budgetModelHzList.title" />',

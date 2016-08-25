@@ -21,13 +21,60 @@ var budgetReportDefine = {
 					//grid.func("CallFunc","2");
 					grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
 					//grid.func("Swkrntpomzqa", "1, 2"); 
-					grid.func("SetAutoCalc","10000");
+					//grid.func("SetAutoCalc","10000");
 					setTimeout(function(){
-						grid.func("CallFunc","64");
-						grid.func("CallFunc","163");
+						//grid.func("CallFunc","64");
+						//grid.func("CallFunc","163");
+						console.log(1);
 					},300);
 				}
 				
+			},
+			"Calced":function( id,p1, p2, p3, p4){
+				var grid = eval("("+id+")");
+				var taborderStr = grid.func("GetMemo"," \r\n taborder");
+	 			/* if(taborderStr){
+	 				console.log(taborderStr);
+	 				var taborder = eval("("+taborderStr+")");
+	 				for(var i in taborder){
+	 					var tab = taborder[i];
+	 					var tabArr = i.split("");
+	 					//grid.func("addEditAbleOnly", "cell=C4");
+	 					grid.func("SetCellProp",tabArr[0]+" \r\n "+tabArr[1]+" \r\n taborder \r\n "+tab);
+	 				}
+	 				grid.func("RebuildTabOrder","");
+	 			} */
+	 			/* var deptCol = grid.func("GetMemo"," \r\n deptCol");
+				var indexCode = grid.func("GetMemo"," \r\n indexCol");
+				var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+	 			var dataCell = {};
+	 			if(dataCellStr){
+	 				dataCell = eval("("+dataCellStr+")");
+	 			} 
+	 			var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+ 				var oldDeptCellArr = oldDeptCell.split(",");
+ 				for(var ci=0;ci<oldDeptCellArr.length;ci++){
+ 					var cell = oldDeptCellArr[ci];
+ 					grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
+ 					grid.func("SetCellProp",cell+" \r\n hasArrow \r\n ");
+ 				}
+ 				var oldIndexCell = grid.func("FindCell", "hasArrow=1"); 
+ 				var oldIndexCellArr = oldIndexCell.split(",");
+ 				for(var ci=0;ci<oldIndexCellArr.length;ci++){
+ 					var cell = oldIndexCellArr[ci];
+ 					grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
+ 					grid.func("SetCellProp",cell+" \r\n hasArrow \r\n ");
+ 				}
+ 				for(var i in dataCell){
+ 					var alias = dataCell[i];
+ 					var ij = i.split("");
+ 					grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n Alias \r\n "+alias);
+ 					grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n isProtected \r\n");
+ 				} */
+ 				/* if("${reportModel}"!="report"){
+					grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}&modelType=${modelType}");
+					grid.func("SelectCell", "");
+				} */
 			},
 			"Toolbar":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
@@ -40,11 +87,14 @@ var budgetReportDefine = {
 			onComplete:function(id){
 				var grid = eval("("+id+")");
 				if("${reportModel}"!="report"){
-					grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}");
+					grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}&modelType=${modelType}");
 					grid.func("SelectCell", "");
 				}
 				if("${reportType}"=="show"||"${reportModel}"=="report"){
 					grid.func("Swkrntpomzqa", "1, 2"); 
+				}
+				if("${modelType}"=="3"){
+					
 				}
 			}
 		}
@@ -132,7 +182,7 @@ var budgetReportDefine = {
 	            url: 'saveBmUpdata',
 	            type: 'post',
 	            dataType: 'json',
-	            data :{updataId:"${updataId}",updataXml:updataXml},
+	            data :{updataId:"${updataId}",updataXml:updataXml,modelType:"${modelType}"},
 	            async:false,
 	            error: function(data){
 	            alertMsg.error("系统错误！");
@@ -203,7 +253,6 @@ var budgetReportDefine = {
  			sysVarJson['%BMMODEL_DEPTNAME%'] = "${budgetUpdata.department.name}";
  			sysVarJson['%BMMODEL_MODELCODE%'] = "${budgetUpdata.modelXfId.modelId.modelCode}";
  			sysVarJson['%BMMODEL_MODELNAME%'] = "${budgetUpdata.modelXfId.modelId.modelName}";
- 			sysVarJson['%BMMODEL_MODELTYPE%'] = "${budgetUpdata.modelXfId.modelId.modelTypeTxt}";
  			sysVarJson['%BMMODEL_PERIODTYPE%'] = "${budgetUpdata.modelXfId.modelId.periodType}";
  			<c:forEach items="${processLogs}" var="pl">
  			sysVarJson['${pl.label_name}'] = '${pl.label_value}';

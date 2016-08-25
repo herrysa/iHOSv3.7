@@ -361,9 +361,25 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 						checkMap.put("info_"+bmModelProcessLog.getStepCode(), bmModelProcessLog.getInfo());
 					}
 					budgetUpdataTemp.setCheckMap(checkMap);
+					
+					
+					BudgetModelXf budgetModelXf = budgetUpdataTemp.getModelXfId();
+					if(budgetModelXf.getState()!=3&&"2".equals(budgetModelXf.getModelId().getModelType())){
+						BudgetModel hzModel = budgetModelXf.getModelId().getHzModelId();
+						if(hzModel!=null){
+							List<PropertyFilter> hzfilters = new ArrayList<PropertyFilter>();
+							hzfilters.add(new PropertyFilter("EQS_modelId.modelId",hzModel.getModelId()));
+							hzfilters.add(new PropertyFilter("NEI_state","3"));
+							List<BudgetModelXf> budgetModelXfs = budgetModelXfManager.getByFilters(hzfilters);
+							if(budgetModelXfs!=null&&budgetModelXfs.size()>0){
+								budgetModelXf.setBmXf(budgetModelXfs.get(0));
+							}
+						}
+					}
 				}
 			//}
 			
+				
 			records = pagedRequests.getTotalNumberOfRows();
 			total = pagedRequests.getTotalNumberOfPages();
 			page = pagedRequests.getPageNumber();
@@ -580,6 +596,13 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			return ajaxForward(false,"没有可保存的上报数据！",false);
 		}
 		budgetUpdata = budgetUpdataManager.get(updataId);
+		if("3".equals(modelType)){
+			String xfId = budgetUpdata.getModelXfId().getXfId();
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("EQS_modelXfId.xfId", xfId));
+			filters.add(new PropertyFilter("EQI_deptType", "0"));
+			budgetUpdatas = budgetUpdataManager.getByFilters(filters);
+		}
 		String deptId = budgetUpdata.getDepartment().getDepartmentId();
 		String periodYear = budgetUpdata.getPeriodYear();
 		Document document = XMLUtil.stringToXml(updataXml);
@@ -598,7 +621,25 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			}else{
 				value = "'"+value+"'";
 			}
-			updataDetailSqlList.add("insert into bm_updatadetail(detailId,updataId,deptId,period_year,cell,indexCode,bmvalue,state) values ('"+uuid+"','"+updataId+"','"+deptId+"','"+periodYear+"','"+Cell+"','"+indexCode+"',"+value+",0)");
+			if("3".equals(modelType)){
+				if(indexCode.contains("@")){
+					String[] indexCodeArr = indexCode.split("@");
+					for(BudgetUpdata bdu : budgetUpdatas){
+						String d = bdu.getDepartment().getDepartmentId();
+						if(d.equals(indexCodeArr[0])){
+							budgetUpdataManager.executeSql("delete from bm_updatadetail where updataId='"+bdu.getUpdataId()+"'");
+							updataDetailSqlList.add("insert into bm_updatadetail(detailId,updataId,deptId,period_year,cell,indexCode,bmvalue,state) values ('"+uuid+"','"+bdu.getUpdataId()+"','"+d+"','"+periodYear+"','"+Cell+"','"+indexCodeArr[1]+"',"+value+",0)");
+							User user = UserContextUtil.getContextUser();
+							bdu.setOperator(user.getPerson());
+							bdu.setOptDate(Calendar.getInstance().getTime());
+							budgetUpdataManager.save(bdu);
+							break;
+						}
+					}
+				}
+			}else{
+				updataDetailSqlList.add("insert into bm_updatadetail(detailId,updataId,deptId,period_year,cell,indexCode,bmvalue,state) values ('"+uuid+"','"+updataId+"','"+deptId+"','"+periodYear+"','"+Cell+"','"+indexCode+"',"+value+",0)");
+			}
 		}
 		budgetUpdataManager.executeSqlList(updataDetailSqlList);
 		User user = UserContextUtil.getContextUser();
@@ -626,12 +667,27 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 					}
 				}
 				reportXml = "<WorkSheet name=\"Sheet\" number=\"0\">";
-				List<Map<String, Object>> bmValueList = budgetUpdataManager.getBySqlToMap("select cell,indexCode,bmvalue from bm_updatadetail where updataId='"+updataId+"'");
+				List<Map<String, Object>> bmValueList = null;
+				if("3".equals(modelType)){
+					String findSql = "select deptId,cell,indexCode,bmvalue from bm_updatadetail where updataId in (SELECT updataId from bm_updata where modelXfId =(SELECT modelXfId from bm_updata where updataId='"+updataId+"'))";
+					bmValueList = budgetUpdataManager.getBySqlToMap(findSql);
+				}else{
+					bmValueList = budgetUpdataManager.getBySqlToMap("select cell,indexCode,bmvalue from bm_updatadetail where updataId='"+updataId+"'");
+				}
 				for(Map<String, Object> bmValue : bmValueList){
+					String deptId = bmValue.get("deptId").toString();
 					String indexCode = bmValue.get("indexCode").toString();
 					String cell = bmValue.get("cell").toString();
-					String bmvalue = bmValue.get("bmvalue").toString();
-					reportXml += "<data name=\""+indexCode+"\" Cell=\""+cell+"\">"+bmvalue+"</data>";
+					Object bmvalueObj = bmValue.get("bmvalue");
+					String bmvalue = "";
+					if(bmvalueObj!=null){
+						bmvalue = bmvalueObj.toString();
+					}
+					if("3".equals(modelType)){
+						reportXml += "<data name=\""+deptId+"@"+indexCode+"\" Cell=\""+cell+"\">"+bmvalue+"</data>";
+					}else{
+						reportXml += "<data name=\""+indexCode+"\" Cell=\""+cell+"\">"+bmvalue+"</data>";
+					}
 				}
 				reportXml += "</WorkSheet>";
 				HttpServletResponse response = getResponse();  

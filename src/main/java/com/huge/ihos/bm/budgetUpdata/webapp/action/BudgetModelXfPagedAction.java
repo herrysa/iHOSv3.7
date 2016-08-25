@@ -411,8 +411,8 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 						updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",bmmXf.getXfId()));
 						List<BudgetUpdata> budgetUpdataList = budgetUpdataManager.getByFilters(updatafilters);
 						for(BudgetUpdata bup : budgetUpdataList){
-							bup.setState(4);
-							budgetUpdataManager.executeSql("update bm_updatadetail set state=4 where updataId='"+bup.getUpdataId()+"'");
+							bup.setState(9);
+							budgetUpdataManager.executeSql("update bm_updatadetail set state=9 where updataId='"+bup.getUpdataId()+"'");
 							budgetUpdataManager.save(bup);
 						}
 						bmmXf.setState(3);
@@ -527,5 +527,29 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		return SUCCESS;
 	}
 	
+	public String budgetModel_gq(){
+		try {
+			List<PropertyFilter> xfModelfilters = new ArrayList<PropertyFilter>();
+			xfModelfilters.add(new PropertyFilter("INS_xfId", xfId));
+			List<BudgetModelXf> xfBudgetModelXfs = budgetModelXfManager.getByFilters(xfModelfilters);
+			for(BudgetModelXf bmmXf :xfBudgetModelXfs){
+				List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
+				updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",bmmXf.getXfId()));
+				List<BudgetUpdata> budgetUpdataList = budgetUpdataManager.getByFilters(updatafilters);
+				for(BudgetUpdata bup : budgetUpdataList){
+					bup.setState(9);
+					budgetUpdataManager.executeSql("update bm_updatadetail set state=9 where updataId='"+bup.getUpdataId()+"'");
+					budgetUpdataManager.save(bup);
+				}
+				bmmXf.setState(3);
+				budgetModelXfManager.save(bmmXf);
+			}
+			return ajaxForward(true,"作废成功！",false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false,"作废失败！",false);
+		}
+		
+	}
 }
 

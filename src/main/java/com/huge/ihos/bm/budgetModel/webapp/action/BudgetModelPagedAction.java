@@ -851,6 +851,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public String bmsDepartmentGridList(){
 		log.debug("enter list method!");
 		try {
+
 			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(getRequest());
 			JQueryPager pagedRequests = null;
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
@@ -1135,6 +1136,14 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			}
 			if("".equals(checkPersonId)){
 				bmModelProcess.setCheckPersonId(null);
+			}
+			BmModelProcess okStep = bmModelProcess.getOkStep();
+			BmModelProcess noStep = bmModelProcess.getNoStep();
+			if(okStep!=null&&"".equals(okStep.getBmProcessId())){
+				bmModelProcess.setOkStep(null);
+			}
+			if(noStep!=null&&"".equals(noStep.getBmProcessId())){
+				bmModelProcess.setNoStep(null);
 			}
 			bmModelProcessManager.save(bmModelProcess);
 			return ajaxForward("保存成功！");

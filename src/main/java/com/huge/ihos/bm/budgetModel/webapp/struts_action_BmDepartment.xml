@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bmDepartment" extends="default"	namespace="/">
+
+		<action name="bmvDepartmentList" class="com.huge.ihos.bm.budgetModel.webapp.action.BmDepartmentPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetModel/bmvDepartmentList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/bmvDepartmentList.jsp</result>
+		</action>
+		<action name="bmDepartmentGridList" class="com.huge.ihos.bm.budgetModel.webapp.action.BmDepartmentPagedAction"		method="bmDepartmentGridList">
+			<result type="json">
+				<param name="includeProperties">bmDepartments.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bmDepartmentGridEdit" class="com.huge.ihos.bm.budgetModel.webapp.action.BmDepartmentPagedAction"			method="bmDepartmentGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBmDepartment" class="com.huge.ihos.bm.budgetModel.webapp.action.BmDepartmentPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bmDepartment/bmDepartmentForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bmDepartment/bmDepartmentForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBmDepartment" class="com.huge.ihos.bm.budgetModel.webapp.action.BmDepartmentPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

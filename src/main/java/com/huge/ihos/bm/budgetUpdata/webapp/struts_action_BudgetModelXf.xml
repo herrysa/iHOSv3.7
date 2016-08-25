@@ -60,12 +60,22 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
+		<action name="budgetModel_gq" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction"			method="budgetModel_gq">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 		
 		<action name="bmHzList" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction" method="bmHzList">
 			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelHzList.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelHzList.jsp</result>
 		</action>
-		
+		<action name="budgetModelXf" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfMain.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfMain.jsp</result>
+		</action>
 
 	</package>
 

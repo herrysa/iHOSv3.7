@@ -3,7 +3,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <head>
 <script type="text/javascript">
-var bmsDepartmentGridIdString="#bmsDepartment_gridtable";
+var bmsDepartmentGridIdString="#${random}_bmsDepartment_gridtable";
 jQuery(document).ready(function() { 
 	var bmsDepartmentGrid = jQuery(bmsDepartmentGridIdString);
 	bmsDepartmentGrid.jqGrid({
@@ -13,12 +13,12 @@ jQuery(document).ready(function() {
 		mtype : "GET",
 		colModel : [
 			{name : 'bmDeptId',index : 'bmDeptId',align : 'left',width:100,label : '<s:text name="bmDepartment.bmDeptId" />',hidden : true,key : true},
-			{name : 'bmDepartment.departmentId',index : 'bmDepartment.departmentId',align : 'left',width:100,label : '<s:text name="department.departmentId" />',hidden : true,highsearch:true},
-			{name : 'bmDepartment.deptCode',index : 'bmDepartment.deptCode',align : 'left',width:100,label : '<s:text name="department.deptCode" />',hidden : false, sortable:true,highsearch:true},
-			{name : 'bmDepartment.name',index : 'bmDepartment.name',align : 'left',width:120,label : '<s:text name="department.name" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.departmentId',index : 'bmDepartment.departmentId',align : 'left',width:150,label : '<s:text name="department.departmentId" />',hidden : true,highsearch:true},
+			{name : 'bmDepartment.deptCode',index : 'bmDepartment.deptCode',align : 'left',width:150,label : '<s:text name="预算责任中心编码" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.name',index : 'bmDepartment.name',align : 'left',width:200,label : '<s:text name="预算责任中心名称" />',hidden : false, sortable:true,highsearch:true},
 			/* {name : 'bmDepartment.org.orgname',index : 'org.orgname',align : 'left',width:130,label : '<s:text name="department.orgCode" />',hidden : false,highsearch:true},
 			{name : 'bmDepartment.branch.branchName',index : 'branch.branchName',align : 'left',width:130,label : '<s:text name="department.branchCode" />',hidden : false,highsearch:true}, */
-			{name : 'bmDepartment.deptClass',index : 'bmDepartment.deptClass',align : 'center',width:70,label : '<s:text name="department.deptClass" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.deptClass',index : 'bmDepartment.deptClass',align : 'center',width:150,label : '<s:text name="预算责任中心类别" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'bmDepartment.outin',index : 'bmDepartment.outin',align : 'left',width:70,label : '<s:text name="department.outin" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'bmDepartment.dgroup',index : 'bmDepartment.dgroup',align : 'left',width:70,label : '<s:text name="department.dgroup" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'bmDepartment.clevel',index : 'bmDepartment.clevel',align : 'center',width:50,label : '<s:text name="department.clevel" />',hidden : false, sortable:true,highsearch:true},
@@ -57,32 +57,33 @@ jQuery(document).ready(function() {
 				}
 	           
 			var dataTest = {
-				"id" : "bmsDepartment_gridtable"
+				"id" : "${random}_bmsDepartment_gridtable"
 			};
 			jQuery.publish("onLoadSelect", dataTest, null);
 		}
 	});
-	jQuery("#bmsDepartment_selectDepartment").click(function(){
-		var sid = jQuery("#bmsDepartment_gridtable").jqGrid('getDataIDs');
+	jQuery("#${random}_bmsDepartment_selectDepartment").click(function(){
+		var sid = jQuery("#${random}_bmsDepartment_gridtable").jqGrid('getDataIDs');
 		var deptId = "";
 		for(var i in sid){
 			var id = sid[i];
-			var rowData = jQuery("#bmsDepartment_gridtable").jqGrid('getRowData',id);
+			var rowData = jQuery("#${random}_bmsDepartment_gridtable").jqGrid('getRowData',id);
 			deptId += rowData['bmDepartment.departmentId']+",";
 		}
-		var url = "selectBmModelDepartment?modelId=${modelId}&navTabId=bmsDepartment_gridtable&deptId="+deptId;
-		var winTitle='选择部门';
+		//var url = "selectBmModelDepartment?modelId=${modelId}&navTabId=${random}_bmsDepartment_gridtable&deptId="+deptId;
+		var url = "bmvDepartmentList?modelId==${modelId}&navTabId=${random}_bmsDepartment_gridtable&departmentId="+deptId;
+		var winTitle='选择预算责任中心';
 		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 700,height : 500});
 		stopPropagation();
 	});
-	jQuery("#bmsDepartment_delDepartment").click(function(){
-		var sid = jQuery("#bmsDepartment_gridtable").jqGrid('getGridParam','selarrrow');
+	jQuery("#${random}_bmsDepartment_delDepartment").click(function(){
+		var sid = jQuery("#${random}_bmsDepartment_gridtable").jqGrid('getGridParam','selarrrow');
 		if(sid==null|| sid.length == 0){       	
-			alertMsg.error("请选择部门。");
+			alertMsg.error("请选择预算责任中心。");
 			return;
 		}
 		$.post("delBmModelDepartment", {
-			"_" : $.now(),navTabId:'bmsDepartment_gridtable',deptId:sid
+			"_" : $.now(),navTabId:'${random}_bmsDepartment_gridtable',deptId:sid
 		}, function(data) {
 			formCallBack(data);
 			
@@ -92,21 +93,21 @@ jQuery(document).ready(function() {
 </script>
 </head>
 <div class="page">
-	<div id="bmsDepartment_pageHeader" class="pageHeader">
-		<form  id="bmsDepartment_search_form" class="queryarea-form">
+	<div id="${random}_bmsDepartment_pageHeader" class="pageHeader">
+		<form  id="${random}_bmsDepartment_search_form" class="queryarea-form">
 			<div class="searchBar">
 				<div class="searchContent">
 					<label class="queryarea-label">
-						<s:text name="department.deptCode"></s:text>
+						<s:text name="预算责任中心编码"></s:text>
 						<input type="text" name="filter_LIKES_bmDepartment.deptCode"/>
 					</label>
 					<label class="queryarea-label">
-						<s:text name="department.name"></s:text>
+						<s:text name="预算责任中心名称"></s:text>
 						<input type="text" name="filter_LIKES_bmDepartment.name"/>
 					</label>
 				<div class="buttonActive" style="float:right">
 					<div class="buttonContent">
-						<button type="button" onclick="propertyFilterSearch('bmsDepartment_search_form','bmsDepartment_gridtable')">
+						<button type="button" onclick="propertyFilterSearch('${random}_bmsDepartment_search_form','${random}_bmsDepartment_gridtable')">
 							<fmt:message key='button.search' />
 						</button>
 					</div>
@@ -116,18 +117,18 @@ jQuery(document).ready(function() {
 		</form>
 	</div>
 	<div class="pageContent">
-		<div id="bmsDepartment_buttonBar" class="panelBar">
+		<div id="${random}_bmsDepartment_buttonBar" class="panelBar">
 			<ul class="toolBar">
 				<li>
-					<a id=bmsDepartment_selectDepartment class="addbutton"  href="javaScript:"><span>添加部门</span></a>
+					<a id=${random}_bmsDepartment_selectDepartment class="addbutton"  href="javaScript:"><span>添加预算责任中心</span></a>
 				</li>
 				<li>
-					<a id=bmsDepartment_delDepartment class="delbutton"  href="javaScript:"><span>删除部门</span></a>
+					<a id=${random}_bmsDepartment_delDepartment class="delbutton"  href="javaScript:"><span>删除预算责任中心</span></a>
 				</li>
 			</ul>
 		</div>
-		<div id="bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=100>
-			<table id="bmsDepartment_gridtable"></table>
+		<div id="${random}_bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=100>
+			<table id="${random}_bmsDepartment_gridtable"></table>
 		</div>
 		<!-- <div class="panelBar" id="bmsDepartment_pageBar">
 			<div class="pages">

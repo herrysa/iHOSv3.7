@@ -18,12 +18,73 @@ var budgetReportDefine = {
 				grid.func("SetAutoCalc","0");
 				grid.func("CallFunc","2");
 				grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
+				
+				resetGridStatus(id);
+			},
+			"EditChanged":function( id,p1, p2, p3, p4){
+				var grid = eval("(budgetReport_gridtable_${random})");
+				var deptCol = grid.func("GetMemo"," \r\n deptCol");
+				if(deptCol.indexOf("r_")!=-1){
+					var row = deptCol.replace("r_","");
+					if(row==p1){
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n Arrow \r\n blue");
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n hasArrow \r\n 1");
+					}
+				}else if(deptCol.indexOf("c_")!=-1){
+					var col = deptCol.replace("c_","");
+					if(col==p2){
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n Arrow \r\n blue");
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n hasArrow \r\n 1");
+					}
+				}
+				var indexCode = grid.func("GetMemo"," \r\n indexCol");
+				if(indexCode.indexOf("r_")!=-1){
+					var row = indexCode.replace("r_","");
+					if(row==p1){
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n Arrow \r\n red");
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n hasArrow \r\n 1");
+					}
+				}else if(indexCode.indexOf("c_")!=-1){
+					var col = indexCode.replace("c_","");
+					if(col==p2){
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n Arrow \r\n red");
+						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n hasArrow \r\n 1");
+					}
+				}
+			},
+			"Calced" :function( id,p1, p2, p3, p4){
+				var grid = eval("(budgetReport_gridtable_${random})");
+				var deptCol = grid.func("GetMemo"," \r\n deptCol");
+				if(deptCol){
+					grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+					if(deptCol.indexOf("r_")!=-1){
+						deptCol = deptCol.replace("r_","");
+	 					var cols = grid.func("GetCols","");
+	 					for(var c = 0; c<cols ;c++){
+	 						var cellText = grid.func("GetCellText",deptCol+" \r\n "+c);
+	 						if(cellText){
+	 							grid.func("SetCellProp",deptCol+" \r\n "+c+" \r\n Arrow \r\n blue");
+	 							grid.func("SetCellProp",deptCol+" \r\n "+c+" \r\n hasArrow \r\n 2");
+	 						}
+	 					}
+	 				}else if(deptCol.indexOf("c_")!=-1){
+	 					deptCol = deptCol.replace("c_","");
+	 					var rows = grid.func("GetRows","");
+	 					for(var r = 0; r<rows ;r++){
+	 						var cellText = grid.func("GetCellText",r+" \r\n "+deptCol);
+	 						if(cellText){
+		 						grid.func("SetCellProp",r+" \r\n "+deptCol+" \r\n Arrow \r\n blue");
+	 							grid.func("SetCellProp",r+" \r\n "+deptCol+" \r\n hasArrow \r\n 2");
+	 						}
+	 					}
+	 				}
+					grid.func("GrayWindow",'0');//遮罩/还原的动作
+				}
 			},
 			"Toolbar":function( id,p1, p2, p3, p4){
 				var grid = eval("("+id+")");
 				if(p1=="104"){
 					var reportXml = grid.func("GetFileXML", "");
-					console.log(reportXml);
 					$.ajax({
 			            url: 'saveBmReportXml',
 			            type: 'post',
@@ -46,6 +107,24 @@ var budgetReportDefine = {
 				var grid = eval("("+id+")");
 				
 				grid.func("SetItemLibraryURL", "getBmReportIndexXml");
+				grid.func("SubscribeEvent", "EditChanged");
+				
+				/* var deptCol = grid.func("GetMemo"," \r\n deptCol");
+				var indexCode = grid.func("GetMemo"," \r\n indexCol");
+				var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+	 			var dataCell = {};
+	 			if(dataCellStr){
+	 				dataCell = eval("("+dataCellStr+")");
+	 			} */
+				/* var taborderStr = grid.func("GetMemo"," \r\n taborder");
+	 			if(taborderStr){
+	 				var taborder = eval("("+taborderStr+")");
+	 				for(var i in taborder){
+	 					var tab = taborder[i];
+	 					var tabArr = i.split("");
+	 					grid.func("SetCellProp",tabArr[0]+" \r\n "+tabArr[1]+" \r\n taborder \r\n "+tab);
+	 				}
+	 			} */
 			}
 		}
 	}; 
@@ -173,14 +252,17 @@ var budgetReportDefine = {
  			grid.func("SetAutoCalc","10000");
 			grid.func("CallFunc","64");
 			grid.func("CallFunc","163");
+			setTimeout(function(){
+				
+			},200);
+			
  		});
  		jQuery("#${random}_selectIndexToCell").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
  			grid.func("GrayWindow",'1 \r\n 255');
  		});
  		jQuery("#${random}_saveBudgetModelReport").click(function(){
- 			var grid = eval("(budgetReport_gridtable_${random})");
- 			var reportXml = grid.func("GetFileXML", "");
+ 			var reportXml = getBmModelXml("budgetReport_gridtable_${random}");
  			var cellIndexStr = JSON.stringify(cellIndexMap);
 			$.ajax({
 	            url: 'saveBmReportXml',
@@ -192,7 +274,9 @@ var budgetReportDefine = {
 	            alertMsg.error("系统错误！");
 	            },
 	            success: function(data){
-	            	formCallBack(data);
+	            	setTimeout(function(){
+		            	formCallBack(data);
+            		},200);
 	            }
 	        });
  		});
@@ -201,60 +285,293 @@ var budgetReportDefine = {
  			var sss = grid.func("GetUploadXML");
  			console.log(sss);
  		});
- 		var ${random}_deptCol = "";
  		jQuery("#${random}_setDeptCol").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
  			var currentCell = grid.func("GetCurrentCells","");
- 			alert(currentCell);
- 			var currentCellArr = currentCell.split(",");
- 			var srow = 0,scol = 0;
- 			if(currentCellArr[0]==currentCellArr[2]){
- 				srow = 1;
+ 			var currentCellArr = currentCell.split(":");
+ 			if(currentCellArr[0]==currentCellArr[1]){
+ 				alertMsg.error("请选择两个单元格以上！");
+ 				return ;
  			}
- 			if(currentCellArr[1]==currentCellArr[3]){
+ 			var rowBegin = grid.func("GetCellRow", currentCellArr[0]);
+ 			var colBegin = grid.func("GetCellCol", currentCellArr[0]);
+ 			var rowEnd = grid.func("GetCellRow", currentCellArr[1]);
+ 			var colEnd = grid.func("GetCellCol", currentCellArr[1]);
+ 			var srow = 0,scol = 0;
+ 			if(colBegin==colEnd){
  				scol = 1;
+ 			}
+ 			if(rowBegin==rowEnd){
+ 				srow = 1;
  			}
  			if(srow==1&&scol==1){
  				alertMsg.error("请唯一行或列！");
  				return ;
  			}else{
- 				if(srow==1){
- 					grid.func("SetProp","deptCol \r\n r_"+currentCellArr[0]);
- 				}else if(scol==1){
- 					grid.func("SetProp","deptCol \r\n c_"+currentCellArr[1]);
+ 				var oldDeptCol = grid.func("GetMemo"," \r\n deptCol");
+ 				grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+ 				var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+ 				var oldDeptCellArr = oldDeptCell.split(",");
+ 				for(var ci=0;ci<oldDeptCellArr.length;ci++){
+ 					var cell = oldDeptCellArr[ci];
+ 					grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
+ 					grid.func("SetCellProp",cell+" \r\n hasArrow \r\n ");
  				}
+ 				if(srow==1){
+ 					grid.func("SetMemo"," \r\n deptCol \r\n r_"+rowBegin);
+ 					var cols = grid.func("GetCols","");
+ 					for(var c = 0; c<cols ;c++){
+ 						var cellText = grid.func("GetCellText",rowBegin+" \r\n "+c);
+ 						if(cellText){
+ 							grid.func("SetCellProp",rowBegin+" \r\n "+c+" \r\n Arrow \r\n blue");
+ 							grid.func("SetCellProp",rowBegin+" \r\n "+c+" \r\n hasArrow \r\n 2");
+ 						}
+ 					}
+ 				}else if(scol==1){
+ 					grid.func("SetMemo"," \r\n deptCol \r\n c_"+colBegin);
+ 					var rows = grid.func("GetRows","");
+ 					for(var r = 0; r<rows ;r++){
+ 						var cellText = grid.func("GetCellText",r+" \r\n "+colBegin);
+ 						if(cellText){
+	 						grid.func("SetCellProp",r+" \r\n "+colBegin+" \r\n Arrow \r\n blue");
+ 							grid.func("SetCellProp",r+" \r\n "+colBegin+" \r\n hasArrow \r\n 2");
+ 						}
+ 					}
+ 				}
+				grid.func("GrayWindow","0");//遮罩/还原的动作
+ 			}
+ 			
+ 		});
+ 		jQuery("#${random}_setIndexCol").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var currentCell = grid.func("GetCurrentCells","");
+ 			var currentCellArr = currentCell.split(":");
+ 			if(currentCellArr[0]==currentCellArr[1]){
+ 				alertMsg.error("请选择两个单元格以上！");
+ 				return ;
+ 			}
+ 			var rowBegin = grid.func("GetCellRow", currentCellArr[0]);
+ 			var colBegin = grid.func("GetCellCol", currentCellArr[0]);
+ 			var rowEnd = grid.func("GetCellRow", currentCellArr[1]);
+ 			var colEnd = grid.func("GetCellCol", currentCellArr[1]);
+ 			var srow = 0,scol = 0;
+ 			if(colBegin==colEnd){
+ 				scol = 1;
+ 			}
+ 			if(rowBegin==rowEnd){
+ 				srow = 1;
+ 			}
+ 			if(srow==1&&scol==1){
+ 				alertMsg.error("请唯一行或列！");
+ 				return ;
+ 			}else{
+ 				var oldIndexCode = grid.func("GetMemo"," \r\n indexCol");
+ 				grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+ 				var oldIndexCell = grid.func("FindCell", "hasArrow=1"); 
+ 				var oldIndexCellArr = oldIndexCell.split(",");
+ 				for(var ci=0;ci<oldIndexCellArr.length;ci++){
+ 					var cell = oldIndexCellArr[ci];
+ 					grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
+ 					grid.func("SetCellProp",cell+" \r\n hasArrow \r\n ");
+ 				}
+ 				if(srow==1){
+ 					grid.func("SetMemo"," \r\n indexCol \r\n r_"+rowBegin);
+ 					var cols = grid.func("GetCols","");
+ 					for(var c = 0; c<cols ;c++){
+ 						var cellText = grid.func("GetCellText",rowBegin+" \r\n "+c);
+ 						if(cellText){
+	 						grid.func("SetCellProp",rowBegin+" \r\n "+c+" \r\n Arrow \r\n red");
+	 						grid.func("SetCellProp",rowBegin+" \r\n "+c+" \r\n hasArrow \r\n 1");
+ 						}
+ 					}
+ 				}else if(scol==1){
+ 					grid.func("SetMemo"," \r\n indexCol \r\n c_"+colBegin);
+ 					var rows = grid.func("GetRows","");
+ 					for(var r = 0; r<rows ;r++){
+ 						var cellText = grid.func("GetCellText",r+" \r\n "+colBegin);
+ 						if(cellText){
+ 							grid.func("SetCellProp",r+" \r\n "+colBegin+" \r\n Arrow \r\n red");
+ 							grid.func("SetCellProp",r+" \r\n "+colBegin+" \r\n hasArrow \r\n 1");
+	 					}
+ 					}
+ 				}
+				grid.func("GrayWindow","0");//遮罩/还原的动作
  			}
  			
  		});
  		jQuery("#${random}_setDataCell").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
  			var currentCell = grid.func("GetCurrentCells","");
- 			var currentCellArr = currentCell.split(",");
- 			var deptCol = grid.func("GetProp","");
- 			alert(deptCol);
- 			for(var row=currentCellArr[0];row<currentCellArr[2];row++){
- 				for(var col=currentCellArr[1];col<currentCellArr[3];col++){
- 					var deptId = "";
- 					if(deptCol.indexOf("r_")){
- 						deptCol = deptCol.replace("r_","");
- 						deptId = grid.func("GetCellData",deptCol+" \r\n "+col);
- 					}else if(deptCol.indexOf("c_")){
- 						deptCol = deptCol.replace("c_","");
- 						deptId = grid.func("GetCellData",row+" \r\n "+deptCol);
- 					}
- 					
- 					grid.func("SetCellProp",row+" \r\n "+col+" \r\n "+Alias+" \r\n "+);
- 	 			}
+ 			var currentCellArr = currentCell.split(":");
+ 			var deptCol = grid.func("GetMemo"," \r\n deptCol");
+ 			var indexCol = grid.func("GetMemo"," \r\n indexCol");
+ 			var cell1 = currentCellArr[0],cell2 = currentCellArr[1];
+ 			var rowBegin = grid.func("GetCellRow", cell1);
+ 			var colBegin = grid.func("GetCellCol", cell1);
+ 			var rowEnd = grid.func("GetCellRow", cell2);
+ 			var colEnd = grid.func("GetCellCol", cell2);
+ 			var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+ 			var dataCell = {};
+ 			if(dataCellStr){
+ 				dataCell = eval("("+dataCellStr+")");
  			}
- 			
+ 			grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+ 			for(var i=rowBegin;i<=rowEnd;i++){
+ 				for(var j=colBegin;j<=colEnd;j++){
+					var deptId = "" , indexCode = "";
+					if(deptCol.indexOf("r_")!=-1){
+						var deptColTemp = deptCol.replace("r_","");
+						deptId = grid.func("GetCellData",deptColTemp+" \r\n "+j);
+					}else if(deptCol.indexOf("c_")!=-1){
+						var deptColTemp = deptCol.replace("c_","");
+						deptId = grid.func("GetCellData",i+" \r\n "+deptColTemp);
+					}
+					if(indexCol.indexOf("r_")!=-1){
+						var indexColTemp = indexCol.replace("r_","");
+						//indexCode = grid.func("GetCellData",indexCol+" \r\n "+col);
+						indexCode = grid.func("GetCellProp",indexColTemp+" \r\n "+j+" \r\n Alias");
+					}else if(indexCol.indexOf("c_")!=-1){
+						var indexColTemp = indexCol.replace("c_","");
+						//indexCode = grid.func("SetCellProp",indexCol+" \r\n "+col+" \r\n Alias");
+						indexCode = grid.func("GetCellProp",i+" \r\n "+indexColTemp+" \r\n Alias");
+					}	
+					grid.func("SetCellProp",i+" \r\n "+j+" \r\n Alias \r\n "+deptId+"@"+indexCode);
+					grid.func("SetCellProp",i+" \r\n "+j+" \r\n isProtected  \r\n 1");
+ 					//grid.func("SetCellProp",row+" \r\n "+col+" \r\n "+Alias+" \r\n "+);
+					dataCell[i+""+j] = deptId+"@"+indexCode;
+ 				}
+ 			}
+ 			grid.func("GrayWindow",'0');//遮罩/还原的动作
+ 			grid.func("SetMemo"," \r\n dataCell \r\n "+JSON.stringify(dataCell));
  		});
  		jQuery("#${random}_cancelDataCell").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
  			var currentCell = grid.func("GetCurrentCells","");
- 			alert(currentCell);
- 			
+ 			var currentCellArr = currentCell.split(":");
+ 			var cell1 = currentCellArr[0],cell2 = currentCellArr[1];
+ 			var rowBegin = grid.func("GetCellRow", cell1);
+ 			var colBegin = grid.func("GetCellCol", cell1);
+ 			var rowEnd = grid.func("GetCellRow", cell2);
+ 			var colEnd = grid.func("GetCellCol", cell2);
+ 			var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+ 			var dataCell = {};
+ 			if(dataCellStr){
+ 				dataCell = eval("("+dataCellStr+")");
+ 			}
+ 			grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+ 			for(var i=rowBegin;i<=rowEnd;i++){
+ 				for(var j=colBegin;j<=colEnd;j++){
+ 					grid.func("SetCellProp",i+" \r\n "+j+" \r\n Alias \r\n ");
+ 					grid.func("SetCellProp",i+" \r\n "+j+" \r\n isProtected  \r\n 0");
+ 					delete dataCell[i+""+j];
+ 				}
+ 			}
+ 			grid.func("GrayWindow",'0');//遮罩/还原的动作
+ 			grid.func("SetMemo"," \r\n dataCell \r\n "+JSON.stringify(dataCell));
  		});
  	});
+ 	
+ 	function getBmModelXml(id){
+		var grid = eval("("+id+")");
+		grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+ 		var cells = grid.func("FindCell", "left(formula,8)='=datarow'"); 
+		var cellArr = cells.split(",");
+		for(var i in cellArr){
+			var cell = cellArr[i];
+			var cellTxt = grid.func("GetCellText", cell+"");
+			grid.func("SetCellData", cell+"\r\n");
+			grid.func("SetCellData", cell+"\r\n"+cellTxt);
+		}
+		var rows = grid.func("GetRows","");
+		for(var row=0;row<rows;row++){
+			var isds = grid.func("GetRowProp",row+"\r\nds");
+			if(isds==1){
+				grid.func("SetRowProp",row+"\r\nds\r\n0");
+			}
+		}
+		var deptCol = grid.func("GetMemo"," \r\n deptCol");
+		var indexCode = grid.func("GetMemo"," \r\n indexCol");
+		var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+		var dataCell = {};
+		if(dataCellStr){
+			dataCell = eval("("+dataCellStr+")");
+		} 
+		var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+		var oldDeptCellArr = oldDeptCell.split(",");
+		for(var ci=0;ci<oldDeptCellArr.length;ci++){
+			var cell = oldDeptCellArr[ci];
+			grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
+		}
+		var oldIndexCell = grid.func("FindCell", "hasArrow=1"); 
+		var oldIndexCellArr = oldIndexCell.split(",");
+		for(var ci=0;ci<oldIndexCellArr.length;ci++){
+			var cell = oldIndexCellArr[ci];
+			grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
+		}
+		for(var i in dataCell){
+			var alias = dataCell[i];
+			var ij = i.split("");
+			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n Alias \r\n "+alias);
+			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n isProtected \r\n");
+		}
+		var reportXml = grid.func("GetFileXML", "isSaveCalculateResult=true"); 
+		var deptCol = grid.func("GetMemo"," \r\n deptCol");
+		var indexCode = grid.func("GetMemo"," \r\n indexCol");
+		var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+			var dataCell = {};
+			if(dataCellStr){
+				dataCell = eval("("+dataCellStr+")");
+			} 
+			var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+		var oldDeptCellArr = oldDeptCell.split(",");
+		for(var ci=0;ci<oldDeptCellArr.length;ci++){
+			var cell = oldDeptCellArr[ci];
+			grid.func("SetCellProp",cell+" \r\n Arrow \r\n blue");
+		}
+		var oldIndexCell = grid.func("FindCell", "hasArrow=1"); 
+		var oldIndexCellArr = oldIndexCell.split(",");
+		for(var ci=0;ci<oldIndexCellArr.length;ci++){
+			var cell = oldIndexCellArr[ci];
+			grid.func("SetCellProp",cell+" \r\n Arrow \r\n red");
+		}
+		for(var i in dataCell){
+			var alias = dataCell[i];
+			var ij = i.split("");
+			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n isProtected \r\n 1");
+		}
+		grid.func("GrayWindow",'0');//遮罩/还原的动作
+		return reportXml;
+ 	}
+ 	
+ 	function resetGridStatus(id){
+		var grid = eval("("+id+")");
+		grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+		var deptCol = grid.func("GetMemo"," \r\n deptCol");
+		var indexCode = grid.func("GetMemo"," \r\n indexCol");
+		var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+			var dataCell = {};
+			if(dataCellStr){
+				dataCell = eval("("+dataCellStr+")");
+			} 
+			var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+		var oldDeptCellArr = oldDeptCell.split(",");
+		for(var ci=0;ci<oldDeptCellArr.length;ci++){
+			var cell = oldDeptCellArr[ci];
+			grid.func("SetCellProp",cell+" \r\n Arrow \r\n blue");
+		}
+		var oldIndexCell = grid.func("FindCell", "hasArrow=1"); 
+		var oldIndexCellArr = oldIndexCell.split(",");
+		for(var ci=0;ci<oldIndexCellArr.length;ci++){
+			var cell = oldIndexCellArr[ci];
+			grid.func("SetCellProp",cell+" \r\n Arrow \r\n red");
+		}
+		for(var i in dataCell){
+			var alias = dataCell[i];
+			var ij = i.split("");
+			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n isProtected \r\n 1");
+		}
+		grid.func("GrayWindow",'0');//遮罩/还原的动作
+	}
  	function sourcepayinSum1(checkperiod1,checkperiod2,deptId,chargeType){
  		//return checkperiod1;
  		console.log(chargeType);
@@ -293,7 +610,7 @@ var budgetReportDefine = {
 		<div class="panelBar">
 			<ul class="toolBar">
 				<li><a id="${random}_editBudgetModelReport" class="changebutton"  href="javaScript:"
-					><span>编辑报表
+					><span>编辑模板
 					</span>
 				</a>
 				</li>
@@ -302,17 +619,22 @@ var budgetReportDefine = {
 					</span>
 				</a>
 				</li>
-				<li><a id="${random}_setDeptCol" class="submitbutton"  href="javaScript:"
-					><span>设为部门列
+				<li><a id="${random}_setDeptCol" class="settlebutton"  href="javaScript:"
+					><span>设为部门行/列
 					</span>
 				</a>
 				</li>
-				<li><a id="${random}_setDataCell" class="submitbutton"  href="javaScript:"
+				<li><a id="${random}_setIndexCol" class="settlebutton"  href="javaScript:"
+					><span>设为指标行/列
+					</span>
+				</a>
+				</li>
+				<li><a id="${random}_setDataCell" class="editbutton"  href="javaScript:"
 					><span>设为数据项
 					</span>
 				</a>
 				</li>
-				<li><a id="${random}_cancelDataCell" class="submitbutton"  href="javaScript:"
+				<li><a id="${random}_cancelDataCell" class="canceleditbutton"  href="javaScript:"
 					><span>取消数据项
 					</span>
 				</a>

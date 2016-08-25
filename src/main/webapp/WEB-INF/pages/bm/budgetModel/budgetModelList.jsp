@@ -33,9 +33,13 @@
 			{name:'periodType',index:'periodType',align:'left',label : '<s:text name="budgetModel.periodType" />',width:100,hidden:false,highsearch:true},
 			{name:'creator',index:'creator',align:'left',label : '<s:text name="budgetModel.creator" />',width:100,hidden:false,highsearch:true},
 			{name:'createDate',index:'createDate',align:'left',label : '<s:text name="budgetModel.createDate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},highsearch:true},
-			{name:'modifier',index:'modifier',align:'left',label : '<s:text name="budgetModel.modifier" />',width:100,hidden:false,highsearch:true},
-			{name:'modifydate',index:'modifydate',align:'left',label : '<s:text name="budgetModel.modifydate" />',width:100,hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},highsearch:true},
-			{name:'isHz',index:'isHz',align:'center',label : '<s:text name="budgetModel.isHz" />',width:100,hidden:false,formatter:'checkbox',highsearch:true},
+			{name:'modifier',index:'modifier',align:'left',label : '<s:text name="budgetModel.modifier" />',width:100,hidden:true,highsearch:true},
+			{name:'modifydate',index:'modifydate',align:'left',label : '<s:text name="budgetModel.modifydate" />',width:100,hidden:true,formatter:'date',formatoptions:{newformat : 'Y-m-d'},highsearch:true},
+			{name:'updataProcess.checkDeptName',index:'updataProcess.checkDeptName',align:'left',label : '上报部门',width:150,hidden:false,highsearch:true},
+			{name:'updataProcess.checkPersonName',index:'updataProcess.checkPersonName',align:'left',label : '上报人',width:150,hidden:false,highsearch:true},
+			{name:'checkProcess.checkPersonName',index:'checkProcess.checkPersonName',align:'left',label : '审核部门',width:150,hidden:false,highsearch:true},
+			{name:'checkProcess.checkPersonName',index:'checkProcess.checkPersonName',align:'left',label : '审核人',width:150,hidden:false,highsearch:true},
+			/* {name:'isHz',index:'isHz',align:'center',label : '<s:text name="budgetModel.isHz" />',width:100,hidden:false,formatter:'checkbox',highsearch:true}, */
 			{name:'hzModelId.modelName',index:'hzModelId.modelName',align:'left',label : '<s:text name="budgetModel.hzModelId" />',width:200,hidden:false,highsearch:true},
 			{name:'disabled',index:'disabled',align:'center',label : '<s:text name="budgetModel.disabled" />',width:100,hidden:false,formatter:'checkbox',highsearch:true},
 			{name:'remark',index:'remark',align:'left',label : '<s:text name="budgetModel.remark" />',width:200,hidden:false,highsearch:true}
@@ -301,7 +305,7 @@
 				</a>
 				</li>
 				<li><a id="budgetModel_gridtable_editReport" class="reportbutton"  href="javaScript:"
-					><span>设计模板
+					><span>编辑模板
 					</span>
 				</a>
 				</li>

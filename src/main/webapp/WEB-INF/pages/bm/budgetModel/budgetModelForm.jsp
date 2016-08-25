@@ -26,7 +26,7 @@
 				<div class="tabsHeaderContent">
 					<ul>
 						<li><a href="#"><span>主要信息</span> </a></li>
-						<li><a href="budgetDepartmentList?modelId=${budgetModel.modelId}" class="j-ajax" ><span>预算部门</span> </a></li>
+						<li><a href="budgetDepartmentList?modelId=${budgetModel.modelId}" class="j-ajax" ><span>预算责任中心</span> </a></li>
 						<li><a href="modelProcessList?modelId=${budgetModel.modelId}" class="j-ajax" ><span>审核流程</span> </a></li>
 					</ul>
 				</div>
@@ -69,7 +69,27 @@
 				</div>
 				<div class="unit">
 					<label><s:text name="budgetModel.modelType"/>:</label>
-					<s:select list="#{'1':'科室填报(自下而上)','2':'预算汇总(自下而上)','3':'职能代编(自上而下)'}" key="budgetModel.modelType" headerKey="" headerValue="--" theme="simple"></s:select>
+					<s:select id="budgetModel_modelType" list="#{'1':'科室填报(自下而上)','2':'预算汇总(自下而上)','3':'职能代编(自上而下)'}" key="budgetModel.modelType" headerKey="" headerValue="--" theme="simple"></s:select>
+					<script>
+					var bmModelType = jQuery("#budgetModel_modelType").val();
+					if(bmModelType=="2"){
+						jQuery("#budgetModel_hzModelId_div").show();
+						jQuery("#budgetModel_hzModelId").addClass("required");
+					}else{
+						jQuery("#budgetModel_hzModelId_div").hide();
+						jQuery("#budgetModel_hzModelId").removeClass("required");
+					}
+					jQuery("#budgetModel_modelType").change(function(){
+						var modelType = jQuery(this).val();
+						if(modelType=="2"){
+							jQuery("#budgetModel_hzModelId_div").show();
+							jQuery("#budgetModel_hzModelId").addClass("required");
+						}else{
+							jQuery("#budgetModel_hzModelId_div").hide();
+							jQuery("#budgetModel_hzModelId").removeClass("required");
+						}
+					});
+					</script>
 				</div>
 				<div class="unit">
 					<label><s:text name="budgetModel.periodType"/>:</label>
@@ -100,7 +120,7 @@
 					});
 					</script>
 				</div> --%>
-				<div class="unit">
+				<%-- <div class="unit">
 					<label><s:text name="budgetModel.isHz"/>:</label>
 					<s:checkbox id="budgetModel_isHz" key="budgetModel.isHz" name="budgetModel.isHz" theme="simple"/>
 					<script>
@@ -119,7 +139,7 @@
 							}
 						});
 					</script>
-				</div>
+				</div> --%>
 				<div id="budgetModel_hzModelId_div" class="unit">
 					<s:hidden id="budgetModel_hzModelId_id" name="budgetModel.hzModelId.modelId"/>
 					<s:textfield id="budgetModel_hzModelId" key="budgetModel.hzModelId" name="budgetModel.hzModelId.modelName" style="width:350px"/>
@@ -138,6 +158,7 @@
 					});
 					</script>
 				</div>
+				<s:hidden key="budgetModel.disabled"></s:hidden>
 				<%-- <s:if test="%{!entityIsNew}">
 				<div class="unit">
 					<label><s:text name="budgetModel.disabled"/>:</label>
