@@ -20,6 +20,15 @@ public class BmDepartmentPagedAction extends JqGridBaseAction implements Prepara
 	private List<BmDepartment> bmDepartments;
 	private BmDepartment bmDepartment;
 	private String departmentId;
+	private String modelId;
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
 
 	public BmDepartmentManager getBmDepartmentManager() {
 		return bmDepartmentManager;

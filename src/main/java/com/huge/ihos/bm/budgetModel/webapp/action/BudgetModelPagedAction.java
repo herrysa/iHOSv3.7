@@ -1199,9 +1199,10 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		try {
 			budgetModel = budgetModelManager.get(modelId);
 			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			deptId = deptId.replaceAll(" ", "");
 			filters.add(new PropertyFilter("INS_departmentId",deptId));
 			List<Department> departments = departmentManager.getByFilters(filters);
-			bmModelDeptManager.executeSql("delete from bm_model_dept where modelId='"+modelId+"'");
+			//bmModelDeptManager.executeSql("delete from bm_model_dept where modelId='"+modelId+"'");
 			for(Department department : departments){
 				BmModelDept bmModelDept = new BmModelDept();
 				bmModelDept.setBmModel(budgetModel);

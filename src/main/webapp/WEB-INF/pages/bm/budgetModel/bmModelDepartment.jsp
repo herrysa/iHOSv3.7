@@ -71,9 +71,9 @@ jQuery(document).ready(function() {
 			deptId += rowData['bmDepartment.departmentId']+",";
 		}
 		//var url = "selectBmModelDepartment?modelId=${modelId}&navTabId=${random}_bmsDepartment_gridtable&deptId="+deptId;
-		var url = "bmvDepartmentList?modelId==${modelId}&navTabId=${random}_bmsDepartment_gridtable&departmentId="+deptId;
+		var url = "bmvDepartmentList?modelId=${modelId}&navTabId=${random}_bmsDepartment_gridtable&departmentId="+deptId;
 		var winTitle='选择预算责任中心';
-		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 700,height : 500});
+		$.pdialog.open(url,'sellectDepartment',winTitle, {mask:true,width : 800,height : 500});
 		stopPropagation();
 	});
 	jQuery("#${random}_bmsDepartment_delDepartment").click(function(){

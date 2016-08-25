@@ -2,14 +2,12 @@
 <%@ include file="/common/taglibs.jsp"%>
 <%@ page language="java"   pageEncoding="UTF-8"%>
 <script type="text/javascript">
-	var budgetModelHzLayout;
-	var budgetModelHzGridIdString="#budgetModelHz_gridtable";
 	
-	var budgetModelHzLayout;
 	jQuery(document).ready(function() {
+		var budgetModelHzGridIdString="#${random}_budgetModelHz_gridtable";
 		var budgetModelHzGrid = jQuery(budgetModelHzGridIdString);
     	budgetModelHzGrid.jqGrid({
-    		url : "budgetUpdataGridList?1=1&upType=3&modelType=2",
+    		url : "budgetUpdataGridList?1=1&upType=3&modelType=2&filter_EQI_state=${state}",
     		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
@@ -58,8 +56,8 @@
            	//if(jQuery(this).getDataIDs().length>0){
            	//  jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
            	// }
-           	gridContainerResize('budgetModelHz','div');
-           	var dataTest = {"id":"budgetModelHz_gridtable"};
+           	gridContainerResize('${random}_budgetModelHz','div',0,30);
+           	var dataTest = {"id":"${random}_budgetModelHz_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
      		 var rowNum = jQuery(this).getDataIDs().length;
      		 var ret = jQuery(this).jqGrid('getRowData');
@@ -94,30 +92,28 @@
        		} 
 
     	});
-    jQuery(budgetModelHzGrid).jqGrid('bindKeys');
-    
-    jQuery("#budgetModelHz_gridtable_refresh").click(function(){
+    jQuery("#${random}_budgetModelHz_gridtable_refresh").click(function(){
     	$.get("budgetModelXfRefresh", {
-			"_" : $.now(),xfType:2,navTabId:'budgetModelHz_gridtable'
+			"_" : $.now(),xfType:2,navTabId:'${random}_budgetModelHz_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
     });
     
-    jQuery("#budgetModelHz_gridtable_xf").click(function(){
-    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    jQuery("#${random}_budgetModelHz_gridtable_xf").click(function(){
+    	var sid = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
     	if(sid.length==0){
     		alertMsg.error("请选择记录！");
     		return ;
     	}
     	$.get("budgetModel_Xf", {
-			"_" : $.now(),xfId:sid,navTabId:'budgetModelHz_gridtable'
+			"_" : $.now(),xfId:sid,navTabId:'${random}_budgetModelHz_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
     });
-    jQuery("#budgetModelHz_gridtable_reXf").click(function(){
-    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    jQuery("#${random}_budgetModelHz_gridtable_reXf").click(function(){
+    	var sid = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
     	if(sid.length==0){
     		alertMsg.error("请选择记录！");
     		return ;
@@ -125,7 +121,7 @@
     	alertMsg.confirm("确认重新汇总？重新汇总后,之前汇总的数据将作废！", {
 			okCall: function(){
 				jQuery.post("budgetModel_Xf", {
-					"_" : $.now(),xfId:sid,xfType:'4',navTabId:'budgetModelHz_gridtable'
+					"_" : $.now(),xfId:sid,xfType:'4',navTabId:'${random}_budgetModelHz_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				},"json");
@@ -134,44 +130,44 @@
 		});
     });
     
-    jQuery("#budgetModelHz_gridtable_hzReport").click(function(){
+    jQuery("#${random}_budgetModelHz_gridtable_hzReport").click(function(){
     	var fullHeight = jQuery("#container").innerHeight();
     	var fullWidth = jQuery("#container").innerWidth();
-    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    	var sid = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
     	if(sid.length==0||sid.length>1){
     		alertMsg.error("请选择一条记录！");
     		return;
     	}
-    	var rowData = jQuery("#budgetModelHz_gridtable").jqGrid('getRowData',sid);
+    	var rowData = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getRowData',sid);
     	var updataId = rowData['updataId'];
     	$.pdialog.open('openBmReport?reportType=1&updataId='+updataId,'bmReport',"预算汇总", {mask:true,width : fullWidth,height : fullHeight});
       	});
     
     
-    jQuery("#budgetModelHz_gridtable_comfirm").click(function(){
-    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    jQuery("#${random}_budgetModelHz_gridtable_comfirm").click(function(){
+    	var sid = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
     	if(sid.length==0){
     		alertMsg.error("请选择记录！");
     		return ;
     	}
-    	var rowData = jQuery("#budgetModelHz_gridtable").jqGrid('getRowData',sid);
+    	var rowData = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getRowData',sid);
     	var updataId = rowData['updataId'];
     	$.get("confirmBmUpdata", {
-			"_" : $.now(),updataId:updataId,navTabId:'budgetModelHz_gridtable'
+			"_" : $.now(),updataId:updataId,navTabId:'${random}_budgetModelHz_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
     });
     
-    jQuery("#budgetModelHz_gridtable_del_c").click(function(){
-    	var sid = jQuery("#budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    jQuery("#${random}_budgetModelHz_gridtable_del_c").click(function(){
+    	var sid = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
     	if(sid.length==0){
     		alertMsg.error("请选择记录！");
     		return ;
     	}
     	for(var i in sid){
     		var id = sid[i];
-	    	var rowData = jQuery("#budgetModelHz_gridtable").jqGrid('getRowData',id);
+	    	var rowData = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getRowData',id);
 	    	var state = rowData["state"];
 	    	if(state==1||state==2){
 	    		alertMsg.error("只能删除未汇总或已过期的汇总数据！");
@@ -181,7 +177,25 @@
     	alertMsg.confirm("确认删除？", {
 			okCall: function(){
 				jQuery.post("budgetModelXfDel", {
-					"_" : $.now(),id:sid,xfType:2,navTabId:'budgetModelHz_gridtable'
+					"_" : $.now(),id:sid,xfType:2,navTabId:'${random}_budgetModelHz_gridtable'
+				}, function(data) {
+					formCallBack(data);
+				},"json");
+				
+			}
+		});
+    });
+    
+    jQuery("#${random}_budgetModelHz_gridtable_gq").click(function(){
+    	var sid = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	alertMsg.confirm("确认作废？", {
+			okCall: function(){
+				jQuery.post("budgetModel_gq", {
+					"_" : $.now(),xfId:sid,navTabId:'${random}_budgetModelHz_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				},"json");
@@ -211,36 +225,34 @@
 </script>
 
 <div class="page">
-<div id="budgetModelHz_container">
-	<div id="budgetModelHz_layout-center" class="pane ui-layout-center">
-	<div id="budgetModelHz_pageHeader" class="pageHeader">
+	<div id="${random}_budgetModelHz_pageHeader" class="pageHeader">
 			<div class="searchBar">
 				<div class="searchContent">
-				<form id="budgetModelHz_search_form" >
+				<form id="${random}_budgetModelHz_search_form" >
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelHz.modelCode'/>:
-						<input type="text" name="filter_LIKES_modelId.modelCode"/>
+						<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						模板名称:
-						<input type="text" name="filter_LIKES_modelId.modelName"/>
+						<input type="text" name="filter_LIKES_modelXfId.modelId.modelName"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelHz.HzDate'/>:从
-						<input type="text" name="filter_GED_xfDate" name="filter_GED_createDate" class="input-mini" type="text" 
+						<input type="text" name="filter_GED_modelXfId.xfDate" class="input-mini" type="text" 
 									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
 									value="" size="8"/>
-						到&nbsp;<input type="text" name="filter_LED_xfDate" name="filter_GED_createDate" class="input-mini" type="text" 
+						到&nbsp;<input type="text" name="filter_LED_modelXfId.xfDate" class="input-mini" type="text" 
 									onClick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd'})"
 									value="" size="8"/>
 					</label>
-					<label style="float:none;white-space:nowrap" >
+					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModelHz.state'/>:
 						<s:select list="#{'0':'未汇总','1':'汇总中','2':'已汇总','3':'已过期' }" name="filter_EQI_state" headerKey="" headerValue="--"></s:select>
-					</label>
+					</label> --%>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">
-							<button type="button" onclick="propertyFilterSearch('budgetModelHz_search_form','budgetModelHz_gridtable')"><s:text name='button.search'/></button>
+							<button type="button" onclick="propertyFilterSearch('${random}_budgetModelHz_search_form','${random}_budgetModelHz_gridtable')"><s:text name='button.search'/></button>
 						</div>
 					</div>
 				</form>
@@ -248,90 +260,74 @@
 			</div>
 	</div>
 	<div class="pageContent">
-		<div id="budgetModelHz_buttonBar" class="panelBar">
+		<div id="${random}_budgetModelHz_buttonBar" class="panelBar">
 			<ul class="toolBar">
-				<li><a id="budgetModelHz_gridtable_refresh" class="initbutton" href="javaScript:" ><span>刷新
+				<s:if test="state==0">
+				<li><a id="${random}_budgetModelHz_gridtable_refresh" class="initbutton" href="javaScript:" ><span>刷新
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelHz_gridtable_xf" class="settlebutton"  href="javaScript:"><span>汇总</span>
+				<li><a id="${random}_budgetModelHz_gridtable_xf" class="settlebutton"  href="javaScript:"><span>汇总</span>
 				</a>
 				</li>
-				<li><a id="budgetModelHz_gridtable_reXf" class="resettlebutton"  href="javaScript:"
+				</s:if>
+				<s:if test="state==1||state==2">
+				<li><a id="${random}_budgetModelHz_gridtable_reXf" class="resettlebutton"  href="javaScript:"
 					><span>重新汇总
 					</span>
 				</a>
 				</li>
-				<li><a id="budgetModelHz_gridtable_hzReport" class="previewbutton"  href="javaScript:"
+				</s:if>
+				<s:if test="state==1||state==2">
+				<li><a id="${random}_budgetModelHz_gridtable_gq" class="closebutton"  href="javaScript:"
+					><span>作废
+					</span>
+				</a>
+				</li>
+				</s:if>
+				<li><a id="${random}_budgetModelHz_gridtable_hzReport" class="previewbutton"  href="javaScript:"
 					><span>查看汇总表
 					</span>
 				</a>
 				</li>
-				<s:if test="needBmHzCheckProcess!='1'">
-				<li><a id="budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
+				<s:if test="needBmHzCheckProcess!='1'&&satet==1">
+				<li><a id="${random}_budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
 				</s:if>
-				<li><a id="budgetModelHz_gridtable_del_c" class="delbutton"  href="javaScript:"
+				<s:if test="state==0||state==3">
+				<li><a id="${random}_budgetModelHz_gridtable_del_c" class="delbutton"  href="javaScript:"
 					><span>删除
 					</span>
 				</a>
 				</li>
+				</s:if>
 			</ul>
 		</div>
-		<div id="budgetModelHz_gridtable_div" class="grid-wrapdiv" buttonBar="width:500;height:300">
-			<input type="hidden" id="budgetModelHz_gridtable_navTabId" value="${sessionScope.navTabId}">
-			<label style="display: none" id="budgetModelHz_gridtable_addTile">
+		<div id="${random}_budgetModelHz_gridtable_div" class="grid-wrapdiv" buttonBar="width:500;height:300">
+			<input type="hidden" id="${random}_budgetModelHz_gridtable_navTabId" value="${sessionScope.navTabId}">
+			<label style="display: none" id="${random}_budgetModelHz_gridtable_addTile">
 				<s:text name="budgetModelHzNew.title"/>
 			</label> 
 			<label style="display: none"
-				id="budgetModelHz_gridtable_editTile">
+				id="${random}_budgetModelHz_gridtable_editTile">
 				<s:text name="budgetModelHzEdit.title"/>
 			</label>
-			<div id="load_budgetModelHz_gridtable" class='loading ui-state-default ui-state-active' style="display:none"></div>
- 			<table id="budgetModelHz_gridtable"></table>
+			<div id="load_${random}_budgetModelHz_gridtable" class='loading ui-state-default ui-state-active' style="display:none"></div>
+ 			<table id="${random}_budgetModelHz_gridtable"></table>
 			<!--<div id="budgetModelHzPager"></div>-->
 		</div>
 	</div>
-	<div id="budgetModelHz_pageBar" class="panelBar">
+	<div id="${random}_budgetModelHz_pageBar" class="panelBar">
 		<div class="pages">
-			<span><s:text name="pager.perPage" /></span> <select id="budgetModelHz_gridtable_numPerPage">
+			<span><s:text name="pager.perPage" /></span> <select id="${random}_budgetModelHz_gridtable_numPerPage">
 				<option value="20">20</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
 				<option value="200">200</option>
-			</select> <span><s:text name="pager.items" />. <s:text name="pager.total" /><label id="budgetModelHz_gridtable_totals"></label><s:text name="pager.items" /></span>
+			</select> <span><s:text name="pager.items" />. <s:text name="pager.total" /><label id="${random}_budgetModelHz_gridtable_totals"></label><s:text name="pager.items" /></span>
 		</div>
-		<div id="budgetModelHz_gridtable_pagination" class="pagination"
+		<div id="${random}_budgetModelHz_gridtable_pagination" class="pagination"
 			targetType="navTab" totalCount="200" numPerPage="20"
 			pageNumShown="10" currentPage="1">
 		</div>
 	</div>
-	</div>
-
-<div id="budgetModelHz_layout-south" class="pane ui-layout-south" style="padding: 2px">
-		<div class="panelBar">
-						<ul class="toolBar">
-							<li style="float: right;"><a id="budgetModelHz_close" class="closebutton"
-								href="javaScript:"><span><fmt:message
-											key="button.close" />
-								</span>
-							</a></li>
-
-							<li class="line" style="float: right">line</li>
-							<li style="float: right;"><a id="budgetModelHz_fold" class="foldbutton"
-								href="javaScript:"><span><fmt:message
-											key="button.fold" />
-								</span>
-							</a></li>
-							<li class="line" style="float: right">line</li>
-							<li style="float: right"><a id="budgetModelHz_unfold" class="unfoldbutton"
-								href="javaScript:"><span><fmt:message
-											key="button.unfold" />
-								</span>
-							</a></li>
-						</ul>
-					</div>
-		<div id="budgetUpdataListDiv"></div>
-</div>
-
-</div>
 </div>

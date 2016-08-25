@@ -76,6 +76,14 @@
 			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfMain.jsp</result>
 			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelXfMain.jsp</result>
 		</action>
+		<action name="budgetModelHz" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelHzMain.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelHzMain.jsp</result>
+		</action>
+		<action name="budgetModelZn" class="com.huge.ihos.bm.budgetUpdata.webapp.action.BudgetModelXfPagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetUpdata/budgetModelZnMain.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetUpdata/budgetModelZnMain.jsp</result>
+		</action>
 
 	</package>
 

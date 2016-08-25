@@ -70,8 +70,8 @@
         	loadui: "disable",
         	multiselect: true,
 			multiboxonly:true,
-			shrinkToFit:true,
-			autowidth:true,
+			shrinkToFit:false,
+			autowidth:false,
 			onSelectRow: function(rowid) {
 			},
 			gridComplete:function(){

@@ -13,20 +13,20 @@
 			datatype : "json",
 			mtype : "GET",
         	colModel:[
-			{name:'departmentId',index:'departmentId',align:'center',label : '<s:text name="bmDepartment.departmentId" />',hidden:true,width:150,key:true},
-			{name:'deptCode',index:'deptCode',align:'center',label : '<s:text name="bmDepartment.deptCode" />',hidden:false,width:150},
-			{name:'name',index:'name',align:'center',label : '<s:text name="bmDepartment.name" />',hidden:false,width:200},
-			{name:'cnCode',index:'cnCode',align:'center',label : '<s:text name="bmDepartment.cnCode" />',hidden:false,width:100},
-			{name:'internalCode',index:'internalCode',align:'center',label : '<s:text name="bmDepartment.internalCode" />',hidden:false,width:150},
-			{name:'deptClass',index:'deptClass',align:'center',label : '<s:text name="bmDepartment.deptClass" />',hidden:false,width:100},
-			{name:'outin',index:'outin',align:'center',label : '<s:text name="bmDepartment.outin" />',hidden:false,width:100},
-			{name:'manager',index:'manager',align:'center',label : '<s:text name="bmDepartment.manager" />',hidden:false,width:150},
-			{name:'phone',index:'phone',align:'center',label : '<s:text name="bmDepartment.phone" />',hidden:false,width:200},
-			{name:'clevel',index:'clevel',align:'center',label : '<s:text name="bmDepartment.clevel" />',hidden:false,formatter:'integer',width:70},
+			{name:'departmentId',index:'departmentId',align:'left',label : '<s:text name="bmDepartment.departmentId" />',hidden:true,width:150,key:true},
+			{name:'deptCode',index:'deptCode',align:'left',label : '<s:text name="bmDepartment.deptCode" />',hidden:false,width:150},
+			{name:'name',index:'name',align:'left',label : '<s:text name="bmDepartment.name" />',hidden:false,width:200},
+			{name:'cnCode',index:'cnCode',align:'leftr',label : '<s:text name="bmDepartment.cnCode" />',hidden:false,width:100},
+			{name:'internalCode',index:'internalCode',align:'left',label : '<s:text name="bmDepartment.internalCode" />',hidden:false,width:150},
+			{name:'deptClass',index:'deptClass',align:'left',label : '<s:text name="bmDepartment.deptClass" />',hidden:false,width:100},
+			{name:'outin',index:'outin',align:'left',label : '<s:text name="bmDepartment.outin" />',hidden:false,width:100},
+			{name:'manager',index:'manager',align:'left',label : '<s:text name="bmDepartment.manager" />',hidden:false,width:150},
+			{name:'phone',index:'phone',align:'left',label : '<s:text name="bmDepartment.phone" />',hidden:false,width:200},
+			{name:'clevel',index:'clevel',align:'right',label : '<s:text name="bmDepartment.clevel" />',hidden:false,formatter:'integer',width:70},
 			{name:'leaf',index:'leaf',align:'center',label : '<s:text name="bmDepartment.leaf" />',hidden:false,formatter:'checkbox',width:70},
 			{name:'ysLeaf',index:'ysLeaf',align:'center',label : '<s:text name="bmDepartment.ysLeaf" />',hidden:false,formatter:'checkbox',width:70},
 			{name:'disabled',index:'disabled',align:'center',label : '<s:text name="bmDepartment.disabled" />',hidden:false,formatter:'checkbox',width:70},
-			{name:'note',index:'note',align:'center',label : '<s:text name="bmDepartment.note" />',hidden:false,width:200},
+			{name:'note',index:'note',align:'left',label : '<s:text name="bmDepartment.note" />',hidden:false,width:200},
 			],
         	jsonReader : {
 				root : "bmDepartments", // (2)
@@ -59,6 +59,20 @@
        		} 
 
     	});
+    	
+    	jQuery("#bmDepartment_gridtable_add_c").click(function(){
+    		var sid = jQuery("#bmDepartment_gridtable").jqGrid('getGridParam','selarrrow');
+    		if(sid==null|| sid.length == 0){       	
+    			alertMsg.error("请选择预算责任中心。");
+    			return;
+    		}
+    		$.post("saveBmDepartment", {
+    			"_" : $.now(),deptId:sid,modelId:"${modelId}",navTabId:'${navTabId}'
+    		}, function(data) {
+    			formCallBack(data);
+    			
+    		});
+    	});
   	});
 </script>
 
@@ -68,14 +82,6 @@
 				<div class="searchContent">
 				<form id="bmDepartment_search_form" >
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmDepartment.clevel'/>:
-						<input type="text" name="filter_EQS_clevel"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmDepartment.cnCode'/>:
-						<input type="text" name="filter_EQS_cnCode"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.deptClass'/>:
 						<input type="text" name="filter_EQS_deptClass"/>
 					</label>
@@ -84,16 +90,16 @@
 						<input type="text" name="filter_EQS_deptCode"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
+						<s:text name='bmDepartment.name'/>:
+						<input type="text" name="filter_EQS_name"/>
+					</label>
+					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.disabled'/>:
 						<input type="text" name="filter_EQS_disabled"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.leaf'/>:
 						<input type="text" name="filter_EQS_leaf"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmDepartment.name'/>:
-						<input type="text" name="filter_EQS_name"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.note'/>:

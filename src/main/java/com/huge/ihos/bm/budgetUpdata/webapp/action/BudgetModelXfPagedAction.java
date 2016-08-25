@@ -38,7 +38,15 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 	private List<BudgetModelXf> budgetModelXfs;
 	private BudgetModelXf budgetModelXf;
 	private String xfId;
+	private Integer state;
 	
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
 	private BudgetModelManager budgetModelManager;
 	private BudgetUpdataManager budgetUpdataManager;
 	
