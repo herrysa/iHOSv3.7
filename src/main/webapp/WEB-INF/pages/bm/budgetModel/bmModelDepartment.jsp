@@ -63,6 +63,10 @@ jQuery(document).ready(function() {
 		}
 	});
 	jQuery("#${random}_bmsDepartment_selectDepartment").click(function(){
+		if("${modelType}"=="2"){
+			alertMsg.error("汇总模板不需要选择预算责任中心！");
+			return ;
+		}
 		var sid = jQuery("#${random}_bmsDepartment_gridtable").jqGrid('getDataIDs');
 		var deptId = "";
 		for(var i in sid){

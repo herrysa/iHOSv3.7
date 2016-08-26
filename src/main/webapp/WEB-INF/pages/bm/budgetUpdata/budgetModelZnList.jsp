@@ -7,7 +7,7 @@
 		var budgetModelZnGridIdString="#${random}_budgetModelZn_gridtable";
 		var budgetModelZnGrid = jQuery(budgetModelZnGridIdString);
     	budgetModelZnGrid.jqGrid({
-    		url : "budgetUpdataGridList?1=1&upType=3&modelType=3&filter_EQI_state=${state}",
+    		url : "budgetUpdataGridList?1=1&upType=3&modelType=3&filter_EQI_modelXfId.state=${state}",
     		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
@@ -17,7 +17,7 @@
 			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetModelZn.modelCode" />',hidden:false,width:100},
 			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetModelZn.model" />',hidden:false,width:250},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelZn.periodYear" />',hidden:false,width:70},
-			{name:'modelXfId.modelId.modelType',index:'modelXfId.modelId.modelType',align:'left',label : '<s:text name="budgetModelZn.budgetType" />',hidden:true,width:100},
+			{name:'modelXfId.modelId.modelType',index:'modelXfId.modelId.modelType',align:'left',label : '<s:text name="budgetModelZn.budgetType" />',hidden:false,width:120,formatter : 'select',	edittype : 'select',editoptions : {value : '1:科室填报(自下而上);2:预算汇总(自下而上);3:职能代编(自上而下)'}},
 			{name:'department.name',index:'department.name',align:'left',label : '代编部门',hidden:false,width:200},
 			{name:'modelXfId.state',index:'modelXfId.state',align:'center',label : '<s:text name="budgetModelZn.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未上报;1:上报中;2:已上报;3:已过期'},width:70},
 			{name:'modelXfId.xfDate',index:'modelXfId.xfDate',align:'center',label : '<s:text name="budgetModelZn.ZnDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
@@ -65,14 +65,14 @@
      	    	 for (i=0;i<rowNum;i++){
      	    		var id = rowIds[i];
      	    	 	var hrefUrl = "budgetUpdataList?xfId="+id;
-			    	var state = ret[i]["state"];
-			    	var xfstate = ret[i]["bmXf.state"];
+			    	var state = ret[i]["modelXfId.state"];
+			    	var xfstate = ret[i]["modelXfId.bmXf.state"];
 			    	if(state=="1"){
-              		  	setCellText(this,id,'state','<span style="color:red" >上报中</span>');
+              		  	setCellText(this,id,'modelXfId.state','<span style="color:red" >上报中</span>');
               	  	}else if(state=="2"){
-              		  	setCellText(this,id,'state','<span style="color:blue" >已上报</span>');
+              		  	setCellText(this,id,'modelXfId.state','<span style="color:blue" >已上报</span>');
               	  	}else if(state=="3"){
-              		  	setCellText(this,id,'state','<span style="color:gray" >已过期</span>');
+              		  	setCellText(this,id,'modelXfId.state','<span style="color:gray" >已过期</span>');
               	  	}
 			    	<c:forEach items="${bsStepList}" var="pc">
 			    	var cellText = ret[i]["stepMap.${pc.stepCode }"];
@@ -110,10 +110,10 @@
     		alertMsg.error("请选择记录！");
     		return ;
     	}
-    	alertMsg.confirm("确认重新汇总？重新汇总后,之前汇总的数据将作废！", {
+    	alertMsg.confirm("确认重新上报？重新上报后,之前上报的数据将作废！", {
 			okCall: function(){
 				jQuery.post("budgetModel_Xf", {
-					"_" : $.now(),xfId:sid,xfType:'4',navTabId:'${random}_budgetModelZn_gridtable'
+					"_" : $.now(),xfId:sid,xfType:'2',navTabId:'${random}_budgetModelZn_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				},"json");
@@ -177,7 +177,23 @@
 			}
 		});
     });
-    
+    jQuery("#${random}_budgetModelZn_gridtable_gq").click(function(){
+    	var sid = jQuery("#${random}_budgetModelZn_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid.length==0){
+    		alertMsg.error("请选择记录！");
+    		return ;
+    	}
+    	alertMsg.confirm("确认作废？", {
+			okCall: function(){
+				jQuery.post("budgetModel_gq", {
+					"_" : $.now(),xfId:sid,navTabId:'${random}_budgetModelZn_gridtable'
+				}, function(data) {
+					formCallBack(data);
+				},"json");
+				
+			}
+		});
+    });
     });
     
 	function setCellText(grid,rowid,colName,cellTxt){
@@ -241,26 +257,31 @@
 					</span>
 				</a>
 				</li>
-				<li><a id="${random}_budgetModelZn_gridtable_report" class="settlebutton"  href="javaScript:"><span>填报</span>
-				</a>
-				</li>
-				</s:if>
-				<s:if test="state==1||state==2">
-				<li><a id="${random}_budgetModelZn_gridtable_reXf" class="resettlebutton"  href="javaScript:"
-					><span>重新填报
+				<li><a id="${random}_budgetModelZn_gridtable_xf" class="resettlebutton"  href="javaScript:"
+					><span>上报
 					</span>
 				</a>
 				</li>
 				</s:if>
 				<s:if test="state==1||state==2">
-				<li><a id="${random}_budgetModelHz_gridtable_gq" class="closebutton"  href="javaScript:"
+				<li><a id="${random}_budgetModelZn_gridtable_report" class="settlebutton"  href="javaScript:"><span>填报</span>
+				</a>
+				</li>
+				<s:if test="state==1">
+				<li><a id="${random}_budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
+				</s:if>
+				<li><a id="${random}_budgetModelZn_gridtable_reXf" class="resettlebutton"  href="javaScript:"
+					><span>重新上报
+					</span>
+				</a>
+				</li>
+				</s:if>
+				<s:if test="state==1||state==2">
+				<li><a id="${random}_budgetModelZn_gridtable_gq" class="closebutton"  href="javaScript:"
 					><span>作废
 					</span>
 				</a>
 				</li>
-				</s:if>
-				<s:if test="needBmZnCheckProcess!='1'&&satet==1">
-				<li><a id="${random}_budgetModelZn_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
 				</s:if>
 				<s:if test="state==0||state==3">
 				<li><a id="${random}_budgetModelZn_gridtable_del_c" class="delbutton"  href="javaScript:"

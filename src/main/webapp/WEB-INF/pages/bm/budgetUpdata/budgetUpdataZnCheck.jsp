@@ -13,19 +13,19 @@
 </script>
 </head>
 
-<div class="page" id="bmUpdataHzCheckPage" style="height:100%">
+<div class="page" id="bmUpdataZnCheckPage" style="height:100%">
 	<div class="pageContent" style="height:100%">
-		<div class="tabs" currentIndex="0" eventType="click" id="bmUpdataHzCheckTabs" tabcontainer="container" extraHeight=30 extraWidth=2>
+		<div class="tabs" currentIndex="0" eventType="click" id="bmUpdataZnCheckTabs" tabcontainer="container" extraHeight=30 extraWidth=2>
 			<div class="tabsHeader">
 				<div class="tabsHeaderContent">
 					<ul>
 						<s:iterator value="bmCheckSteps" status="it">
-						<li><a href="budgetUpdataList?upType=1&modelType=2&bmCheckProcessCode=bmHzCheckProcess&stepCode=<s:property value="stepCode"/>" class="j-ajax"><span><s:property value="stepName"/></span> </a></li>
+						<li><a href="budgetUpdataList?upType=1&modelType=3&bmCheckProcessCode=bmZnCheckProcess&stepCode=<s:property value="stepCode"/>" class="j-ajax"><span><s:property value="stepName"/></span> </a></li>
 						</s:iterator>
 					</ul>
 				</div>
 			</div>
-			<div id="bmUpdataCheckHzTabsContent" class="tabsContent"
+			<div id="bmUpdataCheckZnTabsContent" class="tabsContent"
 				style="height: 250px;padding:0px">
 				<s:iterator value="bmCheckSteps" status="it">
 				<div></div>

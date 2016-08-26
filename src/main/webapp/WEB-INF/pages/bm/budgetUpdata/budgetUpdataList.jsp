@@ -7,17 +7,16 @@
 		var budgetUpdataGrid${random} = jQuery(budgetUpdataGridIdString${random});
 		var upType = "${upType}";
 		var url = "budgetUpdataGridList?1=1";
+		var modelType = 1;
+		if("${modelType}"){
+			modelType = "${modelType}";
+		}
 		if(upType=="1"){
-			url += "&upType="+upType+"&stepCode=${stepCode}";
-			if("${hz}"=="1"){
-				url += "&filter_EQB_modelXfId.modelId.isHz=true";
-			}else{
-				url += "&filter_EQB_modelXfId.modelId.isHz=false";
-			}
+			url += "&upType="+upType+"&stepCode=${stepCode}&filter_EQS_modelXfId.modelId.modelType="+modelType;
 		}else if(upType=="2"){
-			url += "&filter_EQB_modelXfId.modelId.isHz=false&upType="+upType;
+			url += "&upType="+upType+"&filter_EQS_modelXfId.modelId.modelType="+modelType;
 		}else{
-			url += "&filter_EQB_modelXfId.modelId.isHz=false&xfId=${xfId}&state=${state}";
+			url += "&xfId=${xfId}&state=${state}";
 		}
 		if("${bmCheckProcessCode}"){
 			url += "&bmCheckProcessCode=${bmCheckProcessCode}"

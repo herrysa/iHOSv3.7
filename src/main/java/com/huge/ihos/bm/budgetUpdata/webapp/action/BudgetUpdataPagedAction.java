@@ -46,6 +46,7 @@ import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
 import com.huge.webapp.util.PropertyFilter;
+import com.ibm.db2.jcc.am.mo;
 import com.opensymphony.xwork2.Preparable;
 
 
@@ -296,6 +297,7 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 				List<BusinessProcessStep> bmCheckStep = businessProcessStepManager.getByFilters(processStepFilters);
 				BusinessProcessStep businessProcessStep = bmCheckStep.get(0);
 				filters.add(new PropertyFilter("EQI_state",""+businessProcessStep.getState()));
+				//filters.add(new PropertyFilter("EQI_modelXfId.modelId.modelType",modelType));
 				User user = UserContextUtil.getContextUser();
 				Person person = user.getPerson();
 				Department department = person.getDepartment();
@@ -471,7 +473,11 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			BudgetModelXf budgetModelXf = budgetUpdata.getModelXfId();
 			BudgetModel budgetModel = budgetModelXf.getModelId();
 			modelId = budgetModel.getModelId();
-			if("1".equals(reportType)){
+			/*if("1".equals(reportType)){
+				
+			}*/
+			modelType = budgetModel.getModelType();
+			if("2".equals(modelType)){
 				String hzModelId = budgetModel.getHzModelId().getModelId();
 				List<PropertyFilter> xfFilter = new ArrayList<PropertyFilter>();
 				xfFilter.add(new PropertyFilter("EQS_modelId.modelId",hzModelId));
@@ -484,9 +490,10 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 						xfId = xfs.get(0).getXfId();
 					}
 				}
-				if(budgetModelXf.getState()==2){
-					reportModel = "report";
-				}
+			}
+			
+			if(budgetModelXf.getState()==2){
+				reportModel = "report";
 			}
 			
 			Set<BmModelProcess> bmModelProcesses = budgetModel.getBmModelProcesses();
@@ -672,7 +679,7 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 					String findSql = "select deptId,cell,indexCode,bmvalue from bm_updatadetail where updataId in (SELECT updataId from bm_updata where modelXfId =(SELECT modelXfId from bm_updata where updataId='"+updataId+"'))";
 					bmValueList = budgetUpdataManager.getBySqlToMap(findSql);
 				}else{
-					bmValueList = budgetUpdataManager.getBySqlToMap("select cell,indexCode,bmvalue from bm_updatadetail where updataId='"+updataId+"'");
+					bmValueList = budgetUpdataManager.getBySqlToMap("select deptId,cell,indexCode,bmvalue from bm_updatadetail where updataId='"+updataId+"'");
 				}
 				for(Map<String, Object> bmValue : bmValueList){
 					String deptId = bmValue.get("deptId").toString();
@@ -848,9 +855,46 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ajaxForward(false,"确认失败！",false);
 		}
-		return ajaxForward(true,"确认成功！",false);
+		return SUCCESS;
+	}
+	
+	public String bmUpdataZnCheck(){
+		try {
+			User user = UserContextUtil.getContextUser();
+			Set<Role> roleSet = user.getRoles();
+			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmZnCheckProcess");
+			List<PropertyFilter> processStepFilters = new ArrayList<PropertyFilter>();
+			processStepFilters.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode));
+			processStepFilters.add(new PropertyFilter("OAS_state",""));
+			List<BusinessProcessStep >bmCheckStepsTemp = businessProcessStepManager.getByFilters(processStepFilters);
+			bmCheckSteps = new ArrayList<BusinessProcessStep>();
+			for(BusinessProcessStep businessProcessStep : bmCheckStepsTemp){
+				boolean hasRight = false;
+				String roleIds = businessProcessStep.getRoleId();
+				String[] roleArr = null;
+				if(roleIds!=null&&!"".equals(roleIds)){
+					roleArr = roleIds.split(",");
+					for(String roleCode : roleArr){
+						for(Role role : roleSet){
+							if(roleCode.equals(role.getName())){
+								hasRight = true;
+								break;
+							}
+						}
+						if(hasRight){
+							break;
+						}
+					}
+				}
+				if(hasRight){
+					bmCheckSteps.add(businessProcessStep);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
 	}
 	
 	private String bmProcessId;
@@ -1005,6 +1049,16 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
         		endState2 = endStepList2.get(0).getState();
         	}
         	
+        	String bmCheckProcessCode3 = ContextUtil.getGlobalParamByKey("bmZnCheckProcess");
+			List<PropertyFilter> filters3 = new ArrayList<PropertyFilter>();
+			filters3.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode3));
+			filters3.add(new PropertyFilter("EQB_isEnd","true"));
+        	List<BusinessProcessStep> endStepList3 = businessProcessStepManager.getByFilters(filters3);
+        	int endState3 = 0;
+        	if(endStepList3!=null&&endStepList3.size()>0){
+        		endState3 = endStepList3.get(0).getState();
+        	}
+        	
         	
 			List<PropertyFilter> xffilters = new ArrayList<PropertyFilter>();
 			xffilters.add(new PropertyFilter("EQI_state","1"));
@@ -1016,12 +1070,14 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			for(BudgetModelXf budgetModelXf : budgetModelXfs){
 				List<PropertyFilter> updatafilters = new ArrayList<PropertyFilter>();
 				updatafilters.add(new PropertyFilter("EQS_modelXfId.xfId",budgetModelXf.getXfId()));
-				/*Boolean isHz = budgetModelXf.getModelId().getIsHz();
-				if(isHz!=null&&isHz==true){
+				String modelType = budgetModelXf.getModelId().getModelType();
+				if("1".equals(modelType)){
 					updatafilters.add(new PropertyFilter("NEI_state",""+endState));
-				}else{
+				}else if("2".equals(modelType)){
 					updatafilters.add(new PropertyFilter("NEI_state",""+endState2));
-				}*/
+				}else if("3".equals(modelType)){
+					updatafilters.add(new PropertyFilter("NEI_state",""+endState3));
+				}
 				List<BudgetUpdata> budgetUpdatas = budgetUpdataManager.getByFilters(updatafilters);
 				if(budgetUpdatas.size()==0){
 					budgetModelXf.setState(2);
@@ -1082,38 +1138,57 @@ public class BudgetUpdataPagedAction extends JqGridBaseAction implements Prepara
 			if(updataXml==null||"".equals(updataXml)){
 				return ajaxForward(false,"数据错误！",false);
 			}
-			
 			budgetUpdata = budgetUpdataManager.get(updataId);
 			BudgetModelXf budgetModelXf = budgetUpdata.getModelXfId();
-			BudgetModel budgetModel = budgetModelXf.getModelId();
-			BudgetModel budgetHzModel = budgetModel.getHzModelId();
-			if(budgetHzModel==null){
-				List<PropertyFilter> xffilters = new ArrayList<PropertyFilter>();
-				xffilters.add(new PropertyFilter("ODS_xfDate",""));
-				xffilters.add(new PropertyFilter("INS_modelId.modelId",budgetHzModel.getModelId()));
-				List<BudgetModelXf> budgetModelXfs = budgetModelXfManager.getByFilters(xffilters);
-				if(budgetModelXfs!=null&&budgetModelXfs.size()!=0){
-					BudgetModelXf hzBudgetModelXf = budgetModelXfs.get(0);
-					if(hzBudgetModelXf.getState()!=2){
-						return ajaxForward(false,"被上报预算未完成上报！",false);
+			modelType = budgetModelXf.getModelId().getModelType();
+			if("2".equals(modelType)){
+				BudgetModel budgetModel = budgetModelXf.getModelId();
+				BudgetModel budgetHzModel = budgetModel.getHzModelId();
+				if(budgetHzModel!=null){
+					List<PropertyFilter> xffilters = new ArrayList<PropertyFilter>();
+					xffilters.add(new PropertyFilter("ODS_xfDate",""));
+					xffilters.add(new PropertyFilter("INS_modelId.modelId",budgetHzModel.getModelId()));
+					List<BudgetModelXf> budgetModelXfs = budgetModelXfManager.getByFilters(xffilters);
+					if(budgetModelXfs!=null&&budgetModelXfs.size()!=0){
+						BudgetModelXf hzBudgetModelXf = budgetModelXfs.get(0);
+						if(hzBudgetModelXf.getState()!=2){
+							return ajaxForward(false,"被上报预算未完成上报！",false);
+						}
 					}
 				}
+				String needBmHzCheckProcess = ContextUtil.getGlobalParamByKey("needBmHzCheckProcess");
+				if("1".equals(needBmHzCheckProcess)){
+					String bmCheckProcessCode2 = ContextUtil.getGlobalParamByKey("bmHzCheckProcess");
+					List<PropertyFilter> filters2 = new ArrayList<PropertyFilter>();
+					filters2.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode2));
+					filters2.add(new PropertyFilter("EQB_isEnd","true"));
+		        	List<BusinessProcessStep> endStepList2 = businessProcessStepManager.getByFilters(filters2);
+		        	int endState2 = 0;
+		        	if(endStepList2!=null&&endStepList2.size()>0){
+		        		endState2 = endStepList2.get(0).getState();
+		        	}
+		        	if(budgetUpdata.getState()!=endState2){
+		        		return ajaxForward(false,"该汇总预算未审批完成！",false);
+		        	}
+				}
+			}else if("3".equals(modelType)){
+				String needBmHzCheckProcess = ContextUtil.getGlobalParamByKey("needBmZnCheckProcess");
+				if("1".equals(needBmHzCheckProcess)){
+					String bmCheckProcessCode2 = ContextUtil.getGlobalParamByKey("bmZnCheckProcess");
+					List<PropertyFilter> filters2 = new ArrayList<PropertyFilter>();
+					filters2.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode2));
+					filters2.add(new PropertyFilter("EQB_isEnd","true"));
+		        	List<BusinessProcessStep> endStepList2 = businessProcessStepManager.getByFilters(filters2);
+		        	int endState2 = 0;
+		        	if(endStepList2!=null&&endStepList2.size()>0){
+		        		endState2 = endStepList2.get(0).getState();
+		        	}
+		        	if(budgetUpdata.getState()!=endState2){
+		        		return ajaxForward(false,"该职能代编预算未审批完成！",false);
+		        	}
+				}
 			}
-			String needBmHzCheckProcess = ContextUtil.getGlobalParamByKey("needBmHzCheckProcess");
-			if("1".equals(needBmHzCheckProcess)){
-				String bmCheckProcessCode2 = ContextUtil.getGlobalParamByKey("bmHzCheckProcess");
-				List<PropertyFilter> filters2 = new ArrayList<PropertyFilter>();
-				filters2.add(new PropertyFilter("EQS_businessProcess.processCode",bmCheckProcessCode2));
-				filters2.add(new PropertyFilter("EQB_isEnd","true"));
-	        	List<BusinessProcessStep> endStepList2 = businessProcessStepManager.getByFilters(filters2);
-	        	int endState2 = 0;
-	        	if(endStepList2!=null&&endStepList2.size()>0){
-	        		endState2 = endStepList2.get(0).getState();
-	        	}
-	        	if(budgetUpdata.getState()!=endState2){
-	        		return ajaxForward(false,"该汇总预算未审批完成！",false);
-	        	}
-			}
+			
 			budgetUpdata.setUpdataXml(updataXml);
 			budgetUpdataManager.save(budgetUpdata);
 			budgetModelXf.setState(2);

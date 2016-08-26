@@ -26,8 +26,8 @@
 				<div class="tabsHeaderContent">
 					<ul>
 						<li><a href="#"><span>主要信息</span> </a></li>
-						<li><a href="budgetDepartmentList?modelId=${budgetModel.modelId}" class="j-ajax" ><span>预算责任中心</span> </a></li>
-						<li><a href="modelProcessList?modelId=${budgetModel.modelId}" class="j-ajax" ><span>审核流程</span> </a></li>
+						<li><a href="budgetDepartmentList?modelId=${budgetModel.modelId}&modelType=${budgetModel.modelType}" class="j-ajax" ><span>预算责任中心</span> </a></li>
+						<li><a href="modelProcessList?modelId=${budgetModel.modelId}&modelType=${budgetModel.modelType}" class="j-ajax" ><span>审核流程</span> </a></li>
 					</ul>
 				</div>
 			</div>

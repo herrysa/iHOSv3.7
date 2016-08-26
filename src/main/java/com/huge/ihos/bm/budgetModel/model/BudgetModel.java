@@ -60,17 +60,13 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	@Transient
 	public BmModelProcess getUpdataProcess() {
 		if(bmModelProcesses!=null){
-			int i=0;
 			Iterator<BmModelProcess> bmpIt = bmModelProcesses.iterator();
 			while(bmpIt.hasNext()){
 				BmModelProcess bmp = bmpIt.next();
-				if(i==0){
+				if(bmp.getState()==0){
 					updataProcess = bmp;
-				}else if(i==2){
-					checkProcess = bmp;
 					break;
 				}
-				i++;
 			}
 		}
 		return updataProcess;
@@ -84,6 +80,16 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	
 	@Transient
 	public BmModelProcess getCheckProcess() {
+		if(bmModelProcesses!=null){
+			Iterator<BmModelProcess> bmpIt = bmModelProcesses.iterator();
+			while(bmpIt.hasNext()){
+				BmModelProcess bmp = bmpIt.next();
+				if(bmp.getState()==2){
+					checkProcess = bmp;
+					break;
+				}
+			}
+		}
 		return checkProcess;
 	}
 

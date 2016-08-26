@@ -7,7 +7,7 @@
 		var budgetModelHzGridIdString="#${random}_budgetModelHz_gridtable";
 		var budgetModelHzGrid = jQuery(budgetModelHzGridIdString);
     	budgetModelHzGrid.jqGrid({
-    		url : "budgetUpdataGridList?1=1&upType=3&modelType=2&filter_EQI_state=${state}",
+    		url : "budgetUpdataGridList?1=1&upType=3&modelType=2&filter_EQI_modelXfId.state=${state}",
     		editurl:"budgetModelXfGridEdit",
 			datatype : "json",
 			mtype : "GET",
@@ -17,7 +17,7 @@
 			{name:'modelXfId.modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelHz.modelCode" />',hidden:false,width:100},
 			{name:'modelXfId.modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelHz.model" />',hidden:false,width:250},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelHz.periodYear" />',hidden:false,width:70},
-			{name:'modelXfId.modelId.modelType',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelHz.budgetType" />',hidden:false,width:100},
+			{name:'modelXfId.modelId.modelType',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelHz.budgetType" />',hidden:false,width:120,formatter : 'select',	edittype : 'select',editoptions : {value : '1:科室填报(自下而上);2:预算汇总(自下而上);3:职能代编(自上而下)'}},
 			{name:'department.name',index:'department.name',align:'left',label : '汇总部门',hidden:false,width:200},
 			{name:'modelXfId.state',index:'modelXfId.state',align:'center',label : '<s:text name="budgetModelHz.state" />',hidden:false,formatter : 'select',	edittype : 'select',editoptions : {value : '0:未汇总;1:汇总中;2:已汇总;3:已过期'},width:70},
 			{name:'modelXfId.xfDate',index:'modelXfId.xfDate',align:'center',label : '<s:text name="budgetModelHz.HzDate" />',hidden:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
@@ -67,21 +67,21 @@
      	    	 for (i=0;i<rowNum;i++){
      	    		var id = rowIds[i];
      	    	 	var hrefUrl = "budgetUpdataList?xfId="+id;
-			    	var state = ret[i]["state"];
-			    	var xfstate = ret[i]["bmXf.state"];
+			    	var state = ret[i]["modelXfId.state"];
+			    	var xfstate = ret[i]["modelXfId.bmXf.state"];
 			    	if(state=="1"){
-              		  	setCellText(this,id,'state','<span style="color:red" >汇总中</span>');
+              		  	setCellText(this,id,'modelXfId.state','<span style="color:red" >汇总中</span>');
               	  	}else if(state=="2"){
-              		  	setCellText(this,id,'state','<span style="color:blue" >已汇总</span>');
+              		  	setCellText(this,id,'modelXfId.state','<span style="color:blue" >已汇总</span>');
               	  	}else if(state=="3"){
-              		  	setCellText(this,id,'state','<span style="color:gray" >已过期</span>');
+              		  	setCellText(this,id,'modelXfId.state','<span style="color:gray" >已过期</span>');
               	  	}
 			    	if(xfstate=="1"){
-              		  	setCellText(this,id,'bmXf.state','<span style="color:red" >上报中</span>');
+              		  	setCellText(this,id,'modelXfId.bmXf.state','<span style="color:red" >上报中</span>');
               	  	}else if(xfstate=="2"){
-              		  	setCellText(this,id,'bmXf.state','<span style="color:blue" >已上报</span>');
+              		  	setCellText(this,id,'modelXfId.bmXf.state','<span style="color:blue" >已上报</span>');
               	  	}else if(xfstate=="3"){
-              		  	setCellText(this,id,'bmXf.state','<span style="color:gray" >已过期</span>');
+              		  	setCellText(this,id,'modelXfId.bmXf.state','<span style="color:gray" >已过期</span>');
               	  	}
 			    	<c:forEach items="${bsStepList}" var="pc">
 			    	var cellText = ret[i]["stepMap.${pc.stepCode }"];
@@ -94,7 +94,7 @@
     	});
     jQuery("#${random}_budgetModelHz_gridtable_refresh").click(function(){
     	$.get("budgetModelXfRefresh", {
-			"_" : $.now(),xfType:2,navTabId:'${random}_budgetModelHz_gridtable'
+			"_" : $.now(),modelType:2,navTabId:'${random}_budgetModelHz_gridtable'
 		}, function(data) {
 			formCallBack(data);
 		});
@@ -121,7 +121,7 @@
     	alertMsg.confirm("确认重新汇总？重新汇总后,之前汇总的数据将作废！", {
 			okCall: function(){
 				jQuery.post("budgetModel_Xf", {
-					"_" : $.now(),xfId:sid,xfType:'4',navTabId:'${random}_budgetModelHz_gridtable'
+					"_" : $.now(),xfId:sid,xfType:'2',navTabId:'${random}_budgetModelHz_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				},"json");
@@ -140,7 +140,7 @@
     	}
     	var rowData = jQuery("#${random}_budgetModelHz_gridtable").jqGrid('getRowData',sid);
     	var updataId = rowData['updataId'];
-    	$.pdialog.open('openBmReport?reportType=1&updataId='+updataId,'bmReport',"预算汇总", {mask:true,width : fullWidth,height : fullHeight});
+    	$.pdialog.open('openBmReport?reportType=1&updataId='+updataId+'&modelType=2','bmReport',"预算汇总", {mask:true,width : fullWidth,height : fullHeight});
       	});
     
     
@@ -290,7 +290,7 @@
 					</span>
 				</a>
 				</li>
-				<s:if test="needBmHzCheckProcess!='1'&&satet==1">
+				<s:if test="needBmHzCheckProcess=='1'&&state==1">
 				<li><a id="${random}_budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
 				</s:if>
 				<s:if test="state==0||state==3">

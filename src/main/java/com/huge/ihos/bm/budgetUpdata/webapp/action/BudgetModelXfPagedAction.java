@@ -298,7 +298,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 		//modelfilters.add(new PropertyFilter("SQS_modelId.modelId", "modelId not in (select modelId from bm_model_xf where period_year='"+periodYear+"')"));
 		modelfilters.add(new PropertyFilter("EQS_modelType", modelType));
 		modelfilters.add(new PropertyFilter("EQB_disabled", "false"));
-		modelfilters.add(new PropertyFilter("SQS_modelId", "this_.modelId not in (select xf.modelId from bm_model_xf xf where xf.period_year='"+periodYear+"')"));
+		modelfilters.add(new PropertyFilter("SQS_modelId", "this_.modelId not in (select xf.modelId from bm_model_xf xf where xf.period_year='"+periodYear+"' and state!=3)"));
 		List<BudgetModel> budgetModels = budgetModelManager.getByFilters(modelfilters);
 		for(BudgetModel bmm :budgetModels){
 			if("2".equals(bmm.getModelType())||"3".equals(bmm.getModelType())){
@@ -400,7 +400,7 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 				}else if("2".equals(modelType)){
 					msg = "汇总";
 				}else if("3".equals(modelType)){
-					//msg = "汇总";
+					msg = "上报";
 				}
 				if(this.msg!=null){
 					msg = this.msg;
@@ -438,26 +438,40 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 					bmmXf.setState(1);
 					bmmXf.setXfDate(Calendar.getInstance().getTime());
 				}
-				List<BudgetUpdata> budgetUpdatas = new ArrayList<BudgetUpdata>();
-				for(Department dept : departments){
-					BudgetUpdata budgetUpdata = new BudgetUpdata();
-					budgetUpdata.setModelXfId(bmmXf);
-					budgetUpdata.setDepartment(dept);
-					budgetUpdata.setPeriodYear(periodYear);
-					budgetUpdata.setState(0);
-					budgetUpdata.setDeptType(0);
-					//Person operator = UserContextUtil.getSessionUser().getPerson();
-					//budgetUpdata.setOperator(operator);
-					//budgetUpdata.setOptDate(Calendar.getInstance().getTime());
-					budgetUpdatas.add(budgetUpdata);
+				if("1".equals(modelType)||(("2".equals(modelType)||"3".equals(modelType))&&"2".equals(xfType))){
+					List<BudgetUpdata> budgetUpdatas = new ArrayList<BudgetUpdata>();
+					for(Department dept : departments){
+						BudgetUpdata budgetUpdata = new BudgetUpdata();
+						budgetUpdata.setModelXfId(bmmXf);
+						budgetUpdata.setDepartment(dept);
+						budgetUpdata.setPeriodYear(periodYear);
+						budgetUpdata.setState(0);
+						budgetUpdata.setDeptType(0);
+						//Person operator = UserContextUtil.getSessionUser().getPerson();
+						//budgetUpdata.setOperator(operator);
+						//budgetUpdata.setOptDate(Calendar.getInstance().getTime());
+						budgetUpdatas.add(budgetUpdata);
+					}
+					
+					if("2".equals(modelType)||"3".equals(modelType)){
+						BmModelProcess bmp = bmm.getUpdataProcess();
+						String checkDeptId = bmp.getCheckDeptId();
+						String[] checkDeptIdArr = checkDeptId.split(",");
+						for(String deptId : checkDeptIdArr){
+							Department department = departmentManager.get(deptId);
+							BudgetUpdata budgetUpdata = new BudgetUpdata();
+							budgetUpdata.setModelXfId(bmmXf);
+							budgetUpdata.setDepartment(department);
+							budgetUpdata.setPeriodYear(periodYear);
+							budgetUpdata.setState(0);
+							budgetUpdata.setDeptType(1);
+							budgetUpdatas.add(budgetUpdata);
+						}
+					}
+					budgetUpdataManager.saveAll(budgetUpdatas);
 				}
 				
-				String checkDeptId = null;
-				if("2".equals(modelType)||"3".equals(modelType)){
-					BmModelProcess bmp = bmm.getUpdataProcess();
-					checkDeptId = bmp.getCheckDeptId();
-				}
-				if(checkDeptId!=null){
+				/*if(checkDeptId!=null){
 					String[] checkDeptIdArr = checkDeptId.split(",");
 					for(String deptId : checkDeptIdArr){
 						Department department = departmentManager.get(deptId);
@@ -469,9 +483,8 @@ public class BudgetModelXfPagedAction extends JqGridBaseAction implements Prepar
 						budgetUpdata.setDeptType(1);
 						budgetUpdatas.add(budgetUpdata);
 					}
-				}
+				}*/
 				
-				budgetUpdataManager.saveAll(budgetUpdatas);
 			}
 			budgetModelXfManager.saveAll(xfBudgetModelXfs);
 		}

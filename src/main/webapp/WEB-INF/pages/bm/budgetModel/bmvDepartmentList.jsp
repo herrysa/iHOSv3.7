@@ -81,37 +81,37 @@
 			<div class="searchBar">
 				<div class="searchContent">
 				<form id="bmDepartment_search_form" >
-					<label style="float:none;white-space:nowrap" >
+					<%-- <label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.deptClass'/>:
 						<input type="text" name="filter_EQS_deptClass"/>
-					</label>
+					</label> --%>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.deptCode'/>:
-						<input type="text" name="filter_EQS_deptCode"/>
+						<input type="text" name="filter_LIKES_deptCode"/>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.name'/>:
-						<input type="text" name="filter_EQS_name"/>
+						<input type="text" name="filter_LIKES_name"/>
+					</label>
+					<%-- <label style="float:none;white-space:nowrap" >
+						<s:text name='bmDepartment.outin'/>:
+						<input type="text" name="filter_EQS_outin"/>
+					</label> --%>
+					<label style="float:none;white-space:nowrap" >
+						<s:text name='bmDepartment.leaf'/>:
+						<s:select list="#{'':'--','true':'是','false':'否'}" name="filter_EQB_leaf"></s:select>
+					</label>
+					<label style="float:none;white-space:nowrap" >
+						<s:text name='bmDepartment.ysLeaf'/>:
+						<s:select list="#{'':'--','true':'是','false':'否'}" name="filter_EQB_ysLeaf"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.disabled'/>:
-						<input type="text" name="filter_EQS_disabled"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmDepartment.leaf'/>:
-						<input type="text" name="filter_EQS_leaf"/>
+						<s:select list="#{'':'--','true':'是','false':'否'}" name="filter_EQB_disabled"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='bmDepartment.note'/>:
 						<input type="text" name="filter_EQS_note"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmDepartment.outin'/>:
-						<input type="text" name="filter_EQS_outin"/>
-					</label>
-					<label style="float:none;white-space:nowrap" >
-						<s:text name='bmDepartment.ysLeaf'/>:
-						<input type="text" name="filter_EQS_ysLeaf"/>
 					</label>
 					<div class="buttonActive" style="float:right">
 						<div class="buttonContent">

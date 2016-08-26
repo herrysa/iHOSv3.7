@@ -27,6 +27,7 @@ var budgetReportDefine = {
 				if(deptCol.indexOf("r_")!=-1){
 					var row = deptCol.replace("r_","");
 					if(row==p1){
+					//console.log(row+":"+p1);
 						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n Arrow \r\n blue");
 						grid.func("SetCellProp",p1+" \r\n "+p2+" \r\n hasArrow \r\n 1");
 					}
@@ -308,6 +309,13 @@ var budgetReportDefine = {
  				alertMsg.error("请唯一行或列！");
  				return ;
  			}else{
+ 				var indexCol = grid.func("GetMemo"," \r\n indexCol");
+ 				if(indexCol){
+ 					if((indexCol.indexOf("r_")!=-1&&srow==1)||(indexCol.indexOf("c_")!=-1&&scol==1)){
+ 						alertMsg.error("预算责任中心和指标不能同时为行或者列！");
+ 						return ;
+ 					}
+ 				}
  				var oldDeptCol = grid.func("GetMemo"," \r\n deptCol");
  				grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
  				var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
@@ -365,6 +373,13 @@ var budgetReportDefine = {
  				alertMsg.error("请唯一行或列！");
  				return ;
  			}else{
+ 				var deptCode = grid.func("GetMemo"," \r\n deptCol");
+ 				if(deptCode){
+ 					if((deptCode.indexOf("r_")!=-1&&srow==1)||(deptCode.indexOf("c_")!=-1&&scol==1)){
+ 						alertMsg.error("预算责任中心和指标不能同时为行或者列！");
+ 						return ;
+ 					}
+ 				}
  				var oldIndexCode = grid.func("GetMemo"," \r\n indexCol");
  				grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
  				var oldIndexCell = grid.func("FindCell", "hasArrow=1"); 
@@ -619,8 +634,9 @@ var budgetReportDefine = {
 					</span>
 				</a>
 				</li>
+				<s:if test="budgetModel.modelType==2||budgetModel.modelType==3">
 				<li><a id="${random}_setDeptCol" class="settlebutton"  href="javaScript:"
-					><span>设为部门行/列
+					><span>设为预算责任中心行/列
 					</span>
 				</a>
 				</li>
@@ -639,6 +655,7 @@ var budgetReportDefine = {
 					</span>
 				</a>
 				</li>
+				</s:if>
 				<li><a id="${random}_saveBudgetModelReport" class="savebutton"  href="javaScript:"
 					><span>保存
 					</span>

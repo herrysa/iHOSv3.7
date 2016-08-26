@@ -13,6 +13,10 @@
 			if("${globalParam.paramKey}"=="ansyOrgDeptPerson"&&"${globalParam.paramValue}"!="1"&&jQuery("#globalParam_paramValue").val()=="1"){
 				$("#progressBar").text("同步数据中，请稍等...");
 			}
+			var options = jQuery("#${random }globalParam_selectOptions").val();
+			if(options.indexOf("key1:")!=-1){
+				jQuery("#${random }globalParam_selectOptions").val("");
+			}
 			jQuery("#${random}globalParamForm").attr("action","saveGlobalparam?popup=true&navTabId="+'${navTabId}&entityIsNew=${entityIsNew}');
 			jQuery("#${random}globalParamForm").submit();
 			//$("#progressBar").text("数据加载中，请稍等...");

@@ -21,11 +21,10 @@ var budgetReportDefine = {
 					//grid.func("CallFunc","2");
 					grid.func("SetBatchFunctionURL","batchFunc \r\n functions=10000;timeout=9999 \r\n user=normal");
 					//grid.func("Swkrntpomzqa", "1, 2"); 
-					//grid.func("SetAutoCalc","10000");
+					grid.func("SetAutoCalc","10000");
 					setTimeout(function(){
-						//grid.func("CallFunc","64");
-						//grid.func("CallFunc","163");
-						console.log(1);
+						grid.func("CallFunc","64");
+						grid.func("CallFunc","163");
 					},300);
 				}
 				
@@ -124,7 +123,7 @@ var budgetReportDefine = {
  	    	alertMsg.confirm("确认驳回预算？驳回后,之前填报的数据将作废！", {
  				okCall: function(){
  					jQuery.post("budgetModel_Xf", {
- 						"_" : $.now(),xfId:"${xfId}",xfType:'2',navTabId:'budgetModelXf_gridtable'
+ 						"_" : $.now(),xfId:"${xfId}",xfType:'2',msg:'驳回预算',navTabId:'budgetModelXf_gridtable'
  					}, function(data) {
  						formCallBack(data);
  					},"json");
@@ -222,7 +221,7 @@ var budgetReportDefine = {
 	            url: 'saveBmUpdataXml',
 	            type: 'post',
 	            dataType: 'json',
-	            data :{updataId:"${updataId}",updataXml:fileXml,navTabId:'budgetModelHz_gridtable'},
+	            data :{updataId:"${updataId}",modelType:"${modelType}",updataXml:fileXml,navTabId:'budgetModelHz_gridtable'},
 	            async:false,
 	            error: function(data){
 	            alertMsg.error("系统错误！");
@@ -287,7 +286,7 @@ var budgetReportDefine = {
 					</s:else>
 				</s:if>
 				<li><a id="${random}_freshReportData" class="previewbutton"  href="javaScript:"><span>刷新</span></a></li>
-				<s:if test="reportType==1">
+				<s:if test="modelType==2">
 				<%-- <li><a id="${random}_userdefine" class="editbutton"  href="javaScript:"><span>编辑汇总表</span></a>
 				</li> --%>
 				<li><a id="${random}_reBm" class="delallbutton"  href="javaScript:"><span>驳回预算</span></a>
@@ -295,9 +294,17 @@ var budgetReportDefine = {
 					<s:if test="reportModel!='report'">
 						<li><a id="${random}_saveBmReportXml" class="closebutton"  href="javaScript:"><span>完成汇总</span></a></li>
 					</s:if>
-					<s:else>
+					<%-- <s:else>
 						<li><a class="closebutton" style='color:#808080;' href="javaScript:"><span>完成汇总</span></a></li>
-					</s:else>
+					</s:else> --%>
+				</s:if>
+				<s:if test="modelType==3">
+					<s:if test="reportModel!='report'">
+						<li><a id="${random}_saveBmReportXml" class="closebutton"  href="javaScript:"><span>完成上报</span></a></li>
+					</s:if>
+					<%-- <s:else>
+						<li><a class="closebutton" style='color:#808080;' href="javaScript:"><span>完成上报</span></a></li>
+					</s:else> --%>
 				</s:if>
 				<%-- <li><a id="${random}_submitReport" class="changebutton"  href="javaScript:"
 					><span>提交

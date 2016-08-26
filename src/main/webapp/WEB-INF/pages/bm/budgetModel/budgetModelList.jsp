@@ -37,7 +37,7 @@
 			{name:'modifydate',index:'modifydate',align:'left',label : '<s:text name="budgetModel.modifydate" />',width:100,hidden:true,formatter:'date',formatoptions:{newformat : 'Y-m-d'},highsearch:true},
 			{name:'updataProcess.checkDeptName',index:'updataProcess.checkDeptName',align:'left',label : '上报部门',width:150,hidden:false,highsearch:true},
 			{name:'updataProcess.checkPersonName',index:'updataProcess.checkPersonName',align:'left',label : '上报人',width:150,hidden:false,highsearch:true},
-			{name:'checkProcess.checkPersonName',index:'checkProcess.checkPersonName',align:'left',label : '审核部门',width:150,hidden:false,highsearch:true},
+			{name:'checkProcess.checkDeptName',index:'checkProcess.checkDeptName',align:'left',label : '审核部门',width:150,hidden:false,highsearch:true},
 			{name:'checkProcess.checkPersonName',index:'checkProcess.checkPersonName',align:'left',label : '审核人',width:150,hidden:false,highsearch:true},
 			/* {name:'isHz',index:'isHz',align:'center',label : '<s:text name="budgetModel.isHz" />',width:100,hidden:false,formatter:'checkbox',highsearch:true}, */
 			{name:'hzModelId.modelName',index:'hzModelId.modelName',align:'left',label : '<s:text name="budgetModel.hzModelId" />',width:200,hidden:false,highsearch:true},
@@ -138,9 +138,18 @@
     	var fullHeight = jQuery("#container").innerHeight();
     	var fullWidth = jQuery("#container").innerWidth();
     	var sid = jQuery("#budgetModel_gridtable").jqGrid('getGridParam','selarrrow');
+    	if(sid==null||sid.length>1){       	
+			alertMsg.error("请选择一条记录。");
+			return;
+		}
+    	var rowData = jQuery("#budgetModel_gridtable").jqGrid('getRowData',sid);
+    	if(rowData.disabled=="No"){
+			alertMsg.error("模板在启用中，不能编辑！");
+			return ;
+		}
     	var url = "editBudgetModelReport?modelId="+sid;
     	url = encodeURI(url);
-    	$.pdialog.open(url, 'editBudgetReport', "编辑预算报表", {
+    	$.pdialog.open(url, 'editBudgetReport', "编辑预算模板", {
     		mask : true,
     		maxable : true,
     		resizable : true,
@@ -225,7 +234,7 @@
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.modelType'/>:
-						<s:select list="modelTypeList" key="filter_EQS_modelType" listKey="displayContent" listValue="value" headerKey="" headerValue="--" theme="simple"></s:select>
+						<s:select list="#{'1':'科室填报(自下而上)','2':'预算汇总(自下而上)','3':'职能代编(自上而下)'}" key="filter_EQS_modelType" headerKey="" headerValue="--" theme="simple"></s:select>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						<s:text name='budgetModel.periodType'/>:
