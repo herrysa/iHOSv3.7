@@ -68,7 +68,7 @@ public class UpCostPagedAction extends CBBaseAction {
 		this.personUpCostManager = personUpCostManager;
 	}
 
-	private List<Department> mapDepts;
+	private List<Map<String, Object>> mapDepts;
 	private String selectedPerson;
 	private String selectedDept;
 	private String deptIds;
@@ -184,11 +184,11 @@ public class UpCostPagedAction extends CBBaseAction {
 		this.selectedPerson = selectedPerson;
 	}
 
-	public List<Department> getMapDepts() {
+	public List<Map<String, Object>> getMapDepts() {
 		return mapDepts;
 	}
 
-	public void setMapDepts(List<Department> mapDepts) {
+	public void setMapDepts(List<Map<String, Object>> mapDepts) {
 		this.mapDepts = mapDepts;
 	}
 
@@ -499,7 +499,7 @@ public class UpCostPagedAction extends CBBaseAction {
 				upCost = upCostManager.get(upcostId);
 				this.setEntityIsNew(false);
 			} else {
-				User user = userManager.getCurrentLoginUser();
+				//User user = userManager.getCurrentLoginUser();
 				//    			checkPeriod = periodManager.getCurrentPeriod().getPeriodCode();
 				checkPeriod = this.getLoginPeriod();
 				upCost = new UpCost();
@@ -508,8 +508,15 @@ public class UpCostPagedAction extends CBBaseAction {
 				upCost.setCheckperiod(checkPeriod);
 				upCost.setCostitemid(upItem.getCostItemId());
 				upCost.setState(0);
+				
+				if (upItem.getItemClass().equals("全院")) {
+					
+				} else {
+					String deptIds = UserContextUtil.findUserDataPrivilegeSql("jjdept_dp", "1");
+					mapDepts = departmentManager.getBySqlToMap("SELECT deptId,name from t_department where jjdeptId in (SELECT deptId FROM t_department where deptId in "+deptIds+")");
+				}
 				//upCost.setselectedPerson
-				selectedPerson = "(";
+				/*selectedPerson = "(";
 				selectedDept = "(";
 				deptIds = "(";
 				//deptIds_cb = "(";
@@ -530,11 +537,11 @@ public class UpCostPagedAction extends CBBaseAction {
 						selectedDept = "('')";
 					}
 				} else {
-					/*if(upItem.getIsUpOtherDept()){
+					if(upItem.getIsUpOtherDept()){
 						mapDepts = jjDeptMapManager.getAllDept();
 					}else{
 						mapDepts = jjDeptMapManager.getByOperatorId(user.getPerson().getPersonId());
-					}*/
+					}
 					String deptIds = UserContextUtil.findUserDataPrivilegeStr("jjdept_dp", "1");
 					mapDepts = departmentManager.getAllDeptByDeptIds(deptIds);
 					//mapDepts = jjDeptMapManager.getByOperatorId(user.getPerson().getPersonId());
@@ -545,10 +552,10 @@ public class UpCostPagedAction extends CBBaseAction {
 						selectedPersons_cb += department.getDepartmentId() + ":\"";
 						String selectedPersonTemp = "(";
 						for (Department department_cb : departments_Cb) {
-							/*List<UpCost> upCostsSubmit = upCostManager.getBycheckPeriodAndDept(checkPeriod, department_cb.getDepartmentId(),upItem.getId(),1);
+							List<UpCost> upCostsSubmit = upCostManager.getBycheckPeriodAndDept(checkPeriod, department_cb.getDepartmentId(),upItem.getId(),1);
 							if(upCostsSubmit!=null&&upCostsSubmit.size()!=0){
 								continue;
-							}*/
+							}
 							deptIds_cb += "'" + department_cb.getDepartmentId() + "'@";
 							List<UpCost> upCosts = upCostManager.getBycheckPeriodAndDept(checkPeriod, department_cb.getDepartmentId(), upItem.getId(), null);
 							for (UpCost upCost : upCosts) {
@@ -591,7 +598,7 @@ public class UpCostPagedAction extends CBBaseAction {
 				} else {
 					deptIds_cb = "{}";
 					selectedPersons_cb = "{}";
-				}
+				}*/
 				//System.out.println(deptIds_cb);
 				//System.out.println(selectedPersons_cb);
 				this.setEntityIsNew(true);

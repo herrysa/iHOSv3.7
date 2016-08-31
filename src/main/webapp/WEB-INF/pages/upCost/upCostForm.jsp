@@ -6,12 +6,12 @@
 	var deptAndPersonSql = "";
 	//var currentOrgModel = "${fns:userContextParam('currentOrgModel')}";
 	var herpType = "${fns:getHerpType()}";
-	deptAndPersonSql = "select personId id,name,dept_id parent ,0 isparent,'/scripts/zTree/css/zTreeStyle/img/diy/person.png' icon,personCode orderCol from v_upcost_person where personId<>'XT' and disabled=0 @replace@ ";
+	deptAndPersonSql = "select personId id,name,dept_id parent ,0 isparent,'/scripts/zTree/css/zTreeStyle/img/diy/person.png' icon,personCode orderCol from v_upcost_person where personId<>'XT' and disabled=0 @preplace@ ";
 	if(herpType == "S2") {
 		var branchPriv = "${fns:u_writeDPSql('branch_dp')}";
 		deptAndPersonSql += " and branchCode in " +branchPriv;
 	}
-	deptAndPersonSql += " UNION SELECT deptId id,name,ISNULL(parentDept_id,orgCode) parent ,1 isparent,'/scripts/zTree/css/zTreeStyle/img/diy/dept.gif' icon,deptCode orderCol FROM t_department where deptId<>'XT' and disabled=0 ";
+	deptAndPersonSql += " UNION SELECT deptId id,name,ISNULL(parentDept_id,orgCode) parent ,1 isparent,'/scripts/zTree/css/zTreeStyle/img/diy/dept.gif' icon,deptCode orderCol FROM t_department where deptId<>'XT' and disabled=0 @dreplace@";
 	if(herpType == "S2") {
 		var branchPriv = "${fns:u_writeDPSql('branch_dp')}";
 		deptAndPersonSql += " and branchCode in " +branchPriv;
@@ -28,7 +28,7 @@
 		//}
 	}
 	deptAndPersonSql += " ORDER BY orderCol";
-	var deptId ,deptIds_cb,selectedPerson,cbDepts,selectedDept,upCostType,selectedPersons_cb;
+	/* var deptId ,deptIds_cb,selectedPerson,cbDepts,selectedDept,upCostType,selectedPersons_cb;
 	upCostType = "${upCost.upItemType}";
 	deptId = "${deptIds}";
 	deptIds_cb = "${deptIds_cb}";
@@ -48,12 +48,14 @@
 	selectedDept = "${selectedDept}";
 	selectedDept = selectedDept.replace(/&#039;/g,"'");
 	
-	var item_isUpOtherDept = "${upCost.upitemid.isUpOtherDept}";
-	if(upCostType==1){
+	if("${upCost.upItemType}"==1){
+		makeCbDept('all');
+	} */
+	if("${upCost.upItemType}"=="1"){
 		makeCbDept('all');
 	}
+	var item_isUpOtherDept = "${upCost.upitemid.isUpOtherDept}";
 	
-	var selectFilter = "";
 	jQuery(document).ready(function() {
 		jQuery('#${random}savelink').click(function() {
 			if(jQuery("#deptId_departmentId").val()=='-1'){
@@ -75,30 +77,20 @@
 		}
 	}
 	function makeCbDept(jjdept){
-		var cbDepts;
+		var selectFilter = "",selectFilter2="",deptAndPersonSqlTemp="";
 		if(jjdept=='all'){
 			if(item_isUpOtherDept=="true"){
-				selectFilter = " personId not in "+selectedPerson;
+				selectFilter = " personId not in (SELECT personId from t_UpCost where checkperiod='${upCost.checkperiod}' and upitemid='${upCost.upitemid.id}')";
+				deptAndPersonSqlTemp = deptAndPersonSql.replace("@preplace@"," and "+selectFilter);
+				deptAndPersonSqlTemp = deptAndPersonSqlTemp.replace("@dreplace@",selectFilter2);
 			}else{
-				var cbDeptAll = "(";
-				for(var cbDept in deptIds_cb){
-					var deptIds_cbTemp = deptIds_cb[cbDept]
-					deptIds_cbTemp = deptIds_cbTemp.replace(/\(/g,"");
-					deptIds_cbTemp = deptIds_cbTemp.replace(/\)/g,"");
-					cbDeptAll += deptIds_cbTemp.replace(/@/g,",")+",";
-				}
-				if(cbDeptAll=="("){
-					cbDeptAll += "'')";
-				}else{
-					cbDeptAll = cbDeptAll.substring(0,cbDeptAll.length-1);
-					cbDeptAll += ")";
-				}
-				cbDepts = cbDeptAll;
 				jQuery("#${random}_upCost_personName").val("");
 				jQuery("#${random}_upCost_personName_id").val("");
-				selectFilter = " dept_id in "+cbDepts+" and personId not in "+selectedPerson;
+				selectFilter = " dept_id in (SELECT deptId from t_department where jjdeptId in (SELECT deptId FROM t_department where deptId in ${fns:u_readDP('jjdept_dp')})) and personId not in (SELECT personId from t_UpCost where checkperiod='${upCost.checkperiod}' and upitemid='${upCost.upitemid.id}')";
+				selectFilter2 = " deptId in (SELECT deptId from t_department where jjdeptId in (SELECT deptId FROM t_department where deptId in ${fns:u_readDP('jjdept_dp')})) ";
+				deptAndPersonSqlTemp = deptAndPersonSql.replace("@preplace@"," and "+selectFilter);
+				deptAndPersonSqlTemp = deptAndPersonSqlTemp.replace("@dreplace@"," and "+selectFilter2);
 			}
-			var deptAndPersonSqlTemp = deptAndPersonSql.replace("@replace@"," and "+selectFilter);
 			jQuery("#${random}_upCost_personName").treeselect({
 				optType:"multi",
 				dataType:"sql",
@@ -108,24 +100,25 @@
 				minWidth:'200px'
 			});
 			
-			/* addTreeSelect("class","sync","${random}_upCost_personName","${random}_upCost_personId","multi"
-					,{tableName:"v_upcost_person",treeId:"personId",treeName:"name",parentId:"dept_id",filter:" dept_id in "+cbDepts+" and personId not in "+selectedPerson
-					,classTable:"t_department",classTreeId:"deptId",classTreeName:"name",classFilter:" jjdeptId in "+deptId}); */
 		}else{
 			if(item_isUpOtherDept=="true"){
-				selectedPerson = selectedPersons_cb[jjdept];
-				selectFilter = " personId not in "+selectedPerson;
+				//selectedPerson = selectedPersons_cb[jjdept];
+				selectFilter = " personId not in (SELECT personId from t_UpCost where checkperiod='${upCost.checkperiod}' and upitemid='${upCost.upitemid.id}' and deptId='"+jjdept+"')";
+				deptAndPersonSqlTemp = deptAndPersonSql.replace("@preplace@"," and "+selectFilter);
+				deptAndPersonSqlTemp = deptAndPersonSqlTemp.replace("@dreplace@",selectFilter2);
 			}else{
-				var cbDeptsTemp = deptIds_cb[jjdept];
+				/* var cbDeptsTemp = deptIds_cb[jjdept];
 				cbDeptsTemp = cbDeptsTemp.replace(/@/g,",");
-				cbDepts = cbDeptsTemp;
+				cbDepts = cbDeptsTemp; */
 				jQuery("#${random}_upCost_personName").val("");
 				jQuery("#${random}_upCost_personName_id").val("");
 				
-				selectFilter = " dept_id in "+cbDepts+" and personId not in "+selectedPerson;
+				selectFilter = " dept_id in (SELECT deptId from t_department where jjdeptId in (SELECT deptId FROM t_department where deptId ='"+jjdept+"')) and personId not in (SELECT personId from t_UpCost where checkperiod='${upCost.checkperiod}' and upitemid='${upCost.upitemid.id}')";
+				selectFilter2 = " deptId in (SELECT deptId from t_department where jjdeptId in (SELECT deptId FROM t_department where deptId ='"+jjdept+"'))";
+				deptAndPersonSqlTemp = deptAndPersonSql.replace("@preplace@"," and "+selectFilter);
+				deptAndPersonSqlTemp = deptAndPersonSqlTemp.replace("@dreplace@"," and "+selectFilter2);
 				
 			}
-			var deptAndPersonSqlTemp = deptAndPersonSql.replace("@replace@"," and "+selectFilter);
 			jQuery("#${random}_upCost_personName").treeselect({
 				optType:"multi",
 				dataType:"sql",
@@ -135,9 +128,6 @@
 				minWidth:'200px'
 			});
 			
-			/* addTreeSelect("class","sync","${random}_upCost_personName","${random}_upCost_personId","multi"
-					,{tableName:"v_upcost_person",treeId:"personId",treeName:"name",parentId:"dept_id",filter:" dept_id in "+cbDepts+" and personId not in "+selectedPerson
-					,classTable:"t_department",classTreeId:"deptId",classTreeName:"name",classFilter:" jjdeptId in "+deptId}); */
 		}
 	}
 </script>
@@ -170,7 +160,7 @@
 				<div class="unit">
 				<label><s:text name="上报科室"></s:text></label>
 					
-						<s:select id="deptId_departmentId" list="mapDepts" listKey="departmentId" listValue="name" key="upCost.deptId.departmentId" headerKey="-1" headerValue="--" theme="simple" onchange="changeDept(this)"></s:select>
+						<s:select id="deptId_departmentId" list="mapDepts" listKey="deptId" listValue="name" key="upCost.deptId.departmentId" headerKey="-1" headerValue="--" theme="simple" onchange="changeDept(this)"></s:select>
 				</div>
 				<div class="unit">
 				<%-- <s:hidden type="hidden" id="${random}_upCost_personId" key="upCost.personId.personId" theme="simple"/> --%>
@@ -220,12 +210,12 @@
 					}
 						sql +=" order by orderCol"; */
 					var herpType = "${fns:getHerpType()}";
-					var sql = "select d.deptId id,d.name name, case d.deptType when '' THEN '' ELSE d.deptType+d.orgCode end parent,1-leaf isParent,'/scripts/zTree/css/zTreeStyle/img/diy/dept.gif' icon,deptCode orderCol  from t_department d where leaf=1 and d.disabled = '0' and d.deptId <> 'XT' and deptId not in "+selectedDept;
+					var sql = "select d.deptId id,d.name name, case d.deptType when '' THEN '' ELSE d.deptType+d.orgCode end parent,1-leaf isParent,'/scripts/zTree/css/zTreeStyle/img/diy/dept.gif' icon,deptCode orderCol  from t_department d where leaf=1 and d.disabled = '0' and d.deptId <> 'XT' and deptId not in (SELECT deptId from t_UpCost where checkperiod='${upCost.checkperiod}' and upitemid='${upCost.upitemid.id}')";
 					if(herpType == "S2") {
 						var branchPriv = "${fns:u_writeDPSql('branch_dp')}";
 						sql += " and branchCode in " + branchPriv;
 					}
-					sql +=" union select case gd.deptType when '' THEN '' ELSE gd.deptType+gd.orgCode  end id,case gd.deptType WHEN '' THEN '未分类' ELSE deptType END name,gd.orgCode parent,1 isParent,null icon,deptType orderCol from t_department gd where leaf=1 and gd.disabled = '0'  and gd.deptId <> 'XT' and gd.deptId not in "+selectedDept;
+					sql +=" union select case gd.deptType when '' THEN '' ELSE gd.deptType+gd.orgCode  end id,case gd.deptType WHEN '' THEN '未分类' ELSE deptType END name,gd.orgCode parent,1 isParent,null icon,deptType orderCol from t_department gd where leaf=1 and gd.disabled = '0'  and gd.deptId <> 'XT' and gd.deptId not in (SELECT deptId from t_UpCost where checkperiod='${upCost.checkperiod}' and upitemid='${upCost.upitemid.id}')";
 					if(herpType == "S2") {
 						var branchPriv = "${fns:u_writeDPSql('branch_dp')}";
 						sql += " and branchCode in " + branchPriv;
