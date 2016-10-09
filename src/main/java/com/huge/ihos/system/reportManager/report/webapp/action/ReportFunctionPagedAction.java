@@ -19,7 +19,7 @@ public class ReportFunctionPagedAction extends JqGridBaseAction implements Prepa
 	private ReportFunctionManager reportFunctionManager;
 	private List<ReportFunction> reportFunctions;
 	private ReportFunction reportFunction;
-	private String code;
+	private String code; 
 
 	public ReportFunctionManager getReportFunctionManager() {
 		return reportFunctionManager;

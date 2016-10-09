@@ -21,6 +21,7 @@ public class DefineReport extends BaseObject{
 	private String searchName;
 	private Boolean isSys;
 	private String report;
+	private String reportData;
 	private String remark;
 	
 	@Id
@@ -61,6 +62,14 @@ public class DefineReport extends BaseObject{
 	}
 	public void setReport(String report) {
 		this.report = report;
+	}
+	
+	@Column
+	public String getReportData() {
+		return reportData;
+	}
+	public void setReportData(String reportData) {
+		this.reportData = reportData;
 	}
 	
 	@Column

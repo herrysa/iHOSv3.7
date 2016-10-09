@@ -39,6 +39,13 @@
 				 <param name="ignoreHierarchy">false</param>
             </result>
 		</action>
+		<action name="saveReportXml" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="saveReportXml">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
 		<action name="editUserDefineReport" class="com.huge.ihos.system.reportManager.report.webapp.action.DefineReportPagedAction"			method="editDefineReport">
 			<result name="input">/WEB-INF/pages/system/reportManager/report/defineReport/defineReport.jsp</result>
 			<result name="success">/WEB-INF/pages/system/reportManager/report/defineReport/defineReport.jsp</result>

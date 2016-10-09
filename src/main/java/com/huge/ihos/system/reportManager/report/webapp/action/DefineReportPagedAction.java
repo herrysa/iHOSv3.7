@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,13 +17,19 @@ import javax.servlet.http.HttpSession;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.reportManager.report.model.DefineReport;
 import com.huge.ihos.system.reportManager.report.model.ReportFunction;
 import com.huge.ihos.system.reportManager.report.service.DefineReportManager;
 import com.huge.ihos.system.reportManager.report.service.ReportFunctionManager;
 import com.huge.ihos.system.reportManager.search.model.Search;
+import com.huge.ihos.system.reportManager.search.model.SearchItem;
 import com.huge.ihos.system.reportManager.search.model.SearchOption;
 import com.huge.ihos.system.reportManager.search.service.QueryManager;
+import com.huge.ihos.system.systemManager.dataprivilege.model.PrivilegeClass;
+import com.huge.ihos.system.systemManager.dataprivilege.model.UserDataPrivilegeBean;
+import com.huge.ihos.system.systemManager.dataprivilege.service.PrivilegeClassManager;
+import com.huge.util.OtherUtil;
 import com.huge.util.XMLUtil;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
@@ -39,6 +46,15 @@ public class DefineReportPagedAction extends JqGridBaseAction implements Prepara
 	private List<DefineReport> defineReports;
 	private DefineReport defineReport;
 	private String code;
+	private String isTemplate;
+	public String getIsTemplate() {
+		return isTemplate;
+	}
+
+	public void setIsTemplate(String isTemplate) {
+		this.isTemplate = isTemplate;
+	}
+
 	private String searchName;
 	public String getSearchName() {
 		return searchName;
@@ -134,6 +150,21 @@ public class DefineReportPagedAction extends JqGridBaseAction implements Prepara
 		}
 		String key = ((this.isEntityIsNew())) ? "defineReport.added" : "defineReport.updated";
 		return ajaxForward(this.getText(key));
+	}
+	public String saveReportXml(){
+		try {
+			if (code != null) {
+	        	defineReport = defineReportManager.get(code);
+	        	defineReport.setReportData(reportXml);
+	        	defineReportManager.save(defineReport);
+	        	return ajaxForward(true,"保存成功！",false);
+	        } else {
+	        	return ajaxForward(false, "保存失败！",false);
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ajaxForward(false, "保存失败！",false);
+		}
 	}
     public String edit() {
         if (code != null&&!"".equals(code)) {
@@ -353,15 +384,19 @@ public class DefineReportPagedAction extends JqGridBaseAction implements Prepara
 		try {
 			if (code != null) {
 	        	defineReport = defineReportManager.get(code);
-	        	reportXml = defineReport.getReport();
-	        	
+	        	if(!"1".equals(isTemplate)){
+	        		reportXml = defineReport.getReportData();
+	        	}
 	        }
 			if(reportXml==null){
+				reportXml = defineReport.getReport();
+				if(reportXml==null){
 				HttpServletRequest request = getRequest();
 	        	HttpSession session = request.getSession();
 	        	String blankPath = session.getServletContext().getRealPath("/home/supcan/userdefine/blank.xml");
 	        	File blank = new File(blankPath);
 	        	reportXml = XMLUtil.xmltoString(XMLUtil.read(blank, "UTF-8"));
+				}
         	}
 			HttpServletResponse response = getResponse();  
 			//设置编码  
@@ -413,8 +448,58 @@ public class DefineReportPagedAction extends JqGridBaseAction implements Prepara
 
 	}
 	
+	private SearchItem[] searchItems;
+	public SearchItem[] getSearchItems() {
+		return searchItems;
+	}
+
+	public void setSearchItems(SearchItem[] searchItems) {
+		this.searchItems = searchItems;
+	}
+
+	PrivilegeClassManager privilegeClassManager;
+	public void setPrivilegeClassManager(PrivilegeClassManager privilegeClassManager) {
+		this.privilegeClassManager = privilegeClassManager;
+	}
+	
 	public String showDefineReport(){
-		
+		if(code!=null&&!"".equals(code)){
+			defineReport = defineReportManager.get(code);
+			searchName = defineReport.getSearchName();
+			if(searchName!=null&&!"".equals(searchName)){
+				if(searchName.contains(",")){
+					String[] searchNameArr = searchName.split(",");
+					searchName = searchNameArr[0];
+					/*for(String sn : searchNameArr){
+					}*/
+				}
+				Search search = this.queryManager.getSearchBySearchName( searchName );
+		        String searchId = search.getSearchId();
+				this.searchItems = this.queryManager.getSearchItemsBySearchNameOrdered( searchId );
+		        for(SearchItem searchItem : searchItems){
+		        	if("dpSelect".equals(searchItem.getUserTag())||"dpSelectR".equals(searchItem.getUserTag())){
+		        		String dpClassCode = searchItem.getParam1();
+		        		PrivilegeClass privilegeClass = privilegeClassManager.get(dpClassCode);
+		        		if(privilegeClass!=null){
+		        			Set<UserDataPrivilegeBean> userDataPrivilegeBeans = UserContextUtil.findUserDataPrivilege(dpClassCode);
+		        			String dpStr = "";
+		        			for(UserDataPrivilegeBean udp : userDataPrivilegeBeans){
+		        				dpStr += udp.getItem()+","+udp.getItemName()+";";
+		        			}
+		        			if(!"".equals(dpStr)){
+		        				dpStr = OtherUtil.subStrEnd(dpStr, ";");
+		        			}
+		        			if("dpSelect".equals(searchItem.getUserTag())){
+		        				searchItem.setUserTag("stringSelect");
+		        			}else{
+		        				searchItem.setUserTag("stringSelectR");
+		        			}
+		        			searchItem.setParam1(dpStr);
+		        		}
+		        	}
+		        }
+			}
+		}
 		return SUCCESS;
 	}
 }
