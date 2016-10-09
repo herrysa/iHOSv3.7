@@ -10,6 +10,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.huge.model.BaseObject;
 
@@ -366,6 +367,7 @@ public class MonthPerson extends BaseObject{
 		this.gzType = gzType;
 	}
 	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	//@Transient
 	public String getGzType2() {
 		return gzType2;
 	}

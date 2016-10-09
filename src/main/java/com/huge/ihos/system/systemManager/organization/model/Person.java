@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
@@ -421,6 +422,7 @@ public class Person extends BaseObject implements Serializable {
 	}
 	
 	@Column(name = "gzTypeId2", length = 32, nullable = true)
+	//@Transient
 	public String getGzType2() {
 		return gzType2;
 	}
