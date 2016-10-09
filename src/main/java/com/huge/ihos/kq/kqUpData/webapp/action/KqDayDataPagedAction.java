@@ -671,7 +671,12 @@ public class KqDayDataPagedAction extends JqGridBaseAction implements Preparable
 							if("kqId".equals(column)){
 								gzIdString = columnValue;
 							}else{
-								sqlTemp += column + "='" + columnValue+"',";
+								if("".equals(columnValue)){
+									sqlTemp += column + "=null,";
+								}else{
+									sqlTemp += column + "='" + columnValue+"',";
+								}
+								
 							}
 						}
 					    if(OtherUtil.measureNotNull(sqlTemp)){
