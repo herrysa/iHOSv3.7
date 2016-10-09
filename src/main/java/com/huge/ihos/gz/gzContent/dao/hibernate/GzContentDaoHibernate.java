@@ -51,10 +51,10 @@ public class GzContentDaoHibernate extends GenericDaoHibernate<GzContent, String
 	}
     @Override
     public List<Map<String,Object>> getGzContentGridData(String columns,String lastPeriod,List<String> sqlFilterList,List<String> sqlOrderList){
-    	String sql = "SELECT gz.gzId AS gzId,gz.orgCode AS orgCode,gz.period AS period,gz.issueNumber issueNumber,";
+    	String sql = "SELECT gz.gzId AS gzId,gz.orgCode AS orgCode,gz.period AS period,gz.issueNumber issueNumber,gz.idNumber idNumber,";
     	sql	+= "gz.maker maker,gz.makeDate makeDate,gz.checker checker,gz.checkDate checkDate,gz.status status,";
     	sql += "tp.sex sex,tp.birthday birthday,tp.duty duty,";
-    	sql += "tp.educationalLevel educationalLevel,tp.salaryNumber salaryNumber,tp.idNumber idNumber,";
+    	sql += "tp.educationalLevel educationalLevel,tp.salaryNumber salaryNumber,";
     	sql += "tp.jobTitle jobTitle,tp.postType postType,tp.ratio ratio,tp.workBegin workBegin,tp.disabled disabled";
     	/*该行是否编辑*/
     	sql += ",'0' isEdit";

@@ -525,6 +525,7 @@ public class GzContentPagedAction extends JqGridBaseAction implements Preparable
 				gzContentTemp.setPersonId(personId);
 				gzContentTemp.setPersonCode(person.getPersonCode());
 				gzContentTemp.setPersonName(person.getName());
+				gzContentTemp.setIdNumber(person.getIdNumber());
 //				gzContentTemp.setOrgCode(person.getOrgCode());
 				Department department = person.getDepartment();
 				if(department!=null){

@@ -53,7 +53,17 @@ public class GzContent extends BaseObject implements Serializable{
 	private String checker;//审核人
 	private Date checkDate;//审核日期
 	
+	private String idNumber;
 	
+	@Column
+	public String getIdNumber() {
+		return idNumber;
+	}
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
+
 	@Id
 	@Column(name = "gzId", length = 32)
 	@GenericGenerator(name = "uuid", strategy = "uuid")
