@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invBillNumberSetting" extends="default"	namespace="/">
+
+		<action name="invBillNumberSettingList" class="com.huge.ihos.material.webapp.action.InvBillNumberSettingPagedAction">
+			<result name="input">/WEB-INF/pages/material/invBillNumberSetting/invBillNumberSettingList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invBillNumberSetting/invBillNumberSettingList.jsp</result>
+		</action>
+		<action name="invBillNumberSettingGridList" class="com.huge.ihos.material.webapp.action.InvBillNumberSettingPagedAction"		method="invBillNumberSettingGridList">
+			<result type="json">
+				<param name="includeProperties">invBillNumberSettings.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invBillNumberSettingGridEdit" class="com.huge.ihos.material.webapp.action.InvBillNumberSettingPagedAction"			method="invBillNumberSettingGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvBillNumberSetting" class="com.huge.ihos.material.webapp.action.InvBillNumberSettingPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/invBillNumberSetting/invBillNumberSettingForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invBillNumberSetting/invBillNumberSettingForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvBillNumberSetting" class="com.huge.ihos.material.webapp.action.InvBillNumberSettingPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkSerialCode" class="com.huge.ihos.material.webapp.action.InvBillNumberSettingPagedAction"	method="checkSerialCode">
+			<result name="success" type="json">
+                <param name="includeProperties">exists</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

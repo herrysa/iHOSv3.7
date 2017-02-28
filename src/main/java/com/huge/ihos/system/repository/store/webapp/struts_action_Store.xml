@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="store" extends="default"	namespace="/">
+
+		<action name="storeList" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction">
+			<result name="input">/WEB-INF/pages/system/repository/store/storeAndPos.jsp</result>
+			<result name="success">/WEB-INF/pages/system/repository/store/storeAndPos.jsp</result>
+		</action>
+		<action name="storeGridList" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"		method="storeGridList">
+			<result type="json">
+				<param name="includeProperties">stores.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="storeGridEdit" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"			method="storeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editStore" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/repository/store/storeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/repository/store/storeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveStore" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,addStore.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="delStore" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"			method="delete">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="makeStoreTree"	class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="makeStoreTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">storeTree.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="makeStoreTreeIsPos"	class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="makeStoreTreeIsPos">
+			<result name="success"  type="json">
+				<param name="includeProperties">storeTree.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="refreshStoreNode" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="refreshStoreNode">
+			<result name="success"  type="json">
+				<param name="includeProperties">parentAndChildList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="storeTree"	class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction">
+			<result>/WEB-INF/pages/system/repository/store/storeTree.jsp</result>
+		</action>
+		
+		<action name="storeForm"	class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="edit">
+			<result>/WEB-INF/pages/system/repository/store/storeForm.jsp</result>
+		</action>
+		
+		<action name="reBuildTree" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="reBuildTree">
+			<result>/WEB-INF/pages/system/repository/store/storeTree.jsp</result>
+		</action>
+		
+		<action name="hasStoreChildren" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="hasStoreChildren">
+			<result name="success"  type="json">
+				<param name="includeProperties">hasStoreChildren</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="hasStorePos" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="hasStorePos">
+			<result name="success"  type="json">
+				<param name="includeProperties">hasStorePos</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="hasStorePositionChild" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="hasStorePositionChild">
+			<result name="success"  type="json">
+				<param name="includeProperties">hasStorePositionChild</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getSearchStores" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="getSearchStores">
+			<result name="success"  type="json">
+				<param name="includeProperties">searchStoreList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getStoreLockState" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="getStoreLockState">
+			<result name="success"  type="json">
+				<param name="includeProperties">isLock</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="doLockStore" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"			method="doLockStore">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="unLockStore" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"			method="unLockStore">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getDeptByStore" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction" method="getDeptByStore">
+			<result name="success" type="json">
+                <param name="includeProperties">department.*,storeStartDate</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+
+	</package>
+
+</struts>

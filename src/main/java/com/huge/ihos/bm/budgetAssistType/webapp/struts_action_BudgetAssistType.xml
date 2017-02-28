@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="budgetAssistType" extends="default"	namespace="/">
+
+		<action name="budgetAssistTypeList" class="com.huge.ihos.bm.budgetAssistType.webapp.action.BudgetAssistTypePagedAction">
+			<result name="input">/WEB-INF/pages/bm/budgetAssistType/budgetAssistTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetAssistType/budgetAssistTypeList.jsp</result>
+		</action>
+		<action name="budgetAssistTypeGridList" class="com.huge.ihos.bm.budgetAssistType.webapp.action.BudgetAssistTypePagedAction"		method="budgetAssistTypeGridList">
+			<result type="json">
+				<param name="includeProperties">budgetAssistTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="budgetAssistTypeGridEdit" class="com.huge.ihos.bm.budgetAssistType.webapp.action.BudgetAssistTypePagedAction"			method="budgetAssistTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBudgetAssistType" class="com.huge.ihos.bm.budgetAssistType.webapp.action.BudgetAssistTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/budgetAssistType/budgetAssistTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/budgetAssistType/budgetAssistTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBudgetAssistType" class="com.huge.ihos.bm.budgetAssistType.webapp.action.BudgetAssistTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

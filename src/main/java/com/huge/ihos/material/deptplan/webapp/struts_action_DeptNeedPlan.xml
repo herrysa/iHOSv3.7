@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="deptNeedPlan" extends="default"	namespace="/">
+
+		<action name="deptNeedPlanList" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanList.jsp</result>
+		</action>
+		<action name="selectDeptNeedPlanList" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanPagedAction" method="selectDeptNeedPlanList">
+			<result name="input">/WEB-INF/pages/material/deptNeedPlan/selectDeptNeedPlanList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptNeedPlan/selectDeptNeedPlanList.jsp</result>
+		</action>
+		<action name="deptNeedPlanGridList" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanPagedAction"		method="deptNeedPlanGridList">
+			<result type="json">
+				<param name="includeProperties">deptNeedPlans.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deptNeedPlanGridEdit" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanPagedAction"			method="deptNeedPlanGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDeptNeedPlan" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveDeptNeedPlan" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="createDeptNeedPlanByDistribute" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanPagedAction"	method="createDeptNeedPlanByDistribute">
+			<result name="success">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanForm.jsp</result>
+		</action>
+	</package>
+
+</struts>

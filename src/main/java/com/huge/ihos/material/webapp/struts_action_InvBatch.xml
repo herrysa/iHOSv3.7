@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invBatch" extends="default"	namespace="/">
+
+		<action name="invBatchList" class="com.huge.ihos.material.webapp.action.InvBatchPagedAction">
+			<result name="input">/WEB-INF/pages/material/invBatch/invBatchList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invBatch/invBatchList.jsp</result>
+		</action>
+		<action name="invBatchGridList" class="com.huge.ihos.material.webapp.action.InvBatchPagedAction"		method="invBatchGridList">
+			<result type="json">
+				<param name="includeProperties">invBatches.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invBatchGridEdit" class="com.huge.ihos.material.webapp.action.InvBatchPagedAction"			method="invBatchGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvBatch" class="com.huge.ihos.material.webapp.action.InvBatchPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/invBatch/invBatchForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invBatch/invBatchForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvBatch" class="com.huge.ihos.material.webapp.action.InvBatchPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="checkBatchNo" class="com.huge.ihos.material.webapp.action.InvBatchPagedAction"		method="checkBatchNo">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,doubleBatchNo</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+	</package>
+
+</struts>

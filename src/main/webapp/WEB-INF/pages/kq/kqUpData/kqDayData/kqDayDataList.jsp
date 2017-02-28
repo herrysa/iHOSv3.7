@@ -344,7 +344,7 @@
 		kqDayDataGrid.DropLists = [{"id":"deptList",treelist:"supcanXML?supcanXMLPath=kq/departmentList.xml",DataCol:"name",DisplayCol:"name"}];
 		var buildStr = JSON.stringify(kqDayDataGrid);
 		/*硕正配置JSON转换*/
-		buildStr = parseBuildString(buildStr);
+		//buildStr = parseBuildString(buildStr);
 		if(reLoad){
 			kqDayData_gridtable.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
 			kqDayData_gridtable.func("build", buildStr);
@@ -358,24 +358,24 @@
 	/*列初始化*/
 	function initKqDayDataColModel(data) {
 		editAbleColumnsDD = [];
-		var colModelDatas = {
-			"Col_0_Col":{name : 'kqId',align : 'center',text : '<s:text name="kqDayData.kqId" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'},
-			"Col_1_Col":{name : 'status',align : 'center',text : '<s:text name="kqDayData.status" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'}, 
-			"Col_2_Col":{name : 'period',align : 'center',text : '<s:text name="kqDayData.period" />',width : 80,isHide : false,editable : false,dataType : 'string',totalExpress:"合计",totalAlign:"center"},
-			"Col_3_Col":{name : 'maker',align : 'left',text : '<s:text name="kqDayData.maker" />',width : 80,isHide : true,editable : false,dataType : 'string'},
-			"Col_4_Col":{name : 'makeDate',width : '80px',align : 'center',text : '<s:text name="kqDayData.makeDate" />',isHide : true,dataType : 'date',editable : false},
-			"Col_5_Col":{name:'sex',align:'center',text : '<s:text name="kqDayData.sex" />',width:80,isHide:"absHide",editable:false,dataType:'string'},
-			"Col_6_Col":{name:'birthday',width:'80px',align:'center',text : '<s:text name="kqDayData.birthday" />',isHide:"absHide",editable:false,dataType:'date'},
-			"Col_7_Col":{name:'duty',width:'80px',align:'left',text : '<s:text name="kqDayData.duty" />',isHide:"absHide",editable:false,dataType:'string'},
-			"Col_8_Col":{name:'educationalLevel',width:'80px',align:'left',text : '<s:text name="kqDayData.educationalLevel" />',isHide:"absHide",editable:false,dataType:'string'},
-			"Col_9_Col":{name:'salaryNumber',width:'80px',align:'left',text : '<s:text name="kqDayData.salaryNumber" />',isHide:"absHide",editable:false,dataType:'string'},
-			"Col_10_Col":{name:'idNumber',width:'80px',align:'left',text : '<s:text name="kqDayData.idNumber" />',isHide:"absHide",editable:false,dataType:'string'},
-			"Col_11_Col":{name:'jobTitle',width:'80px',align:'left',text : '<s:text name="kqDayData.jobTitle" />',isHide:"absHide",editable:false,dataType:'string'},
-			"Col_12_Col":{name:'postType',width:'80px',align:'left',text : '<s:text name="kqDayData.postType" />',isHide:"absHide",editable:false,dataType:'string'},
-			"Col_13_Col":{name:'ratio',width:'80px',align:'left',text : '<s:text name="kqDayData.ratio" />',isHide:"absHide",editable:false,dataType:'double'},
-			"Col_14_Col":{name:'disabled',width:'80px',align:'left',text : '<s:text name="kqDayData.disabled" />',isHide:"absHide",editable:false,dataType:'string'},
-			"Col_15_Col":{name:'workBegin',width:'80px',align:'left',text : '<s:text name="kqDayData.workBegin" />',isHide:"absHide",editable:false,dataType:'date'}
-		} ;
+		var colModelDatas = [
+			{name : 'kqId',align : 'center',text : '<s:text name="kqDayData.kqId" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'},
+			{name : 'status',align : 'center',text : '<s:text name="kqDayData.status" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'}, 
+			{name : 'period',align : 'center',text : '<s:text name="kqDayData.period" />',width : 80,isHide : false,editable : false,dataType : 'string',totalExpress:"合计",totalAlign:"center"},
+			{name : 'maker',align : 'left',text : '<s:text name="kqDayData.maker" />',width : 80,isHide : true,editable : false,dataType : 'string'},
+			{name : 'makeDate',width : '80px',align : 'center',text : '<s:text name="kqDayData.makeDate" />',isHide : true,dataType : 'date',editable : false},
+			{name:'sex',align:'center',text : '<s:text name="kqDayData.sex" />',width:80,isHide:"absHide",editable:false,dataType:'string'},
+			{name:'birthday',width:'80px',align:'center',text : '<s:text name="kqDayData.birthday" />',isHide:"absHide",editable:false,dataType:'date'},
+			{name:'duty',width:'80px',align:'left',text : '<s:text name="kqDayData.duty" />',isHide:"absHide",editable:false,dataType:'string'},
+			{name:'educationalLevel',width:'80px',align:'left',text : '<s:text name="kqDayData.educationalLevel" />',isHide:"absHide",editable:false,dataType:'string'},
+			{name:'salaryNumber',width:'80px',align:'left',text : '<s:text name="kqDayData.salaryNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+			{name:'idNumber',width:'80px',align:'left',text : '<s:text name="kqDayData.idNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+			{name:'jobTitle',width:'80px',align:'left',text : '<s:text name="kqDayData.jobTitle" />',isHide:"absHide",editable:false,dataType:'string'},
+			{name:'postType',width:'80px',align:'left',text : '<s:text name="kqDayData.postType" />',isHide:"absHide",editable:false,dataType:'string'},
+			{name:'ratio',width:'80px',align:'left',text : '<s:text name="kqDayData.ratio" />',isHide:"absHide",editable:false,dataType:'double'},
+			{name:'disabled',width:'80px',align:'left',text : '<s:text name="kqDayData.disabled" />',isHide:"absHide",editable:false,dataType:'string'},
+			{name:'workBegin',width:'80px',align:'left',text : '<s:text name="kqDayData.workBegin" />',isHide:"absHide",editable:false,dataType:'date'}
+		] ;
 		
 		var curPeriodWeekObj = {};
 		kqMonthDataProofColums = {};
@@ -437,12 +437,12 @@
 	 				var isHoliday = curPeriodWeekTemp["isHoliday"];
 	 				var jsonLength = getJsonLength(colModelDatas);
 	 				var gropName = "group_" + jsonLength + "_group";
-	 				var groupObj = {name : groupText,jsonArray : [colModelData]};
+	 				var groupObj = {name : groupText,cols : [colModelData]};
 	 				if(isHoliday == "true"){
 	 					groupObj["textColor"] = "#f94a52";
 	 				}
 	 				kqDayDataShowIconCols.push(row.itemCode);
-	 				colModelDatas[gropName] = groupObj;
+	 				colModelDatas.push(groupObj);
 				}
 	 		}else if(frequency && "kqItem" == showType){
 	 			kqUpDataGridJson[row.itemCode] = {name:row.itemCode,type:"kqItem",sn:groupIndex++};
@@ -452,11 +452,11 @@
 	 			colModelData["text"] = frequency;
  				var jsonLength = getJsonLength(colModelDatas);
  				var gropName = "group_" + jsonLength + "_group";
- 				var groupObj = {name : groupText,jsonArray : [colModelData],id:row.itemCode+"_group"};
+ 				var groupObj = {name : groupText,cols : [colModelData],id:row.itemCode+"_group"};
  				if(editable){
  					groupObj["textColor"] = "#0000FF";
  				}
- 				colModelDatas[gropName] = groupObj;
+ 				colModelDatas.push(groupObj);
  				kqMonthDataProofColums[row.itemCode] = frequency;
 	 		}else{
 	 			if(row.itemCode == "kqDeptName"){
@@ -465,7 +465,7 @@
 	 			}
 	 			var jsonLength = getJsonLength(colModelDatas);
 				var ColName = "Col_" + jsonLength + "_Col";
-				colModelDatas[ColName] = colModelData;
+				colModelDatas.push(colModelData);
 	 		}
 		} 
 		var colModelDataChecker = {
@@ -510,18 +510,18 @@
 		};
 		var jsonLength = getJsonLength(colModelDatas);
 		var colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataChecker;
+		colModelDatas.push(colModelDataChecker);
 		//colModelDatas.push(colModelDataChecker);
 		jsonLength = getJsonLength(colModelDatas);
 		colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataCheckDate;
+		colModelDatas.push(colModelDataCheckDate);
 		//colModelDatas.push(colModelDataCheckDate);
 		jsonLength = getJsonLength(colModelDatas);
 		colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataSubmiter;
+		colModelDatas.push(colModelDataSubmiter);
 		jsonLength = getJsonLength(colModelDatas);
 		colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataSubmitDate;
+		colModelDatas.push(colModelDataSubmitDate);
 		return colModelDatas;
 	}
 		
@@ -1071,10 +1071,20 @@
 				}
 			}
 		}
-		for(var itemCode in calJson){
+		for(var itemKey in kqItemShortNameJson){
+			var kqItemShortNameJsonTemp = kqItemShortNameJson[itemKey];
+			var itemCode = kqItemShortNameJsonTemp.code;
+			var itemValue = calJson[itemCode];
+			if(!itemValue){
+				itemValue = "";
+			}
+			kqDayDatas[rowIndex][itemCode] = itemValue;
+			kqDayData_gridtable.func("SetCellData",rowId+"\r\n"+itemCode+"\r\n"+itemValue);
+		}
+		/* for(var itemCode in calJson){
 			kqDayDatas[rowIndex][itemCode] = calJson[itemCode];
 			kqDayData_gridtable.func("SetCellData",rowId+"\r\n"+itemCode+"\r\n"+calJson[itemCode]);
-		}
+		} */
 		kqDayDataCalculate(rowIndex,rowId);//计算
 	}
 	/*明细数据*/

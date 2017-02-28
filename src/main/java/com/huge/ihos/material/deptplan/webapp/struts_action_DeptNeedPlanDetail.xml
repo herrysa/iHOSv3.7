@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="deptNeedPlanDetail" extends="default"	namespace="/">
+
+		<action name="deptNeedPlanDetailList" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanDetailPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanDetailList.jsp</result>
+		</action>
+		<action name="deptNeedPlanDetailGridList" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanDetailPagedAction"		method="deptNeedPlanDetailGridList">
+			<result type="json">
+				<param name="includeProperties">deptNeedPlanDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deptNeedPlanDetailGridEdit" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanDetailPagedAction"			method="deptNeedPlanDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDeptNeedPlanDetail" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/deptNeedPlan/deptNeedPlanDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveDeptNeedPlanDetail" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getLastAndStoreAmount" class="com.huge.ihos.material.deptplan.webapp.action.DeptNeedPlanDetailPagedAction" method="getLastAndStoreAmount">
+			<result name="success" type="json">
+                <param name="includeProperties">amounts.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

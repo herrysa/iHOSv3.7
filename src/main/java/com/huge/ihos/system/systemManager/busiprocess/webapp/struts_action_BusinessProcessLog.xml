@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="businessProcessLog" extends="default"	namespace="/">
+
+		<action name="businessProcessLogList" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessLogPagedAction">
+			<result name="input">/WEB-INF/pages/businessProcess/businessProcessLogList.jsp</result>
+			<result name="success">/WEB-INF/pages/businessProcess/businessProcessLogList.jsp</result>
+		</action>
+		<action name="businessProcessLogGridList" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessLogPagedAction"		method="businessProcessLogGridList">
+			<result type="json">
+				<param name="includeProperties">businessProcessLogs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="businessProcessLogGridEdit" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessLogPagedAction"			method="businessProcessLogGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBusinessProcessLog" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessLogPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/businessProcess/businessProcessLogForm.jsp</result>
+			<result name="input">/WEB-INF/pages/businessProcess/businessProcessLogForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBusinessProcessLog" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessLogPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

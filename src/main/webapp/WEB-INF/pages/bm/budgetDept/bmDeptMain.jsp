@@ -12,7 +12,7 @@
 			<div class="tabsHeaderContent">
 				<ul>
 					<li><a href="bmDepartmentList" class="j-ajax"><span>预算部门定义</span> </a></li>
-					<li><a href="#" ><span>关系查询</span> </a></li>
+					<li><a href="query?searchName=ysDeptMap" class="j-ajax"><span>关系查询</span> </a></li>
 				</ul>
 			</div>
 		</div>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="procType" extends="default"	namespace="/">
+
+		<action name="procTypeList" class="com.huge.ihos.procType.webapp.action.ProcTypePagedAction">
+			<result name="input">/WEB-INF/pages/procType/procTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/procType/procTypeList.jsp</result>
+		</action>
+		<action name="procTypeGridList" class="com.huge.ihos.procType.webapp.action.ProcTypePagedAction"		method="procTypeGridList">
+			<result type="json">
+				<param name="includeProperties">procTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="procTypeGridEdit" class="com.huge.ihos.procType.webapp.action.ProcTypePagedAction"			method="procTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editProcType" class="com.huge.ihos.procType.webapp.action.ProcTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/procType/procTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/procType/procTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveProcType" class="com.huge.ihos.procType.webapp.action.ProcTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

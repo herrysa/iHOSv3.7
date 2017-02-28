@@ -75,6 +75,14 @@
 				<s:hidden key="bdInfo.orderByField"/>
 				<s:hidden key="bdInfo.orderByFieldAsc"/>
 				</div>
+				<s:if test="entityIsNew">
+					<div class="unit">
+						<label>数据库引入:</label>
+						<span class="formspan" style="float: left; width: 140px">
+							<input id="bdInfo_dbCheck" type="checkbox">
+						</span>
+					</div>
+				</s:if>
 				<div class="unit">
 					<s:if test="entityIsNew">
 					<s:textfield key="bdInfo.bdInfoId" cssClass="required" maxlength="50" notrepeat='id已存在 ' validatorParam="from BdInfo bdInfo where bdInfo.bdInfoId=%value%"/>
@@ -112,14 +120,6 @@
 				<div class="unit">
 					<s:textarea key="bdInfo.remark" name="bdInfo.remark" cssStyle="width:350px;height:60px;" />
 				</div>
-				<s:if test="entityIsNew">
-					<div class="unit">
-						<label>数据库引入:</label>
-						<span class="formspan" style="float: left; width: 140px">
-							<input id="bdInfo_dbCheck" type="checkbox">
-						</span>
-					</div>
-				</s:if>
 			</div>
 			<div class="formBar">
 				<ul>

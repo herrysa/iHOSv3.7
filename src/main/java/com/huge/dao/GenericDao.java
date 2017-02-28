@@ -73,6 +73,18 @@ public interface GenericDao<T, PK extends Serializable> {
     public boolean existCodeEdit(Long idValue,String tableName,String idColumnName,String columnName,String valueCode);
     public boolean existCodeEdit(Long idValue,String tableName,String idColumnName,String columnName,String valueCode,String columnName2,String valueCode2);
 
+    /**通过example的方式查找是否存在
+     * @param object
+     * @return
+     */
+    public boolean existByExample(T object);
+    
+    /**通过filter的方式查找是否存在
+     * @param filters
+     * @return
+     */
+    public boolean existByFilter(List<PropertyFilter> filters);
+    
     /**
      * 自动补全通用方法
      * @param entityName 实体名

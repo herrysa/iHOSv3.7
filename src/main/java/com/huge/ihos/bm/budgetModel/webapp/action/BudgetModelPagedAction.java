@@ -19,12 +19,17 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import com.huge.ihos.bm.budgetAssistType.model.BudgetAssistType;
+import com.huge.ihos.bm.budgetAssistType.service.BudgetAssistTypeManager;
+import com.huge.ihos.bm.budgetModel.model.BmModelAssist;
 import com.huge.ihos.bm.budgetModel.model.BmModelDept;
 import com.huge.ihos.bm.budgetModel.model.BmModelProcess;
 import com.huge.ihos.bm.budgetModel.model.BudgetModel;
+import com.huge.ihos.bm.budgetModel.service.BmModelAssistManager;
 import com.huge.ihos.bm.budgetModel.service.BmModelDeptManager;
 import com.huge.ihos.bm.budgetModel.service.BmModelProcessManager;
 import com.huge.ihos.bm.budgetModel.service.BudgetModelManager;
@@ -32,6 +37,7 @@ import com.huge.ihos.bm.index.model.BudgetIndex;
 import com.huge.ihos.bm.index.service.BudgetIndexManager;
 import com.huge.ihos.system.configuration.businessprocess.model.BusinessProcessStep;
 import com.huge.ihos.system.configuration.businessprocess.service.BusinessProcessStepManager;
+import com.huge.ihos.system.configuration.syvariable.model.Variable;
 import com.huge.ihos.system.configuration.syvariable.service.VariableManager;
 import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContextUtil;
@@ -58,18 +64,44 @@ import com.opensymphony.xwork2.Preparable;
 
 public class BudgetModelPagedAction extends JqGridBaseAction implements Preparable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2788261692863806228L;
 	private BudgetModelManager budgetModelManager;
 	private List<BudgetModel> budgetModels;
 	private BudgetModel budgetModel;
 	private String modelId;
 	private String modelCode;
 	private String deptId;
+	private String reportType;
+	public String getReportType() {
+		return reportType;
+	}
+	public void setReportType(String reportType) {
+		this.reportType = reportType;
+	}
+
 	private List<Map<String, Object>> bmDepartmentNodes;
 	
 	private BmModelDeptManager bmModelDeptManager;
 	
 	private ReportFunctionManager reportFunctionManager;
+	//private AssistTypeManager assistTypeManager;
+	private BudgetAssistTypeManager budgetAssistTypeManager;
+	
+	private BmModelAssistManager bmModelAssistManager;
 
+	public void setBmModelAssistManager(BmModelAssistManager bmModelAssistManager) {
+		this.bmModelAssistManager = bmModelAssistManager;
+	}
+	public void setBudgetAssistTypeManager(
+			BudgetAssistTypeManager budgetAssistTypeManager) {
+		this.budgetAssistTypeManager = budgetAssistTypeManager;
+	}
+	/*public void setAssistTypeManager(AssistTypeManager assistTypeManager) {
+		this.assistTypeManager = assistTypeManager;
+	}*/
 	public void setReportFunctionManager(ReportFunctionManager reportFunctionManager) {
 		this.reportFunctionManager = reportFunctionManager;
 	}
@@ -180,10 +212,12 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		return SUCCESS;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String budgetModelGridList() {
 		log.debug("enter list method!");
 		try {
 			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(getRequest());
+			filters.add(new PropertyFilter("EQI_state","1"));
 			JQueryPager pagedRequests = null;
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
 					PagerFactory.JQUERYTYPE, getRequest());
@@ -256,10 +290,17 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		String reMsg = "添加预算模板成功！";
 		try {
 			modelId = budgetModel.getModelId();
+			String assistType = budgetModel.getAssistType();
+			if(StringUtils.isNotEmpty(assistType)){
+				assistType = assistType.replaceAll(" ", "");
+				budgetModel.setAssistType(assistType);
+			}
+			String copyId = budgetModel.getModelCopyId();
 			if(this.isEntityIsNew()){
+				budgetModel.setDisabled(true);
 				budgetModel.setCreator(UserContextUtil.getContextUser().getPersonName());
 				budgetModel.setCreateDate(Calendar.getInstance().getTime());
-			}else{
+			}else if(copyId==null){
 				reMsg = "修改预算模板成功！";
 				BudgetModel oldModel = budgetModelManager.get(modelId);
 				if(oldModel.getDisabled()!=null&!oldModel.getDisabled()){
@@ -291,20 +332,44 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				budgetModel.setHzModelId(null);
 			}
 			modelId = budgetModel.getModelId();
-			String copyId = budgetModel.getModelCopyId();
-			budgetModel = budgetModelManager.save(budgetModel);
-			budgetModel = budgetModelManager.get(modelId);
+			
+			//budgetModel = budgetModelManager.get(modelId);
 			if(copyId!=null&&!"".equals(copyId)){
 				reMsg = "复制预算模板成功！";
 				if(!copyId.equals(modelId)){
-					BudgetModel bmModelNew = budgetModel.clone();
+					BudgetModel oldModel = budgetModelManager.get(modelId);
+					BudgetModel bmModelNew = oldModel.clone();
 					bmModelNew.setModelId(copyId);
+					Set<Department> depts = oldModel.getDepartments();
+					bmModelNew.setState(1);
 					bmModelNew = budgetModelManager.save(bmModelNew);
+					//Set<BmModelAssist> bmModelAssistCopy = new HashSet<BmModelAssist>();
+					for(Department department : depts){
+						BmModelDept bmModelDept = new BmModelDept();
+						bmModelDept.setBmModel(bmModelNew);
+						bmModelDept.setBmDepartment(department);
+						bmModelDeptManager.save(bmModelDept);
+					}
+					Set<BmModelAssist> bmModelAssists = oldModel.getBmModelAssists();
+					for(BmModelAssist  bmModelAssist : bmModelAssists){
+						BmModelAssist bmModelAssistTemp = new BmModelAssist();
+						bmModelAssistTemp.setModel(bmModelNew);
+						bmModelAssistTemp.setAssistCode(bmModelAssist.getAssistCode());
+						bmModelAssistTemp.setItem(bmModelAssist.getItem());
+						bmModelAssistTemp.setItemName(bmModelAssist.getItemName());
+						//bmModelAssistCopy.add(bmModelAssistTemp);
+						bmModelAssistManager.save(bmModelAssistTemp);
+					}
+					//bmModelNew.setBmModelAssists(bmModelAssistCopy);
 					budgetModelManager.remove(modelId);
 					budgetModelManager.executeSql("delete from bm_model_process where modelId = '"+modelId+"'");
 					budgetModelManager.executeSql("delete from bm_model_dept where modelId = '"+modelId+"'");
+					budgetModelManager.executeSql("delete from bm_model_assist where modelId = '"+modelId+"'");
 					budgetModel = bmModelNew;
 				}
+			}else{
+				budgetModel.setState(1);
+				budgetModel = budgetModelManager.save(budgetModel);
 			}
 			
 			
@@ -366,7 +431,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			gridOperationMessage = dre.getMessage();
 			return ajaxForwardError(gridOperationMessage);
 		}
-		return ajaxForward(reMsg);
+		return ajaxForward(true,reMsg,true);
 	}
 	
 	List<Map<String, Object>> modelTypes;
@@ -385,6 +450,21 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public void setPeriodYearList(List<String> periodYearList) {
 		this.periodYearList = periodYearList;
 	}
+	List<BudgetAssistType> budgetAssistTypes;
+	public List<BudgetAssistType> getBudgetAssistTypes() {
+		return budgetAssistTypes;
+	}
+	public void setBudgetAssistTypes(List<BudgetAssistType> budgetAssistTypes) {
+		this.budgetAssistTypes = budgetAssistTypes;
+	}
+
+	/*List<AssistType> assistTypes;
+	public List<AssistType> getAssistTypes() {
+		return assistTypes;
+	}
+	public void setAssistTypes(List<AssistType> assistTypes) {
+		this.assistTypes = assistTypes;
+	}*/
 	public String edit() {
         if (modelId != null) {
         	budgetModel = budgetModelManager.get(modelId);
@@ -401,6 +481,11 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
         periodYearList.add(periodYear);
         periodYearList.add(""+(year+1));
         periodYearList.add(""+(year+2));
+        List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+        filters.add(new PropertyFilter("EQB_assistType.disabled","false"));
+        filters.add(new PropertyFilter("NES_assistType.typeCode","0"));
+        //assistTypes = assistTypeManager.getByFilters(filters);
+        budgetAssistTypes = budgetAssistTypeManager.getByFilters(filters);
         return SUCCESS;
     }
 	public String budgetModelGridEdit() {
@@ -440,6 +525,14 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		try {
 			if (modelId != null&&!"".equals(modelId)) {
 				budgetModel = budgetModelManager.get(modelId);
+				String assistType = budgetModel.getAssistType();
+				if(StringUtils.isNotEmpty(assistType)){
+					List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+					filters.add(new PropertyFilter("INS_assistType.typeCode",assistType));
+					budgetAssistTypes = budgetAssistTypeManager.getByFilters(filters);
+				}else{
+					budgetAssistTypes = new ArrayList<BudgetAssistType>();
+				}
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -470,6 +563,173 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	        	File blank = new File(blankPath);
 	        	reportXml = XMLUtil.xmltoString(XMLUtil.read(blank, "UTF-8"));
         	}
+			HttpServletResponse response = getResponse();  
+			//设置编码  
+			response.setCharacterEncoding("UTF-8");  
+			response.setContentType("text/xml;charset=utf-8");  
+			response.setHeader("Cache-Control", "no-cache");  
+			PrintWriter out = response.getWriter();  
+			out.write(reportXml);  
+			out.flush();  
+			out.close(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getSvXml(){
+		try {
+			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			filters.add(new PropertyFilter("EQB_disabled","false"));
+			filters.add(new PropertyFilter("OAS_variableName",""));
+			List<Variable> variables= variableManager.getByFilters(filters);
+			Document document = XMLUtil.createDocument();
+			Element items = document.addElement("items");
+			Element itemDeptCode = items.addElement("item");
+			itemDeptCode.setText("上报科室编码");
+			itemDeptCode.addAttribute("key", "=sv('%BMMODEL_DEPTCODE%')");
+			Element itemDeptName = items.addElement("item");
+			itemDeptName.setText("上报科室名称");
+			itemDeptName.addAttribute("key", "=sv('%BMMODEL_DEPTNAME%')");
+			Element itemModelCode = items.addElement("item");
+			itemModelCode.setText("预算模板编码");
+			itemModelCode.addAttribute("key", "=sv('%BMMODEL_MODELCODE%')");
+			Element itemModelName = items.addElement("item");
+			itemModelName.setText("预算模板名称");
+			itemModelName.addAttribute("key", "=sv('%BMMODEL_MODELNAME%')");
+			Element itemPeriodType = items.addElement("item");
+			itemPeriodType.setText("预算模板期间类型");
+			itemPeriodType.addAttribute("key", "=sv('%BMMODEL_PERIODTYPE%')");
+			Element itemCheckLabel = items.addElement("item");
+			itemCheckLabel.setText("审核步骤");
+			itemCheckLabel.addAttribute("key", "=sv('%BMPL_LABEL_%')");
+			Element itemCheckPerson = items.addElement("item");
+			itemCheckPerson.setText("审核人");
+			itemCheckPerson.addAttribute("key", "=sv('%BMPL_PERSONNAME_%')");
+			Element itemCheckDate = items.addElement("item");
+			itemCheckDate.setText("审核时间");
+			itemCheckDate.addAttribute("key", "=sv('%%BMPL_OPTDATE_%')");
+			
+			for(Variable variable : variables){
+				Element item = items.addElement("item");
+				item.setText(variable.getVariableDesc());
+				item.addAttribute("key", "=sv('"+variable.getVariableName()+"')");
+			}
+			reportXml = XMLUtil.xmltoString(document);
+			HttpServletResponse response = getResponse();  
+			//设置编码  
+			response.setCharacterEncoding("UTF-8");  
+			response.setContentType("text/xml;charset=utf-8");  
+			response.setHeader("Cache-Control", "no-cache");  
+			PrintWriter out = response.getWriter();  
+			out.write(reportXml);  
+			out.flush();  
+			out.close(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	String assistCode;
+	String assistName;
+	public String getAssistName() {
+		return assistName;
+	}
+	public void setAssistName(String assistName) {
+		this.assistName = assistName;
+	}
+	public String getAssistCode() {
+		return assistCode;
+	}
+	public void setAssistCode(String assistCode) {
+		this.assistCode = assistCode;
+	}
+	public String getAssistItemXml(){
+		try {
+			Document document = XMLUtil.createDocument();
+			Element items = document.addElement("items");
+			if(StringUtils.isNotEmpty(assistCode)){
+				List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+				filters.add(new PropertyFilter("EQS_assistCode.typeCode",assistCode));
+				filters.add(new PropertyFilter("EQS_model.modelId",modelId));
+				List<BmModelAssist> bmModelAssists = bmModelAssistManager.getByFilters(filters);
+				for(BmModelAssist assist : bmModelAssists){
+					Element item = items.addElement("item");
+					item.setText(assist.getItemName());
+					item.addAttribute("key", assist.getItem());
+				}
+			}
+			reportXml = XMLUtil.xmltoString(document);
+			HttpServletResponse response = getResponse();  
+			//设置编码  
+			response.setCharacterEncoding("UTF-8");  
+			response.setContentType("text/xml;charset=utf-8");  
+			response.setHeader("Cache-Control", "no-cache");  
+			PrintWriter out = response.getWriter();  
+			out.write(reportXml);  
+			out.flush();  
+			out.close(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getBmDutyCenterXml(){
+		try {
+			if(StringUtils.isNotEmpty(modelId)){
+				budgetModel = budgetModelManager.get(modelId);
+				List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+		        filters.add(new PropertyFilter("EQB_assistType.disabled","false"));
+		        filters.add(new PropertyFilter("INS_assistType.typeCode","0,"+budgetModel.getAssistType()));
+		        //assistTypes = assistTypeManager.getByFilters(filters);
+		        budgetAssistTypes = budgetAssistTypeManager.getByFilters(filters);
+			}else{
+				List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+		        filters.add(new PropertyFilter("EQB_assistType.disabled","false"));
+		        filters.add(new PropertyFilter("EQS_assistType.typeCode","0"));
+		        //assistTypes = assistTypeManager.getByFilters(filters);
+		        budgetAssistTypes = budgetAssistTypeManager.getByFilters(filters);
+			}
+			Document document = XMLUtil.createDocument();
+			Element items = document.addElement("items");
+			for(BudgetAssistType assistType : budgetAssistTypes){
+				Element item = items.addElement("item");
+				item.setText(assistType.getColName());
+				item.addAttribute("key", ""+assistType.getAssistType().getTypeCode());
+			}
+			
+			reportXml = XMLUtil.xmltoString(document);
+			HttpServletResponse response = getResponse();  
+			//设置编码  
+			response.setCharacterEncoding("UTF-8");  
+			response.setContentType("text/xml;charset=utf-8");  
+			response.setHeader("Cache-Control", "no-cache");  
+			PrintWriter out = response.getWriter();  
+			out.write(reportXml);  
+			out.flush();  
+			out.close(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getBmIndexXml(){
+		try {
+			Document document = XMLUtil.createDocument();
+			Element items = document.addElement("items");
+			List<PropertyFilter> indexFilters = new ArrayList<PropertyFilter>();
+			indexFilters.add(new PropertyFilter("EQB_disabled", "false"));
+			List<BudgetIndex> budgetIndexs = budgetIndexManager.getByFilters(indexFilters);
+			for(BudgetIndex budgetIndex : budgetIndexs){
+				Element item = items.addElement("item");
+				item.addAttribute("key", budgetIndex.getIndexCode());
+				item.addText(budgetIndex.getIndexName());
+			}
+			
+			reportXml = XMLUtil.xmltoString(document);
 			HttpServletResponse response = getResponse();  
 			//设置编码  
 			response.setCharacterEncoding("UTF-8");  
@@ -529,7 +789,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				modelType = budgetModel.getModelType();
 				String mc = "";
 				String deptId = "(";
-				Set<Department> depts = null;
+				Set<Department> depts = new HashSet<Department>();
 				boolean deptDS = false;
 				if("2".equals(modelType)){
 					BudgetModel hzModel = budgetModel.getHzModelId();
@@ -538,7 +798,7 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 						mc = hzModel.getModelCode();
 					}
 					deptDS = true;
-				}else if("3".equals(modelType)){
+				}else if("1".equals(modelType)||"3".equals(modelType)){
 					depts = budgetModel.getDepartments();
 					mc = budgetModel.getModelCode();
 					deptDS = true;
@@ -552,6 +812,10 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				}
 				if("(".equals(deptId)){
 					deptId = "('')";
+				}
+				String assitType =budgetModel.getAssistType();
+				if(StringUtils.isNotEmpty(assitType)){
+					deptDS = true;
 				}
 				if(deptDS){
 					Element Project_search = category.addElement("Project");
@@ -719,11 +983,13 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			
 			List<PropertyFilter> indexFilters = new ArrayList<PropertyFilter>();
 			indexFilters.add(new PropertyFilter("EQB_disabled", "false"));
+			indexFilters.add(new PropertyFilter("ISNULLS_parentId.indexCode", "null"));
 			List<BudgetIndex> budgetIndexs = budgetIndexManager.getByFilters(indexFilters);
 			for(BudgetIndex budgetIndex : budgetIndexs){
-				Element item = bmIndex.addElement("item");
+				Element item = bmIndex.addElement("project");
 				item.addAttribute("id", budgetIndex.getIndexCode());
-				item.addText(budgetIndex.getIndexName());
+				item.addAttribute("name",budgetIndex.getIndexName());
+				addBmIndexItem(budgetIndex,item);
 			}
 			
 			/*sysVarIndex.addAttribute("name", "系统变量");
@@ -755,6 +1021,25 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 		}
 		return null;
 	}
+	
+	private void addBmIndexItem(BudgetIndex budgetIndex,Element parentItem){
+		List<PropertyFilter> indexFiltersTemp = new ArrayList<PropertyFilter>();
+		indexFiltersTemp.add(new PropertyFilter("EQB_disabled", "false"));
+		indexFiltersTemp.add(new PropertyFilter("EQS_parentId.indexCode", budgetIndex.getIndexCode()));
+		List<BudgetIndex> budgetIndexsTemp = budgetIndexManager.getByFilters(indexFiltersTemp);
+		for(BudgetIndex budgetIndex2 : budgetIndexsTemp){
+			Element item2 = null;
+			if(budgetIndex2.getLeaf()!=null&&budgetIndex2.getLeaf()==true){
+				item2 = parentItem.addElement("item");
+			}else{
+				item2 = parentItem.addElement("project");
+			}
+			item2.addAttribute("id", budgetIndex2.getIndexCode());
+			item2.addAttribute("name",budgetIndex2.getIndexName());
+			addBmIndexItem(budgetIndex2,item2);
+		}
+	}
+	
 	private DeptTypeManager deptTypeManager;
 	private KhDeptTypeManager khDeptTypeManager;
 	private BranchManager branchManager;
@@ -879,7 +1164,9 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	
 	public String modelProcessList(){
 		try {
-			budgetModel = budgetModelManager.get(modelId);
+			if(modelId!=null&&!"".equals(modelId)){
+				budgetModel = budgetModelManager.get(modelId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1115,11 +1402,13 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			endModelProcessStep.setStepName("结束");*/
 			bmModelProcess = bmModelProcessManager.get(bmProcessId);
 			filters.add(new PropertyFilter("OAS_state",""));
+			filters.add(new PropertyFilter("EQS_budgetModel.modelId",modelId));
         	filters.add(new PropertyFilter("GTI_state",""+bmModelProcess.getState()));
             okStepList = bmModelProcessManager.getByFilters(filters);
             //okStepList.add(endModelProcessStep);
         	filters.clear();
             filters.add(new PropertyFilter("LTI_state",""+bmModelProcess.getState()));
+            filters.add(new PropertyFilter("EQS_budgetModel.modelId",modelId));
             filters.add(new PropertyFilter("OAS_state",""));
             noStepList = bmModelProcessManager.getByFilters(filters);
 		} catch (Exception e) {
@@ -1171,6 +1460,8 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
             	maprs = new HashMap<String, Object>();
             	maprs.put("stepInfo",bmModelProcess.getStepInfo());
             	maprs.put("bmProcessId",bmModelProcess.getBmProcessId());
+            	maprs.put("okName",bmModelProcess.getOkName());
+            	maprs.put("noName",bmModelProcess.getNoName());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1236,13 +1527,32 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 	public void setModelType(String modelType) {
 		this.modelType = modelType;
 	}
+	private int getCopyModelSuffix(String modelId,int time){
+		try {
+			boolean exist = budgetModelManager.exists(modelId+time);
+			if(exist){
+				time++;
+				time = getCopyModelSuffix(modelId,time);
+			}
+		} catch (Exception e) {
+			
+		}
+		
+		return time;
+	}
 	public String copyBudgetModel(){
 		if (modelId != null) {
         	budgetModel = budgetModelManager.get(modelId);
         	BudgetModel budgetModel2 = budgetModel.clone();
-        	budgetModel2.setModelId(budgetModel.getModelId()+"copy");
-        	budgetModel2.setModelCode(budgetModel.getModelCode()+"copy");
-        	budgetModel2.setModelName(budgetModel.getModelName()+"copy");
+        	budgetModel2.setState(0);
+        	int copyTime = getCopyModelSuffix(budgetModel.getModelId(),1);
+        	long currentTime = System.currentTimeMillis();
+        	budgetModel2.setModelId("temp"+currentTime);
+        	budgetModel2.setModelCode(budgetModel.getModelCode()+copyTime);
+        	budgetModel2.setModelName(budgetModel.getModelName()+copyTime);
+        	budgetModel2.setDisabled(true);
+        	budgetModel2.setCreator(UserContextUtil.getContextUser().getPersonName());
+        	budgetModel2.setCreateDate(Calendar.getInstance().getTime());
         	budgetModel2 = budgetModelManager.save(budgetModel2);
         	
         	Set<BmModelProcess> bmModelProcesses = budgetModel.getBmModelProcesses();
@@ -1282,13 +1592,30 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 				bmModelDeptManager.save(bmModelDept);
         	}
         	
+        	List<PropertyFilter> assistFilters = new ArrayList<PropertyFilter>();
+        	assistFilters.add(new PropertyFilter("EQS_model.modelId",budgetModel.getModelId()));
+        	List<BmModelAssist> bmModelAssists= bmModelAssistManager.getByFilters(assistFilters);
+        	for(BmModelAssist bmModelAssist : bmModelAssists){
+        		BmModelAssist bmModelAssistTemp = new BmModelAssist();
+        		bmModelAssistTemp.setModel(budgetModel2);
+        		bmModelAssistTemp.setAssistCode(bmModelAssist.getAssistCode());
+        		bmModelAssistTemp.setItem(bmModelAssist.getItem());
+        		bmModelAssistTemp.setItemName(bmModelAssist.getItemName());
+        		bmModelAssistManager.save(bmModelAssistTemp);
+        	}
+        	
         	budgetModel = budgetModel2;
-        	budgetModel.setModelCopyId(budgetModel.getModelId());
+        	budgetModel.setModelCopyId(budgetModel.getModelCode());
+        	//budgetModel.setModelId();
         	
         	this.setEntityIsNew(false);
         }
         modelTypes = ContextUtil.getDicItemsByCode("bmModelType");
         modelType = "copy";
+        List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+        filters.add(new PropertyFilter("EQB_assistType.disabled","false"));
+        filters.add(new PropertyFilter("NES_assistType.typeCode","0"));
+        budgetAssistTypes = budgetAssistTypeManager.getByFilters(filters);
         return SUCCESS;
 	}
 	
@@ -1398,6 +1725,24 @@ public class BudgetModelPagedAction extends JqGridBaseAction implements Preparab
 			bmCheckProcessCode = ContextUtil.getGlobalParamByKey("bmCheckProcess");
 		}
 		return SUCCESS;
+	}
+	
+	public String bmAssistTypeMain(){
+		if(StringUtils.isNotEmpty(modelId)){
+			budgetModel = budgetModelManager.get(modelId);
+			String assistType = budgetModel.getAssistType();
+			if(StringUtils.isNotEmpty(assistType)){
+				List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+				filters.add(new PropertyFilter("INS_assistType.typeCode",assistType));
+				budgetAssistTypes = budgetAssistTypeManager.getByFilters(filters);
+			}
+		}else{
+			budgetAssistTypes = new ArrayList<BudgetAssistType>();
+		}
+		return SUCCESS;
+	}
+	public static void main(String[] args) {
+		System.out.println();
 	}
 }
 

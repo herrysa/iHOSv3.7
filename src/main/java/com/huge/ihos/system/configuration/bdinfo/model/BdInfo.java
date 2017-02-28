@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.huge.ihos.system.systemManager.organization.model.Person;
 import com.huge.model.BaseObject;
@@ -49,6 +50,51 @@ public class BdInfo extends BaseObject implements Serializable{
 	private Boolean orderByFieldAsc = false;//升序排列
 	
 	private Set<FieldInfo> fieldInfos;
+	
+	private String tablePkName;
+	private String tableDisplayName;
+	private String filter;
+	
+	@Transient
+	public String getTablePkName() {
+		if(fieldInfos!=null&fieldInfos.size()>0){
+			for(FieldInfo fieldInfo : fieldInfos){
+				Boolean pk = fieldInfo.getIsPkCol();
+				if(pk!=null&&pk){
+					tablePkName = fieldInfo.getFieldCode();
+				}
+			}
+		}
+		return tablePkName;
+	}
+	public void setTablePkName(String tablePkName) {
+		this.tablePkName = tablePkName;
+	}
+	
+	@Transient
+	public String getTableDisplayName() {
+		if(fieldInfos!=null&fieldInfos.size()>0){
+			for(FieldInfo fieldInfo : fieldInfos){
+				Boolean name = fieldInfo.getIsNameCol();
+				if(name!=null&&name){
+					tableDisplayName = fieldInfo.getFieldCode();
+				}
+			}
+		}
+		return tableDisplayName;
+	}
+	public void setTableDisplayName(String tableDisplayName) {
+		this.tableDisplayName = tableDisplayName;
+	}
+	
+	@Transient
+	public String getFilter() {
+		return filter;
+	}
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+	
 	
 	@Id
 	@Column(length = 50,name="bdInfoId",nullable = false)

@@ -97,7 +97,7 @@ var reportPlanDefine = {
 <div class="page" style="height: 100%;">
 	<div id="defineReportContent" class="pageContent" style="height: 100%;">
 		<div class="panelBar">
-			<ul class="toolBar">
+			<ul class="toolBar"> 
 				<li><a id="${random}_editReport" class="reportbutton"  href="javaScript:"
 					><span>编辑报表
 					</span>

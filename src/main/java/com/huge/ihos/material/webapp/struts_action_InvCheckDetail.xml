@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invCheckDetail" extends="default"	namespace="/">
+
+		<action name="invCheckDetailList" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction">
+			<result name="input">/WEB-INF/pages/invCheck/invCheckDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/invCheck/invCheckDetailList.jsp</result>
+		</action>
+		<action name="invCheckDetailGridList" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction"		method="invCheckDetailGridList">
+			<result type="json">
+				<param name="includeProperties">invCheckDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invCheckDetailGridEdit" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction"			method="invCheckDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvCheckDetail" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/invCheck/invCheckDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/invCheck/invCheckDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvCheckDetail" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="invCheckImportDict" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction" method="invCheckImportDict">
+			<result name="success">/WEB-INF/pages/material/invCheck/invCheckImportDict.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invCheck/invCheckImportDict.jsp</result>
+		</action>
+		<action name="invCheckImportDictGridList" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction" method="invCheckImportDictGridList">
+			<result type="json">
+				<param name="includeProperties">invCheckImportDicts.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="addInvDictToInvCheckDetail" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction"			method="addInvDictToInvCheckDetail">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="addAllInvDictToInvCheckDetail" class="com.huge.ihos.material.webapp.action.InvCheckDetailPagedAction"			method="addAllInvDictToInvCheckDetail">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

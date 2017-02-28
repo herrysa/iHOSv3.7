@@ -140,6 +140,37 @@
 			}
 			var second_tr = $("#gbox_"+$t.id+" .ui-jqgrid-htable .jqg-second-row-header");
 			newTr.insertBefore(second_tr);
+		} ,
+	setComplexGroupThirdHeaders : function(o) {
+		var $t = this[0];
+		if(!$t.grid) { return; }
+		var $ghs;
+		if(o.groupHeaders){
+			$ghs = o.groupHeaders;
+			$(this).setGroupHeaders(o);
+		}else{
+			$ghs = $t.p.groupHeader;
 		}
+		var $cghs = o.complexGroupHeaders;
+		if(!$cghs){return;}
+		var colModel = $t.p.colModel;
+		var s_ths = $("#gbox_"+$t.id+" .ui-jqgrid-htable .jqg-second-row-header > th");
+		for(var i=0;i<$ghs.length;i++){
+			var ghItem = $ghs[i];
+			var count_secondCol = 0;
+			for(var j=0;j<colModel.length;j++){
+				if(colModel[j].name==ghItem.startColumnName){
+					break;
+				}
+				count_secondCol++;
+			}
+			for(var j=0;j<i;j++){
+				count_secondCol = count_secondCol - ($ghs[j].numberOfColumns-1);
+			}
+			$(s_ths[count_secondCol]).attr("startColName","s_" + ghItem.startColumnName)
+			.attr("numberOfColumns",ghItem.numberOfColumns);
+		}
+		
+	}
 	});
 })(jQuery);

@@ -73,10 +73,26 @@
 			shrinkToFit:false,
 			autowidth:false,
 			onSelectRow: function(rowid) {
+				jQuery(this).data("rowid",rowid);
 			},
 			gridComplete:function(){
-           		if(jQuery(this).getDataIDs().length>0){
-           			jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
+          		var rowIds = jQuery(this).getDataIDs();
+          		var rowNum = rowIds.length;
+           		if(rowNum>0){
+           			var rowid = jQuery(this).data("rowid");
+           			if(rowid){
+	           			jQuery(this).jqGrid('setSelection',rowid);
+           			}else{
+    	       			jQuery(this).jqGrid('setSelection',jQuery(this).getDataIDs()[0]);
+           			}
+           			var ret = jQuery(this).jqGrid('getRowData');
+        	    	var i=0;
+        	    	for (i=0;i<rowNum;i++){
+        	    		var id = rowIds[i];
+         	    	 	var hrefUrl = "editBudgetModelReport?reportType=1&modelId="+id;
+        	    		var cellText = ret[i]["modelName"];
+    			    	setCellText(jQuery(this)[0],id,'modelName','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="modelReportZhuanqu(\''+hrefUrl+'\')" target="navTab">'+cellText+"</a>");
+        	    	}
            		}
            		gridContainerResize('budgetModel','fullLayout');
            		var dataTest = {"id":"budgetModel_gridtable"};
@@ -149,7 +165,7 @@
 		}
     	var url = "editBudgetModelReport?modelId="+sid;
     	url = encodeURI(url);
-    	$.pdialog.open(url, 'editBudgetReport', "编辑预算模板", {
+    	$.pdialog.open(url, 'editBudgetReport', "设计模板", {
     		mask : true,
     		maxable : true,
     		resizable : true,
@@ -211,6 +227,18 @@
         });
     });
   	});
+	function modelReportZhuanqu(url){
+		var fullHeight = jQuery("#container").innerHeight();
+    	var fullWidth = jQuery("#container").innerWidth();
+		url = encodeURI(url);
+    	$.pdialog.open(url, 'showBudgetReport', "查看预算模板", {
+    		mask : true,
+    		maxable : true,
+    		resizable : true,
+    		width : fullWidth,
+    		height : fullHeight
+    	});
+	}
 </script>
 
 <div class="page" id="budgetModel_page">
@@ -298,6 +326,11 @@
 					</span>
 				</a>
 				</li>
+				<li><a id="budgetModel_gridtable_editReport" class="reportbutton"  href="javaScript:"
+					><span>设计模板
+					</span>
+				</a>
+				</li>
 				<li><a id="budgetModel_gridtable_enabled" class="enablebutton"  href="javaScript:"
 					><span>启用
 					</span>
@@ -310,11 +343,6 @@
 				</li>
 				<li><a id="budgetModel_gridtable_copy" class="inheritbutton"  href="javaScript:"
 					><span>复制
-					</span>
-				</a>
-				</li>
-				<li><a id="budgetModel_gridtable_editReport" class="reportbutton"  href="javaScript:"
-					><span>编辑模板
 					</span>
 				</a>
 				</li>

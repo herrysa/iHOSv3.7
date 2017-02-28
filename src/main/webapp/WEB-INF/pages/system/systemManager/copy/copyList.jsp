@@ -5,11 +5,11 @@
  
 	function copyGridReload(){
 		var urlString = "copyGridList";
-		var copycode = jQuery("#copycode").val();
-		var copyname = jQuery("#copyname").val();
-		var copyshort = jQuery("#copyshort").val();
-		var cwmanager = jQuery("#cwmanager").val();
-		var orgCode = jQuery("#orgCode").val();
+		var copycode = jQuery("#copy_copycode").val();
+		var copyname = jQuery("#copy_copyname").val();
+		var copyshort = jQuery("#copy_copyshort").val();
+		var cwmanager = jQuery("#copy_cwmanager").val();
+		var orgCode = jQuery("#copy_orgCode").val();
 	
 		urlString=urlString+"?filter_LIKES_copycode="+copycode+"&filter_LIKES_copyname="+copyname+"&filter_LIKES_copyshort="+copyshort+"&filter_LIKES_cwmanager="+cwmanager+"&filter_LIKES_org.orgCode="+orgCode;
 		urlString=encodeURI(urlString);
@@ -112,10 +112,10 @@ var copyGrid = jQuery(copyGridIdString);
 			selectId = treeId;
 			urlString = "copyGridList";
 			if(treeId!='-1' && treeId!=""){
-				jQuery("#orgCode").val(selectId);
+				jQuery("#copy_orgCode").val(selectId);
 				urlString += "?filter_LIKES_org.orgCode="+treeId+"*";
 			} else {
-				jQuery("#orgCode").val("");
+				jQuery("#copy_orgCode").val("");
 			}
 			urlString=encodeURI(urlString);
 			jQuery("#copy_gridtable").jqGrid('setGridParam',{url:urlString,page:1}).trigger("reloadGrid");
@@ -163,19 +163,19 @@ var copyGrid = jQuery(copyGridIdString);
 				<table class="searchContent">
 					<tr>
 						<td><s:text name='copy.copycode'/>:
-							<input type="text"	id="copycode" >
+							<input type="text"	id="copy_copycode" >
 						</td>
 						<td><s:text name='copy.copyname'/>:
-						 	<input type="text"	id="copyname" >
+						 	<input type="text"	id="copy_copyname" >
 						 </td>
 						<td><s:text name='copy.copyshort'/>:
-						 	<input type="text"	id="copyshort" >
+						 	<input type="text"	id="copy_copyshort" >
 						 </td>
 						<td><s:text name='copy.cwmanager'/>:
-						 	<input type="text"	id="cwmanager" >
+						 	<input type="text"	id="copy_cwmanager" >
 						 </td>
 						 <td>
-						 	<input type="hidden"	id="orgCode" >
+						 	<input type="hidden"	id="copy_orgCode" >
 						 </td>
 					</tr>
 				</table>

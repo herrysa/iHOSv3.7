@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="kjYear" extends="default"	namespace="/">
+
+		<action name="kjYearList" class="com.huge.ihos.kjyear.webapp.action.KjYearPagedAction">
+			<result name="input">/WEB-INF/pages/accounting/kjYear/kjYearList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/kjYear/kjYearList.jsp</result>
+		</action>
+		<action name="kjYearGridList" class="com.huge.ihos.kjyear.webapp.action.KjYearPagedAction"		method="kjYearGridList">
+			<result type="json">
+				<param name="includeProperties">kjYears.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="kjYearGridEdit" class="com.huge.ihos.kjyear.webapp.action.KjYearPagedAction"			method="kjYearGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editKjYear" class="com.huge.ihos.kjyear.webapp.action.KjYearPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/accounting/kjYear/kjYearForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/kjYear/kjYearForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveKjYear" class="com.huge.ihos.kjyear.webapp.action.KjYearPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invTypeNo" extends="default"	namespace="/">
+
+		<action name="invTypeNoList" class="com.huge.ihos.material.typeno.webapp.action.InvTypeNoPagedAction">
+			<result name="input">/WEB-INF/pages/invTypeNo/invTypeNoList.jsp</result>
+			<result name="success">/WEB-INF/pages/invTypeNo/invTypeNoList.jsp</result>
+		</action>
+		<action name="invTypeNoGridList" class="com.huge.ihos.material.typeno.webapp.action.InvTypeNoPagedAction"		method="invTypeNoGridList">
+			<result type="json">
+				<param name="includeProperties">invTypeNoes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invTypeNoGridEdit" class="com.huge.ihos.material.typeno.webapp.action.InvTypeNoPagedAction"			method="invTypeNoGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvTypeNo" class="com.huge.ihos.material.typeno.webapp.action.InvTypeNoPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/invTypeNo/invTypeNoForm.jsp</result>
+			<result name="input">/WEB-INF/pages/invTypeNo/invTypeNoForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvTypeNo" class="com.huge.ihos.material.typeno.webapp.action.InvTypeNoPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkMaterialDocument" class="com.huge.ihos.material.typeno.webapp.action.InvTypeNoPagedAction" method="checkMaterialDocument">
+			<result name="invMainInit" type="redirectAction">editInvMainInit?ioId=${docId}</result>
+            <result name="invMainIn" type="redirectAction">editInvMainIn?ioId=${docId}</result>
+            <result name="invMainOut" type="redirectAction">editInvMainOut?ioId=${docId}</result>
+            <result name="invCheck" type="redirectAction">editInvCheck?checkId=${docId}</result>
+            <result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

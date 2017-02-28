@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--By Supcan TreeList -->
+<TreeList>
+	<Properties dataURL="getDataXml?sql=select p.personId ,p.name ,p.personCode,d.name deptName from t_person p left join t_department d on p.dept_id=d.deptId  where p.disabled=0 and p.personId&lt;&gt;'XT'">
+	</Properties>
+	<Cols>
+		<Col name="personId"  width="70" align="center" isHide="true">人员Id</Col>
+		<Col name="name" width="100">姓名</Col>
+		<Col name="personCode" width="100">人员编码</Col>
+		<Col name="deptName" width="100">部门</Col>
+	</Cols>
+</TreeList>

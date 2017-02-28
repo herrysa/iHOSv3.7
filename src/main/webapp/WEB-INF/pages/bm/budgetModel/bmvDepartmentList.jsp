@@ -126,7 +126,7 @@
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a id="bmDepartment_gridtable_add_c" class="addbutton" href="javaScript:" ><span>确定
+				<li><a id="bmDepartment_gridtable_add_c" class="addbutton" href="javaScript:" ><span>选中
 					</span>
 				</a>
 				</li>

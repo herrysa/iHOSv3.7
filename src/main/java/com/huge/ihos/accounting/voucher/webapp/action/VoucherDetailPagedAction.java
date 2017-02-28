@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
-import com.huge.ihos.accounting.AssistType.service.AssistTypeManager;
 import com.huge.ihos.accounting.account.model.Account;
 import com.huge.ihos.accounting.account.service.AccountManager;
 import com.huge.ihos.accounting.voucher.model.Voucher;
@@ -22,6 +21,7 @@ import com.huge.ihos.accounting.voucher.service.VoucherDetailManager;
 import com.huge.ihos.accounting.voucher.service.VoucherManager;
 import com.huge.ihos.accounting.voucherType.model.VoucherType;
 import com.huge.ihos.accounting.voucherType.service.VoucherTypeManager;
+import com.huge.ihos.system.configuration.AssistType.service.AssistTypeManager;
 import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.systemManager.organization.model.Person;
 import com.huge.util.DateUtil;

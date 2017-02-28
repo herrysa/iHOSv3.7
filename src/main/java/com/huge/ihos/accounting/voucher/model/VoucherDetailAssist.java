@@ -3,7 +3,6 @@ package com.huge.ihos.accounting.voucher.model;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +16,7 @@ import javax.persistence.Transient;
 import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.GenericGenerator;
 
-import com.huge.ihos.accounting.AssistType.model.AssistType;
+import com.huge.ihos.system.configuration.AssistType.model.AssistType;
 import com.huge.model.BaseObject;
 
 @Entity

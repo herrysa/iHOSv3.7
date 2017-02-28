@@ -49,7 +49,7 @@
     <!-- DataSource -->
     <bean id="DataSource1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
-        <property name="url" value="jdbc:jtds:sqlserver://localhost:1433/ihosv3.7_e"/>
+        <property name="url" value="jdbc:jtds:sqlserver://localhost:1433/ihosv3.7"/>
         <property name="username" value="sa"/>
         <property name="password" value="1234"/>
         <property name="maxActive" value="100"/>
@@ -77,7 +77,7 @@
                 hibernate.jdbc.fetch_size 50
                 hibernate.jdbc.batch_size 30
                 hibernate.show_sql=false
-                hibernate.format_sql=false
+                hibernate.format_sql=true
             </value>
         </property>
     </bean>

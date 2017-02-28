@@ -8,12 +8,12 @@
 	<package name="voucherDetail" extends="default"	namespace="/">
 
 		<action name="voucherDetailList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction" method="voucherDetailCardPre">
-			<result name="input">/WEB-INF/pages/voucherDetail/voucherDetailList.jsp</result>
-			<result name="success">/WEB-INF/pages/voucherDetail/voucherDetailList.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucherDetail/voucherDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucherDetail/voucherDetailList.jsp</result>
 		</action>
 		<action name="voucherCard" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction" method="voucherDetailCardPre">
-			<result name="input">/WEB-INF/pages/voucherDetail/voucherCard.jsp</result>
-			<result name="success">/WEB-INF/pages/voucherDetail/voucherCard.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucherDetail/voucherCard.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucherDetail/voucherCard.jsp</result>
 		</action>
 		
 		<action name="saveVoucherDetailData" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction" method="saveVoucherDetailData">
@@ -40,8 +40,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editVoucherDetail" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailPagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/voucherDetail/voucherDetailForm.jsp</result>
-			<result name="input">/WEB-INF/pages/voucherDetail/voucherDetailForm.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucherDetail/voucherDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucherDetail/voucherDetailForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->

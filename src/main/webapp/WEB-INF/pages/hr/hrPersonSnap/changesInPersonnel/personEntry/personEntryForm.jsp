@@ -248,11 +248,11 @@
      						     		<td>
      						     		<s:if test="%{entityIsNew}">
      						     		<s:textfield id="personEntry_personCode" key="personEntry.personCode" maxlength="20"
-      									notrepeat='人员编码已存在' validatorType="sql"  validatorParam="SELECT v.personId AS checkId FROM v_hr_person_current v WHERE v.personCode = %value% AND v.orgCode = '${orgCode}' UNION SELECT hpe.id AS checkId FROM hr_person_entry hpe WHERE hpe.personCode = %value% AND hpe.deptId IN (SELECT v.deptId FROM v_hr_department_current v WHERE v.orgCode = '${orgCode}')"/>
+      									notrepeat='人员编码已存在' validatorType="sql"  validatorParam="SELECT v.personId AS checkId FROM v_hr_person_current v WHERE v.disabled=0 and v.personCode = %value% AND v.orgCode = '${orgCode}' UNION SELECT hpe.id AS checkId FROM hr_person_entry hpe WHERE hpe.personCode = %value% AND hpe.deptId IN (SELECT v.deptId FROM v_hr_department_current v WHERE v.orgCode = '${orgCode}')"/>
      						     		</s:if>
      						     		<s:else>
      						     		<s:textfield id="personEntry_personCode" key="personEntry.personCode" maxlength="20" oldValue="'${personEntry.personCode}'"
-      									notrepeat='人员编码已存在' validatorType="sql"  validatorParam="SELECT v.personId AS checkId FROM v_hr_person_current v WHERE v.personCode = %value% AND v.orgCode = '${orgCode}' UNION SELECT hpe.id AS checkId FROM hr_person_entry hpe WHERE hpe.personCode = %value% AND hpe.deptId IN (SELECT v.deptId FROM v_hr_department_current v WHERE v.orgCode = '${orgCode}')"/>
+      									notrepeat='人员编码已存在' validatorType="sql"  validatorParam="SELECT v.personId AS checkId FROM v_hr_person_current v WHERE v.disabled=0 and v.personCode = %value% AND v.orgCode = '${orgCode}' UNION SELECT hpe.id AS checkId FROM hr_person_entry hpe WHERE hpe.personCode = %value% AND hpe.deptId IN (SELECT v.deptId FROM v_hr_department_current v WHERE v.orgCode = '${orgCode}')"/>
      						     		</s:else>
       									</td>
      						     		</tr>

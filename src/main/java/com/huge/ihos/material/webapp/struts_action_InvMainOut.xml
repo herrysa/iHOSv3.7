@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invMainOut" extends="default" namespace="/">
+
+		<action name="invMainOutList" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="invMainOutList">
+			<result name="input">/WEB-INF/pages/material/invMainOut/invMainOutList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainOut/invMainOutList.jsp</result>
+		</action>
+		<action name="invMainMoveList" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="invMainOutList">
+			<result name="input">/WEB-INF/pages/material/invMainMove/invMainMoveList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainMove/invMainMoveList.jsp</result>
+		</action>
+		<action name="invMainOutGridList" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="invMainGridList">
+			<result type="json">
+				<param name="includeProperties">invMains.*,records,total,page,userdata.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainOutGridEdit" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="invMainGridEdit">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvMainOut" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="edit">
+			<result name="input">/WEB-INF/pages/material/invMainOut/invMainOutForm.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainOut/invMainOutForm.jsp</result>
+		</action>
+		<action name="editInvMainMove" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="editMove">
+			<result name="input">/WEB-INF/pages/material/invMainMove/invMainMoveForm.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainMove/invMainMoveForm.jsp</result>
+		</action>
+		<action name="batchAddOutInvs" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="batchAddOutInvs">
+			<result name="input">/WEB-INF/pages/material/invMainOut/storeInvOutSelectList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainOut/storeInvOutSelectList.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvMainOut" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="save">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainOutConfirm" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="invMainOutConfirm">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainOutAudit" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="invMainOutAudit">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainOutAuditNot" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="invMainOutAuditNot">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="getInvMainOutCurAmount" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="getInvMainOutCurAmount">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,curAmount</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<!-- 根据科室申领生成出库单、移库单 -->
+		<action name="createInvOutByDistribute" class="com.huge.ihos.material.webapp.action.InvMainOutPagedAction" method="createInvOutByDistribute">
+			<result name="deptAppOut">/WEB-INF/pages/material/invMainOut/invMainOutForm.jsp</result>
+			<result name="deptAppMove">/WEB-INF/pages/material/invMainMove/invMainMoveForm.jsp</result>
+		</action>
+	</package>
+
+</struts>

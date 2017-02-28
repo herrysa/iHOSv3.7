@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="busiProcess" extends="default"	namespace="/">
+
+		<action name="businessProcess" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction">
+			<result name="input">/WEB-INF/pages/businessProcess/businessProcess.jsp</result>
+			<result name="success">/WEB-INF/pages/businessProcess/businessProcess.jsp</result>
+		</action>
+		<action name="businessProcessList" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction">
+			<result name="input">/WEB-INF/pages/businessProcess/businessProcessList.jsp</result>
+			<result name="success">/WEB-INF/pages/businessProcess/businessProcessList.jsp</result>
+		</action>
+		<action name="businessProcessGridList" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction"		method="businessProcessGridList">
+			<result type="json">
+				<param name="includeProperties">businessProcesses.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="businessProcessGridEdit" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction"			method="businessProcessGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBusinessProcess" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/businessProcess/businessProcessForm.jsp</result>
+			<result name="input">/WEB-INF/pages/businessProcess/businessProcessForm.jsp</result>
+		</action>
+		<action name="copyBusinessProcess" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction" method="copyBusinessProcess">
+			<result name="success">/WEB-INF/pages/businessProcess/businessProcessForm.jsp</result>
+			<result name="input">/WEB-INF/pages/businessProcess/businessProcessForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBusinessProcess" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkEditBusinessProcess" class="com.huge.ihos.businessprocess.webapp.action.BusinessProcessPagedAction" method="checkEditBusinessProcess">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,exists</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

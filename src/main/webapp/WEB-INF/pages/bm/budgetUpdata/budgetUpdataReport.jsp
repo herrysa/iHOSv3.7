@@ -14,6 +14,7 @@ var budgetReportDefine = {
 			"Load":function( id,p1, p2, p3, p4){
 			},
 			"Opened":function( id,p1, p2, p3, p4){
+				console.log("open");
 				if("${reportModel}"!="report"){
 					var grid = eval("("+id+")");
 					grid.func("AddUserFunctions", "getBmReportFunctionXml");
@@ -80,13 +81,53 @@ var budgetReportDefine = {
 				if(p1=="104"){
 					grid.func("CancelEvent", "");
 				}
+			},
+			"EditChanged":function( id,p1, p2, p3, p4){
+				var grid = eval("("+id+")");
+				var thisHasArrow = grid.func("GetCellProp",p1+" \r\n "+p2+" \r\n hasArrow");
+				if(!thisHasArrow){
+					var cols = grid.func("GetCols");
+					var assistColStr = grid.func("GetMemo"," \r\n assistColArr");
+					var indexColStr = grid.func("GetMemo"," \r\n indexColArr");
+					var assistColArr = eval("("+assistColStr+")");
+					var indexColArr = eval("("+indexColStr+")");
+					var arrowCells = grid.func("FindCell", "hasArrow=1");
+					var arrowCellArr = arrowCells.split(",");
+					for(var i=0;i<cols;i++){
+						var hasArrow = grid.func("GetCellProp",p1+" \r\n "+i+" \r\n hasArrow");
+						if(hasArrow==1){
+							var cellRow = p1;
+							var cellCol = i;
+							var alias = "";
+							for(var colIndex in assistColArr){
+								var col = assistColArr[colIndex];
+								if(!col&&col!=0){
+									continue;
+								}else{
+									var assisData = grid.func("getCellData", cellRow+" \r\n "+colIndex);
+									alias += assisData+"@";
+								}
+							}
+							var indexCode = indexColArr[cellCol];
+							if(!indexCode){
+								indexCode = "";
+							}
+							alias += indexCode;
+							//dataCell[cellRow+cellCol] = alias;
+							grid.func("SetCellProp",cellRow+" \r\n "+cellCol+" \r\n Alias \r\n "+alias);
+							console.log(alias);
+						}
+					}
+				}
 			}
 		},
 		callback:{
 			onComplete:function(id){
+				console.log("com");
 				var grid = eval("("+id+")");
 				if("${reportModel}"!="report"){
-					grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}&modelType=${modelType}");
+					var dataColCode = grid.func("GetMemo"," \r\n dataColCode");
+					grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}&modelType=${modelType}&dataColCode="+dataColCode);
 					grid.func("SelectCell", "");
 				}
 				if("${reportType}"=="show"||"${reportModel}"=="report"){
@@ -95,6 +136,7 @@ var budgetReportDefine = {
 				if("${modelType}"=="3"){
 					
 				}
+				//grid.func("SubscribeEvent", "SelChanged, EditChanged");　　
 			}
 		}
 	}; 
@@ -102,10 +144,10 @@ var budgetReportDefine = {
     supcanGridMap.put('budgetReport_gridtable_${random}',budgetReportDefine); 
  	jQuery(document).ready(function(){
  		//uploadDesigntime、uploadRuntime
- 		if("${reportModel}"!="report"){
- 			insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadRuntime","99%");
+ 		if("${reportModel}"!="report"&&"${reportType}"!="show"){
+ 			insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadRuntime;Rebar=Print","99%");
  		}else{
- 			insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","","99%");
+ 			insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","Rebar=Print","99%");
  		}
  		var grid = eval("(budgetReport_gridtable_${random})");
  		jQuery("#${random}_freshReportData").click(function(){
@@ -176,12 +218,76 @@ var budgetReportDefine = {
  		});
  		jQuery("#${random}_saveBmReportData").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var assistColStr = grid.func("GetMemo"," \r\n assistColArr");
+			var indexColStr = grid.func("GetMemo"," \r\n indexColArr");
+			var assistColArr = new Array();
+			if(assistColStr){
+				assistColArr = eval("("+assistColStr+")");
+			}
+			var indexColArr = new Array();
+			if(indexColStr){
+				indexColArr = eval("("+indexColStr+")");
+			}
+ 			var arrowCells = grid.func("FindCell", "hasArrow=1");
+ 			var arrowCellArr = arrowCells.split(",");
+ 			var aliasArr = new Array();
+ 			for(var i in arrowCellArr){
+ 				var arrowCell = arrowCellArr[i];
+ 				var cellRow = grid.func("GetCellRow",arrowCell);
+ 				var cellCol = grid.func("GetCellCol",arrowCell);
+ 				var alias = "";
+ 				for(var colIndex in assistColArr){
+ 					var col = assistColArr[colIndex];
+ 					if(!col&&col!=0){
+ 						continue;
+ 					}else{
+ 						var assisData = grid.func("getCellData", cellRow+" \r\n "+colIndex);
+ 						alias += assisData+"@";
+ 					}
+ 				}
+ 				var indexCode = indexColArr[cellCol];
+ 				if(!indexCode){
+ 					indexCode = "";
+ 				}
+ 				alias += indexCode;
+ 				if(aliasArr.indexOf(alias)!=-1){
+ 					cellRow = parseInt(cellRow);
+ 					alertMsg.error("第"+(cellRow+1)+"行有重复记录，请检查！");
+ 					return ;
+ 				}
+ 				aliasArr.push(alias);
+ 				grid.func("SetCellProp",cellRow+" \r\n "+cellCol+" \r\n Alias \r\n "+alias);
+ 			}
+ 			var uploadCells = grid.func("GetUploadCells");
+ 			var uploadCellArr = uploadCells.split(",");
+ 			var taborderBack = {};
+ 			for(var i in uploadCellArr){
+ 				var uploadCell = uploadCellArr[i];
+ 				var hasArrow = grid.func("GetCellProp",uploadCell+" \r\n hasArrow");
+ 				if(hasArrow!=1){
+ 					var taborder = grid.func("GetCellProp",uploadCell+" \r\n taborder");
+ 					taborderBack[uploadCell] = taborder;
+ 					grid.func("SetCellProp",uploadCell+" \r\n taborder \r\n 0");
+ 				}
+ 			}
  			var updataXml = grid.func("GetUploadXML", "");
+ 			for(var uploadCell in taborderBack){
+ 				var taborder = taborderBack[uploadCell];
+ 				grid.func("SetCellProp",uploadCell+" \r\n taborder \r\n "+taborder);
+ 			}
+ 			var modelChanged = grid.func("GetMemo"," \r\n modelChanged");
+ 			var reportXml = "";
+ 			/* if(modelChanged==1){
+ 			}else if(modelChanged==2){
+ 				reportXml = 'null';
+ 			} */
+	 			reportXml = grid.func("GetFileXML", "isSaveCalculateResult=true");
+ 			var dataColCode = grid.func("GetMemo"," \r\n dataColCode");
 			$.ajax({
 	            url: 'saveBmUpdata',
 	            type: 'post',
 	            dataType: 'json',
-	            data :{updataId:"${updataId}",updataXml:updataXml,modelType:"${modelType}"},
+	            data :{updataId:"${updataId}",updataXml:updataXml,reportXml:reportXml,dataColCode:dataColCode,modelType:"${modelType}"},
 	            async:false,
 	            error: function(data){
 	            alertMsg.error("系统错误！");
@@ -195,11 +301,12 @@ var budgetReportDefine = {
  			alertMsg.confirm("确认引入？引入后，当前编辑的数据将被覆盖！", {
  				okCall: function(){
  					var grid = eval("(budgetReport_gridtable_${random})");
-	 				grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}&reportType=lastUpdata");
+ 					var dataColCode = grid.func("GetMemo"," \r\n dataColCode");
+	 				grid.func("SetUploadXML", "getBmUpdataXml?updataId=${updataId}&reportType=lastUpdata&dataColCode="+dataColCode);
  				}
  			});
  		});
- 		jQuery("#${random}_saveBmReportXml").click(function(){
+ 		jQuery("#${random}_saveHzBmReportXml").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
  			var cells = grid.func("FindCell", "left(formula,1)='='"); 
  			var cellArr = cells.split(",");
@@ -221,7 +328,7 @@ var budgetReportDefine = {
 	            url: 'saveBmUpdataXml',
 	            type: 'post',
 	            dataType: 'json',
-	            data :{updataId:"${updataId}",modelType:"${modelType}",updataXml:fileXml,navTabId:'budgetModelHz_gridtable'},
+	            data :{updataId:"${updataId}",modelType:"${modelType}",updataXml:fileXml,navTabId:'${random}_budgetModelHz_gridtable'},
 	            async:false,
 	            error: function(data){
 	            alertMsg.error("系统错误！");
@@ -230,6 +337,105 @@ var budgetReportDefine = {
 	            	formCallBack(data);
 	            }
 	        });
+ 		});
+ 		jQuery("#${random}_saveZnBmReportXml").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var cells = grid.func("FindCell", "left(formula,1)='='"); 
+ 			var cellArr = cells.split(",");
+ 			for(var i in cellArr){
+ 				var cell = cellArr[i];
+ 				var cellTxt = grid.func("GetCellText", cell+"");
+ 				grid.func("SetCellData", cell+"\r\n");
+ 				grid.func("SetCellData", cell+"\r\n"+cellTxt);
+ 			}
+ 			var rows = grid.func("GetRows","");
+ 			for(var row=0;row<rows;row++){
+ 				var isds = grid.func("GetRowProp",row+"\r\nds");
+ 				if(isds==1){
+ 					grid.func("SetRowProp",row+"\r\nds\r\n0");
+ 				}
+ 			}
+ 			var fileXml = grid.func("GetFileXML", "isSaveCalculateResult=true"); 
+ 			$.ajax({
+	            url: 'saveBmUpdataXml',
+	            type: 'post',
+	            dataType: 'json',
+	            data :{updataId:"${updataId}",modelType:"${modelType}",updataXml:fileXml,navTabId:'${random}_budgetModelZn_gridtable'},
+	            async:false,
+	            error: function(data){
+	            alertMsg.error("系统错误！");
+	            },
+	            success: function(data){
+	            	formCallBack(data);
+	            }
+	        });
+ 		});
+ 		jQuery("#${random}_copyBmReportRow1").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var currentCells = grid.func("GetCurrentCells");
+ 			var currentCellArr = currentCells.split(":");
+ 			var currentRow = grid.func("GetCellRow",currentCellArr[0]);
+ 			grid.func("SelectCell", "A1 \r\n \r\n -1"); 
+ 		});
+ 		jQuery("#${random}_copyBmReportRow").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			grid.func("SetMemo"," \r\n modelChanged \r\n 1");
+ 			var cols = grid.func("GetCols");
+ 			var currentCells = grid.func("GetCurrentCells");
+ 			var currentCellArr = currentCells.split(":");
+ 			var currentRow = grid.func("GetCellRow",currentCellArr[0]);
+ 			currentRow = parseInt(currentRow);
+ 			//var firstCellArr = currentCellArr[0].split("");
+ 			grid.func("SelectCell", currentRow+" \r\n A \r\n "+currentRow+" \r\n -1");
+ 			var maxColNum = grid.func("GetCellCol",currentCellArr[1]);
+ 			var hasArrowArr = new Array();
+ 			var maxTaborder = 0;
+ 			for(var i=0;i<maxColNum;i++){
+ 				var hasArrow = grid.func("GetCellProp",currentRow+" \r\n "+i+" \r\n hasArrow");
+ 				if(maxTaborder>0){
+	 				maxTaborder = grid.func("GetCellProp",currentRow+" \r\n "+i+" \r\n taborder");
+ 				}
+ 				if(hasArrow==1){
+	 				hasArrowArr[i] = 1;
+ 				}
+ 			}
+ 			maxTaborder = parseInt(maxTaborder);
+ 			var maxColArr = currentCellArr[1].split("");
+ 			grid.func("SetProp","WorkMode=uploadDesigntime");
+ 			grid.func("CallFunc","20");
+ 			grid.func("InsertRows",currentRow+" \r\n 1 \r\n 0");
+ 			grid.func("SelectCell", "A"+(currentRow+2)+"  \r\n "+maxColArr[0]+(currentRow+2)); 
+ 			grid.func("CallFunc","34");
+ 			for(var i=0;i<maxColNum;i++){
+ 				var hasArrow = hasArrowArr[i];
+ 				var thisTaborder = grid.func("GetCellProp",(currentRow+1)+" \r\n "+i+" \r\n taborder");
+ 				if(thisTaborder>0){
+ 					maxTaborder += 10;
+ 					grid.func("SetCellProp",(currentRow+1)+" \r\n "+i+" \r\n taborder \r\n "+maxTaborder);
+ 				}
+ 				if(hasArrow==1){
+ 					grid.func("SetCellProp",(currentRow+1)+" \r\n "+i+" \r\n hasArrow \r\n 1");
+ 				}
+ 			}
+ 			grid.func("SetProp","WorkMode=uploadRuntime");
+ 			grid.func("RebuildTabOrder");
+ 			var fileXml = grid.func("GetFileXML", "isSaveCalculateResult=true"); 
+ 			//console.log(fileXml);
+ 			//grid.func("CloneArea", "A5:D5 \r\n row=9");
+
+ 		});
+ 		jQuery("#${random}_delBmReportRow").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var currentCells = grid.func("GetCurrentCells");
+ 			var currentCellArr = currentCells.split(":");
+ 			var currentRow = grid.func("GetCellRow",currentCellArr[0]);
+ 			grid.func("DeleteRows", currentRow+" \r\n 1");
+ 		});
+ 		jQuery("#${random}_initBmReport").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			grid.func("SetMemo"," \r\n modelChanged \r\n 2");
+ 			grid.func("Build",'getBmUpdataReportXml?updataId=${updataId}&reportType=init');
+ 			 
  		});
  		jQuery("#${random}_submitReport").click(function(){
  			var grid = eval("(budgetReport_gridtable_${random})");
@@ -278,6 +484,26 @@ var budgetReportDefine = {
 					<s:else>
 						<li><a class="savebutton" style='color:#808080;' href="javaScript:"><span>保存</span></a></li>
 					</s:else>
+					<s:if test="assistType!=null&&assistType!=''">
+					<s:if test="reportModel!='report'">
+						<li><a id="${random}_copyBmReportRow" class="savebutton" href="javaScript:"><span>复制行</span></a></li>
+					</s:if>
+					<s:else>
+						<li><a class="savebutton" style='color:#808080;' href="javaScript:"><span>复制行</span></a></li>
+					</s:else>
+					<s:if test="reportModel!='report'">
+						<li><a id="${random}_delBmReportRow" class="delbutton" href="javaScript:"><span>删除行</span></a></li>
+					</s:if>
+					<s:else>
+						<li><a class="delbutton" style='color:#808080;' href="javaScript:"><span>删除行</span></a></li>
+					</s:else>
+					<s:if test="reportModel!='report'">
+						<li><a id="${random}_initBmReport" class="initbutton" href="javaScript:"><span>恢复初始状态</span></a></li>
+					</s:if>
+					<s:else>
+						<li><a class="delbutton" style='color:#808080;' href="javaScript:"><span>恢复初始状态</span></a></li>
+					</s:else>
+					</s:if>
 					<s:if test="reportModel!='report'">
 						<li><a id="${random}_getLastBmReportData" class="importbutton"  href="javaScript:"><span>引入上次填报数据</span></a></li>
 					</s:if>
@@ -285,22 +511,24 @@ var budgetReportDefine = {
 						<li><a class="importbutton" style='color:#808080;' href="javaScript:"><span>引入上次填报数据</span></a></li>
 					</s:else>
 				</s:if>
+				<s:if test="reportType=='show'">
 				<li><a id="${random}_freshReportData" class="previewbutton"  href="javaScript:"><span>刷新</span></a></li>
+				</s:if>
 				<s:if test="modelType==2">
 				<%-- <li><a id="${random}_userdefine" class="editbutton"  href="javaScript:"><span>编辑汇总表</span></a>
 				</li> --%>
 				<li><a id="${random}_reBm" class="delallbutton"  href="javaScript:"><span>驳回预算</span></a>
 				</li>
-					<s:if test="reportModel!='report'">
-						<li><a id="${random}_saveBmReportXml" class="closebutton"  href="javaScript:"><span>完成汇总</span></a></li>
+					<s:if test="reportType!='show'&&reportModel!='report'">
+						<li><a id="${random}_saveHzBmReportXml" class="closebutton"  href="javaScript:"><span>完成汇总</span></a></li>
 					</s:if>
 					<%-- <s:else>
 						<li><a class="closebutton" style='color:#808080;' href="javaScript:"><span>完成汇总</span></a></li>
 					</s:else> --%>
 				</s:if>
 				<s:if test="modelType==3">
-					<s:if test="reportModel!='report'">
-						<li><a id="${random}_saveBmReportXml" class="closebutton"  href="javaScript:"><span>完成上报</span></a></li>
+					<s:if test="reportType!='show'&&reportModel!='report'">
+						<li><a id="${random}_saveZnBmReportXml" class="closebutton"  href="javaScript:"><span>完成上报</span></a></li>
 					</s:if>
 					<%-- <s:else>
 						<li><a class="closebutton" style='color:#808080;' href="javaScript:"><span>完成上报</span></a></li>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="payCondition" extends="default"	namespace="/">
+
+		<action name="payConditionList" class="com.huge.ihos.paymode.webapp.action.PayConditionPagedAction">
+			<result name="input">/WEB-INF/pages/payMode/payConditionList.jsp</result>
+			<result name="success">/WEB-INF/pages/payMode/payConditionList.jsp</result>
+		</action>
+		<action name="payConditionGridList" class="com.huge.ihos.paymode.webapp.action.PayConditionPagedAction"		method="payConditionGridList">
+			<result type="json">
+				<param name="includeProperties">payConditions.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="payConditionGridEdit" class="com.huge.ihos.paymode.webapp.action.PayConditionPagedAction"			method="payConditionGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPayCondition" class="com.huge.ihos.paymode.webapp.action.PayConditionPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/payMode/payConditionForm.jsp</result>
+			<result name="input">/WEB-INF/pages/payMode/payConditionForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePayCondition" class="com.huge.ihos.paymode.webapp.action.PayConditionPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

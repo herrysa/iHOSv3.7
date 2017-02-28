@@ -10,9 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.huge.ihos.system.systemManager.organization.model.Department;
@@ -40,7 +42,17 @@ public class BudgetUpdata extends BaseObject {
 	private String periodYear;
 	private String updataXml;
 	private Integer deptType;
+	private Integer lastState;
 	
+	@Transient
+	public Integer getLastState() {
+		return lastState;
+	}
+
+	public void setLastState(Integer lastState) {
+		this.lastState = lastState;
+	}
+
 	@Column
 	public Integer getDeptType() {
 		return deptType;

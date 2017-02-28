@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invUse" extends="default"	namespace="/">
+
+		<action name="invUseList" class="com.huge.ihos.material.webapp.action.InvUsePagedAction">
+			<result name="input">/WEB-INF/pages/material/invUse/invUseList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invUse/invUseList.jsp</result>
+		</action>
+		<action name="invUseGridList" class="com.huge.ihos.material.webapp.action.InvUsePagedAction"		method="invUseGridList">
+			<result type="json">
+				<param name="includeProperties">invUses.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invUseGridEdit" class="com.huge.ihos.material.webapp.action.InvUsePagedAction"			method="invUseGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvUse" class="com.huge.ihos.material.webapp.action.InvUsePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/invUse/invUseForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invUse/invUseForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvUse" class="com.huge.ihos.material.webapp.action.InvUsePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

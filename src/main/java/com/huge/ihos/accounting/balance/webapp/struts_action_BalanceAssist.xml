@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="balanceAssist" extends="default"	namespace="/">
+
+		<action name="balanceAssistList" class="com.huge.ihos.accounting.balance.webapp.action.BalanceAssistPagedAction" method="balanceAssistList">
+			<result name="input">/WEB-INF/pages/accounting/balanceAssist/balanceAssistList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/balanceAssist/balanceAssistList.jsp</result>
+		</action>
+		<action name="balanceAssistGridList" class="com.huge.ihos.accounting.balance.webapp.action.BalanceAssistPagedAction"		method="balanceAssistGridList">
+			<result type="json">
+				<param name="includeProperties">assistTypeList.*,balanceAssistList.*,balance,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="balanceAssistGridEdit" class="com.huge.ihos.accounting.balance.webapp.action.BalanceAssistPagedAction"			method="balanceAssistGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBalanceAssist" class="com.huge.ihos.accounting.balance.webapp.action.BalanceAssistPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/accounting/balanceAssist/balanceAssistForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/balanceAssist/balanceAssistForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBalanceAssist" class="com.huge.ihos.accounting.balance.webapp.action.BalanceAssistPagedAction"			method="saveBalanceAssist">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

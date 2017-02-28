@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="deptMRSummary" extends="default"	namespace="/">
+
+		<action name="deptMRSummaryList" class="com.huge.ihos.material.deptplan.webapp.action.DeptMRSummaryPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptMRSummary/deptMRSummaryList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptMRSummary/deptMRSummaryList.jsp</result>
+		</action>
+		<action name="selectDeptMRSummaryList" class="com.huge.ihos.material.deptplan.webapp.action.DeptMRSummaryPagedAction" method="selectDeptMRSummaryList">
+			<result name="input">/WEB-INF/pages/material/deptMRSummary/selectDeptMRSummaryList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptMRSummary/selectDeptMRSummaryList.jsp</result>
+		</action>
+		<action name="deptMRSummaryGridList" class="com.huge.ihos.material.deptplan.webapp.action.DeptMRSummaryPagedAction"		method="deptMRSummaryGridList">
+			<result type="json">
+				<param name="includeProperties">deptMRSummaries.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deptMRSummaryGridEdit" class="com.huge.ihos.material.deptplan.webapp.action.DeptMRSummaryPagedAction"			method="deptMRSummaryGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDeptMRSummary" class="com.huge.ihos.material.deptplan.webapp.action.DeptMRSummaryPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/deptMRSummary/deptMRSummaryForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/deptMRSummary/deptMRSummaryForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveDeptMRSummary" class="com.huge.ihos.material.deptplan.webapp.action.DeptMRSummaryPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -2,16 +2,32 @@ package com.huge.ihos.accounting.account.webapp.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 
-import com.huge.ihos.accounting.AssistType.model.AssistType;
-import com.huge.ihos.accounting.AssistType.service.AssistTypeManager;
 import com.huge.ihos.accounting.account.model.Account;
 import com.huge.ihos.accounting.account.model.AccountType;
+import com.huge.ihos.accounting.account.model.ZTreeAccountNode;
 import com.huge.ihos.accounting.account.service.AccountManager;
 import com.huge.ihos.accounting.account.service.AccountTypeManager;
+import com.huge.ihos.accounting.balance.model.Balance;
+import com.huge.ihos.accounting.balance.model.BalancePeriod;
+import com.huge.ihos.accounting.balance.service.BalanceManager;
+import com.huge.ihos.system.configuration.AssistType.model.AssistType;
+import com.huge.ihos.system.configuration.AssistType.service.AssistTypeManager;
+import com.huge.ihos.system.context.UserContext;
 import com.huge.ihos.system.context.UserContextUtil;
+import com.huge.ihos.system.systemManager.copy.model.Copy;
 import com.huge.ihos.system.systemManager.copy.service.CopyManager;
+import com.huge.ihos.system.systemManager.period.model.PeriodMonth;
+import com.huge.ihos.system.systemManager.period.model.PeriodPlan;
+import com.huge.ihos.system.systemManager.period.service.PeriodMonthManager;
+import com.huge.ihos.system.systemManager.security.model.SystemVariable;
+import com.huge.util.CodeUtil;
+import com.huge.util.TestTimer;
 import com.huge.webapp.action.JqGridBaseAction;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.pagers.PagerFactory;
@@ -38,7 +54,9 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 	private Boolean lossDirectionAsync;
 	private String acountTypeId ="";
 	private String assisttypeCode;
+	private BalanceManager balanceManager;
 	private CopyManager copyManager;
+	private PeriodMonthManager periodMonthManager;
 	
 	private String initAccountStatus;
 	
@@ -138,6 +156,14 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 		this.copyManager = copyManager;
 	}
 
+	public PeriodMonthManager getPeriodMonthManager() {
+		return periodMonthManager;
+	}
+
+	public void setPeriodMonthManager(PeriodMonthManager periodMonthManager) {
+		this.periodMonthManager = periodMonthManager;
+	}
+
 	public AccountManager getAccountManager() {
 		return accountManager;
 	}
@@ -230,36 +256,39 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 		this.account = account;
 	}
 
-
 	public void prepare() throws Exception {
 		this.clearSessionMessages();
+		codeRule = "4-2-2-2-2";
 	}
 	
 	public String checkAcctcode(){
 		String acctCode = this.getRequest().getParameter("acctcode");
-		/*super.setCodeRule(Account.class);
+		//super.setCodeRule(Account.class);
+		//codeRule = "2-2-2-2-2-2";
 		if(!CodeUtil.isRoot(codeRule, acctCode)){
-			SystemVariable systemVariable = this.getCurrentSystemVariable();
-			String parentId = systemVariable.getOrgCode()+"_"+systemVariable.getCopyCode()+"_"+systemVariable.getKjYear()+"_"+CodeUtil.getFather(codeRule, acctCode);
+			UserContext userContext = UserContextUtil.getUserContext();
+			String parentId = userContext.getOrgCode()+"_"+userContext.getCopyCode()+"_"+userContext.getPeriodYear()+"_"+CodeUtil.getFather(codeRule, acctCode);
 			hasFather = accountManager.hasChildren(parentId)!=-1;	
-		}*/
+		}
 		return SUCCESS;
 	}
 	
 	public String getAccountByNumber() {
 		int number = Integer.parseInt(getRequest().getParameter("number"));
 		String selectTreeId = getRequest().getParameter("selectId");
-		String selectId = UserContextUtil.getUserContext().getOrgCode()+"_"+UserContextUtil.getUserContext().getCopyCode()+"_"+UserContextUtil.getUserContext().getPeriodYear()+"_"+(selectTreeId==null?"":selectTreeId);
+		UserContext userContext = UserContextUtil.getUserContext();
+		String selectId = userContext.getOrgCode()+"_"+userContext.getCopyCode()+"_"+userContext.getPeriodYear()+"_"+(selectTreeId==null?"":selectTreeId);
 		this.acct = accountManager.getAccountByNumber(number,selectId);
 		return SUCCESS;
 	}
 	public String accountListPrepare(){
 		entityName = "Account";
 		//this.colShows = this.colShowManager.getByEntityName(entityName);
+		UserContext userContext = UserContextUtil.getUserContext();
 		HashMap<String,String> environment = new HashMap<String,String>();
-		environment.put("orgCode", UserContextUtil.getUserContext().getOrgCode());
-		environment.put("copyCode", UserContextUtil.getUserContext().getCopyCode());
-		environment.put("kjYear", UserContextUtil.getUserContext().getPeriodYear());
+		environment.put("orgCode", userContext.getOrgCode());
+		environment.put("copyCode", userContext.getCopyCode());
+		environment.put("kjYear", userContext.getPeriodYear());
 		List<Account> acctList = accountManager.getAll(environment);
 		if(acctList.size() == 0){
 			initAccountStatus = "init";
@@ -274,10 +303,11 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 		log.debug("enter list method!");
 		try {
 			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(getRequest());
+			UserContext userContext = UserContextUtil.getUserContext();
 			
-			filters.add(new PropertyFilter("EQS_orgCode", UserContextUtil.getUserContext().getOrgCode()));
-			filters.add(new PropertyFilter("EQS_copyCode", UserContextUtil.getUserContext().getCopyCode()));
-			filters.add(new PropertyFilter("EQS_kjYear", UserContextUtil.getUserContext().getPeriodYear()));
+			filters.add(new PropertyFilter("EQS_orgCode", userContext.getOrgCode()));
+			filters.add(new PropertyFilter("EQS_copyCode", userContext.getCopyCode()));
+			filters.add(new PropertyFilter("EQS_kjYear", userContext.getPeriodYear()));
 			
 			JQueryPager pagedRequests = null;
 			pagedRequests = (JQueryPager) pagerFactory.getPager(
@@ -288,8 +318,7 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 			//super.setCodeRule(Account.class);
 			for(Account account : accounts){
 				String acctCode = account.getAcctCode();
-				//int level = CodeUtil.getLevel(codeRule, acctCode);
-				int level = 4;
+				int level = CodeUtil.getLevel(codeRule, acctCode);
 				String appendixSpace = "";
 				for(int i=1;i<level;i++){
 					appendixSpace +="	";
@@ -326,17 +355,18 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 	}
 	public String save(){
 		String error = isValid();
-		/*if (!error.equalsIgnoreCase(SUCCESS)) {
+		if (!error.equalsIgnoreCase(SUCCESS)) {
 			gridOperationMessage = error;
 			return ajaxForwardError(gridOperationMessage);
 		}
 		try {
-			String ockInfo =  UserContextUtil.getUserContext().getOrgCode()+"_"+UserContextUtil.getUserContext().getCopyCode()+"_"+systemVariable.getKjYear()+"_";
+			UserContext userContext = UserContextUtil.getUserContext();
+			String ockInfo =  userContext.getOrgCode()+"_"+userContext.getCopyCode()+"_"+userContext.getPeriodYear()+"_";
 			if(this.isEntityIsNew()){
 				account.setAcctId(ockInfo+account.getAcctCode());//修改Id包含帐套、单位、会计年
-				account.setOrgCode(UserContextUtil.getUserContext().getOrgCode());
-				account.setCopyCode(UserContextUtil.getUserContext().getCopyCode());
-				account.setKjYear(UserContextUtil.getUserContext().getKjYear());
+				account.setOrgCode(userContext.getOrgCode());
+				account.setCopyCode(userContext.getCopyCode());
+				account.setKjYear(userContext.getPeriodYear());
 			}else{
 				account = accountManager.get(ockInfo+account.getAcctCode());
 			}
@@ -346,7 +376,7 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 			account.setAssistTypes(assistType);
 			account.setDisabled(account.getDisabled());
 			account.setLeaf(true);
-			super.setCodeRule(Account.class);
+			//super.setCodeRule(Account.class);
 			Account newAccount = accountManager.save(account,codeRule);
 			if(lossDirectionAsync!=null && lossDirectionAsync){
 				accountManager.updateAccountDisabled(account.getAcctId(),account.getLossDirection());
@@ -385,20 +415,27 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 			dre.printStackTrace();
 			gridOperationMessage = dre.getMessage();
 			return ajaxForwardError(gridOperationMessage);
-		}*/
+		}
 		String key = ((this.isEntityIsNew())) ? "account.added" : "account.updated";
 		return ajaxForward(this.getText(key));
 	}
+    public BalanceManager getBalanceManager() {
+		return balanceManager;
+	}
+
+	public void setBalanceManager(BalanceManager balanceManager) {
+		this.balanceManager = balanceManager;
+	}
 
 	public String edit() {
-    	/*assistTypes = assistTypeManager.getAllExceptDisable();
+    	assistTypes = assistTypeManager.getAllExceptDisable();
         if (accountId != null) { 
         	account = accountManager.get(accountId);
         	accountTypes = new ArrayList<AccountType>();
         	accountTypes.add(account.getAccttype());
         }else{
-        	SystemVariable systemVariable = this.getCurrentSystemVariable();
-        	accountTypes = accountTypeManager.getAllAccountTypeByOC(systemVariable.getOrgCode(), systemVariable.getCopyCode());
+        	UserContext userContext = UserContextUtil.getUserContext();
+        	accountTypes = accountTypeManager.getAllAccountTypeByOC(userContext.getOrgCode(), userContext.getCopyCode());
         }
         
     	if (accountId != null) { 
@@ -424,10 +461,42 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
         	}
         	this.setEntityIsNew(true);
         }
-		super.setCodeRule(Account.class);*/
+		//super.setCodeRule(Account.class);
         return SUCCESS;
     }
-
+	public String accountGridEdit() {
+		try {
+			if (oper.equals("del")) {
+				StringTokenizer ids = new StringTokenizer(id,
+						",");
+				while (ids.hasMoreTokens()) {
+					String removeId = ids.nextToken();
+					// 删除之前进行判断是否为末级
+					Account removeAccount = accountManager.get(removeId);
+					if(!removeAccount.isLeaf()){
+						gridOperationMessage = "科目\""+removeAccount.getAcctname()+"\"不是末级，不能删除";
+						return ajaxForward(true, gridOperationMessage, false);
+					}
+					log.debug("Delete Customer " + removeId);
+					accountManager.remove(removeId);
+					//检查刚才删除的科目父级下是否还有子级
+					//super.setCodeRule(Account.class);
+					String parentId = CodeUtil.getFather(CodeUtil.updateCodeRule(codeRule, 0, removeAccount.getAcctId().length()-removeAccount.getAcctCode().length()+Integer.parseInt(codeRule.split("-")[0])), removeAccount.getAcctId());
+					if(accountManager.hasChildren(parentId)==0){
+						cascadeUpdateParentLeaf(parentId,true);
+					}
+				}
+				gridOperationMessage = this.getText("account.deleted");
+				return ajaxForward(true, gridOperationMessage, false);
+			}
+			return SUCCESS;
+		} catch (Exception e) {
+			log.error("checkAccountGridEdit Error", e);
+			if(log.isDebugEnabled())
+				gridOperationMessage = e.getMessage()+e.getLocalizedMessage()+e.getStackTrace();
+			return ajaxForward(false, e.getMessage(), false);
+		}
+	}
 	
 	private void cascadeUpdateParentLeaf(String parentId,boolean leaf){
 		Account parentAccount = accountManager.get(parentId);
@@ -452,12 +521,128 @@ public class AccountPagedAction extends JqGridBaseAction implements Preparable {
 	}
 	
 	public String makeAccountTree(){
+		try {
+			HashMap<String,String> environment = new HashMap<String,String>();
+			UserContext userContext = UserContextUtil.getUserContext();
+			environment.put("orgCode", userContext.getOrgCode());
+			environment.put("copyCode", userContext.getCopyCode());
+			environment.put("kjYear", userContext.getPeriodYear());
+			List<AccountType> accountTypes = accountTypeManager.getAll(environment);
+			
+			List<Account> accountes = accountManager.getAll(environment);
+			//TODO 将来改成接收当前单位和套账的环境变量
+			Iterator<AccountType> itr = accountTypes.iterator();
+	        
+	        
+	        ZTreeSimpleNode rtRoot = new ZTreeSimpleNode();
+	        rtRoot.setName( "所有科目");
+            rtRoot.setId( "-1" );
+            rtRoot.setOpen(true);
+            ztreeList.add( rtRoot );
+			while ( itr.hasNext() ) {
+	        	AccountType accountType = itr.next();
+	        	ZTreeSimpleNode rt = new ZTreeSimpleNode();
+	            rt.setName( accountType.getAccounttype().trim() );
+	            rt.setId( accountType.getAccttypeId() );
+	            rt.setpId("-1");
+	            ztreeList.add( rt );
+	        }
+			Iterator<Account> itrAt = accountes.iterator();
+			//super.setCodeRule(Account.class);
+			while ( itrAt.hasNext() ) {
+	        	Account account = itrAt.next();
+	        	String accountCode = account.getAcctCode();
+	        	ZTreeSimpleNode rt = new ZTreeSimpleNode();
+	            rt.setName( account.getAcctname().trim() );
+	            rt.setId( accountCode.trim() );
+	            if(CodeUtil.isRoot(codeRule, accountCode.trim())){
+	            	rt.setpId( account.getAccttype().getAccttypeId() );
+	            }else{
+	            	rt.setpId(CodeUtil.getFather(codeRule, accountCode));
+	            }
+	            
+	            ztreeList.add( rt );
+	        }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return SUCCESS;
 	}
 	
 	public String makeAccountTreeWithCode(){
+		try {
+			HashMap<String,String> environment = new HashMap<String,String>();
+			UserContext userContext = UserContextUtil.getUserContext();
+			environment.put("orgCode", userContext.getOrgCode());
+			environment.put("copyCode", userContext.getCopyCode());
+			environment.put("kjYear", userContext.getPeriodYear());
+			List<AccountType> accountTypes = accountTypeManager.getAll(environment);
+			
+			TestTimer tt = new TestTimer("accountTree");
+			tt.begin();
+			List<Account> accountes = accountManager.getAll(environment);
+			tt.done();
+			//TODO 将来改成接收当前单位和套账的环境变量
+			Iterator<AccountType> itr = accountTypes.iterator();
+	        
+	        
+			ZTreeAccountNode rtRoot = new ZTreeAccountNode();
+	        rtRoot.setName( "所有科目");
+            rtRoot.setId( "-1" );
+            rtRoot.setOpen(true);
+            nodes.add( rtRoot );
+			while ( itr.hasNext() ) {
+	        	AccountType accountType = itr.next();
+	        	ZTreeSimpleNode rt = new ZTreeSimpleNode();
+	            rt.setName( accountType.getAccounttype().trim() );
+	            rt.setId( accountType.getAccttypeId() );
+	            rt.setpId("-1");
+	            nodes.add( rt );
+	        }
+			Iterator<Account> itrAt = accountes.iterator();
+			//super.setCodeRule(Account.class);
+			while ( itrAt.hasNext() ) {
+	        	Account account = itrAt.next();
+	        	String accountCode = account.getAcctCode();
+	        	ZTreeAccountNode rt = new ZTreeAccountNode();
+	            rt.setName( "["+accountCode+"]"+account.getAcctname().trim() );
+	            rt.setId( accountCode.trim() );
+	            rt.setAcctFullname(account.getAcctFullname());
+	            rt.setAssistTypes(account.getAssistTypes());
+	            rt.setAcctId(account.getAcctId());
+	            if(CodeUtil.isRoot(codeRule, accountCode.trim())){
+	            	rt.setpId( account.getAccttype().getAccttypeId() );
+	            }else{
+	            	rt.setpId(CodeUtil.getFather(codeRule, accountCode));
+	            }
+	            
+	            nodes.add( rt );
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return SUCCESS;
+	}
+	
+	
+	public String initAccount(){
+		try {
+			HashMap<String,String> environment = new HashMap<String,String>();
+			UserContext userContext = UserContextUtil.getUserContext();
+			environment.put("orgCode", userContext.getOrgCode());
+			environment.put("copyCode", userContext.getCopyCode());
+			environment.put("kjYear", userContext.getPeriodYear());
+			accountManager.initAccount(environment);
+			return ajaxForward(true, "初始化成功", true);
+		} catch (Exception e) {
+			log.error("init account error", e);
+			if(log.isDebugEnabled())
+				gridOperationMessage = e.getMessage()+e.getLocalizedMessage()+e.getStackTrace();
+			return ajaxForward(false, e.getMessage(), false);
+		}
 	}
 
 }

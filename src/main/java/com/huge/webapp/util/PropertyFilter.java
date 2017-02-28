@@ -210,6 +210,10 @@ public class PropertyFilter {
     public Object getMatchValue() {
         return matchValue;
     }
+    
+    public void setMatchValue(Object obj){
+    	this.matchValue = obj;
+    }
 
     /**
      * 获取比较属性名称列表.

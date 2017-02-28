@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -14,14 +11,12 @@ import javax.persistence.Transient;
 
 /**
  * @author Administrator
- *
+ * 
  * @param <T>
  * @param <PK>
  */
 @MappedSuperclass
-public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
-		extends
-			BaseObject {
+public abstract class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable> extends BaseObject {
 	/**
 	 *
 	 */
@@ -46,16 +41,25 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	/**
 	 * @return
 	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public  PK getId() {
-		return id;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.AUTO)
+	 */
+	@Transient
+	public abstract PK getId();/*
+								 * { return id; }
+								 */
+
+	@Transient
+	protected PK getPK() {
+		return this.id;
 	}
 
 	/**
 	 * @param nodeId
 	 */
-	public  void setId( PK nodeId) {
+	public void setId(PK nodeId) {
 		this.id = nodeId;
 	}
 
@@ -64,14 +68,14 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent_id", nullable = true)
-	public  T getParentNode() {
+	public T getParentNode() {
 		return parentNode;
 	}
 
 	/**
 	 * @param parentNode
 	 */
-	public  void setParentNode( T parentNode) {
+	public void setParentNode(T parentNode) {
 		this.parentNode = parentNode;
 	}
 
@@ -79,14 +83,14 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	 * @return
 	 */
 	@Column(name = "lft", columnDefinition = "int default 1")
-	public  int getLft() {
+	public int getLft() {
 		return lft;
 	}
 
 	/**
 	 * @param lft
 	 */
-	public  void setLft( int lft) {
+	public void setLft(int lft) {
 		this.lft = lft;
 	}
 
@@ -94,14 +98,14 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	 * @return
 	 */
 	@Column(name = "rgt", columnDefinition = "int default 1")
-	public  int getRgt() {
+	public int getRgt() {
 		return rgt;
 	}
 
 	/**
 	 * @param rgt
 	 */
-	public  void setRgt( int rgt) {
+	public void setRgt(int rgt) {
 		this.rgt = rgt;
 	}
 
@@ -109,14 +113,14 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	 * @return
 	 */
 	@Column(name = "level", columnDefinition = "int default 0")
-	public  int getLevel() {
+	public int getLevel() {
 		return level;
 	}
 
 	/**
 	 * @param level
 	 */
-	public  void setLevel( int level) {
+	public void setLevel(int level) {
 		this.level = level;
 	}
 
@@ -124,7 +128,7 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	 * @return
 	 */
 	@Transient
-	public  String getParent() {
+	public String getParent() {
 		if (this.getParentNode() != null) {
 			return this.getParentNode().getId() + "";
 		} else {
@@ -136,7 +140,7 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	 * @return
 	 */
 	@Transient
-	public  boolean getIsLeaf() {
+	public boolean getIsLeaf() {
 		return (this.getRgt() == (this.getLft() + 1)) ? true : false;
 	}
 
@@ -144,26 +148,25 @@ public  class BaseTreeNode<T extends BaseTreeNode, PK extends Serializable>
 	 * @return
 	 */
 	@Transient
-	public  boolean getIsParent() {
+	public boolean getIsParent() {
 		/* return (this.getRgt() == (this.getLft() + 1)) ? false : true; */
 		return !this.getIsLeaf();
 	}
 
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public String toString() {
+		return "BaseTreeNode [id=" + id + ", lft=" + lft + ", rgt=" + rgt + ", level=" + level + "]";
+	}
 
-    @Override
-    public boolean equals( Object o ) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    @Override
-    public int hashCode() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -8,6 +8,10 @@ public class BillNumberConstants {
 	 * 人力资源系统
 	 */
 	public static final String SUBSYSTEM_HR = "HR";
+	/**
+	 * 预算系统
+	 */
+	public static final String SUBSYSTEM_BM = "BM";
 	/*==========================部门========================*/
 	/**
 	 * 部门合并 hrDepartment_new
@@ -98,6 +102,17 @@ public class BillNumberConstants {
 	 */
 	public static final String HR_TRAIN_RECORD="PXJL";
 	
+	/**
+	 * 借款
+	 */
+	public static final String BM_LOAN_BILL="JK";
+	/**
+	 * 报销
+	 */
+	public static final String BM_EXPENSE_CLAIM="BX";
 	
-	public static final String BUSINESSCODE_MAP = "HR=HDN,部门新增#HDR,部门撤销#HDM,部门合并#HDT,部门划转#HT,签订合同#XQ,续签合同#ZZ,终止合同#JC,解除合同#RZ,人员入职#DD,人员调动#DG,人员调岗#LZ,人员离职#ZPXQ,招聘需求#ZPJH,招聘计划#ZPJL,招聘简历#PXXQ,培训需求#PXJH,培训计划#PXBM,培训班#PXKC,培训课程#PXFY,培训费用#PXJL,培训记录;";
+	
+	
+	
+	public static final String BUSINESSCODE_MAP = "HR=HDN,部门新增#HDR,部门撤销#HDM,部门合并#HDT,部门划转#HT,签订合同#XQ,续签合同#ZZ,终止合同#JC,解除合同#RZ,人员入职#DD,人员调动#DG,人员调岗#LZ,人员离职#ZPXQ,招聘需求#ZPJH,招聘计划#ZPJL,招聘简历#PXXQ,培训需求#PXJH,培训计划#PXBM,培训班#PXKC,培训课程#PXFY,培训费用#PXJL,培训记录;BM=JK,借款申请#BX,报销申请;MM=CGJH,采购计划#CGDD,采购订单#MMRK,入库业务#MMCK,出库业务#MMPD,盘点业务#DPSL,科室申领#KSXQ,科室需求;";
 }

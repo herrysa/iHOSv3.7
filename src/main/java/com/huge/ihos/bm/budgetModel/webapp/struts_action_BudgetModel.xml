@@ -48,7 +48,7 @@
 		<!-- called when clicking save on the edit form -->
 		<action name="saveBudgetModel" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="save">
 			<result name="success" type="json">
-                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,budgetModel.*</param>
                    <param name="noCache">true</param>
 				 <param name="ignoreHierarchy">false</param>
             </result>
@@ -58,6 +58,14 @@
 			<result name="input">/WEB-INF/pages/bm/budgetModel/budgetModelReport.jsp</result>
 		</action>
 		<action name="getBmReportXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getBmReportXml">
+		</action>
+		
+		<action name="getBmDutyCenterXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getBmDutyCenterXml">
+		</action>
+		
+		<action name="getBmIndexXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getBmIndexXml">
+		</action>
+		<action name="getSvXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getSvXml">
 		</action>
 		
 		<action name="saveBmReportXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="saveBmReportXml">
@@ -210,6 +218,13 @@
 		<action name="getBmReportDataSourceXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getReportDataSourceXml">
 		</action>
 		<action name="getBmReportDsdescXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getReportDsdescXml">
+		</action>
+		<action name="getAssistItemXml" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction"			method="getAssistItemXml">
+		</action>
+		
+		<action name="bmAssistTypeMain" class="com.huge.ihos.bm.budgetModel.webapp.action.BudgetModelPagedAction" method="bmAssistTypeMain">
+			<result name="input">/WEB-INF/pages/bm/budgetModel/bmAssistTypeMain.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/budgetModel/bmAssistTypeMain.jsp</result>
 		</action>
 	</package>
 

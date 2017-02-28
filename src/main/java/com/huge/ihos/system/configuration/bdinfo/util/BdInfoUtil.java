@@ -63,6 +63,10 @@ public class BdInfoUtil{
 	 */
 	private Map<String, String> aliasMap;
 	/**
+	 * 存储 列名-中文名
+	 */
+	private Map<String, String> chNameMap;
+	/**
 	 * 存储 主要列名[ID,CODE,NAME]-别名
 	 */
 	private Map<String, String> mainColMap;
@@ -120,6 +124,7 @@ public class BdInfoUtil{
 		periodYearCol = null;
 		
 		aliasMap = new HashMap<String, String>();
+		chNameMap = new HashMap<String, String>();
 		mainColMap = new HashMap<String, String>();
 		customColMap = new HashMap<String, String>();
 		tableColList = new ArrayList<TableCol>();
@@ -155,9 +160,11 @@ public class BdInfoUtil{
 				boolean aliasFlag = false;
 				FieldInfo field = (FieldInfo) itr.next();
 				String colNameUpCase = field.getFieldCode().toUpperCase();
+				String chName = field.getFieldName();
 				//fieldMap.put(field.getFieldCode(), field);
 				//colNameMap.put(field.getFieldCode().toUpperCase(),field.getFieldCode().toUpperCase());
 				aliasMap.put(colNameUpCase,colNameUpCase);
+				chNameMap.put(colNameUpCase,chName);
 				TableCol tableColTemp = null;
 				//fieldList.add(field.getFieldCode());
 				boolean added = false;
@@ -1044,6 +1051,15 @@ public class BdInfoUtil{
 		this.copyFilter = copyFilter;
 	}*/
 
+	public Map<String, String> getChNameMap() {
+		return chNameMap;
+	}
+
+	public void setChNameMap(Map<String, String> chNameMap) {
+		this.chNameMap = chNameMap;
+	}
+
+	
 	public boolean isPeriodYearFilter() {
 		return periodYearFilter;
 	}

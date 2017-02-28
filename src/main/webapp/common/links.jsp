@@ -85,9 +85,14 @@
 	
 	<script type="text/javascript" src="${ctx}/scripts/jquery-resize/jquery.ba-resize.js"></script>
 	
+	<script type="text/javascript" src="${ctx}/scripts/docTemplate.js"></script>
+	
 	<script type="text/javascript" src="${ctx}/struts2/js/base/jquery.ui.widget.min.js"></script>
 	<script type="text/javascript" src="${ctx}/scripts/combogrid/resources/plugin/jquery.ui.combogrid-1.6.2.js"></script>
 	<link rel="stylesheet" type="text/css" href="${ctx}/scripts/combogrid/resources/css/smoothness/jquery.ui.combogrid.css" />
 	
 	<script type="text/javascript" src="${ctx}/scripts/autocomplete/jquery.autocomplete3.js"></script>
 	<link rel="stylesheet" href="${ctx}/scripts/autocomplete/jquery.autocomplete.css" />
+	
+	<script type="text/javascript" src="${ctx}/scripts/zhgrid/zhgrid.js"></script>
+	<link rel="stylesheet" type="text/css" href="${ctx}/scripts/zhgrid/zhgrid.css" />

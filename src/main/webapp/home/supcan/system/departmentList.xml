@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--By Supcan TreeList -->
+<TreeList>
+	<Properties dataURL="getDataXml?sql=select deptId,name,deptCode,cnCode from t_department where disabled=0 order by deptCode asc">
+	</Properties>
+	<Cols>
+		<Col name="deptId"  width="70" align="center" isHide="true">部门ID</Col>
+		<Col name="name" width="100">部门名称</Col>
+		<Col name="deptCode" width="100">部门编码</Col>
+		<Col name="cnCode" width="50">助记码</Col>
+	</Cols>
+</TreeList>

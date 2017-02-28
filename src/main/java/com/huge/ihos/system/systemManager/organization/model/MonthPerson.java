@@ -366,8 +366,8 @@ public class MonthPerson extends BaseObject{
 	public void setGzType(String gzType) {
 		this.gzType = gzType;
 	}
-	@Column(name = "gzTypeId2", length = 32, nullable = true)
-	//@Transient
+	//@Column(name = "gzTypeId2", length = 32, nullable = true)
+	@Transient
 	public String getGzType2() {
 		return gzType2;
 	}

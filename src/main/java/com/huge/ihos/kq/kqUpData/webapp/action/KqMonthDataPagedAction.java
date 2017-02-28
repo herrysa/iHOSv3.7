@@ -48,7 +48,7 @@ public class KqMonthDataPagedAction extends JqGridBaseAction implements Preparab
 	private List<KqMonthData> kqMonthDatas;
 	private KqMonthData kqMonthData;
 	private KqItemManager kqItemManager;
-	private String kqId;
+	private String kqId; 
 
 	public KqMonthDataManager getKqMonthDataManager() {
 		return kqMonthDataManager;
@@ -726,7 +726,7 @@ public class KqMonthDataPagedAction extends JqGridBaseAction implements Preparab
 		try {
 			//List list = kqMonthDataManager.getkqDeptCheckDatas();
 			kqDeptChecks = new ArrayList<Map<String,Object>>();
-			List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+			List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(getRequest());
 			filters.add(new PropertyFilter("EQS_period",getLoginPeriod()));
 			filters.add(new PropertyFilter("GPS_deptId","orgCode,deptId,deptName,kqType,status"));
 			List list = kqDayDataManager.getByFilters(filters);

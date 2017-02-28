@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--By Supcan TreeList -->
+<TreeList>
+	<Properties dataURL="getBmSubjListXml">
+	</Properties>
+	<Cols>
+		<Col name="bugetSubjId"  width="70" align="center" isHide="true">预算科目ID</Col>
+		<Col name="bugetSubjCode" width="100">预算科目编码</Col>
+		<Col name="bugetSubjName" width="100">预算科目名称</Col>
+		<Col name="cnCode" width="50">拼音码</Col>
+		<Col name="parent" width="100">上级预算科目</Col>
+		<Col name="centralDept" width="100">归口部门</Col>
+	</Cols>
+</TreeList>

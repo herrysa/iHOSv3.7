@@ -178,7 +178,7 @@ public class VoucherDetail extends BaseObject {
 	}
 
 	@JSON(serialize=false)
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="accountId")
 	public Account getAccount() {
 		return account;

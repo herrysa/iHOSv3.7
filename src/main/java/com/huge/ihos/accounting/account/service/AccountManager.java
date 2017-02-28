@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.huge.ihos.accounting.account.model.Account;
+import com.huge.ihos.system.configuration.AssistType.model.AssistType;
 import com.huge.service.GenericManager;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.util.PropertyFilter;
@@ -22,4 +23,5 @@ public interface AccountManager extends GenericManager<Account, String> {
 	 public List<Account> getAll(HashMap<String,String> environment);
 	 public List<Account> getAllAccountByOCK(String orgCode,String copyCode,String kjYear);
 	public void initAccount(HashMap<String, String> environment);
+	public List<AssistType> getAssitTypesByAcct(String acctId);
 }

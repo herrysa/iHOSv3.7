@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -1072,4 +1073,46 @@ public class PersonAction extends JqGridBaseAction {
 		}
 		return ajaxForwardSuccess("更新成功。");
 	}
+	
+	//硕正treeList
+		public String personSupcanList(){
+			 try {
+		            HttpServletResponse response = this.getResponse();
+		            response.setCharacterEncoding( "UTF-8" );
+		            JSONArray jsonArray = new JSONArray();
+		            List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+		            filters.add(new PropertyFilter("EQB_disabled","0"));
+		            filters.add(new PropertyFilter("NES_perosnId","XT"));
+		            filters.add(new PropertyFilter("OAS_personCode",""));
+		            List<Person> personList = personManager.getByFilters(filters);
+		            if(OtherUtil.measureNotNull(personList)&&!personList.isEmpty()){
+		            	for(Person personTemp:personList){
+		            		JSONObject jsonObject = new JSONObject();
+		            		jsonObject.put("perosnId", personTemp.getPersonId());
+		            		jsonObject.put("name", personTemp.getName());
+		            		jsonObject.put("personCode", personTemp.getPersonCode());
+		            		if(OtherUtil.measureNull(personTemp.getDepartment())){
+		            			jsonObject.put("deptName", "");
+		            		}else{
+		            			jsonObject.put("deptName", personTemp.getDepartment().getName());
+		            		}
+		            		/*if(OtherUtil.measureNotNull(deptTemp.getOrg())){
+		            			jsonObject.put("orgCode", deptTemp.getOrg().getOrgCode());
+		            			jsonObject.put("orgName", deptTemp.getOrg().getOrgname());
+		            		}else{
+		            			jsonObject.put("orgCode", "");
+		            			jsonObject.put("orgName", "");
+		            		}*/
+		            		jsonArray.add(jsonObject);
+		            	}
+		            }
+		            JSONObject responseObj = new JSONObject();
+		            responseObj.put("Record", jsonArray);
+		            response.getWriter().write( responseObj.toString() );
+		        }
+		        catch ( Exception e ) {
+		            e.printStackTrace();
+		        }
+		        return null;
+		}
 }

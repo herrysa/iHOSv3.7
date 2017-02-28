@@ -1,6 +1,9 @@
 package com.huge.ihos.system.context;
 
 import java.io.IOException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -11,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -26,6 +32,7 @@ import com.huge.ihos.hasp.service.DogService;
 import com.huge.ihos.hasp.service.impl.DummyDogManager;
 import com.huge.ihos.hasp.service.impl.HaspDogManager;
 import com.huge.ihos.multidatasource.DynamicSessionFactoryHolder;
+import com.huge.util.ReturnUtil;
 import com.huge.webapp.util.SpringContextHelper;
 
 public class ContextUtil extends HttpServlet{
@@ -36,7 +43,7 @@ public class ContextUtil extends HttpServlet{
 	private static final long serialVersionUID = -5717320394451047589L;
 
 	//herp开关
-	public static String herpType = "S1";// S：单个单位版；M:多单位版；G：集团版
+	public static String herpType = "S2";// S：单个单位版；M:多单位版；G：集团版
 	public static int orgNum = 1;		// 允许的单位数量
 	public static String orgName;
 	public static int versionType = 0;// 1:演示版；0：发行版
@@ -161,7 +168,7 @@ public class ContextUtil extends HttpServlet{
 			String subSystemCodeStr ="";
 			String paramKey = param.get("paramKey").toString();
 			String paramValue = param.get("paramValue").toString();
-			String periodYear = param.get("periodYear").toString();
+			Object periodYear = param.get("periodYear");
 			if(subSystemCode!=null){
 				subSystemCodeStr = subSystemCode.toString();
 			}
@@ -170,7 +177,11 @@ public class ContextUtil extends HttpServlet{
 				subsSystemParam = new HashMap<String, String>();
 				//dsGlobalParamMap.put(subSystemCodeStr, subsSystemParam);
 			}
-			subsSystemParam.put(paramKey+"_"+periodYear, paramValue);
+			if(periodYear==null){
+				subsSystemParam.put(paramKey, paramValue);
+			}else{
+				subsSystemParam.put(paramKey+"_"+periodYear.toString(), paramValue);
+			}
 			dsHerpParamMap.put(subSystemCodeStr, subsSystemParam);
 		}
 		if(herpParam==null){
@@ -241,7 +252,7 @@ public class ContextUtil extends HttpServlet{
     	}
     }
     
-    private static void traversalTree(String parent,List<String> pathStack , Map<String,Boolean> menus , boolean isShow,Map<String, Boolean> dogMenuMap){
+    private static boolean traversalTree(String parent,List<String> pathStack , Map<String,Boolean> menus , boolean isShow,Map<String, Boolean> dogMenuMap){
     	/*System.out.println("isShow:"+isShow);
     	System.out.println("menus:"+menus.keySet().toString());
     	System.out.println("pathStack:"+pathStack.toString());*/
@@ -253,12 +264,16 @@ public class ContextUtil extends HttpServlet{
     	JdbcTemplate jt = new JdbcTemplate( (DataSource) SpringContextHelper.getBean( "dataSource" ) );
 		String menuSql = "select * from t_menu where parentId='"+parent+"' ORDER BY menuId ASC";
 		List<Map<String, Object>> menuList = jt.queryForList(menuSql);
-    	if(showCharge&&(menuList==null||menuList.size()==0)){
-    		for(String menupath : pathStack){
-    			menus.put(menupath,true);
+    	if(menuList==null||menuList.size()==0){
+    		if(showCharge){
+    			for(String menupath : pathStack){
+        			menus.put(menupath,true);
+        		}
     		}
-    		pathStack.remove(parent);
+    		
+    		//pathStack.remove(parent);
     	}
+    	boolean childShowCharge = false;
     	for(Map<String, Object> menu : menuList){
     		/*try {
 				Menu m = MapUtils.toObject(Menu.class, menu);
@@ -274,8 +289,12 @@ public class ContextUtil extends HttpServlet{
 				e.printStackTrace();
 			}*/
     		String menuId = menu.get("menuId").toString();
-    		traversalTree(menuId ,pathStack,menus ,showCharge ,dogMenuMap);
+    		childShowCharge = traversalTree(menuId ,pathStack,menus ,showCharge ,dogMenuMap);
     	}
+    	if(!showCharge&&!childShowCharge){
+    		pathStack.remove(parent);
+    	}
+    	return childShowCharge;
     }
     
     public static Map<String,Boolean> getDogMenus(){
@@ -848,7 +867,80 @@ public class ContextUtil extends HttpServlet{
 	}
 	
 	public static void loadTimerTask(){
-		
+		String spSql = "SELECT * FROM sy_sptask where disabled=0";
+		JdbcTemplate jt = new JdbcTemplate( (DataSource) SpringContextHelper.getDataSource() );
+		List<Map<String, Object>> sptasks = jt.queryForList(spSql);
+		ScheduledThreadPoolExecutor scheduler = new ScheduledThreadPoolExecutor( 5 );
+		for(Map<String, Object> task : sptasks){
+			final String taskName = task.get("taskName").toString();
+			Object time = task.get("exeTime");
+			int t = 1000;
+			if(time!=null){
+				try {
+					t = Integer.parseInt(time.toString());
+					scheduler.scheduleAtFixedRate( new Runnable() {
+						public void run() {
+							exePrecess(taskName,null);
+						}
+					}, 10, t,TimeUnit.SECONDS );
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+	}
+	
+	private static void exePrecess( String taskName, Object[] args ) {
+		System.out.println("执行存储过程："+taskName);
+		String retMsg = "";
+        int retCode = 0;
+        ReturnUtil returnUtil = new ReturnUtil();
+        try {
+        	if(args==null){
+        		args = new Object[0];
+        	}
+            StringBuffer sb = new StringBuffer();
+            for ( int i = 0; i < args.length; i++ ) {
+                sb.append( "?" );
+                sb.append( "," );
+            }
+            String callString = "{call " + taskName + "(" + sb.toString() + "?,?)}";
+            
+            DataSource dataSource = (DataSource) SpringContextHelper.getDataSource();
+            Connection con = null;
+            if(dataSource==null){
+            	return ;
+            }else{
+            	 con = dataSource.getConnection();
+            }
+
+            CallableStatement callStat = null;
+            callStat = con.prepareCall( callString );
+            int j = 1;
+            for ( int k = 0; k < args.length; k++ ) {
+                callStat.setObject( j + 1, args[k] );
+                j++;
+            }
+            callStat.registerOutParameter( 1, Types.INTEGER );
+            callStat.registerOutParameter( j + 1, Types.VARCHAR );
+            callStat.executeUpdate();
+            retCode = callStat.getInt( 1 );
+            retMsg = callStat.getString( j + 1 );
+            returnUtil.setStatusCode(retCode);
+        }
+        catch ( Exception ex ) {
+            ex.printStackTrace();
+            retMsg = ex.getMessage();
+            returnUtil.setStatusCode(300);
+
+        }
+        if ( retMsg == null || retMsg.trim().equals( "" ) ) {
+            if ( ( retCode != 100 ) && ( retCode != 0 ) )
+                retMsg = "处理失败。";
+            else
+                retMsg = "处理成功。";
+        }
 	}
 	/* public static Map<String, Map<String, Collection<ConfigAttribute>>> getResourceMap() {
 			return resourceMap;

@@ -1122,6 +1122,7 @@
  			var urlC=jQuery('#${random}_${searchName}_gridTable').jqGrid('getGridParam','url');
  			var urlC=jQuery('#${random}_${searchName}_gridTable').jqGrid('getGridParam','url');
  			var str = urlC.split("?");
+ 			alert(urlC);
  			var url = "${ctx}/outputExcel?fileName=&"+str[1];
  			//url=encodeURI(url);
  			location.href=url; 
@@ -1379,7 +1380,6 @@
 				var executCallback = function(){
 					returnSearchFun(returnSearch);
 				};
-				url = encodeURI(url);
 				executeSp(null,"${random}_${searchName}_gridTable",msg,waittingMsg,url,executCallback);
 				/*alertMsg.confirm(msg, {
 					okCall: function(){
@@ -1450,7 +1450,6 @@
 		var executCallback = function(){
 					returnSearchFun(returnSearch);
 				};
-		url = encodeURI(url);
 		executeSp(null,"${random}_${searchName}_gridTable",msg,waittingMsg,url,executCallback);
        /* alertMsg.confirm(msg, {
 			okCall: function(){
@@ -1522,7 +1521,6 @@ function conditionConfirmProcess(taskName,args,businessTypeCode,msg,returnSearch
 		var executCallback = function(){
 					returnSearchFun(returnSearch);
 				};
-		url = encodeURI(url);
 		executeSp(null,"${random}_${searchName}_gridTable",msg,waittingMsg,url,executCallback);
        /* alertMsg.confirm(msg, {
 			okCall: function(){

@@ -3,8 +3,9 @@
 <%@ page language="java"   pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	var budgetUpdataGridIdString${random}="#${random}budgetUpdata_gridtable";
-	jQuery(document).ready(function() { 
+	jQuery(document).ready(function() {
 		var budgetUpdataGrid${random} = jQuery(budgetUpdataGridIdString${random});
+		var initFlag_budgetModel = 0;
 		var upType = "${upType}";
 		var url = "budgetUpdataGridList?1=1";
 		var modelType = 1;
@@ -28,12 +29,17 @@
 			mtype : "GET",
         	colModel:[
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetUpdata.updataId" />',hidden:true,key:true},
-			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetUpdata.periodYear" />',hidden:false,width:70},
-			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetUpdata.modelCode" />',hidden:false,width:100},
-			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false,width:250},
-			{name:'modelXfId.modelId.modelTypeTxt',index:'modelXfId.modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetUpdata.budgetType" />',hidden:false,width:70},
-			{name:'modelXfId.modelId.periodType',index:'modelXfId.modelId.periodType',align:'left',label : '<s:text name="budgetUpdata.periodType" />',hidden:false,width:70},
-			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false},
+			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetUpdata.periodYear" />',hidden:false,width:70,highsearch:true},
+			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetUpdata.modelCode" />',hidden:false,width:100,highsearch:true},
+			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetUpdata.model" />',hidden:false,width:250,highsearch:true},
+			{name:'modelXfId.modelId.modelTypeTxt',index:'modelXfId.modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetUpdata.budgetType" />',hidden:false,width:70,highsearch:true},
+			{name:'modelXfId.modelId.periodType',index:'modelXfId.modelId.periodType',align:'left',label : '<s:text name="budgetUpdata.periodType" />',hidden:false,width:70,highsearch:true},
+			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false,highsearch:true},
+			<c:if test="${upType==1}">
+			{name:'operator.name',index:'operator.name',align:'left',label : '<s:text name="budgetUpdata.operator" />',hidden:false,width:100,highsearch:true},
+			{name:'optDate',index:'optDate',align:'left',label : '<s:text name="budgetUpdata.optDate" />',hidden:false,align:"center",
+				formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:100,highsearch:true},
+			</c:if>
 			<c:forEach items="${processColumns}" var="pc">
 			{
 				name : "checkMap.${pc.code }",
@@ -41,12 +47,13 @@
 				label : "${pc.name }",
 				width : 150,
 				sortable:false,
+				highsearch:true,
 				/* <c:if test="${dc.columnType=='varchar'}">
 					formatter:stringFormatter,
 				</c:if> */
 				<c:if test="${pc.dataType=='date'}">
-					align:"center",
-					formatter:'date',formatoptions:{newformat : 'Y-m-d'}
+					align:"left",
+					formatter:formatBmUpdataDate
 				</c:if>
 			},
 			</c:forEach>
@@ -91,6 +98,7 @@
            	//gridContainerResize('${random}budgetUpdata','div',0,extraHeight);
            	var dataTest = {"id":"${random}budgetUpdata_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
+			initFlag_budgetModel = initColumn('${random}budgetUpdata_gridtable','com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata',initFlag_budgetModel);
        		} 
 
     	});
@@ -154,7 +162,30 @@
 			}
 			var fullHeight = jQuery("#container").innerHeight();
 	    	var fullWidth = jQuery("#container").innerWidth();
-			$.pdialog.open('openBmReport?reportType=show&updataId='+sid,'bmReport',"预算上报", {mask:true,width : fullWidth,height : fullHeight});
+			$.pdialog.open('openBmReport?reportType=show&updataId='+sid,'bmReport',"查看报表", {mask:true,width : fullWidth,height : fullHeight});
+	    });
+	    jQuery("#${random}budgetUpdata_gridtable_unfold").click(function(){
+	    	debugger
+	    	var unfoldTxt = jQuery(this).find("span").eq(0).text();
+	    	var groupTxt = jQuery("#${random}budgetUpdata_gridtable_groupByDept").find("span").eq(0).text();
+	    	if(unfoldTxt.indexOf("折叠")!=-1){
+	    		if(groupTxt.indexOf("部门")!=-1){
+					jQuery("#${random}budgetUpdata_gridtable").jqGrid('setGridParam',{groupingView:{groupField : ['department.name'],groupCollapse:true}}).trigger("reloadGrid");
+	    		}else{
+					jQuery("#${random}budgetUpdata_gridtable").jqGrid('setGridParam',{groupingView:{groupField : ['modelXfId.modelId.modelName'],groupCollapse:true}}).trigger("reloadGrid");
+	    		}
+	    		jQuery(this).find("span").eq(0).text("全部展开");
+			}else{
+				if(groupTxt.indexOf("部门")!=-1){
+					jQuery("#${random}budgetUpdata_gridtable").jqGrid('setGridParam',{groupingView:{groupField : ['department.name'],groupCollapse:false}}).trigger("reloadGrid");
+	    		}else{
+					jQuery("#${random}budgetUpdata_gridtable").jqGrid('setGridParam',{groupingView:{groupField : ['modelXfId.modelId.modelName'],groupCollapse:false}}).trigger("reloadGrid");
+	    		}
+				jQuery(this).find("span").eq(0).text("全部折叠");
+			}
+	    });
+	    jQuery("#${random}budgetUpdata_gridtable_setCol").click(function(){
+	    	setColShow('${random}budgetUpdata_gridtable','com.huge.ihos.bm.budgetUpdata.model.BudgetUpdata');
 	    });
   	});
 	function bmProcessFuction(opt){
@@ -195,7 +226,12 @@
 					var url = "#DIA_inline?inlineId=${random}stepInfoDiv";
 					jQuery("#${random}stepInfoDiv").data("bmProcessId",bmProcessId);
 					jQuery("#${random}stepInfoDiv").data("opt",opt);
-					$.pdialog.open(url, 'importSearch', "审核原因", {
+					var checkInfoTitle = data.maprs.okName;
+					if(opt=='no'){
+						checkInfoTitle = data.maprs.noName;
+					}
+					jQuery("textarea[name=stepInfoDiv_info]","#${random}stepInfoDiv").val("");
+					$.pdialog.open(url, 'importSearch', checkInfoTitle+"原因", {
 						mask : false,
 						width : 400,
 						height : 200
@@ -223,6 +259,13 @@
 		});
 		
 	}
+	function formatBmUpdataDate(cellvalue, options, rowObject) {
+		if(!cellvalue){
+			return "";
+		}
+		cellvalue = cellvalue.replaceAll("T","  ");
+		return cellvalue;
+	}
 </script>
 
 <div class="page">
@@ -234,26 +277,32 @@
 						<s:text name='${random}budgetUpdata.checkDate'/>:
 						<input type="text" name="filter_EQS_checkDate"/>
 					</label>
+					 --%>
 					<label style="float:none;white-space:nowrap" >
-						<s:text name='${random}budgetUpdata.checker'/>:
-						<input type="text" name="filter_EQS_checker"/>
-					</label> --%>
+						预算年度:
+						<s:if test="budgetModel!=null">
+							<s:select list="periodYears" listKey="period_year" disabled="true" listValue="period_year"/>
+						</s:if>
+						<s:else>
+							<s:select list="periodYears" listKey="period_year" listValue="period_year"/>
+						</s:else>
+					</label>
 					<label style="float:none;white-space:nowrap" >
 						预算模板编码:
 						<s:if test="budgetModel!=null">
-							<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode" readonly="true" value="${budgetModel.modelCode}"/>
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode" readonly="true" value="${budgetModel.modelCode}" size="15"/>
 						</s:if>
 						<s:else>
-							<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode"/>
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelCode" size="15"/>
 						</s:else>
 					</label>
 					<label style="float:none;white-space:nowrap" >
 						预算模板名称:
 						<s:if test="budgetModel!=null">
-							<input type="text" name="filter_LIKES_modelXfId.modelId.modelName" readonly="true" value="${budgetModel.modelName}"/>
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelName" readonly="true" value="${budgetModel.modelName}" size="35"/>
 						</s:if>
 						<s:else>
-							<input type="text" name="filter_LIKES_modelXfId.modelId.modelName"/>
+							<input type="text" name="filter_LIKES_modelXfId.modelId.modelName" size="35"/>
 						</s:else>
 					</label>
 					<label style="float:none;white-space:nowrap" >
@@ -312,26 +361,38 @@
 					<li><a id="${random}budgetUpdata_gridtable_showReport" class="reportbutton"  href="javaScript:"><span>查看报表</span>
 					</a>
 					</li>
+					<li><a id="${random}budgetUpdata_gridtable_groupByDept" class="settingbutton"  href="javaScript:"><span>按预算部门<s:if test="upType==1">审批</s:if><s:else>查询</s:else></span>
+					</a>
+					</li>
+					<li><a id="${random}budgetUpdata_gridtable_unfold" class="unfoldbutton"  href="javaScript:"><span>全部折叠</span>
+					</a>
+					</li>
 				</s:if>
 				<s:elseif test="upType==2">
-					<li><a id="${random}budgetUpdata_gridtable_log" class="openbutton"  href="javaScript:bmProcessFuction('no')"><span>审批日志</span>
+					<li><a id="${random}budgetUpdata_gridtable_log" class="openbutton"  href="javaScript:"><span>审批日志</span>
 					</a>
 					</li>
 					<li><a id="${random}budgetUpdata_gridtable_showReport" class="reportbutton"  href="javaScript:"><span>查看报表</span>
 					</a>
 					</li>
-				</s:elseif>
-				<s:elseif test="upType==1||upType==2">
-				<li><a id="${random}budgetUpdata_gridtable_groupByDept" class="settingbutton"  href="javaScript:"><span>按预算部门<s:if test="upType==1">审批</s:if><s:else>查询</s:else></span>
-				</a>
-				</li>
+					<li><a id="${random}budgetUpdata_gridtable_groupByDept" class="settingbutton"  href="javaScript:"><span>按预算部门<s:if test="upType==1">审批</s:if><s:else>查询</s:else></span>
+					</a>
+					</li>
+					<li><a id="${random}budgetUpdata_gridtable_unfold" class="unfoldbutton"  href="javaScript:"><span>全部折叠</span>
+					</a>
+					</li>
+					<li><a id="${random}budgetUpdata_gridtable_setCol" class="settlebutton"  href="javaScript:"><span>设置表格列</span>
+					</a>
+					</li>
 				</s:elseif>
 				<%-- <li><a id="${random}budgetUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />
 					</span>
 				</a>
 				</li> --%>
-			
+				<%-- <li><a class="excelbutton"  href="javaScript:exportToExcelByAction('${random}budgetUpdata_gridtable','BudgetUpdata','上报明细数据','page');"><span>导出本页数据</span>
+				</a>
+				</li> --%>
 			</ul>
 		</div>
 		<div id="${random}budgetUpdata_gridtable_div" layoutH=90 class="grid-wrapdiv" buttonBar="width:500;height:300">

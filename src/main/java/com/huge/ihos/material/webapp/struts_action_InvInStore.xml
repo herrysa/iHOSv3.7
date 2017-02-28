@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invInStore" extends="default"	namespace="/">
+
+		<action name="invInStoreList" class="com.huge.ihos.material.webapp.action.InvInStorePagedAction">
+			<result name="input">/WEB-INF/pages/material/invInStore/invInStoreList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invInStore/invInStoreList.jsp</result>
+		</action>
+		<action name="invInStoreGridList" class="com.huge.ihos.material.webapp.action.InvInStorePagedAction"		method="invInStoreGridList">
+			<result type="json">
+				<param name="includeProperties">invInStores.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invInStoreGridEdit" class="com.huge.ihos.material.webapp.action.InvInStorePagedAction"			method="invInStoreGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvInStore" class="com.huge.ihos.material.webapp.action.InvInStorePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/invInStore/invInStoreForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invInStore/invInStoreForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvInStore" class="com.huge.ihos.material.webapp.action.InvInStorePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

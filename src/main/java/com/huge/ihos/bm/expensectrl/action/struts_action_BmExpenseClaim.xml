@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bmExpenseClaim" extends="default"	namespace="/">
+
+		<action name="bmExpenseClaimList" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction" method="bmExpenseClaimList">
+			<result name="input">/WEB-INF/pages/bm/expensectrl/bmExpenseClaimList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/expensectrl/bmExpenseClaimList.jsp</result>
+		</action>
+		<action name="bmExpenseClaimGridList" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"		method="bmExpenseClaimGridList">
+			<result type="json">
+				<param name="includeProperties">sdatas.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bmExpenseClaimGridEdit" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"			method="bmExpenseClaimGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBmExpenseClaim" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"			method="editBmExpenseClaim">
+			<result name="success">/WEB-INF/pages/bm/expensectrl/bmExpenseClaimForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/expensectrl/bmExpenseClaimForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<!-- <action name="savebmExpenseClaim" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action> -->
+		
+		<action name="saveBmExpenseClaim" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"			method="saveBmExpenseClaim">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="delBmExpenseClaim" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"			method="delBmExpenseClaim">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="changeBmExpenseClaimState" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"			method="changeBmExpenseClaimState">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="getbmExpenseClaimForm" class="com.huge.ihos.bm.expensectrl.action.BmExpenseClaimAction"			method="getbmExpenseClaimForm">
+		</action>
+
+	</package>
+
+</struts>

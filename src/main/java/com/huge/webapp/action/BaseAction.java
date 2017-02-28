@@ -31,9 +31,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.huge.Constants;
 import com.huge.dao.hibernate.ActionEntityThreadLocalHolder;
 import com.huge.exceptions.BusinessException;
+import com.huge.ihos.system.configuration.code.service.CodeManager;
 import com.huge.ihos.system.configuration.dictionary.service.DictionaryItemManager;
 import com.huge.ihos.system.configuration.modelstatus.service.ModelStatusManager;
 import com.huge.ihos.system.context.ContextUtil;
+import com.huge.ihos.system.context.UserContext;
 import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.reportManager.search.util.ExcelUtil;
 import com.huge.ihos.system.systemManager.globalparam.service.GlobalParamManager;
@@ -158,6 +160,8 @@ public class BaseAction
 		this.fileFullPath = fileFullPath;
 	}
 
+	protected String codeRule;
+	
 	protected boolean outputExcel = false;
 	
 	public boolean isOutputExcel() {
@@ -166,6 +170,16 @@ public class BaseAction
 
 	public void setOutputExcel(boolean outputExcel) {
 		this.outputExcel = outputExcel;
+	}
+	
+	protected String docPreview;
+	
+	public String getDocPreview() {
+		return docPreview;
+	}
+
+	public void setDocPreview(String docPreview) {
+		this.docPreview = docPreview;
 	}
 
 	private String herpType = "S1";
@@ -187,6 +201,9 @@ public class BaseAction
 	}
 
 	public Map getUserdata() {
+		if(userdata==null){
+			userdata = new HashMap();
+		}
 		return userdata;
 	}
 
@@ -780,4 +797,29 @@ public class BaseAction
 		}
     	return null;
     }
+    
+    public String getCodeRule() {
+		return codeRule;
+	}
+	
+    private CodeManager codeManager;
+    public CodeManager getCodeManager() {
+		return codeManager;
+	}
+	
+	public void setCodeManager(CodeManager codeManager) {
+		this.codeManager = codeManager;
+	}
+    
+	/*public void setCodeRule(Class clazz) {
+		HashMap<String, String> environment = new HashMap<String, String>();
+		UserContext userContext = UserContextUtil.getUserContext();
+		environment.put("orgCode", userContext.getOrgCode());
+		environment.put("copyCode", userContext.getCopyCode());
+		environment.put("periodYear", userContext.getPeriodYear());
+		environment.put("periodMonth", userContext.getPeriodMonth());
+		
+		this.codeRule = codeManager.getCodeRule(clazz, environment); 
+		
+	}*/
 }

@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 
 import org.apache.struts2.json.annotations.JSON;
 
+import com.huge.ihos.system.configuration.AssistType.model.AssistType;
 import com.huge.ihos.system.systemManager.organization.model.Department;
 import com.huge.model.BaseObject;
 
@@ -46,6 +47,8 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	private String department ;
 	//private String periodYear;
 	
+	private String assistType;
+	
 	//private Boolean isHz;
 	private BudgetModel hzModelId;
 	
@@ -55,8 +58,22 @@ public class BudgetModel extends BaseObject implements Cloneable{
 	
 	private Set<BmModelProcess> bmModelProcesses;
 	
+	private Set<BmModelAssist> bmModelAssists;
+	
+	private Integer state;
+
 	private BmModelProcess updataProcess;
 	
+	@JSON(serialize=false)
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="modelId")
+	public Set<BmModelAssist> getBmModelAssists() {
+		return bmModelAssists;
+	}
+	
+	public void setBmModelAssists(Set<BmModelAssist> bmModelAssists) {
+		this.bmModelAssists = bmModelAssists;
+	}
 	@Transient
 	public BmModelProcess getUpdataProcess() {
 		if(bmModelProcesses!=null){
@@ -281,6 +298,22 @@ public class BudgetModel extends BaseObject implements Cloneable{
 		this.hzModelId = hzModelId;
 	}
 	
+	@Column
+	public String getAssistType() {
+		return assistType;
+	}
+
+	public void setAssistType(String assistType) {
+		this.assistType = assistType;
+	}
+	@Column
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
 	/*@Column
 	public String getPeriodYear() {
 		return periodYear;

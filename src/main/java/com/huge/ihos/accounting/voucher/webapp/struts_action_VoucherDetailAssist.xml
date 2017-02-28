@@ -8,8 +8,8 @@
 	<package name="voucherDetailAssist" extends="default"	namespace="/">
 
 		<action name="voucherDetailAssistList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction">
-			<result name="input">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistList.jsp</result>
-			<result name="success">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistList.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucherDetailAssist/voucherDetailAssistList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucherDetailAssist/voucherDetailAssistList.jsp</result>
 		</action>
 		<action name="voucherDetailAssistGridList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction"		method="voucherDetailAssistGridList">
 			<result type="json">
@@ -27,8 +27,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editVoucherDetailAssist" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherDetailAssistPagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistForm.jsp</result>
-			<result name="input">/WEB-INF/pages/voucherDetailAssist/voucherDetailAssistForm.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucherDetailAssist/voucherDetailAssistForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucherDetailAssist/voucherDetailAssistForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->

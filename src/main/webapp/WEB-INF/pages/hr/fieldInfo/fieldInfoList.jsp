@@ -63,7 +63,7 @@ var fieldInfoGrid = jQuery(fieldInfoGridIdString);
 {name:'statistics',index:'statistics',width : 60,align:'center',label : '<s:text name="fieldInfo.statistics" />',hidden:false,formatter:'checkbox'},				
 {name:'disabled',index:'disabled',width : 60,align:'center',label : '<s:text name="fieldInfo.disabled" />',hidden:false,formatter:'checkbox',highsearch:true},
 {name:'remark',index:'remark',width : 250,align:'left',label : '<s:text name="fieldInfo.remark" />',hidden:false,highsearch:true},
-{name:'changeUser.name',index:'changeUser.name',width : 100,align:'left',label : '<s:text name="fieldInfo.changeUser" />',hidden:false,highsearch:true},
+{name:'changerName',index:'changerName',width : 100,align:'left',label : '<s:text name="fieldInfo.changeUser" />',hidden:false,highsearch:true},
 {name:'changeDate',index:'changeDate',width : 100,align:'center',label : '<s:text name="fieldInfo.changeDate" />',hidden:false,formatter:"date",formatoptions:{newformat : 'Y-m-d'},highsearch:true}                  
         ],
         jsonReader : {

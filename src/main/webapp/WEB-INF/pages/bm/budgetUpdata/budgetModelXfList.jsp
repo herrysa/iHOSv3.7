@@ -14,6 +14,7 @@
 			mtype : "GET",
         	colModel:[
 			{name:'xfId',index:'xfId',align:'center',label : '<s:text name="budgetModelXf.xfId" />',hidden:true,key:true},
+			{name:'modelId.modelId',index:'modelId.modelId',align:'left',label : '<s:text name="budgetModelXf.modelId" />',hidden:true,width:100},
 			{name:'modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelXf.modelCode" />',hidden:false,width:100},
 			{name:'modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelXf.model" />',hidden:false,width:200},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelXf.periodYear" />',hidden:false,width:70},
@@ -87,6 +88,10 @@
 			    	var cellText = ret[i]["stepMap.${pc.stepCode }"];
 			    	setCellText(jQuery(this)[0],id,'stepMap.${pc.stepCode }','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=${pc.state }\')" target="navTab">'+cellText+"</a>")
 					</c:forEach>
+			    	var modelId = ret[i]["modelId.modelId"];
+			    	var hrefUrlModelName = "editBudgetModelReport?reportType=1&modelId="+modelId;
+			    	var cellTextModelName = ret[i]["modelId.modelName"];
+			    	setCellText(jQuery(this)[0],id,'modelId.modelName','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="modelReportZhuanqu(\''+hrefUrlModelName+'\')" target="navTab">'+cellTextModelName+"</a>");
      	    	 }
      	     }
        		} 
@@ -122,7 +127,7 @@
     	alertMsg.confirm("确认重新下发？重新下发后,之前填报的数据将作废！", {
 			okCall: function(){
 				jQuery.post("budgetModel_Xf", {
-					"_" : $.now(),xfId:sid,xfType:'1',navTabId:'${random}_budgetModelXf_gridtable'
+					"_" : $.now(),xfId:sid,xfType:'2',navTabId:'${random}_budgetModelXf_gridtable'
 				}, function(data) {
 					formCallBack(data);
 				},"json");
@@ -190,6 +195,18 @@
 	}
 	function bmUpdataZhuanqu(url){
 		$.pdialog.open(url, "bmupdataList", "上报状况明细",{width:800,height:600});
+	}
+	function modelReportZhuanqu(url){
+		var fullHeight = jQuery("#container").innerHeight();
+    	var fullWidth = jQuery("#container").innerWidth();
+		url = encodeURI(url);
+    	$.pdialog.open(url, 'showBudgetReport', "查看预算模板", {
+    		mask : true,
+    		maxable : true,
+    		resizable : true,
+    		width : fullWidth,
+    		height : fullHeight
+    	});
 	}
 </script>
 

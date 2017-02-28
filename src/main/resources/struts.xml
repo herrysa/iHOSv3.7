@@ -229,7 +229,19 @@
 		</action>
 
 
+        <action name="loanBill" class="com.huge.webapp.action.UnitOptAction">
+	        <result name="success">/WEB-INF/pages/bm/loanBill.jsp</result>
+        </action>
         
+        <action name="expenseBill" class="com.huge.webapp.action.UnitOptAction">
+	        <result name="success">/WEB-INF/pages/bm/expenseBill.jsp</result>
+        </action>
+        
+        <action name="getXml" class="com.huge.webapp.action.SupcanAction" method="getXml">
+        </action>
+        
+        <action name="getDataXml" class="com.huge.webapp.action.SupcanAction" method="getDataXml">
+        </action>
 
 
 

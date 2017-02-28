@@ -37,4 +37,14 @@ public interface BillNumberManager extends GenericManager<SerialNumberSet,String
 	 * @return
 	 */
 	public String createNextBillNumberForHRWithYM(String businessCode,String yearMonth);
+	
+	//public boolean isLastNumber(String docNo,String code,String orgCode,String copyCode,String yearMonth);
+	/**
+	 * 单据删除后，将当前的序列号回退一个数，保证单据号的连续[使用在 没有采用临时单据号的情况]
+	 * @param code 单据号规则的编码
+	 * @param orgCode 单位
+	 * @param copyCode 帐套
+	 * @param period 期间
+	 */
+	//public void updateSerialNumber(String code, String orgCode,String copyCode, String yearMonth);
 }

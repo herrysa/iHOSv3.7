@@ -1,154 +1,83 @@
 package com.huge.util;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
-
-import org.apache.log4j.Logger;
-
-public class PropertiesUtil 
-{ 
+  
+/** 
+ *  <p>
+ * 本类用提供一个线程同步的方法,读取资源文件中的配置信息
+ * </p>
+ * 
+ */  
+public class PropertiesUtil {  
+	private String     file;
     
-    private static Logger logger = Logger.getLogger(PropertiesUtil.class); 
-        
-    /** 
-     * 增加属性文件值 
-     * @param key 
-     * @param value 
-     */ 
-    public static void addProperties(String key[], String value[], String file) 
-    { 
-        Properties iniFile = getProperties(file); 
-        FileOutputStream oFile = null; 
-        try 
-        { 
-            iniFile.put(key, value); 
-            oFile = new FileOutputStream(file, true); 
-            iniFile.store(oFile, "modify properties file"); 
-        } 
-        catch (FileNotFoundException e) 
-        { 
-            logger.warn("do " + file + " FileNotFoundException:", e); 
-        } 
-        catch (IOException e) 
-        { 
-            logger.warn("do " + file + " IOException:", e); 
-        } 
-        finally 
-        { 
-            try 
-            { 
-                if (oFile != null) 
-                { 
-                    oFile.close(); 
-                } 
-            } 
-            catch (IOException e) 
-            { 
-                logger.warn("do " + file + " IOException:", e); 
-            } 
-        } 
-    } 
+    private Properties properties;
     
-    /** 
-     * 读取配置文件 
-     * @return 
-     */ 
-    public static Properties getProperties(String file) 
-    { 
-        Properties pro = null; 
-        FileInputStream in = null; 
-        try 
-        { 
-            in = new FileInputStream(file); 
-            pro = new Properties(); 
-            pro.load(in); 
+    /**
+     * 构造 PropertysReader
+     * @param {String} path 相对于classes的文件路径
+     */
+    public PropertiesUtil(String path)
+    {
+        this.file = path;
+        this.properties = new Properties();
+    }
+    
+    public synchronized String getProperty(String key){
+    	return this.getProperty(key, null);
+    }
+    
+    /**
+     * <p>
+     * 本方法根据资源名获取资源内容
+     * <p>
+     * 
+     * @param {String} key 资源文件内key
+     * @param {Stirng} defaultValue 默认值
+     * 
+     * @reaurn String key对应的资源内容
+     */
+    public synchronized String getProperty(String key, String defaultValue)
+    {
+        try
+        {
+            InputStream in = this.getClass().getClassLoader()
+                    .getResourceAsStream(this.file);
             
-        } 
-        catch (Exception e) 
-        { 
-            logger.warn("Read " + file + " IOException:", e); 
-        } 
-        finally 
-        { 
-            try 
-            { 
-                if (in != null) 
-                { 
-                    in.close(); 
-                } 
-            } 
-            catch (IOException e) 
-            { 
-                logger.warn("Read " + file + " IOException:", e); 
-            } 
-        } 
-        return pro; 
-    } 
+            properties.load(in);
+            
+        }
+        catch (Exception ex1)
+        {
+            System.out.println("没有找到资源文件:" + this.file);
+        }
+        return properties.getProperty(key, defaultValue);
+    }
     
-    /** 
-     * 保存属性到文件中 
-     * @param pro 
-     * @param file 
-     */ 
-    public static void saveProperties(Properties pro, String file) 
-    { 
-        if (pro == null) 
-        { 
-            return; 
-        } 
-        FileOutputStream oFile = null; 
-        try 
-        { 
-            oFile = new FileOutputStream(file, false); 
-            pro.store(oFile, "modify properties file"); 
-        } 
-        catch (FileNotFoundException e) 
-        { 
-            logger.warn("do " + file + " FileNotFoundException:", e); 
-        } 
-        catch (IOException e) 
-        { 
-            logger.warn("do " + file + " IOException:", e); 
-        } 
-        finally 
-        { 
-            try 
-            { 
-                if (oFile != null) 
-                { 
-                    oFile.close(); 
-                } 
-            } 
-            catch (IOException e) 
-            { 
-                logger.warn("do " + file + " IOException:", e); 
-            } 
-        } 
-    } 
+    /**
+     * <p>
+     * 本方法根据资源名获取资源内容
+     * <p>
+     * 
+     * @param {String} key 资源文件内key
+     * @param {Stirng} defaultValue 默认值
+     * @param {boolean} isnull 如果配置文件value为空，是否使用默认值
+     * 
+     * @reaurn String key对应的资源内容
+     */
+    public synchronized String getProperty(String key, String defaultValue,boolean isnull)
+    {
+        String value = null;
+        value = getProperty(key,defaultValue);
+        if(isnull && (value == null || "".equals(value.trim()) )  )
+            value = defaultValue;
+        return value;
+    }
     
-    /** 
-     * 修改属性文件 
-     * @param key 
-     * @param value 
-     */ 
-    public static void updateProperties(String key, String value, String file) 
-    { 
-        //key为空则返回 
-        if (key == null || "".equalsIgnoreCase(key)) 
-        { 
-            return; 
-        } 
-        Properties pro = getProperties(file); 
-        if (pro == null) 
-        { 
-            pro = new Properties(); 
-        } 
-        pro.put(key, value); 
-        
-        //保存属性到文件中 
-        saveProperties(pro, file); 
-    } 
-}
+    public static void main(String[] args)
+    {
+    	PropertiesUtil preader = new PropertiesUtil("sysVariTable.properties");
+        String rootLogger = preader.getProperty("tablename", "defaul");
+        System.out.println(rootLogger);
+    }
+}  

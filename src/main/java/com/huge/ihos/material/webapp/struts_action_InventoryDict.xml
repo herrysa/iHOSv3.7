@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="inventoryDict" extends="default"	namespace="/">
+
+		<action name="inventoryDictTreeList" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction">
+			<result name="success">/WEB-INF/pages/material/invDict/invDictList.jsp</result>
+		</action>
+		<!-- <action name="inventoryDictList" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction">
+			<result name="input">/WEB-INF/pages/inventoryDict/inventoryDictList.jsp</result>
+			<result name="success">/WEB-INF/pages/inventoryDict/inventoryDictList.jsp</result>
+		</action> -->
+		<action name="inventoryDictGridList" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"		method="inventoryDictGridList">
+			<result type="json">
+				<param name="includeProperties">inventoryDicts.*,records,total,page</param>
+					<param name="excludeProperties">inventoryDicts.*\.inventoryType.parentNode</param>
+				
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="inventoryDictGridEdit" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"			method="inventoryDictGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInventoryDict" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/invDict/inventoryDictForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invDict/inventoryDictForm.jsp</result>
+		</action>
+		<action name="copyInventoryDict" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"			method="copy">
+			<result name="success">/WEB-INF/pages/material/invDict/inventoryDictForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invDict/inventoryDictForm.jsp</result>
+		</action>
+		<action name="inventoryDictBatchEdit" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"			method="inventoryDictBatchEdit">
+			<result name="success">/WEB-INF/pages/material/invDict/inventoryDictBatchEditForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invDict/inventoryDictBatchEditForm.jsp</result>
+		</action>
+		<action name="inventoryDictBatchSave" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"			method="inventoryDictBatchSave"/>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInventoryDict" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="deleteInventoryDict" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction"			method="delete">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		
+		
+		<action name="uploadInvImageFile" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction" method="uploadImageFile"/>
+		<action name="deleteInvImageFile" class="com.huge.ihos.material.webapp.action.InventoryDictPagedAction" method="deleteImageFile"/>
+	</package>
+
+</struts>

@@ -50,6 +50,12 @@ public class CopyDetailsPagedAction extends JqGridBaseAction implements Preparab
 		return SUCCESS;
 	}
 	
+	public PeriodYearManager getPeriodYearManager() {
+		return periodYearManager;
+	}
+	public void setPeriodYearManager(PeriodYearManager periodYearManager) {
+		this.periodYearManager = periodYearManager;
+	}
 	public String showNormalInfoDetails() {
 		try {
 			
@@ -120,12 +126,7 @@ public class CopyDetailsPagedAction extends JqGridBaseAction implements Preparab
 	public void setPeriodPlanManager(PeriodPlanManager periodPlanManager) {
 		this.periodPlanManager = periodPlanManager;
 	}
-	public PeriodYearManager getPeriodSubjectManager() {
-		return periodYearManager;
-	}
-	public void setPeriodSubjectManager(PeriodYearManager periodYearManager) {
-		this.periodYearManager = periodYearManager;
-	}
+
 	public List<PeriodMonth> getPeriodMonthList() {
 		return periodMonthList;
 	}

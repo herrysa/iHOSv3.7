@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="balance" extends="default"	namespace="/">
+
+		<action name="balanceList" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction" method="balanceList">
+			<result name="input">/WEB-INF/pages/accounting/balance/balanceList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/balance/balanceList.jsp</result>
+		</action>
+		<action name="balanceGridList" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"		method="balanceGridList">
+			<result type="json">
+				<param name="includeProperties">balances.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="balanceGridEdit" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="balanceGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBalanceList" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/accounting/balance/balanceForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/balance/balanceForm.jsp</result>
+		</action>
+		
+		<action name="editBalanceGridList" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"		 method="edit">
+			<result name="success" type="json">
+				<param name="includeProperties">balances.*,assistTypes.*,account</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- called when clicking save on the edit form -->
+		<action name="balanceAssitGridEdit" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="balanceAssitGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="isBalance" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="isBalanceGrid">
+			<result name="success">/WEB-INF/pages/accounting/balance/isBalanceForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/balance/isBalanceForm.jsp</result>
+		</action>
+		
+		<action name="isBalanceGrid" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="isBalanceGrid">
+			<result name="success" type="json">
+                <param name="includeProperties">isBalanceCheckList.*,message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="checkBalanceList" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="checkBalanceList">
+			<result name="success">/WEB-INF/pages/accounting/balance/checkBalanceForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/balance/checkBalanceForm.jsp</result>
+		</action>
+		
+		<action name="checkBalanceListGrid" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="checkBalanceList">
+			<result type="json">
+				<param name="includeProperties">balances.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="initBalance" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="init">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="setUpBalance" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="setUpBalance">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="shutDownBalance" class="com.huge.ihos.accounting.balance.webapp.action.BalancePagedAction"			method="shutDownBalance">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

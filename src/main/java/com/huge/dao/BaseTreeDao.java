@@ -10,7 +10,7 @@ import com.huge.model.BaseTreeNode;
  */
 public interface BaseTreeDao<T extends BaseTreeNode, PK extends Serializable> {
 	T get(PK id);
-
+	 T save(T node);
 	List<T> getAll();
 
 	/**

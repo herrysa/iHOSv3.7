@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import net.sf.json.JSONArray;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -270,6 +271,14 @@ public class UserContextUtil{
 		
 		userContext.setSubSysMainPage(systemVariable.getSubSysMainPage());
 		//组织结构
+		/*String orgCode = systemVariable.getOrgCode();
+		String copyCode = systemVariable.getCopyCode();
+		if(StringUtils.isEmpty(orgCode)){
+			orgCode = "";
+		}
+		if(StringUtils.isEmpty(orgCode)){
+			copyCode = "";
+		}*/
 		userContext.setOrgCode(systemVariable.getOrgCode());
 		userContext.setOrgName(systemVariable.getOrgName());
 		userContext.setCopyCode(systemVariable.getCopyCode());
@@ -996,6 +1005,15 @@ public class UserContextUtil{
 	public static String getLoginPersonId(){
 		UserContext userContext = UserContextUtil.getUserContext();
 		return userContext.getLoginPersonId();
+	}
+	
+	public static String getOrgCodeOrLoginOrgCode(){
+		UserContext userContext = UserContextUtil.getUserContext();
+		String orgCode = userContext.getOrgCode();
+		if(StringUtils.isEmpty(orgCode)){
+			orgCode = userContext.getLoginOrgId();
+		}
+		return orgCode;
 	}
 	
 	//TODO 加入系统参数

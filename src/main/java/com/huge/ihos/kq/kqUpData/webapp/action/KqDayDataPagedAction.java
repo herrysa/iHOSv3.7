@@ -1076,6 +1076,10 @@ public class KqDayDataPagedAction extends JqGridBaseAction implements Preparable
 		lastPeriod = KqUtil.getLastPeriod(curPeriod, globalParamManager.getGlobalParamByKey("kqPersonDelayMonth"));
 		if("0".equals(kqUpDataType)){
 			curPeriodWeek = calWeekDetailOfPeriod(curPeriod);
+		} 
+		ColShow colShow = colShowManager.getLastByTemplName("com.huge.ihos.kq.kqUpData.model.KqDeptCheck", this.getSessionUser().getId()+"",kqUpDataType);
+		if(OtherUtil.measureNotNull(colShow)){
+			kqCustomLayout = colShow.getCustomLayout();
 		}
 		return SUCCESS;
 	}

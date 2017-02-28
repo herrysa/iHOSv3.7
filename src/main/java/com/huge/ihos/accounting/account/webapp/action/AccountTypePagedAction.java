@@ -74,7 +74,6 @@ public class AccountTypePagedAction extends JqGridBaseAction implements Preparab
 		this.accountType = accountType;
 	}
 
-
 	public void prepare() throws Exception {
 		this.clearSessionMessages();
 	}

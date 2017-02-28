@@ -190,17 +190,28 @@ public class PeriodManagerImpl
 		// 得到本年所有期间(有序)
 		String nextPeriod = null;
 		String year = periodCode.substring(0, 4);
-		List<Period> periods = periodDao.getPeriodsByYear(year);
-		for(int i=0,len = periods.size();i<len;i++){
-			if(periods.get(i).getPeriodCode().equals(periodCode)){
-				if(i<len-1){
-					nextPeriod =  periods.get(i+1).getPeriodCode();
-				}else{
-					nextPeriod = null;
+		String month = periodCode.replace(year, "");
+		List<Period> periods = null;
+		if("12".equals(month)){
+			year = ""+(Integer.parseInt(year)+1);
+			periods = periodDao.getPeriodsByYear(year);
+			if(periods!=null){
+				nextPeriod = periods.get(0).getPeriodCode();
+			}
+		}else{
+			periods = periodDao.getPeriodsByYear(year);
+			for(int i=0,len = periods.size();i<len;i++){
+				if(periods.get(i).getPeriodCode().equals(periodCode)){
+					if(i<len-1){
+						nextPeriod =  periods.get(i+1).getPeriodCode();
+					}else{
+						nextPeriod = null;
+					}
+					break;
 				}
-				break;
 			}
 		}
+		
 		return nextPeriod;
 	}
 

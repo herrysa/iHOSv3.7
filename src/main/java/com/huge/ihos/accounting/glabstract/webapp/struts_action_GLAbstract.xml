@@ -8,8 +8,8 @@
 	<package name="gLAbstract" extends="default"	namespace="/">
 
 		<action name="gLAbstractList" class="com.huge.ihos.accounting.glabstract.webapp.action.GLAbstractPagedAction">
-			<result name="input">/WEB-INF/pages/gLAbstract/gLAbstractList.jsp</result>
-			<result name="success">/WEB-INF/pages/gLAbstract/gLAbstractList.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/gLAbstract/gLAbstractList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/gLAbstract/gLAbstractList.jsp</result>
 		</action>
 		<action name="gLAbstractGridList" class="com.huge.ihos.accounting.glabstract.webapp.action.GLAbstractPagedAction"		method="gLAbstractGridList">
 			<result type="json">
@@ -27,8 +27,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editGLAbstract" class="com.huge.ihos.accounting.glabstract.webapp.action.GLAbstractPagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/gLAbstract/gLAbstractForm.jsp</result>
-			<result name="input">/WEB-INF/pages/gLAbstract/gLAbstractForm.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/gLAbstract/gLAbstractForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/gLAbstract/gLAbstractForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->

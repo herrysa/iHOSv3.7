@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="inventoryType" extends="default"	namespace="/">
+
+		<action name="inventoryTypeList" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction">
+			<result name="input">/WEB-INF/pages/material/invType/inventoryTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invType/inventoryTypeList.jsp</result>
+		</action>
+		<action name="inventoryTypeGridList" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction"		method="inventoryTypeGridList">
+			<result type="json">
+				<param name="includeProperties">inventoryTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="inventoryTypeGridEdit" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction"			method="inventoryTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInventoryType" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/invType/inventoryTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/invType/inventoryTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInventoryType" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,addInvType.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="delInventoryType" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction"			method="delete">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="inventoryTypeTree"	class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction">
+			<result>/WEB-INF/pages/material/invType/inventoryTypeTree.jsp</result>
+		</action>
+		
+		<action name="inventoryTypeForm"	class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction" method="edit">
+			<result>/WEB-INF/pages/material/invType/inventoryTypeForm.jsp</result>
+		</action>
+		
+		<action name="makeInventoryTypeTree"	class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction" method="makeInventoryTypeTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">inventoryTypeTreeList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="refreshInvTypeNode" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction" method="refreshInvTypeNode">
+			<result name="success"  type="json">
+				<param name="includeProperties">parentAndChildList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="hasInvTypeChildren" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction" method="hasInvTypeChildren">
+			<result name="success"  type="json">
+				<param name="includeProperties">hasInvTypeChildren</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="reBuildTree" class="com.huge.ihos.material.webapp.action.InventoryTypePagedAction" method="reBuildTree">
+			<result>/WEB-INF/pages/material/invType/inventoryTypeTree.jsp</result>
+		</action>
+
+	</package>
+
+</struts>

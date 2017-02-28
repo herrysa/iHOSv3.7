@@ -14,6 +14,7 @@
         	colModel:[
 			{name:'modelXfId.xfId',index:'modelXfId.xfId',align:'center',label : '<s:text name="budgetModelZn.xfId" />',hidden:true,key:true},
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetModelZn.xfId" />',hidden:true},
+			{name:'modelXfId.modelId.modelId',index:'modelXfId.modelId.modelId',align:'left',label : '<s:text name="budgetModelHz.modelId" />',hidden:true,width:100},
 			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetModelZn.modelCode" />',hidden:false,width:100},
 			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetModelZn.model" />',hidden:false,width:250},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelZn.periodYear" />',hidden:false,width:70},
@@ -78,6 +79,10 @@
 			    	var cellText = ret[i]["stepMap.${pc.stepCode }"];
 			    	setCellText(jQuery(this)[0],id,'stepMap.${pc.stepCode }','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=${pc.state }\')" target="navTab">'+cellText+"</a>")
 					</c:forEach>
+			    	var modelId = ret[i]["modelXfId.modelId.modelId"];
+			    	var hrefUrlModelName = "editBudgetModelReport?reportType=1&modelId="+modelId;
+			    	var cellTextModelName = ret[i]["modelXfId.modelId.modelName"];
+			    	setCellText(jQuery(this)[0],id,'modelXfId.modelId.modelName','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="modelReportZhuanqu(\''+hrefUrlModelName+'\')" target="navTab">'+cellTextModelName+"</a>");
      	    	 }
      	     }
        		} 
@@ -132,7 +137,7 @@
     	}
     	var rowData = jQuery("#${random}_budgetModelZn_gridtable").jqGrid('getRowData',sid);
     	var updataId = rowData['updataId'];
-    	$.pdialog.open('openBmReport?modelType=3&updataId='+updataId,'bmReport',"职能代编填报预算", {mask:true,width : fullWidth,height : fullHeight});
+    	$.pdialog.open('openBmReport?modelType=3&updataId='+updataId+'&random=${random}','bmReport',"职能代编填报预算", {mask:true,width : fullWidth,height : fullHeight});
       	});
     
     
@@ -212,6 +217,18 @@
 	function bmUpdataZhuanqu(url){
 		$.pdialog.open(url, "bmupdataList", "上报科室明细",{width:800,height:600});
 	}
+	function modelReportZhuanqu(url){
+		var fullHeight = jQuery("#container").innerHeight();
+    	var fullWidth = jQuery("#container").innerWidth();
+		url = encodeURI(url);
+    	$.pdialog.open(url, 'showBudgetReport', "查看预算模板", {
+    		mask : true,
+    		maxable : true,
+    		resizable : true,
+    		width : fullWidth,
+    		height : fullHeight
+    	});
+	}
 </script>
 
 <div class="page">
@@ -258,17 +275,20 @@
 				</a>
 				</li>
 				<li><a id="${random}_budgetModelZn_gridtable_xf" class="resettlebutton"  href="javaScript:"
-					><span>上报
+					><span>启动
 					</span>
 				</a>
 				</li>
 				</s:if>
 				<s:if test="state==1||state==2">
-				<li><a id="${random}_budgetModelZn_gridtable_report" class="settlebutton"  href="javaScript:"><span>填报</span>
-				</a>
-				</li>
-				<s:if test="state==1">
-				<li><a id="${random}_budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
+					<s:if test="state==1">
+						<li><a id="${random}_budgetModelZn_gridtable_report" class="settlebutton"  href="javaScript:"><span>填报</span></a></li>
+					</s:if>
+					<s:else>
+						<li><a id="${random}_budgetModelZn_gridtable_report" class="settlebutton"  href="javaScript:"><span>查看报表</span></a></li>
+					</s:else>
+				<s:if test="needBmZnCheckProcess==1&&state==1">
+				<li><a id="${random}_budgetModelZn_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
 				</s:if>
 				<li><a id="${random}_budgetModelZn_gridtable_reXf" class="resettlebutton"  href="javaScript:"
 					><span>重新上报

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="vendorType" extends="default"	namespace="/">
+
+		<action name="vendorTypeList" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction">
+			<result>/WEB-INF/pages/system/repository/vendor/vendorTypeList.jsp</result>
+		</action>
+		<action name="vendorTypeGridList" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction"		method="vendorTypeGridList">
+			<result type="json">
+				<param name="includeProperties">vendorTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="vendorTypeGridEdit" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction"			method="vendorTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editVendorType" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/repository/vendor/vendorTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/repository/vendor/vendorTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveVendorType" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,addVendorType.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="delVendorType" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction"			method="delete">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="vendorTypeForm"	class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction" method="edit">
+			<result>/WEB-INF/pages/system/repository/vendor/vendorTypeForm.jsp</result>
+		</action>
+		<action name="makeVendorTypeTree"	class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction" method="makeVendorTypeTree">
+			<result name="success"  type="json">
+				<param name="includeProperties">vendorTypeTreeList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="refreshVendorTypeNode"	class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction" method="refreshVendorTypeNode">
+			<result name="success"  type="json">
+				<param name="includeProperties">parentAndChildList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="hasVendorTypeChildren" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction" method="hasVendorTypeChildren">
+			<result name="success"  type="json">
+				<param name="includeProperties">hasVendorTypeChildren</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		
+		<action name="getSearchVendorTypes" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorTypePagedAction" method="getSearchVendorTypes">
+			<result name="success"  type="json">
+				<param name="includeProperties">searchVendorTypeList.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+	</package>
+
+</struts>

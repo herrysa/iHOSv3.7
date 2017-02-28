@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="formDesigner" extends="default"	namespace="/">
+
+		<action name="formDesignerList" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction">
+			<result name="input">/WEB-INF/pages/system/formDesigner/formDesignerList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/formDesigner/formDesignerList.jsp</result>
+		</action>
+		<action name="formDesignerGridList" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="formDesignerGridList">
+			<result type="json">
+				<param name="includeProperties">formDesigners.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="formDesignerGridEdit" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"			method="formDesignerGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editFormDesigner" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/formDesigner/formDesignerForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/formDesigner/formDesignerForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveFormDesigner" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="designForm" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"			>
+			<result name="success">/WEB-INF/pages/system/formDesigner/designForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/formDesigner/designForm.jsp</result>
+		</action>
+		
+		<action name="designFormDetail" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"			>
+			<result name="success">/WEB-INF/pages/system/formDesigner/designFormDetail.jsp</result>
+			<result name="input">/WEB-INF/pages/system/formDesigner/designFormDetail.jsp</result>
+		</action>
+		
+		<action name="designPrintReport" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"			>
+			<result name="success">/WEB-INF/pages/system/formDesigner/designPrintReport.jsp</result>
+			<result name="input">/WEB-INF/pages/system/formDesigner/designPrintReport.jsp</result>
+		</action>
+		
+		<action name="getFormDesignerXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getFormDesignerXml"	>
+		</action>
+		<action name="getFormDetailDesignerXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getFormDetailDesignerXml"	>
+		</action>
+		<action name="getTreeListBySearch" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getTreeListBySearch"	>
+		</action>
+		<action name="getFormDesignerTreeXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getFormDesignerTreeXml"	>
+		</action>
+		<action name="saveFormDesignerXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="saveFormDesignerXml"	>
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="saveFormDetailDesignerXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="saveFormDetailDesignerXml"	>
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="getTreeListByBdInfo" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getTreeListByBdInfo"	>
+		</action>
+		<action name="getPrintReportXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getPrintReportXml"	>
+		</action>
+		<action name="savePrintReportXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="savePrintReportXml"	>
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<!-- <action name="designFormMain" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"			>
+			<result name="success">/WEB-INF/pages/system/formDesigner/designFormMain.jsp</result>
+			<result name="input">/WEB-INF/pages/system/formDesigner/designFormMain.jsp</result>
+		</action> -->
+		<action name="getPrintReportDataSourceXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getPrintReportDataSourceXml"	>
+		</action>
+		<action name="getPrintReportFormDataSourceXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getPrintReportFormDataSourceXml"	>
+		</action>
+		<action name="getPrintReportDetailDataSourceXml" class="com.huge.ihos.system.formDesigner.webapp.action.FormDesignerPagedAction"		method="getPrintReportDetailDataSourceXml"	>
+		</action>
+	</package>
+
+</struts>

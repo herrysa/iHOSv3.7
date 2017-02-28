@@ -917,8 +917,8 @@ public class IHosUserAction
     	Map<String, String> syModel = ContextUtil.getSyModel(currentRootMenu);
      	if(syModel!=null){
     		String modelCode = syModel.get("code");
-    		orgModel = ContextUtil.getHerpParamByKey("orgModel_"+businessYear, modelCode);
-    		copyModel = ContextUtil.getHerpParamByKey("copyModel_"+businessYear, modelCode);
+    		orgModel = ContextUtil.getHerpParamByKey("orgModel", modelCode);
+    		copyModel = ContextUtil.getHerpParamByKey("copyModel", modelCode);
     	}
     	//userManager.getBySql("");
     	//String paramValue = ContextUtil.getHerpParamByKey(key, subSystemCode);

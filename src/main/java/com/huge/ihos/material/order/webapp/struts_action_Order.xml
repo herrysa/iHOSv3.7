@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="order" extends="default"	namespace="/">
+
+		<action name="orderList" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction">
+			<result name="input">/WEB-INF/pages/material/order/orderList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/order/orderList.jsp</result>
+		</action>
+		<action name="orderGridList" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"		method="orderGridList">
+			<result type="json">
+				<param name="includeProperties">orders.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="orderGridEdit" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"			method="orderGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editOrder" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/order/orderForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/order/orderForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveOrder" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="extendOrder" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"	method="extendOrder">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,orderId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="unionOrder" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"	method="unionOrder">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,orderId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 根据订单入库的选择页面 -->
+		<action name="orderMainAndDetailList" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"  method="orderMainAndDetailList">
+			<result name="input">/WEB-INF/pages/material/order/orderMainAndDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/order/orderMainAndDetailList.jsp</result>
+		</action>
+		<action name="importOrderToInvMainIn" class="com.huge.ihos.material.order.webapp.action.OrderPagedAction"	method="importOrderToInvMainIn">
+			<result name="success" type="json">
+                <param name="includeProperties">invDetails.*,order.*,message,statusCode,callbackType,navTabId</param>
+                <param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

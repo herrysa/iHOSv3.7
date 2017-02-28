@@ -102,6 +102,24 @@ public class GLAbstractPagedAction extends JqGridBaseAction implements Preparabl
 				gridOperationMessage = this.getText("gLAbstract.deleted");
 				return ajaxForward(true, gridOperationMessage, false);
 			} else if (oper.equals("add")|| oper.equals("edit")){
+				try {
+					if(gLAbstract==null){
+						gLAbstract = new GLAbstract();
+						gLAbstract.setOrgCode(UserContextUtil.getUserContext().getOrgCode());
+						gLAbstract.setCopycode(UserContextUtil.getUserContext().getCopyCode());
+						gLAbstract.setDisabled(false);
+						gLAbstract.setKjYear(UserContextUtil.getUserContext().getPeriodYear());
+						gLAbstract.setVoucher_abstract(voucher_abstract);
+					}else{
+						
+					}
+					gLAbstractManager.save(gLAbstract);
+				} catch (Exception dre) {
+					gridOperationMessage = dre.getMessage();
+					return ajaxForwardError(gridOperationMessage);
+				}
+				String key = ((this.isEntityIsNew())) ? "gLAbstract.added" : "gLAbstract.updated";
+				return ajaxForward(this.getText(key));
 			}
 			return SUCCESS;
 		} catch (Exception e) {

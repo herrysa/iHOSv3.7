@@ -157,6 +157,26 @@ public class GenericDaoHibernate<T, PK extends Serializable>
         T entity = (T) hibernateTemplate.get( this.persistentClass, id );
         return entity != null;
     }
+    
+    @Override
+	public boolean existByExample(T object) {
+		List<T> list = this.getByExample(object);
+		if(list!=null&&list.size()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean existByFilter(List<PropertyFilter> filters) {
+		List<T> list = this.getByFilters(filters);
+		if(list!=null&&list.size()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
     @SuppressWarnings( "unchecked" )
     public boolean existCode( String object, String columnName, String valueCode, String oper ) {

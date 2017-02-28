@@ -46,7 +46,12 @@ import com.huge.webapp.util.SpringContextHelper;
 public class QueryAction
     extends JqGridBaseAction
      {
-    private QueryManager queryManager;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5176851655789834954L;
+
+	private QueryManager queryManager;
 
     private String searchId;
 
@@ -689,89 +694,145 @@ public class QueryAction
             List<Header> tl = new ArrayList();
             Header th = null;
             Header sh = null;
+            
+            int level = 1;
+            boolean hasSecondLevel = false;
             for ( int i = 0; i < searchOptions.length; i++ ) {
-                SearchOption so = searchOptions[i];
-                /*if(!so.isVisible()){
-                	continue;
-                }*/
-                if ( so.getHeaderLevel() > 1 ) {
-                    if ( so.getHeaderLevel() == 3 ) {
+            	SearchOption so = searchOptions[i];
+            	if ( so.getHeaderLevel() == 3 ) {
+            		level = 3;
+            		break;
+            	}else if(so.getHeaderLevel() == 2){
+            		hasSecondLevel = true;
+            	}
+            }
+            if(level==3){
+            	for ( int i = 0; i < searchOptions.length; i++ ) {
+                	SearchOption so = searchOptions[i];
+                	if ( so.getHeaderLevel() == 2 ) {
+                		String[] headers = so.getHeaders();
+                		String[] headers2 = new String[3];
+                		headers2[0] = headers[0];
+                		headers2[1] = "dummy";
+                		headers2[2] = headers[1];
+                		so.setFullHeaders(headers2);
+                	}
+                }
+            }else{
+            	if(hasSecondLevel){
+            		level = 2;
+            	}
+            }
+            
+            if(level>2){
+            	for ( int i = 0; i < searchOptions.length; i++ ) {
+                    SearchOption so = searchOptions[i];
+                    /*if(!so.isVisible()){
+                    	continue;
+                    }*/
+                    //if ( so.getHeaderLevel() > 1 ) {
+                    String[] fullHeaders = so.getFullHeaders();
+                    if(fullHeaders==null){
+                    	fullHeaders = so.getHeaders();
+                    }
+                        if ( fullHeaders.length == 3 ) {
 
-                        if ( th == null ) {
-                            th = new Header();
-                            th.setHeaderTitleText( so.getHeaders()[so.getHeaderLevel() - 3] );
-                            th.setNumberOfColumns( 1 );
-                            th.setStartColumnName( so.getFieldNameUpperCase() );
-                            th.setIndexOfCol(so.getOorder());
-                            tl.add( th );
-                        }
-                        else {
-                            if ( th.getHeaderTitleText().equalsIgnoreCase( so.getHeaders()[so.getHeaderLevel() - 3] ) ) {
-                                th.setNumberOfColumns( th.getNumberOfColumns() + 1 );
+                            if ( th == null ) {
+                                th = new Header();
+                                th.setHeaderTitleText( fullHeaders[0] );
+                                th.setNumberOfColumns( 1 );
+                                th.setStartColumnName( so.getFieldNameUpperCase() );
+                                th.setIndexOfCol(so.getOorder());
+                                tl.add( th );
                             }
                             else {
-                                Header t = new Header();
+                                if ( th.getHeaderTitleText().equalsIgnoreCase( fullHeaders[0] ) ) {
+                                    th.setNumberOfColumns( th.getNumberOfColumns() + 1 );
+                                }
+                                else {
+                                    Header t = new Header();
 
-                                t.setHeaderTitleText( so.getHeaders()[so.getHeaderLevel() - 3] );
-                                t.setNumberOfColumns( 1 );
-                                t.setStartColumnName( so.getFieldNameUpperCase() );
-                                t.setIndexOfCol(so.getOorder());
-                                tl.add( t );
-                                th = t;
+                                    t.setHeaderTitleText( fullHeaders[0] );
+                                    t.setNumberOfColumns( 1 );
+                                    t.setStartColumnName( so.getFieldNameUpperCase() );
+                                    t.setIndexOfCol(so.getOorder());
+                                    tl.add( t );
+                                    th = t;
+                                }
                             }
+
                         }
 
-                    }
+                    /*}
+                    else {
+                        continue;
+                    }*/
 
                 }
-                else {
-                    continue;
-                }
-
             }
+            
+            if(level>1){
+            	for ( int i = 0; i < searchOptions.length; i++ ) {
+                    SearchOption so = searchOptions[i];
+                    /*if(!so.isVisible()){
+                    	continue;
+                    }*/
+                    String[] fullHeaders = so.getFullHeaders();
+                    if(fullHeaders==null){
+                    	fullHeaders = so.getHeaders();
+                    }
+                    //if ( so.getHeaderLevel() > 1 ) {
+                        if ( so.getHeaderLevel() >= 2 ) {
+                        	int headLength = fullHeaders.length;
+                        	String text = fullHeaders[headLength-2];
 
-            for ( int i = 0; i < searchOptions.length; i++ ) {
-                SearchOption so = searchOptions[i];
-                /*if(!so.isVisible()){
-                	continue;
-                }*/
-                if ( so.getHeaderLevel() > 1 ) {
-                    if ( so.getHeaderLevel() >= 2 ) {
-
-                        if ( sh == null ) {
-                            sh = new Header();
-                            sh.setHeaderTitleText( so.getHeaders()[so.getHeaderLevel() - 2] );
-                            sh.setNumberOfColumns( 1 );
-                            sh.setStartColumnName( so.getFieldNameUpperCase() );
-                            sh.setIndexOfCol(so.getOorder());
-                            sl.add( sh );
-                        }
-                        else {
-                            if ( sh.getHeaderTitleText().equalsIgnoreCase( so.getHeaders()[so.getHeaderLevel() - 2] ) ) {
-                                sh.setNumberOfColumns( sh.getNumberOfColumns() + 1 );
+                            if ( sh == null ) {
+                                sh = new Header();
+                                sh.setHeaderTitleText( text );
+                                sh.setNumberOfColumns( 1 );
+                                sh.setStartColumnName( so.getFieldNameUpperCase() );
+                                sh.setIndexOfCol(so.getOorder());
+                                sl.add( sh );
                             }
                             else {
-                                Header t = new Header();
+                                if ( sh.getHeaderTitleText().equalsIgnoreCase( text ) ) {
+                                    sh.setNumberOfColumns( sh.getNumberOfColumns() + 1 );
+                                }
+                                else {
+                                    Header t = new Header();
 
-                                t.setHeaderTitleText( so.getHeaders()[so.getHeaderLevel() - 2] );
-                                t.setNumberOfColumns( 1 );
-                                t.setStartColumnName( so.getFieldNameUpperCase() );
-                                t.setIndexOfCol(so.getOorder());
-                                sl.add( t );
-                                sh = t;
+                                    t.setHeaderTitleText( text );
+                                    t.setNumberOfColumns( 1 );
+                                    t.setStartColumnName( so.getFieldNameUpperCase() );
+                                    t.setIndexOfCol(so.getOorder());
+                                    sl.add( t );
+                                    sh = t;
+                                }
                             }
+
                         }
 
-                    }
+                    /*}
+                    else {
+                        continue;
+                    }*/
 
                 }
-                else {
-                    continue;
-                }
-
             }
+
+            
             List<Header> sl2 = new ArrayList<Header>();
             for(Header header : sl){
+            	if(tl==null||tl.size()==0){
+            		sl2 = sl;
+            		break;
+            	}
+            	String title = header.getHeaderTitleText();
+            	if(!"dummy".equals(title)){
+            		sl2.add(header);
+            	}
+            }
+            /*for(Header header : sl){
             	if(tl==null||tl.size()==0){
             		sl2 = sl;
             		break;
@@ -790,17 +851,18 @@ public class QueryAction
             	if(!thirdFlag){
             		sl2.add(header);
             	}
-            }
+            }*/
             secondHeaders = new Header[sl2.size()];
             thirdHeaders = new Header[tl.size()];
             sl2.toArray( secondHeaders );
             tl.toArray( thirdHeaders );
-            if ( thirdHeaders != null && thirdHeaders.length != 0 ) {
+            headLeve = "" + level;
+           /* if ( thirdHeaders != null && thirdHeaders.length != 0 ) {
                 headLeve = "3";
             }
             else if ( secondHeaders != null && secondHeaders.length != 0 ) {
                 headLeve = "2";
-            }
+            }*/
         }
     }
 

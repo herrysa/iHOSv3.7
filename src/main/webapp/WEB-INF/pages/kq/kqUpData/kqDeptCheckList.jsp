@@ -1,7 +1,7 @@
 
 <%@ include file="/common/taglibs.jsp"%>
 <%@ page language="java"   pageEncoding="UTF-8"%>
-<script type="text/javascript">
+<script type="text/javascript"> 
 	var kqDeptCheckLayout;
 	var kqDeptCheckGridIdString="#kqDeptCheck_gridtable";
 	
@@ -259,7 +259,7 @@
 					</label>
 					<label class="queryarea-label">
 						<s:text name="kqMonthData.status"></s:text>
-						<s:select list="#{'':'--','2':'提交','3':'通过','4':'否决'}" name="filter_EQS_status"  listKey="key" listValue="value"
+						<s:select list="#{'':'--','0':'新增','1':'审核','2':'提交','3':'通过','4':'否决'}" name="filter_EQS_status"  listKey="key" listValue="value"
 							emptyOption="false"  maxlength="50" width="50px"></s:select>
 					</label>
 					<div class="buttonActive" style="float:right">

@@ -1,6 +1,8 @@
 package com.huge.ihos.system.reportManager.search.webapp.action;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -392,6 +394,13 @@ public class QueryPublicAction
     private ReturnUtil process(String dataSql) {
         if ( taskName == null || this.searchName == null )
             throw new GeneralAppException( "配置参数错误" );
+        String aa = this.getRequest().getParameter("id");
+        try {
+			aa = URLDecoder.decode(aa,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         String[] args = this.getRequest().getParameterValues( "ARGS" );
         String itemValue = this.getRequest().getParameter( "itemValue" );
         String[] itemValueArr = null;
@@ -399,7 +408,11 @@ public class QueryPublicAction
         Map<String , String> itemValueMap = new HashMap<String, String>();
         itemValueMap.put("dataSql", dataSql);
         if(itemValue!=null&&itemValue!=""&&!"".equals(itemValue)){
-        	itemValueArr = itemValue.split("%7C");
+        	if(itemValue.contains("|")){
+        		itemValueArr = itemValue.split("|");
+        	}else if(itemValue.contains("%7C")){
+        		itemValueArr = itemValue.split("%7C");
+        	}
         }
         {
             StringBuilder sb = new StringBuilder();

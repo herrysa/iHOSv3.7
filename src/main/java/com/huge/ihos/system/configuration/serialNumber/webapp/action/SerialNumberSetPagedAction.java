@@ -81,6 +81,10 @@ public class SerialNumberSetPagedAction extends JqGridBaseAction implements Prep
 				orgCode = BillNumberConstants.SUBSYSTEM_HR;
 				copyCode = BillNumberConstants.SUBSYSTEM_HR;
 			}
+			if("BM".equalsIgnoreCase(subSystem)){
+				orgCode = BillNumberConstants.SUBSYSTEM_BM;
+				copyCode = BillNumberConstants.SUBSYSTEM_BM;
+			}
 			filters.add(new PropertyFilter("EQS_subSystem",subSystem));
 			filters.add(new PropertyFilter("EQS_orgCode",orgCode));
 			filters.add(new PropertyFilter("EQS_copyCode",copyCode));
@@ -131,6 +135,11 @@ public class SerialNumberSetPagedAction extends JqGridBaseAction implements Prep
 			if("HR".equalsIgnoreCase(subSystem)){
 				orgCode = BillNumberConstants.SUBSYSTEM_HR;
 				copyCode = BillNumberConstants.SUBSYSTEM_HR;
+				serialNumberSet.setNeedYearMonth(false);
+			}
+			if("BM".equalsIgnoreCase(subSystem)){
+				orgCode = BillNumberConstants.SUBSYSTEM_BM;
+				copyCode = BillNumberConstants.SUBSYSTEM_BM;
 				serialNumberSet.setNeedYearMonth(false);
 			}
         	serialNumberSet.setOrgCode(orgCode);

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="purchasePlanDetail" extends="default"	namespace="/">
+
+		<action name="purchasePlanDetailList" class="com.huge.ihos.material.purchaseplan.webapp.action.PurchasePlanDetailPagedAction">
+			<result name="input">/WEB-INF/pages/material/purchasePlan/purchasePlanDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/purchasePlan/purchasePlanDetailList.jsp</result>
+		</action>
+		<action name="purchasePlanDetailGridList" class="com.huge.ihos.material.purchaseplan.webapp.action.PurchasePlanDetailPagedAction"		method="purchasePlanDetailGridList">
+			<result type="json">
+				<param name="includeProperties">purchasePlanDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="purchasePlanDetailGridEdit" class="com.huge.ihos.material.purchaseplan.webapp.action.PurchasePlanDetailPagedAction"			method="purchasePlanDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPurchasePlanDetail" class="com.huge.ihos.material.purchaseplan.webapp.action.PurchasePlanDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/purchasePlan/purchasePlanDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/purchasePlan/purchasePlanDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePurchasePlanDetail" class="com.huge.ihos.material.purchaseplan.webapp.action.PurchasePlanDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getStoreAndNeedAmount" class="com.huge.ihos.material.purchaseplan.webapp.action.PurchasePlanDetailPagedAction"	method="getStoreAndNeedAmount">
+			<result name="success" type="json">
+                <param name="includeProperties">amounts.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

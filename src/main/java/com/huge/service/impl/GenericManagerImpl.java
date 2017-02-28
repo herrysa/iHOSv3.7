@@ -100,6 +100,16 @@ public class GenericManagerImpl<T, PK extends Serializable>
     public boolean exists( PK id ) {
         return dao.exists( id );
     }
+    
+    @Override
+	public boolean existByExample(T object) {
+		return dao.existByExample(object);
+	}
+
+	@Override
+	public boolean existByFilter(List<PropertyFilter> filters) {
+		return dao.existByFilter(filters);
+	}
 
     public boolean existCode( String object, String columnName, String valueCode, String oper ) {
         return dao.existCode( object, columnName, valueCode, oper );

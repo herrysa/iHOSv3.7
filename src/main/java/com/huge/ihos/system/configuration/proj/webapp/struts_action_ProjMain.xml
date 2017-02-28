@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="projMain" extends="default"	namespace="/">
+
+		<action name="projMainList" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjTypePagedAction" method="projMainList">
+			<result name="input">/WEB-INF/pages/system/configuration/proj/projMain.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/proj/projMain.jsp</result>
+		</action>
+	</package>
+
+</struts>

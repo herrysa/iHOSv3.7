@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="deptApp" extends="default"	namespace="/">
+		<action name="deptApp" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptApp/deptApp.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptApp/deptApp.jsp</result>
+		</action>
+		<action name="deptAppList" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptApp/deptAppList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptApp/deptAppList.jsp</result>
+		</action>
+		<action name="deptAppGridList" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction" method="deptAppGridList">
+			<result type="json">
+				<param name="includeProperties">deptApps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deptAppGridEdit" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction" method="deptAppGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editDeptApp" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction" method="edit">
+			<result name="success">/WEB-INF/pages/material/deptApp/deptAppForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/deptApp/deptAppForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveDeptApp" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction" method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="deptAppHisList" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptApp/deptAppHistory.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptApp/deptAppHistory.jsp</result>
+		</action>
+		<!-- deptAppDistribute -->
+		<action name="deptAppDistributeList" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptApp/deptAppDistributeList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptApp/deptAppDistributeList.jsp</result>
+		</action>
+		<action name="deptAppDistributeDetailList" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction">
+			<result name="input">/WEB-INF/pages/material/deptApp/deptAppDistributeDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/deptApp/deptAppDistributeDetailList.jsp</result>
+		</action>
+		<!-- 本次通过 -->
+		<action name="deptAppDetailPass" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction" method="deptAppDetailPass">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- 生成单据之前的校验:是否有可以生成的数据 -->
+		<action name="beforeCreateByDis" class="com.huge.ihos.material.deptapp.webapp.action.DeptAppPagedAction" method="beforeCreate">
+            <result name="success" type="json">
+            	<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

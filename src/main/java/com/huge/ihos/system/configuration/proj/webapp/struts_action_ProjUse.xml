@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="projUse" extends="default"	namespace="/">
+
+		<action name="projUseList" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjUsePagedAction">
+			<result name="input">/WEB-INF/pages/system/configuration/proj/projUse/projUseList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/proj/projUse/projUseList.jsp</result>
+		</action>
+		<action name="projUseGridList" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjUsePagedAction"		method="projUseGridList">
+			<result type="json">
+				<param name="includeProperties">projUses.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="projUseGridEdit" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjUsePagedAction"			method="projUseGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editProjUse" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjUsePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/proj/projUse/projUseForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/proj/projUse/projUseForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveProjUse" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjUsePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

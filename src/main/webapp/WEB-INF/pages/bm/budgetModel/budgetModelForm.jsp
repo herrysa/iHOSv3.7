@@ -16,6 +16,29 @@
 		}
 		tabResize();
 	});
+	function bmModelFormCallBack(data){
+		var budgetModel = data.budgetModel;
+		if(budgetModel){
+			var modelId = budgetModel.modelId;
+			var modelType = budgetModel.modelType;
+			$("#bmModelFormTabs").find("li").each(function(i) {
+				var url = "#";
+				if (i == 1) {
+					url = "budgetDepartmentList?modelId="+modelId+"&modelType="+modelType;
+				} else if (i == 2) {
+					url = "bmAssistTypeMain?modelId="+modelId+"&modelType="+modelType;
+				} else if (i == 3) {
+					url = "modelProcessList?modelId="+modelId+"&modelType="+modelType;
+				}
+				$(this).find("a").eq(0).attr("href", url);
+			});
+		}
+		jQuery("#budgetModel_modelId").attr("readOnly","true");
+		jQuery("#budgetModel_modelId").removeAttr("notrepeat");
+		jQuery("#budgetModel_modelCode").attr("readOnly","true");
+		jQuery("#budgetModel_modelCode").removeAttr("notrepeat");
+		formCallBack(data);
+	}
 </script>
 </head>
 
@@ -27,6 +50,7 @@
 					<ul>
 						<li><a href="#"><span>主要信息</span> </a></li>
 						<li><a href="budgetDepartmentList?modelId=${budgetModel.modelId}&modelType=${budgetModel.modelType}" class="j-ajax" ><span>预算责任中心</span> </a></li>
+						<li><a href="bmAssistTypeMain?modelId=${budgetModel.modelId}&modelType=${budgetModel.modelType}" class="j-ajax" ><span>辅助核算</span> </a></li>
 						<li><a href="modelProcessList?modelId=${budgetModel.modelId}&modelType=${budgetModel.modelType}" class="j-ajax" ><span>审核流程</span> </a></li>
 					</ul>
 				</div>
@@ -34,7 +58,7 @@
 			<div id="bmDeptTabsContent" class="tabsContent"
 				style="height: 250px;padding:0px">
 				<div>
-					<form id="budgetModelForm" method="post"	action="saveBudgetModel?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,formCallBack);">
+					<form id="budgetModelForm" method="post"	action="saveBudgetModel?popup=true&navTabId=${navTabId}&entityIsNew=${entityIsNew}" class="pageForm required-validate"	onsubmit="return validateCallback(this,bmModelFormCallBack);">
 			<div class="pageFormContent" layoutH="93">
 				<div class="unit">
 					<s:if test="modelType=='copy'">
@@ -68,7 +92,7 @@
 				       "/>
 				</div>
 				<div class="unit">
-					<label><s:text name="budgetModel.modelType"/>:</label>
+					<label>编制方式:</label>
 					<s:select id="budgetModel_modelType" list="#{'1':'科室填报(自下而上)','2':'预算汇总(自下而上)','3':'职能代编(自上而下)'}" key="budgetModel.modelType" headerKey="" headerValue="--" theme="simple"></s:select>
 					<script>
 					var bmModelType = jQuery("#budgetModel_modelType").val();
@@ -94,6 +118,45 @@
 				<div class="unit">
 					<label><s:text name="budgetModel.periodType"/>:</label>
 					<s:select list="#{'月度':'月度','季度':'季度','半年':'半年','年度':'年度'}" key="budgetModel.periodType" headerKey="" headerValue="--" theme="simple"></s:select>
+				</div>
+				<div class="unit">
+					<label>辅助核算:</label>
+					<table border="0">
+					<s:iterator value="budgetAssistTypes" status="it">
+						<s:if test="#it.index%5==0">
+							<s:if test="#it.index==0">
+								<tr>
+							</s:if>
+							<s:elseif test="#.it.last">
+								</tr>
+							</s:elseif>
+							<s:else>
+								</tr><tr>
+							</s:else>
+						</s:if>
+						<td style="width:100px" align="left"><input type="checkbox" name="budgetModel.assistType" value="<s:property value='assistType.typeCode'/>"/><s:property value="assistType.typeName"/></td>
+					</s:iterator>
+					</table>
+					<script>
+						var assistTypes= "${budgetModel.assistType}";
+						var assistTypesArr = null;
+						if(assistTypes){
+							assistTypesArr = assistTypes.split(",");
+						}
+						if(assistTypesArr){
+							for(var atIndex in assistTypesArr){
+								var at = assistTypesArr[atIndex];
+								at = at.trim();
+								jQuery("input[name='budgetModel.assistType']").each(function(){
+									var thisValue = jQuery(this).val();
+									if(thisValue==at){
+										jQuery(this).attr("checked","checked");
+										return false;
+									}
+								});
+							}
+						}
+					</script>
 				</div>
 				<%-- <div class="unit">
 					<label>年度:</label>
@@ -204,6 +267,7 @@
 			</div>
 		</form>
 				</div>
+				<div></div>
 				<div></div>
 				<div></div>
 			</div>

@@ -48,6 +48,10 @@ public interface GenericManager<T, PK extends Serializable> {
      * @return - true if it exists, false if it doesn't
      */
     boolean exists( PK id );
+    
+    public boolean existByExample(T object);
+    
+    public boolean existByFilter(List<PropertyFilter> filters);
 
     boolean existCode( String object, String columnName, String valueCode, String oper );
     boolean existCode( String object, String columnName,String columnName2, String valueCode, String valueCode2);

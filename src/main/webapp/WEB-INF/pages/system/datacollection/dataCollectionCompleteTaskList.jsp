@@ -722,7 +722,7 @@ function stringFormatter (cellvalue, options, rowObject)	{
 									index="dataCollectionPeriod.periodCode"
 									title="%{getText('period.periodCode')}" sortable="true"
 									editable="true" search="true"
-									searchoptions="{sopt:['eq','ne','cn','bw']}" width="80"
+									searchoptions="{sopt:['eq','ne','cn','bw']}" width="60"
 									editrules="{required: true}" />
 								<sjg:gridColumn
 										name="dataCollectionTaskDefine.taskNo"
@@ -736,7 +736,7 @@ function stringFormatter (cellvalue, options, rowObject)	{
 									index="dataCollectionTaskDefine.dataCollectionTaskDefineName"
 									title="%{getText('dataCollectionTaskDefine.dataCollectionTaskDefineName')}"
 									sortable="true" editable="true" search="true"
-									searchoptions="{sopt:['eq','ne','cn','bw']}" width="100"
+									searchoptions="{sopt:['eq','ne','cn','bw']}" width="150"
 									editrules="{required: true}" />
 								<sjg:gridColumn
 									name="dataCollectionTaskDefine.dataSourceDefine.dataSourceName"
@@ -750,7 +750,7 @@ function stringFormatter (cellvalue, options, rowObject)	{
 									index="dataCollectionTaskDefine.dataSourceDefine.dataSourceType.dataSourceTypeName"
 									title="%{getText('dataSourceType.dataSourceTypeName')}"
 									sortable="true" editable="true" search="true"
-									searchoptions="{sopt:['eq','ne','cn','bw']}" width="100"
+									searchoptions="{sopt:['eq','ne','cn','bw']}" width="80"
 									editrules="{required: true}" />
 								<sjg:gridColumn
 									name="dataCollectionTaskDefine.dataSourceDefine.dataSourceType.isNeedFile"
@@ -770,9 +770,9 @@ function stringFormatter (cellvalue, options, rowObject)	{
 									searchoptions="{sopt:['eq','ne','cn','bw']}" width="60"
 									editrules="{required: true}" />
 								<sjg:gridColumn name="act"
-									title="%{getText('grid.column.action')}" width="100"
+									title="%{getText('grid.column.action')}" width="80"
 									formatter="formatLink" sortable="false" />
-								<sjg:gridColumn name="operator" width="100" title="%{getText('interLogger.operator')}" sortable="false" align="left" />
+								<sjg:gridColumn name="operator" width="80" title="%{getText('interLogger.operator')}" sortable="false" align="left" />
 								<sjg:gridColumn name="operateDate" width="100" title="%{getText('dataCollectionTask.operatDate')}" formatter="formatDate"  sortable="false" align="left" />
 								<sjg:gridColumn name="interRunTimeId" hidden="true"
 									title="interRunTimeId"></sjg:gridColumn>

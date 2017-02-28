@@ -1,11 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ include file="/common/taglibs.jsp"%>
-<html>
-<head>
-<title><fmt:message key="reportList.title" /></title>
-<meta name="heading" content="<fmt:message key='reportList.heading'/>" />
-<meta name="menu" content="ReportMenu" />
 <script type="text/javascript">
 
 function changeReport(url){
@@ -26,7 +20,7 @@ function changeReport(url){
 	//alert(url);
 	url +="&reportType=1"
 	$("#${random}_reportDIV").html("");
-	$("#${random}_reportDIV").loadUrl("${ctx}"+url);
+	$("#${random}_reportDIV").loadUrl("${ctx}"+url, {}, function(){$("#${random}_reportDIV").find("[layoutH]").layoutH();});
 	 
  	/* jQuery.post("${ctx}"+url, function(result){
 		//alert(result);
@@ -67,14 +61,10 @@ alert(rurl.val()); */
         alert('Before request ');
     });  */
 </script>
-</head>
-<body>
+<div  class="page" style="height: 100%;">
+	<div class="pageContent" style="height: 100%;">
 	<div>
 		&nbsp;&nbsp;&nbsp;&nbsp;<label>请选择：</label>
-		<%-- <s:select id="${random}_reportselect" required="false" list="reportGroupList"
-			listKey="reportName" listValue="reportName" emptyOption="true"
-			onchange="reportChange();"></s:select> --%>
-		
 		<select id="${random}_reportselect" onchange="reportChange();">
 			<option value=""></option>
 			<c:forEach items="${reportGroupList}" var="report">
@@ -82,11 +72,6 @@ alert(rurl.val()); */
 			</c:forEach>
 		</select>
 	</div>
-<%-- 	<s:url id="reportUrl" action="/reportList"></s:url>
-<sj:div id="reportDIV"></sj:div> --%>
-<div id="${random}_reportDIV" class="pages"></div>
-	<%-- <c:forEach items="${reportGroupList}" var="op">
-		<c:out value="${op.reportName}"></c:out>
-	</c:forEach> --%>
-</body>
-</html>
+	<div id="${random}_reportDIV" class="layoutBox" layoutH=24 style="overflow:hidden !important"></div>
+	</div>
+</div>

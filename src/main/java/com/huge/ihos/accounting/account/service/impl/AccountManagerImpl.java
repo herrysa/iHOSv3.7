@@ -1,8 +1,10 @@
 package com.huge.ihos.accounting.account.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import com.huge.ihos.accounting.account.dao.AccountTypeDao;
 import com.huge.ihos.accounting.account.model.Account;
 import com.huge.ihos.accounting.account.model.AccountType;
 import com.huge.ihos.accounting.account.service.AccountManager;
+import com.huge.ihos.system.configuration.AssistType.dao.AssistTypeDao;
+import com.huge.ihos.system.configuration.AssistType.model.AssistType;
 import com.huge.service.impl.GenericManagerImpl;
 import com.huge.webapp.pagers.JQueryPager;
 import com.huge.webapp.util.PropertyFilter;
@@ -22,6 +26,8 @@ import com.huge.webapp.util.PropertyFilter;
 @Service("accountManager")
 public class AccountManagerImpl extends GenericManagerImpl<Account, String> implements AccountManager {
     private AccountDao accountDao;
+    @Autowired
+    private AssistTypeDao assistTypeDao;
     @Autowired
     private AccountTypeDao accountTypeDao;
 
@@ -107,7 +113,7 @@ public class AccountManagerImpl extends GenericManagerImpl<Account, String> impl
 				acctType.setAccouttypecode(acctTypeTemp.getAccouttypecode());
 				acctType.setCopyCode(environment.get("copyCode"));
 				acctType.setOrgCode(environment.get("orgCode"));
-				acctType.setAccttypeId(environment.get("copyCode")+"_"+environment.get("orgCode")+"_"+acctTypeTemp.getAccouttypecode());
+				acctType.setAccttypeId(environment.get("orgCode")+"_"+environment.get("copyCode")+"_"+acctTypeTemp.getAccouttypecode());
 				acctTypeList.add(acctType);
 				accountTypeDao.save(acctType);
 			}
@@ -136,7 +142,7 @@ public class AccountManagerImpl extends GenericManagerImpl<Account, String> impl
 			acct.setCopyCode(environment.get("copyCode"));
 			acct.setOrgCode(environment.get("orgCode"));
 			acct.setKjYear(environment.get("kjYear"));
-			acct.setAcctId(environment.get("copyCode")+"_"+environment.get("orgCode")+"_"+environment.get("kjYear")+"_"+acctTemp.getAcctCode());
+			acct.setAcctId(environment.get("orgCode")+"_"+environment.get("copyCode")+"_"+environment.get("kjYear")+"_"+acctTemp.getAcctCode());
 				
 			String acctTempTypeCode = acctTemp.getAccttype().getAccouttypecode();
 			for(AccountType acctType: acctTypeList){
@@ -149,4 +155,22 @@ public class AccountManagerImpl extends GenericManagerImpl<Account, String> impl
 			accountDao.save(acct);
 		}
 	}
+	public List<AssistType> getAssitTypesByAcct(String acctId){
+    	Account account = accountDao.get(acctId);
+		String assistTypes = account.getAssistTypes();
+		List<AssistType> resultList = new ArrayList<AssistType>();
+		if(assistTypes != null &&  !"".equals(assistTypes)){
+			String[] assistArrays = assistTypes.split(",");
+			for(String asstId : assistArrays){
+				asstId = asstId.trim();
+				if(StringUtils.isNotBlank(asstId)){
+					AssistType assist = assistTypeDao.get(asstId);
+					if(assist != null && !assist.getDisabled()){
+						resultList.add(assist);
+					}
+				}
+			}
+		}
+    	return resultList;
+    }
 }

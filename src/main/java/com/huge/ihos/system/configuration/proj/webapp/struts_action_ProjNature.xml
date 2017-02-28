@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="projNature" extends="default"	namespace="/">
+
+		<action name="projNatureList" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjNaturePagedAction">
+			<result name="input">/WEB-INF/pages/system/configuration/proj/projNature/projNatureList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/configuration/proj/projNature/projNatureList.jsp</result>
+		</action>
+		<action name="projNatureGridList" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjNaturePagedAction"		method="projNatureGridList">
+			<result type="json">
+				<param name="includeProperties">projNatures.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="projNatureGridEdit" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjNaturePagedAction"			method="projNatureGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editProjNature" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjNaturePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/configuration/proj/projNature/projNatureForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/configuration/proj/projNature/projNatureForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveProjNature" class="com.huge.ihos.system.configuration.proj.webapp.action.ProjNaturePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

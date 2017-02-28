@@ -300,6 +300,14 @@
                    <param name="noCache">true</param>
             </result>
         </action>
+        
+        <action name="personSupcanList" class="com.huge.ihos.system.systemManager.organization.webapp.action.DepartmentAction"		method="personSupcanList">
+			<result type="json">
+				<param name="includeProperties"></param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 	</package>
 
 </struts>

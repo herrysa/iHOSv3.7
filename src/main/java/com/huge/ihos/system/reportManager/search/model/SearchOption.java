@@ -206,8 +206,19 @@ public class SearchOption
     }
 
     private String[] headers;
+    
+    private String[] fullHeaders;
 
-    private int headerLevel;
+    @Transient
+    public String[] getFullHeaders() {
+		return fullHeaders;
+	}
+
+	public void setFullHeaders(String[] fullHeaders) {
+		this.fullHeaders = fullHeaders;
+	}
+
+	private int headerLevel;
 
 	private String herpType;
 

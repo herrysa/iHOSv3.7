@@ -144,7 +144,7 @@
 				</div>
 				<div class="unit">
 					<s:textfield key="chargeType.cnCode" required="false"
-						maxlength="12" readonly="true" class="input-small" />
+						readonly="true" class="input-small" />
 					<s:textfield key="chargeType.displayMark" required="false"
 						maxlength="12" class="input-small" />
 				</div>

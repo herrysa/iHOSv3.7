@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bugetAcctMap" extends="default"	namespace="/">
+
+		<action name="bugetAcctMap" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetAcctMapPagedAction">
+			<result name="input">/WEB-INF/pages/bm/bugetSubj/bugetAcctMapList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/bugetSubj/bugetAcctMapList.jsp</result>
+		</action>
+		<action name="bugetAcctMapGridList" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetAcctMapPagedAction"		method="bugetAcctMapGridList">
+			<result type="json">
+				<param name="includeProperties">bugetAcctMaps.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bugetAcctMapGridEdit" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetAcctMapPagedAction"			method="bugetAcctMapGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBugetAcctMap" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetAcctMapPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/bugetSubj/bugetAcctMapForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/bugetSubj/bugetAcctMapForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBugetAcctMap" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetAcctMapPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="initAcctMap" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetAcctMapPagedAction"			method="initAcctMap">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="saveAcctMap" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetAcctMapPagedAction"			method="saveAcctMap">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

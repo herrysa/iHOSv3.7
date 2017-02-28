@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="invMainInit" extends="default" namespace="/">
+
+		<action name="invMainInit" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction">
+			<result name="input">/WEB-INF/pages/material/invMainInit/invMainInit.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainInit/invMainInit.jsp</result>
+		</action>
+		<action name="invMainInitList" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction">
+			<result name="input">/WEB-INF/pages/material/invMainInit/invMainInitList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainInit/invMainInitList.jsp</result>
+		</action>
+		<action name="invMainInitGridList" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="invMainGridList">
+			<result type="json">
+				<param name="includeProperties">invMains.*,records,total,page,userdata.*</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainInitGridEdit" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="invMainGridEdit">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editInvMainInit" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="edit">
+			<!-- <result name="success">/WEB-INF/pages/invMain/invMainForm.jsp</result> <result name="input">/WEB-INF/pages/invMain/invMainForm.jsp</result> -->
+			<result name="input">/WEB-INF/pages/material/invMainInit/invMainInitForm.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainInit/invMainInitForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveInvMainInit" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="save">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<!-- <action name="batchAddStoreInvs" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction">
+			<result name="input">/WEB-INF/pages/material/invMainInit/storeInvSelectList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainInit/storeInvSelectList.jsp</result>
+		</action> -->
+		<action name="invMainInitConfirm" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="invMainInitConfirm">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainBatchEndBook" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="invMainBatchEndBook">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainBookConfirm" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="invMainBookConfirm">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="invMainUnBookConfirm" class="com.huge.ihos.material.webapp.action.InvMainInitPagedAction" method="invMainUnBookConfirm">
+			<result name="success" type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId,forwardUrl</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="invDetailGridList" class="com.huge.ihos.material.webapp.action.InvDetailPagedAction"		method="invDetailGridList">
+			<result type="json">
+				<param name="includeProperties">invDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="invDetailGridEdit" class="com.huge.ihos.material.webapp.action.InvDetailPagedAction"			method="invDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+
+
+		<action name="bookStoreList" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction">
+			<result name="input">/WEB-INF/pages/material/invMainInit/bookStoreList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/invMainInit/bookStoreList.jsp</result>
+		</action>
+		<action name="bookStoreGridList" class="com.huge.ihos.system.repository.store.webapp.action.StorePagedAction"		method="storeGridList">
+			<result type="json">
+				<param name="includeProperties">stores.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

@@ -176,9 +176,9 @@ var hrPersonGrid = jQuery(hrPersonGridIdString);
 						</label>
 						<label style="float:none;white-space:nowrap" >
 						<s:text name='trainStaff.birthday'/>:
-						<input type="text"	id="trainStaff_search_birthday_from" style="width:80px;height:15px" class="Wdate" value="<fmt:formatDate value='${currentSystemVariable.periodBeginDate}' pattern='yyyy-MM-dd' />" onclick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'trainStaff_search_birthday_to\')}'})">
+						<input type="text"	id="trainStaff_search_birthday_from" style="width:80px;height:15px" class="Wdate" value="${fns:userContextParam('periodBeginDateStr')}" onclick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'trainStaff_search_birthday_to\')}'})">
 						<s:text name='至'/>
-					 	<input type="text"	id="trainStaff_search_birthday_to" style="width:80px;height:15px" class="Wdate" value="${currentSystemVariable.businessDate}" onclick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'trainStaff_search_birthday_from\')}'})">
+					 	<input type="text"	id="trainStaff_search_birthday_to" style="width:80px;height:15px" class="Wdate" value="${fns:userContextParam('periodBeginDateStr')}" onclick="WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'trainStaff_search_birthday_from\')}'})">
 						</label>
 						<label style="float:none;white-space:nowrap" >
 						<s:text name='trainStaff.sex'/>:

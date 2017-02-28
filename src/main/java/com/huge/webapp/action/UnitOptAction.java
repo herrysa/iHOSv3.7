@@ -22,6 +22,8 @@ import net.sf.json.JSONObject;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.huge.ihos.excel.ColumnDefine;
@@ -634,6 +636,8 @@ public class UnitOptAction
 		
 		return SUCCESS;
 	}
+	
+	
     
     public String getEntityName() {
         return entityName;

@@ -594,7 +594,7 @@ public class GzTypePagedAction extends JqGridBaseAction implements Preparable {
 			this.modelStatuss = modelStatusManager.getByFilters(filters);
 			Map<String, ModelStatus> modelStatusMap = new HashMap<String, ModelStatus>();
 			if(OtherUtil.measureNotNull(modelStatuss)&&!modelStatuss.isEmpty()){
-				for(ModelStatus msTemp:modelStatuss){
+				for(ModelStatus msTemp:modelStatuss){ 
 					String modelId = msTemp.getModelId();
 					if(modelStatusMap.containsKey(modelId)){
 						ModelStatus msMapTemp = modelStatusMap.get(modelId);
@@ -606,7 +606,7 @@ public class GzTypePagedAction extends JqGridBaseAction implements Preparable {
 							if(checkNumber > oldCheckNumber){
 								modelStatusMap.put(modelId, msTemp);
 							}
-						}else if(Integer.parseInt(checkPeriod.substring(0, 4))<Integer.parseInt(oldCheckPeriod.substring(0, 4))){
+						}else if(Integer.parseInt(checkPeriod.substring(0, 4))>Integer.parseInt(oldCheckPeriod.substring(0, 4))){
 							modelStatusMap.put(modelId, msTemp);
 						}
 					}else{

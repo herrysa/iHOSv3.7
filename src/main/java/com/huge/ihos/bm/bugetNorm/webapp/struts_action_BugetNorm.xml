@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bugetNorm" extends="default"	namespace="/">
+
+		<action name="bugetNorm" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction">
+			<result name="input">/WEB-INF/pages/bm/bugetNorm/bugetNormList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/bugetNorm/bugetNormList.jsp</result>
+		</action>
+		<action name="bugetNormGridList" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction"		method="bugetNormGridList">
+			<result type="json">
+				<param name="includeProperties">bugetNorms.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bugetNormGridEdit" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction"			method="bugetNormGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBugetNorm" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/bugetNorm/bugetNormForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/bugetNorm/bugetNormForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBugetNorm" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction"			method="saveBugetNorm">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getBudgetDeptTree" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction"			method="getBudgetDeptTree">
+			<result name="success" type="json">
+                <param name="includeProperties">budgetDeptTreeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="selectBugetSubjList" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction" method="selectBugetSubjList">
+			<result name="input">/WEB-INF/pages/bm/bugetNorm/selectBugetSubjList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/bugetNorm/selectBugetSubjList.jsp</result>
+		</action>
+		<action name="selectedBugetSubj" class="com.huge.ihos.bm.bugetNorm.webapp.action.BugetNormPagedAction"			method="selectedBugetSubj">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="storeInvSet" extends="default"	namespace="/">
+
+		<action name="storeInvSetList" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction">
+			<result name="input">/WEB-INF/pages/material/storeInvSet/storeInvSetList.jsp</result>
+			<result name="success">/WEB-INF/pages/material/storeInvSet/storeInvSetList.jsp</result>
+		</action>
+		<action name="storeInvSetGridList" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction"		method="storeInvSetGridList">
+			<result type="json">
+				<param name="includeProperties">storeInvSets.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="storeInvSetSearchGridList" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction"		method="storeInvSetSearchGridList">
+			<result type="json">
+				<param name="includeProperties">storeInvSets.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="storeInvSetGridEdit" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction"			method="storeInvSetGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editStoreInvSet" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/material/storeInvSet/storeInvSetForm.jsp</result>
+			<result name="input">/WEB-INF/pages/material/storeInvSet/storeInvSetForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveStoreInvSet" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="saveStoreInvSetAll" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction"		method="saveStoreInvSetAll">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="deleteStoreInvSetAll" class="com.huge.ihos.material.webapp.action.StoreInvSetPagedAction"		method="deleteStoreInvSetAll">
+			<result type="json">
+				<param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

@@ -38,7 +38,7 @@ public class BathFuncThread implements Runnable{
 				reportFunc.setValue(rs);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 	}

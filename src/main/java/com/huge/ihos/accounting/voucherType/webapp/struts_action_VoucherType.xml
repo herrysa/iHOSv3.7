@@ -8,8 +8,8 @@
 	<package name="voucherType" extends="default"	namespace="/">
 
 		<action name="voucherTypeList" class="com.huge.ihos.accounting.voucherType.webapp.action.VoucherTypePagedAction">
-			<result name="input">/WEB-INF/pages/voucherType/voucherTypeList.jsp</result>
-			<result name="success">/WEB-INF/pages/voucherType/voucherTypeList.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucherType/voucherTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucherType/voucherTypeList.jsp</result>
 		</action>
 		<action name="voucherTypeGridList" class="com.huge.ihos.accounting.voucherType.webapp.action.VoucherTypePagedAction"		method="voucherTypeGridList">
 			<result type="json">
@@ -27,8 +27,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editVoucherType" class="com.huge.ihos.accounting.voucherType.webapp.action.VoucherTypePagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/voucherType/voucherTypeForm.jsp</result>
-			<result name="input">/WEB-INF/pages/voucherType/voucherTypeForm.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucherType/voucherTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucherType/voucherTypeForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->

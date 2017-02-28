@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bugetSubj" extends="default"	namespace="/">
+
+		<action name="bugetSubjList" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetSubjPagedAction">
+			<result name="input">/WEB-INF/pages/bm/bugetSubj/bugetSubjList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/bugetSubj/bugetSubjList.jsp</result>
+		</action>
+		<action name="bugetSubjGridList" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetSubjPagedAction"		method="bugetSubjGridList">
+			<result type="json">
+				<param name="includeProperties">bugetSubjs.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bugetSubjGridEdit" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetSubjPagedAction"			method="bugetSubjGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBugetSubj" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetSubjPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bm/bugetSubj/bugetSubjForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/bugetSubj/bugetSubjForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBugetSubj" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetSubjPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId,bugetSubj.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getBudgetSubjTree" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetSubjPagedAction"			method="getBudgetSubjTree">
+			<result name="success" type="json">
+                <param name="includeProperties">bugetSubjTreeNodes.*</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="getBmSubjListXml" class="com.huge.ihos.bm.bugetSubj.webapp.action.BugetSubjPagedAction"			method="getBmSubjListXml">
+		</action>
+
+	</package>
+
+</struts>

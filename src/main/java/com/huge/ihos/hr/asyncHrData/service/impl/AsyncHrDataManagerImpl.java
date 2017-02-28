@@ -267,7 +267,7 @@ public class AsyncHrDataManagerImpl implements AsyncHrDataManager{
 		if(orgSnapList!=null && !orgSnapList.isEmpty()){
 			for(HrOrgSnap orgSnap:orgSnapList){
 				hrOrgSnapManager.syncUpdateOrg(orgSnap, HrOperLog.OPER_EDIT);
-			}
+			} 
 		}
 		orgManager.disableOrgAfterSync(timestamp);
 	}

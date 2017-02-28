@@ -8,8 +8,8 @@
 	<package name="accountType" extends="default"	namespace="/">
 
 		<action name="accountTypeList" class="com.huge.ihos.accounting.account.webapp.action.AccountTypePagedAction">
-			<result name="input">/WEB-INF/pages/accountType/accountTypeList.jsp</result>
-			<result name="success">/WEB-INF/pages/accountType/accountTypeList.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/accountType/accountTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/accountType/accountTypeList.jsp</result>
 		</action>
 		<action name="accountTypeGridList" class="com.huge.ihos.accounting.account.webapp.action.AccountTypePagedAction"		method="accountTypeGridList">
 			<result type="json">
@@ -27,8 +27,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editAccountType" class="com.huge.ihos.accounting.account.webapp.action.AccountTypePagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/accountType/accountTypeForm.jsp</result>
-			<result name="input">/WEB-INF/pages/accountType/accountTypeForm.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/accountType/accountTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/accountType/accountTypeForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->

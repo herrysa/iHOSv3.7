@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.huge.foundation.common.AppException;
+import com.huge.ihos.system.context.ContextUtil;
 import com.huge.ihos.system.context.UserContext;
 import com.huge.ihos.system.context.UserContextUtil;
 import com.huge.ihos.system.reportManager.search.service.QueryManager;
@@ -196,10 +197,9 @@ public class SearchUtils {
         map.put( this.USER_USERNAME_KEY, user.getUsername() );
         map.put( this.USER_USERID_KEY, ""+user.getId() );
         try {
-			map.put(SYS_ORGNAME_KEY,  HaspDogHandler.getInstance().getDogService().getHospitalName());
-		} catch (AppException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
+			map.put(SYS_ORGNAME_KEY,  ContextUtil.orgName);
+        }
+		catch (Exception e) {
 			e.printStackTrace();
 		}
         
@@ -207,7 +207,7 @@ public class SearchUtils {
         if ( user.getPerson() != null ) {
             map.put( this.USER_PERSONID_KEY, user.getPerson().getPersonId() );
             map.put( this.USER_PERSONNAME_KEY, user.getPerson().getName() );
-            if ( user.getPerson().getDepartment() != null ) {
+            if ( user.getPerson().getDepartment() != null ) { 
                 map.put( this.USER_DEPTNAME_KEY, user.getPerson().getDepartment().getName() );
                 map.put( this.USER_DEPTID_KEY, user.getPerson().getDepartment().getDepartmentId() );
                 map.put( this.USER_DEPTCODE_KEY, user.getPerson().getDepartment().getDeptCode() );

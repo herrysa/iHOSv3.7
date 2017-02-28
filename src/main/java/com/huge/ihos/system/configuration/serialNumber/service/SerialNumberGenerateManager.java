@@ -19,4 +19,7 @@ public interface SerialNumberGenerateManager extends
 	 */
 	public Long createNextSerialNumber(String subSystem, String businessCode,
 			Boolean isReal, String orgCode, String copyCode, String yearMonth) throws BusinessException;
+	
+	public SerialNumberGenerate getSerialNumberGenerate(String subSystem, String businessCode,
+			Boolean isReal, String orgCode, String copyCode, String yearMonth) throws BusinessException;
 }

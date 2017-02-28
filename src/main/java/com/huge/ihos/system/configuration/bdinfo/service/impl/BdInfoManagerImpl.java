@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -110,12 +111,18 @@ public class BdInfoManagerImpl extends GenericManagerImpl<BdInfo, String> implem
 					pkList.add(map.get("pkName").toString());
 				}
 			}
-			sql = "select name,xtype type,length,scale,isnullable from syscolumns where id=object_id('"+tableName+"')";
+			//sql = "select name,xtype type,length,scale,isnullable from syscolumns where id=object_id('"+tableName+"')";
+			sql = "select c.name,xtype type,length,scale,isnullable,d.value dname from syscolumns c LEFT JOIN sys.extended_properties d on d.major_id = c.id AND d.minor_id = c.colid where c.id=object_id('"+tableName+"')";
 			List<Map<String, Object>> resultList = this.getBySqlToMap(sql);
 			if(OtherUtil.measureNotNull(resultList)&&!resultList.isEmpty()){
 				List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
 				for(Map<String, Object> map:resultList){
 					String name = map.get("name").toString();
+					Object dnameObj = map.get("dname");
+					String dname = null;
+					if(dnameObj!=null){
+						dname = dnameObj.toString();
+					}
 					String type = map.get("type").toString();
 					Object scale = map.get("scale");
 					Object length = map.get("length");
@@ -124,7 +131,11 @@ public class BdInfoManagerImpl extends GenericManagerImpl<BdInfo, String> implem
 					fieldInfo.setBdInfo(bdInfo);
 					fieldInfo.setFieldId(tableName+"_"+name);
 					fieldInfo.setFieldCode(name);
-					fieldInfo.setFieldName(name);
+					if(StringUtils.isNotEmpty(dname)){
+						fieldInfo.setFieldName(dname);
+					}else{
+						fieldInfo.setFieldName(name);
+					}
 					fieldInfo.setSn(fieldInfos.size());
 					String dataType = convertFieldDataType(type);
 					fieldInfo.setDataType(dataType);

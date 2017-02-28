@@ -184,6 +184,7 @@
 			if(tabsContentHeight <= 100){
 				tabsContentHeight = 100;
 			}
+			tabsContentHeight = 300;
 			jQuery("#statisticsSingleChartCheck_tableDiv").css("top","");
 			jQuery("#statisticsSingleChartCheck_pieDiv").css('top','');
 			jQuery("#statisticsSingleChartCheck_tableDiv").css("overflow","auto");
@@ -381,10 +382,10 @@ table.gridtable {
        				 </div>  
     			</div>  
     		<div class="tabsContent" style="overflow:hidden" id="statisticsSingleChartCheck_tabsContent"> 
-    			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_tableDiv"  style="margin: 0 auto; width: 99%;  position: absolute;text-align: center;"></div> </div>  
-    			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_pieDiv"  style="margin: 0 auto; width: 99%;  position: absolute;text-align: center;" ></div></div>  
-    			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_column2DSingleDiv"  style="margin: 0 auto; width: 99%;  position: absolute;text-align: center;" ></div></div>   
-      			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_line2DSingleDiv"   style="margin: 0 auto; width: 99%;  position: absolute;text-align: center;"></div></div>
+    			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_tableDiv"  style="margin: 0 auto; width: 99%;height: 99%;  position: absolute;text-align: center;"></div> </div>  
+    			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_pieDiv"  style="margin: 0 auto; width: 99%;height: 99%;  position: absolute;text-align: center;" ></div></div>  
+    			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_column2DSingleDiv"  style="margin: 0 auto;height: 99%; width: 99%;  position: absolute;text-align: center;" ></div></div>   
+      			<div style="background-color:#FFF;margin: 0 auto;" layoutH="110"><div id="statisticsSingleChartCheck_line2DSingleDiv"   style="margin: 0 auto;height: 99%; width: 99%;  position: absolute;text-align: center;"></div></div>
        		 </div>  
 		 </div>  
 		</div>

@@ -8,7 +8,7 @@
 			Build : '',
 			Load : '',
 		},
-		event : {
+		event : { 
 			//单元格数据修改
 			"EditChanged" : function(id, p1, p2, p3, p4) {
 				/*  var v = eval("("+id+")").func("GetCellData",p1+"\r\n"+p2);
@@ -28,6 +28,11 @@
 			onComplete : function(id) {
 				var grid = eval("(" + id + ")");
 				grid.func("EnableMenu","print,copy,addSort,selectCol,export,separate,showRuler,enter \r\n false");//打印预览,复制,加入多重排序,自定义显示隐藏列,转换输出,分屏冻结,显示/隐藏左标尺,回车键行为	
+				var kqCustomLayout = jQuery("#kqDeptCheckForm_kqCustomLayout").val();
+				if(kqCustomLayout){
+					//kqCustomLayout = kqDayDataColSetting(grid,kqCustomLayout);
+					grid.func("setCustom", kqCustomLayout);
+				}
 			}
 		}
 	};
@@ -59,6 +64,18 @@
 			ifr:true,
 			lazy:false
 		}); */
+		jQuery("#kqDeptCheckDetail_settle").click(function(){
+			var url = "colShowTemplForm?entityName=com.huge.ihos.kq.kqUpData.model.KqDeptCheck";
+			url += "&navTabId=kqDeptCheckForm_gridtable&oper=supcan";
+			url += "&colshowType=${kqUpDataType}";
+			url = encodeURI(url);
+			$.pdialog.open(url, 'setColShow22', "格式", {
+				ifr:true,hasSupcan:"kqDeptCheckForm_gridtable",mask:true,resizable:false,maxable:false,
+				width : 500,
+				height : 300
+			});
+			stopPropagation();
+		});
 	});
 
 	function initKqDeptCheckFormGrid(reLoad) {
@@ -105,24 +122,24 @@
 	}
 	/*列初始化*/
 	function initKqDeptCheckFormColModel(data) {
-		var colModelDatas = { 
-				"Col_0_Col":{name : 'kqId',align : 'center',text : '<s:text name="kqMonthData.kqId" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'},
-				"Col_1_Col":{name : 'status',align : 'center',text : '<s:text name="kqMonthData.status" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'}, 
-				"Col_2_Col":{name : 'period',align : 'center',text : '<s:text name="kqMonthData.period" />',width : 80,isHide : false,editable : false,dataType : 'string',totalExpress:"合计",totalAlign:"center"},
-				"Col_3_Col":{name : 'maker',align : 'left',text : '<s:text name="kqMonthData.maker" />',width : 80,isHide : true,editable : false,dataType : 'string'}, 
-				"Col_4_Col":{name : 'makeDate',width : '80px',align : 'center',text : '<s:text name="kqMonthData.makeDate" />',isHide : true,dataType : 'date',editable : false},
-				"Col_5_Col":{name:'sex',align:'center',text : '<s:text name="kqMonthData.sex" />',width:80,isHide:"absHide",editable:false,dataType:'string'},
-				"Col_6_Col":{name:'birthday',width:'80px',align:'center',text : '<s:text name="kqMonthData.birthday" />',isHide:"absHide",editable:false,dataType:'date'},
-				"Col_7_Col":{name:'duty',width:'80px',align:'left',text : '<s:text name="kqMonthData.duty" />',isHide:"absHide",editable:false,dataType:'string'},
-				"Col_8_Col":{name:'educationalLevel',width:'80px',align:'left',text : '<s:text name="kqMonthData.educationalLevel" />',isHide:"absHide",editable:false,dataType:'string'},
-				"Col_9_Col":{name:'salaryNumber',width:'80px',align:'left',text : '<s:text name="kqMonthData.salaryNumber" />',isHide:"absHide",editable:false,dataType:'string'},
-				"Col_10_Col":{name:'idNumber',width:'80px',align:'left',text : '<s:text name="kqMonthData.idNumber" />',isHide:"absHide",editable:false,dataType:'string'},
-				"Col_11_Col":{name:'jobTitle',width:'80px',align:'left',text : '<s:text name="kqMonthData.jobTitle" />',isHide:"absHide",editable:false,dataType:'string'},
-				"Col_12_Col":{name:'postType',width:'80px',align:'left',text : '<s:text name="kqMonthData.postType" />',isHide:"absHide",editable:false,dataType:'string'},
-				"Col_13_Col":{name:'ratio',width:'80px',align:'left',text : '<s:text name="kqMonthData.ratio" />',isHide:"absHide",editable:false,dataType:'double'},
-				"Col_14_Col":{name:'disabled',width:'80px',align:'left',text : '<s:text name="kqMonthData.disabled" />',isHide:"absHide",editable:false,dataType:'string'},
-				"Col_15_Col":{name:'workBegin',width:'80px',align:'left',text : '<s:text name="kqMonthData.workBegin" />',isHide:"absHide",editable:false,dataType:'date'}
-		};
+		var colModelDatas = [
+				{name : 'kqId',align : 'center',text : '<s:text name="kqMonthData.kqId" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'},
+				{name : 'status',align : 'center',text : '<s:text name="kqMonthData.status" />',width : 80,isHide : "absHide",editable : false,dataType : 'string'}, 
+				{name : 'period',align : 'center',text : '<s:text name="kqMonthData.period" />',width : 80,isHide : false,editable : false,dataType : 'string',totalExpress:"合计",totalAlign:"center"},
+				{name : 'maker',align : 'left',text : '<s:text name="kqMonthData.maker" />',width : 80,isHide : true,editable : false,dataType : 'string'}, 
+				{name : 'makeDate',width : '80px',align : 'center',text : '<s:text name="kqMonthData.makeDate" />',isHide : true,dataType : 'date',editable : false},
+				{name:'sex',align:'center',text : '<s:text name="kqMonthData.sex" />',width:80,isHide:"absHide",editable:false,dataType:'string'},
+				{name:'birthday',width:'80px',align:'center',text : '<s:text name="kqMonthData.birthday" />',isHide:"absHide",editable:false,dataType:'date'},
+				{name:'duty',width:'80px',align:'left',text : '<s:text name="kqMonthData.duty" />',isHide:"absHide",editable:false,dataType:'string'},
+				{name:'educationalLevel',width:'80px',align:'left',text : '<s:text name="kqMonthData.educationalLevel" />',isHide:"absHide",editable:false,dataType:'string'},
+				{name:'salaryNumber',width:'80px',align:'left',text : '<s:text name="kqMonthData.salaryNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+				{name:'idNumber',width:'80px',align:'left',text : '<s:text name="kqMonthData.idNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+				{name:'jobTitle',width:'80px',align:'left',text : '<s:text name="kqMonthData.jobTitle" />',isHide:"absHide",editable:false,dataType:'string'},
+				{name:'postType',width:'80px',align:'left',text : '<s:text name="kqMonthData.postType" />',isHide:"absHide",editable:false,dataType:'string'},
+				{name:'ratio',width:'80px',align:'left',text : '<s:text name="kqMonthData.ratio" />',isHide:"absHide",editable:false,dataType:'double'},
+				{name:'disabled',width:'80px',align:'left',text : '<s:text name="kqMonthData.disabled" />',isHide:"absHide",editable:false,dataType:'string'},
+				{name:'workBegin',width:'80px',align:'left',text : '<s:text name="kqMonthData.workBegin" />',isHide:"absHide",editable:false,dataType:'date'}
+		];
 		var curPeriodWeekObj = {};
 		if(curPeriodWeek){
 			for(var index in curPeriodWeek){
@@ -166,7 +183,7 @@
 		 				if(isHoliday == "true"){
 		 					groupObj["textColor"] = "#f94a52";
 		 				}
-		 				colModelDatas[gropName] = groupObj;
+		 				colModelDatas.push(groupObj);
 					}
 		 		}else if(frequency && "kqItem" == showType){
 		 			var groupText = row.itemName;
@@ -177,11 +194,11 @@
 	 				if(editable){
 	 					groupObj["textColor"] = "#0000FF";
 	 				}
-	 				colModelDatas[gropName] = groupObj;
+	 				colModelDatas.push(groupObj);
 		 		}else{
 		 			var jsonLength = getJsonLength(colModelDatas);
 					var ColName = "Col_" + jsonLength + "_Col";
-					colModelDatas[ColName] = colModelData;
+					colModelDatas.push(colModelData);
 		 		}
 			}
 		}
@@ -227,16 +244,16 @@
 		};
 		var jsonLength = getJsonLength(colModelDatas);
 		var colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataChecker;
+		colModelDatas.push(colModelDataChecker);
 		jsonLength = getJsonLength(colModelDatas);
 		colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataCheckDate;
+		colModelDatas.push(colModelDataCheckDate);
 		jsonLength = getJsonLength(colModelDatas);
 		colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataSubmiter;
+		colModelDatas.push(colModelDataSubmiter);
 		jsonLength = getJsonLength(colModelDatas);
 		colName = "Col_" + jsonLength + "_Col";
-		colModelDatas[colName] = colModelDataSubmitDate;
+		colModelDatas.push(colModelDataSubmitDate);
 		return colModelDatas;
 	}
 	function kqDeptCheckFormGridTableload(reLoad) {
@@ -306,9 +323,15 @@
 		</div>
 	</div>
 	<div class="pageContent">
-<!-- 		<div class="panelBar">
-		</div> -->
-		<div id="kqDeptCheckForm_gridtable_div" layoutH="45" class="grid-wrapdiv" buttonBar="width:500;height:300">
+		<div class="panelBar">
+			<ul class="toolBar" id="kqDayData_toolbuttonbar">
+			<li>
+				<a id="kqDeptCheckDetail_settle" class="settlebutton" ><span>格式</span></a>
+			</li>
+			</ul>
+		</div>
+		<input type="hidden" id="kqDeptCheckForm_kqCustomLayout" value='<s:property value="kqCustomLayout" escapeHtml="false"/>'>
+		<div id="kqDeptCheckForm_gridtable_div" layoutH="65" class="grid-wrapdiv" buttonBar="width:500;height:300">
 			<div id="load_kqDeptCheckForm_gridtable" class='loading ui-state-default ui-state-active' style="display: none"></div>
 		</div>
 	</div>

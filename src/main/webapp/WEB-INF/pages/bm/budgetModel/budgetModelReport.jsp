@@ -90,7 +90,7 @@ var budgetReportDefine = {
 			            url: 'saveBmReportXml',
 			            type: 'post',
 			            dataType: 'json',
-			            data :{modelId:${modelId},reportXml:reportXml},
+			            data :{modelId:"${modelId}",reportXml:reportXml},
 			            async:false,
 			            error: function(data){
 			            alertMsg.error("系统错误！");
@@ -109,7 +109,18 @@ var budgetReportDefine = {
 				
 				grid.func("SetItemLibraryURL", "getBmReportIndexXml");
 				grid.func("SubscribeEvent", "EditChanged");
-				
+				if("${reportType}"=="1"){
+					grid.func("Swkrntpomzqa", "1, 2,3,4,8,128"); 
+					grid.func("CallFunc","309");
+				}else{
+					
+				}
+					grid.func("Droplists_Add", "name=辅助核算;dataURL=getBmDutyCenterXml?modelId=${modelId}");
+					grid.func("Droplists_Add", "name=预算指标;dataURL=getBmIndexXml?modelId=${modelId}");
+					grid.func("Droplists_Add", "name=系统变量;dataURL=getSvXml?modelId=${modelId}");
+					<c:forEach items="${budgetAssistTypes}" var="bst">
+						grid.func("Droplists_Add", "name=${bst.colName};dataURL=getAssistItemXml?modelId=${modelId}&assistCode=${bst.assistType.typeCode}");
+					</c:forEach>
 				/* var deptCol = grid.func("GetMemo"," \r\n deptCol");
 				var indexCode = grid.func("GetMemo"," \r\n indexCol");
 				var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
@@ -134,7 +145,7 @@ var budgetReportDefine = {
  	jQuery(document).ready(function(){
  		//reportPlanDefine.main.Build = initreportColModel();
  		//alert(reportPlanDefine.main.Build);
- 		var bmReportFullSize = jQuery("#${random}_bmReportContent").innerHeight()-28;
+ 		/* var bmReportFullSize = jQuery("#${random}_bmReportContent").innerHeight()-28;
  		jQuery("#${random}_budgetReport_container").css("height",bmReportFullSize);
 		var bmReportLayout = $('#${random}_budgetReport_container').layout({ 
 			applyDefaultStyles: false ,
@@ -154,11 +165,14 @@ var budgetReportDefine = {
 					//gridResize(null,null,gridtable,"single");
 				}
 			}
-		});
- 		tabResize();
+		}); */
  		
  		//uploadDesigntime、uploadRuntime
- 		insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadDesigntime","100%");
+ 		if("${reportType}"=="1"){
+	 		insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","Rebar=Print,Property; SeperateBar=none;workmode=uploadDesigntime","99%");
+ 		}else{
+	 		insertReportToDiv("${random}_budgetReport_gridtable_container","budgetReport_gridtable_${random}","workmode=uploadDesigntime","99%");
+ 		}
  		
  		var grid = eval("(budgetReport_gridtable_${random})");
  		var ztreesetting_bmReport = {
@@ -263,7 +277,11 @@ var budgetReportDefine = {
  			grid.func("GrayWindow",'1 \r\n 255');
  		});
  		jQuery("#${random}_saveBudgetModelReport").click(function(){
+ 			setBmUpdataAlias("budgetReport_gridtable_${random}");
  			var reportXml = getBmModelXml("budgetReport_gridtable_${random}");
+ 			
+ 			
+ 			
  			var cellIndexStr = JSON.stringify(cellIndexMap);
 			$.ajax({
 	            url: 'saveBmReportXml',
@@ -418,6 +436,33 @@ var budgetReportDefine = {
  			var grid = eval("(budgetReport_gridtable_${random})");
  			var currentCell = grid.func("GetCurrentCells","");
  			var currentCellArr = currentCell.split(":");
+ 			var cell1 = currentCellArr[0],cell2 = currentCellArr[1];
+ 			var rowBegin = grid.func("GetCellRow", cell1);
+ 			var colBegin = grid.func("GetCellCol", cell1);
+ 			var rowEnd = grid.func("GetCellRow", cell2);
+ 			var colEnd = grid.func("GetCellCol", cell2);
+ 			var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+ 			var dataCell = {};
+ 			if(dataCellStr){
+ 				dataCell = eval("("+dataCellStr+")");
+ 			}
+ 			grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+ 			for(var i=rowBegin;i<=rowEnd;i++){
+ 				for(var j=colBegin;j<=colEnd;j++){
+ 					//grid.func("SetCellProp",i+" \r\n "+j+" \r\n isProtected  \r\n 1");
+ 					grid.func("SetCellProp",i+" \r\n "+j+" \r\n Arrow \r\n red");
+ 					grid.func("SetCellProp",i+" \r\n "+j+" \r\n hasArrow \r\n 1");
+ 					//grid.func("SetCellProp",row+" \r\n "+col+" \r\n "+Alias+" \r\n "+);
+					//dataCell[i+""+j] = 1;
+ 				}
+ 			}
+ 			grid.func("GrayWindow",'0');//遮罩/还原的动作
+ 			grid.func("SetMemo"," \r\n dataCell \r\n "+JSON.stringify(dataCell));
+ 		});
+ 		jQuery("#${random}_setDataCell1").click(function(){
+ 			var grid = eval("(budgetReport_gridtable_${random})");
+ 			var currentCell = grid.func("GetCurrentCells","");
+ 			var currentCellArr = currentCell.split(":");
  			var deptCol = grid.func("GetMemo"," \r\n deptCol");
  			var indexCol = grid.func("GetMemo"," \r\n indexCol");
  			var cell1 = currentCellArr[0],cell2 = currentCellArr[1];
@@ -477,14 +522,108 @@ var budgetReportDefine = {
  			for(var i=rowBegin;i<=rowEnd;i++){
  				for(var j=colBegin;j<=colEnd;j++){
  					grid.func("SetCellProp",i+" \r\n "+j+" \r\n Alias \r\n ");
- 					grid.func("SetCellProp",i+" \r\n "+j+" \r\n isProtected  \r\n 0");
- 					delete dataCell[i+""+j];
+ 					//grid.func("SetCellProp",i+" \r\n "+j+" \r\n isProtected  \r\n 0");
+ 					grid.func("SetCellProp",i+" \r\n "+j+" \r\n hasArrow \r\n 0");
+ 					grid.func("SetCellProp",i+" \r\n "+j+" \r\n Arrow \r\n");
+ 					//delete dataCell[i+""+j];
  				}
  			}
  			grid.func("GrayWindow",'0');//遮罩/还原的动作
  			grid.func("SetMemo"," \r\n dataCell \r\n "+JSON.stringify(dataCell));
  		});
  	});
+ 	
+ 	function setBmUpdataAlias(id){
+		var grid = eval("("+id+")");
+		//var arrowCellss = grid.func("FindCell", "droplistID=1");
+		///alert(arrowCellss);
+		var assistTypeDropCells = grid.func("Droplists_FindCells","辅助核算");
+		//alert(assistTypeDropCells);
+		var indexDropCells = grid.func("Droplists_FindCells","预算指标");
+		var assistTypeDropCellArr = new Array();
+		if(assistTypeDropCells){
+			assistTypeDropCellArr = assistTypeDropCells.split(",");
+		}
+		var indexDropCellArr = new Array();
+		if(indexDropCells){
+			indexDropCellArr = indexDropCells.split(",");
+		}
+		var dataRow = null;
+		var assistCodeStr = "";
+		var assistColArr = new Array(),indexColArr = new Array();
+		for(var i in assistTypeDropCellArr){
+			var assistCell = assistTypeDropCellArr[i];
+			var assistCode = grid.func("getCellData", assistCell);
+			assistCodeStr += assistCode+"@";
+			var assistRow = grid.func("GetCellRow", assistCell);
+			var assistCol = grid.func("GetCellCol", assistCell);
+			if(dataRow==null){
+				dataRow = assistRow;
+			}else{
+				if(assistRow!=dataRow){
+					alertMsg.error("标题行必须在同一行！");
+					return ;
+				}
+			}
+			var assistColValue = assistColArr[assistCol];
+			if(!assistColValue&&assistColValue!=0){
+				assistColArr[assistCol] = assistCode;
+			}else{
+				alertMsg.error("标题行不能在同一列！");
+			return ;
+			}
+		}
+		grid.func("SetMemo"," \r\n dataColCode \r\n "+assistCodeStr);
+		for(var i in indexDropCellArr){
+			var indexCell = indexDropCellArr[i];
+			var indexCode = grid.func("getCellData", indexCell);
+			var indexRow = grid.func("GetCellRow", indexCell);
+			var indexCol = grid.func("GetCellCol", indexCell);
+			if(dataRow==null){
+				dataRow = indexRow;
+			}else{
+				if(indexRow!=dataRow){
+					alertMsg.error("标题行必须在同一行！");
+					return ;
+				}
+			}
+			var indexColValue = indexColArr[indexCol];
+			if(!indexColValue&&indexColValue!=0){
+				indexColArr[indexCol] = indexCode;
+			}else{
+				alertMsg.error("标题行不能在同一列！");
+			return ;
+			}
+		} 
+		grid.func("SetMemo"," \r\n assistColArr \r\n "+JSON.stringify(assistColArr));
+		grid.func("SetMemo"," \r\n indexColArr \r\n "+JSON.stringify(indexColArr));
+		var dataCell = {};
+		var arrowCells = grid.func("FindCell", "hasArrow=1");
+		var arrowCellArr = arrowCells.split(",");
+		for(var i in arrowCellArr){
+			var arrowCell = arrowCellArr[i];
+			var cellRow = grid.func("GetCellRow",arrowCell);
+			var cellCol = grid.func("GetCellCol",arrowCell);
+			var alias = "";
+			for(var colIndex in assistColArr){
+				var col = assistColArr[colIndex];
+				if(!col&&col!=0){
+					continue;
+				}else{
+					var assisData = grid.func("getCellData", cellRow+" \r\n "+colIndex);
+					alias += assisData+"@";
+				}
+			}
+			var indexCode = indexColArr[cellCol];
+			if(!indexCode){
+				indexCode = "";
+			}
+			alias += indexCode;
+			dataCell[cellRow+cellCol] = alias;
+			grid.func("SetCellProp",cellRow+" \r\n "+cellCol+" \r\n Alias \r\n "+alias);
+		}
+		grid.func("SetMemo"," \r\n dataCell \r\n "+JSON.stringify(dataCell));
+ 	}
  	
  	function getBmModelXml(id){
 		var grid = eval("("+id+")");
@@ -493,9 +632,11 @@ var budgetReportDefine = {
 		var cellArr = cells.split(",");
 		for(var i in cellArr){
 			var cell = cellArr[i];
-			var cellTxt = grid.func("GetCellText", cell+"");
-			grid.func("SetCellData", cell+"\r\n");
-			grid.func("SetCellData", cell+"\r\n"+cellTxt);
+			if(cell){
+				var cellTxt = grid.func("GetCellText", cell+"");
+				grid.func("SetCellData", cell+"\r\n");
+				grid.func("SetCellData", cell+"\r\n"+cellTxt);
+			}
 		}
 		var rows = grid.func("GetRows","");
 		for(var row=0;row<rows;row++){
@@ -504,16 +645,16 @@ var budgetReportDefine = {
 				grid.func("SetRowProp",row+"\r\nds\r\n0");
 			}
 		}
-		var deptCol = grid.func("GetMemo"," \r\n deptCol");
-		var indexCode = grid.func("GetMemo"," \r\n indexCol");
+		//var deptCol = grid.func("GetMemo"," \r\n deptCol");
+		//var indexCode = grid.func("GetMemo"," \r\n indexCol");
 		var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
 		var dataCell = {};
 		if(dataCellStr){
 			dataCell = eval("("+dataCellStr+")");
 		} 
-		var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
-		var oldDeptCellArr = oldDeptCell.split(",");
-		for(var ci=0;ci<oldDeptCellArr.length;ci++){
+		//var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+		//var oldDeptCellArr = oldDeptCell.split(",");
+		/* for(var ci=0;ci<oldDeptCellArr.length;ci++){
 			var cell = oldDeptCellArr[ci];
 			grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
 		}
@@ -522,24 +663,24 @@ var budgetReportDefine = {
 		for(var ci=0;ci<oldIndexCellArr.length;ci++){
 			var cell = oldIndexCellArr[ci];
 			grid.func("SetCellProp",cell+" \r\n Arrow \r\n ");
-		}
+		} */
 		for(var i in dataCell){
 			var alias = dataCell[i];
 			var ij = i.split("");
 			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n Alias \r\n "+alias);
-			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n isProtected \r\n");
+			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n Arrow \r\n");
 		}
 		var reportXml = grid.func("GetFileXML", "isSaveCalculateResult=true"); 
-		var deptCol = grid.func("GetMemo"," \r\n deptCol");
-		var indexCode = grid.func("GetMemo"," \r\n indexCol");
-		var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
-			var dataCell = {};
-			if(dataCellStr){
-				dataCell = eval("("+dataCellStr+")");
-			} 
-			var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
-		var oldDeptCellArr = oldDeptCell.split(",");
-		for(var ci=0;ci<oldDeptCellArr.length;ci++){
+		//var deptCol = grid.func("GetMemo"," \r\n deptCol");
+		//var indexCode = grid.func("GetMemo"," \r\n indexCol");
+		//var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
+		//var dataCell = {};
+		//if(dataCellStr){
+		//	dataCell = eval("("+dataCellStr+")");
+		//} 
+		//var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+		//var oldDeptCellArr = oldDeptCell.split(",");
+		/* for(var ci=0;ci<oldDeptCellArr.length;ci++){
 			var cell = oldDeptCellArr[ci];
 			grid.func("SetCellProp",cell+" \r\n Arrow \r\n blue");
 		}
@@ -548,11 +689,11 @@ var budgetReportDefine = {
 		for(var ci=0;ci<oldIndexCellArr.length;ci++){
 			var cell = oldIndexCellArr[ci];
 			grid.func("SetCellProp",cell+" \r\n Arrow \r\n red");
-		}
+		} */
 		for(var i in dataCell){
 			var alias = dataCell[i];
 			var ij = i.split("");
-			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n isProtected \r\n 1");
+			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n Arrow \r\n red");
 		}
 		grid.func("GrayWindow",'0');//遮罩/还原的动作
 		return reportXml;
@@ -561,16 +702,16 @@ var budgetReportDefine = {
  	function resetGridStatus(id){
 		var grid = eval("("+id+")");
 		grid.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
-		var deptCol = grid.func("GetMemo"," \r\n deptCol");
-		var indexCode = grid.func("GetMemo"," \r\n indexCol");
+		//var deptCol = grid.func("GetMemo"," \r\n deptCol");
+		//var indexCode = grid.func("GetMemo"," \r\n indexCol");
 		var dataCellStr = grid.func("GetMemo"," \r\n dataCell");
-			var dataCell = {};
-			if(dataCellStr){
-				dataCell = eval("("+dataCellStr+")");
-			} 
-			var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
-		var oldDeptCellArr = oldDeptCell.split(",");
-		for(var ci=0;ci<oldDeptCellArr.length;ci++){
+		var dataCell = {};
+		if(dataCellStr){
+			dataCell = eval("("+dataCellStr+")");
+		} 
+		//var oldDeptCell = grid.func("FindCell", "hasArrow=2"); 
+		//var oldDeptCellArr = oldDeptCell.split(",");
+		/* for(var ci=0;ci<oldDeptCellArr.length;ci++){
 			var cell = oldDeptCellArr[ci];
 			grid.func("SetCellProp",cell+" \r\n Arrow \r\n blue");
 		}
@@ -579,35 +720,14 @@ var budgetReportDefine = {
 		for(var ci=0;ci<oldIndexCellArr.length;ci++){
 			var cell = oldIndexCellArr[ci];
 			grid.func("SetCellProp",cell+" \r\n Arrow \r\n red");
-		}
+		} */
 		for(var i in dataCell){
 			var alias = dataCell[i];
 			var ij = i.split("");
-			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n isProtected \r\n 1");
+			grid.func("SetCellProp",ij[0]+" \r\n "+ij[1]+" \r\n Arrow \r\n red");
 		}
 		grid.func("GrayWindow",'0');//遮罩/还原的动作
 	}
- 	function sourcepayinSum1(checkperiod1,checkperiod2,deptId,chargeType){
- 		//return checkperiod1;
- 		console.log(chargeType);
- 		var sum;
- 		var sql = "select sum(amount) from v_sourcepayin where checkPeriod BETWEEN '"+checkperiod1+"' and '"+checkperiod2+"' and kdDeptId='"+deptId+"'";
- 		$.ajax({
-            url: 'getBySql?sql='+sql,
-            type: 'post',
-            dataType: 'json',
-            async:false,
-            error: function(data){
-            alertMsg.error("系统错误！");
-            },
-            success: function(data){
-            	console.log(data.sqlResult);
-            	sum = data.sqlResult;
-            }
-        });
- 		
- 		return sum;
- 	}
  	
  	function sv(str){
  		var sysVarStr = '${fns:getAllVariableStr()}';
@@ -622,10 +742,11 @@ var budgetReportDefine = {
  </script>
  <div class="page" style="height: 100%;">
 	<div id="${random}_bmReportContent" class="pageContent" style="height: 100%;">
+ 	<s:if test="reportType!=1">
 		<div class="panelBar">
 			<ul class="toolBar">
 				<li><a id="${random}_editBudgetModelReport" class="changebutton"  href="javaScript:"
-					><span>编辑模板
+					><span>编辑
 					</span>
 				</a>
 				</li>
@@ -634,8 +755,18 @@ var budgetReportDefine = {
 					</span>
 				</a>
 				</li>
+				<li><a id="${random}_setDataCell" class="editbutton"  href="javaScript:"
+					><span>设为指标项
+					</span>
+				</a>
+				</li>
+				<li><a id="${random}_cancelDataCell" class="canceleditbutton"  href="javaScript:"
+					><span>取消指标项
+					</span>
+				</a>
+				</li>
 				<s:if test="budgetModel.modelType==2||budgetModel.modelType==3">
-				<li><a id="${random}_setDeptCol" class="settlebutton"  href="javaScript:"
+				<%-- <li><a id="${random}_setDeptCol" class="settlebutton"  href="javaScript:"
 					><span>设为预算责任中心行/列
 					</span>
 				</a>
@@ -644,17 +775,8 @@ var budgetReportDefine = {
 					><span>设为指标行/列
 					</span>
 				</a>
-				</li>
-				<li><a id="${random}_setDataCell" class="editbutton"  href="javaScript:"
-					><span>设为数据项
-					</span>
-				</a>
-				</li>
-				<li><a id="${random}_cancelDataCell" class="canceleditbutton"  href="javaScript:"
-					><span>取消数据项
-					</span>
-				</a>
-				</li>
+				</li> --%>
+				
 				</s:if>
 				<li><a id="${random}_saveBudgetModelReport" class="savebutton"  href="javaScript:"
 					><span>保存
@@ -663,120 +785,17 @@ var budgetReportDefine = {
 				</li>
 			</ul>
 		</div>
-		<div id="${random}_budgetReport_container">
-			<div id="${random}_budgetReport_layout-center" class="pane ui-layout-center" style="display: block; overflow: hidden;">
+		<div id="${random}_budgetReport_gridtable_container" layoutH=30 style="height:100%;overflow: hidden;"></div>
+		</s:if>
+		<s:else>
 				<div id="${random}_budgetReport_gridtable_container" style="height:100%;overflow: hidden;"></div>
-			</div>
-			<div id="${random}_budgetReport_layout-east" class="pane ui-layout-east" style="padding:0px;display: block; overflow: hidden;">
+			<%--<div id="${random}_budgetReport_container">
+			 <div id="${random}_budgetReport_layout-center" class="pane ui-layout-center" style="display: block; overflow: hidden;">
+			</div> --%>
+			<%-- <div id="${random}_budgetReport_layout-east" class="pane ui-layout-east" style="padding:0px;display: block; overflow: hidden;">
 				
-				<div class="tabs" currentIndex="0" eventType="click" id="${random}_bmRightTabs" tabcontainer="${random}_budgetReport_layout-east" extraHeight=0 extraWidth=10>
-						<div class="tabsHeader">
-							<div class="tabsHeaderContent">
-								<ul>
-									<li><a href="javascript:;"><span>系统变量</span> </a></li>
-									<li><a href="javascript:;"><span>预算指标</span> </a></li>
-								</ul>
-							</div>
-						</div>
-						<div id="${random}_bmRightTabsContent" class="tabsContent"
-							style="height: 250px;">
-							<div id="${random}_systemVarTree" style="padding:5px">
-								<%-- <a style="position: relative; float: right;top:5px" id="${random}_bmReportSysVar_expandTree" href="javaScript:">展开</a> --%>
-								<div style="marigin:10px">查询：<input /></div>
-								<script>
-									/* jQuery("#${random}_bmReportSysVar_expandTree").click(function(){
-										var thisText = jQuery(this).text();
-										var budgetSysVarTee = $.fn.zTree.getZTreeObj("${random}_bmrSysVarTree");
-										if(thisText=="展开"){
-											budgetSysVarTee.expandAll(true);
-											jQuery(this).text("折叠");
-										}else{
-											budgetSysVarTee.expandAll(false);
-											jQuery(this).text("展开");
-										}
-									}); */
-									var setting_bmSysVar = {
-											view : {
-												dblClickExpand : false,
-												showLine : true,
-												selectedMulti : false
-											},
-											callback : {
-												onClick : selectVarToCell
-											},
-											data : {
-												key : {
-													name : "name"
-												},
-												simpleData : {
-													enable : true,
-													idKey : "id",
-													pIdKey : "pId"
-												}
-											}
-									};
-							 		function selectVarToCell(event, treeId, treeNode, clickFlag) { 
-										var grid = eval("(budgetReport_gridtable_${random})");
-										var subIndexs = treeNode.children;
-										if(subIndexs!=null&&subIndexs.length!=0){
-											for(var i=0;i<subIndexs.length;i++){
-												var childNode = subIndexs[i];
-												var cell = grid.func("GetCurrentCell",""+i);
-												grid.func("SetCellData",cell+" \r\n{VAR."+childNode.name+"}");
-											}
-										}else{
-											var cell = grid.func("GetCurrentCell",""+0);
-											grid.func("SetCellData",cell+" \r\n{VAR."+treeNode.name+"}");
-										}
-										
-							 		}
-							 		var bmrSysvarTree = $.fn.zTree.init($("#${random}_bmrSysVarTree"),setting_bmSysVar);
-							 		var sysVarStr = '${fns:getAllVariableStr()}';
-							 		var sysVarJson = eval("("+sysVarStr+")");
-							 		var varIndex = 0;
-							 		for(var vName in sysVarJson){
-							 			var vValue = sysVarJson[vName];
-							 			var svNode = {id:varIndex,name:vName,value:vValue};
-							 			bmrSysvarTree.addNodes(null, svNode);
-							 		}
-							 		/* $.get("getSystemTree", {
-										"_" : $.now()
-									}, function(data) {
-										var budgetIndexTreeData = data.budgetIndexTreeNodes;
-										var budgetIndexTree = $.fn.zTree.init($("#bmReportIndexTree"),
-												ztreesetting_bmReport, budgetIndexTreeData);
-										var nodes = budgetIndexTree.getNodes();
-										budgetIndexTree.expandNode(nodes[0], true, false, true);
-										budgetIndexTree.selectNode(nodes[0]);
-										
-									}); */
-								</script>
-								<div id="${random}_bmrSysVarTree" class="ztree"></div>
-							</div>
-							<div id="${random}_bmIndexTree">
-								<a style="position: relative; float: right;top:5px" id="bmReportIndex_expandTree" href="javaScript:">展开</a>
-								<script>
-									jQuery("#bmReportIndex_expandTree").click(function(){
-										var thisText = jQuery(this).text();
-										var budgetIndexTee = $.fn.zTree.getZTreeObj("bmReportIndexTree");
-										if(thisText=="展开"){
-											budgetIndexTee.expandAll(true);
-											jQuery(this).text("折叠");
-										}else{
-											budgetIndexTee.expandAll(false);
-											jQuery(this).text("展开");
-										}
-									});
-								</script>
-								<div id="bmReportIndexTree" class="ztree"></div>
-							</div>
-						</div>
-						<div class="tabsFooter">
-							<div class="tabsFooterContent"></div>
-						</div>
-					</div>
 			</div>
-		</div>
-	
+			</div> --%>
+		</s:else>
 	</div> 
  </div>

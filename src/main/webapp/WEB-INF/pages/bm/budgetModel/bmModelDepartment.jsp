@@ -6,8 +6,12 @@
 var bmsDepartmentGridIdString="#${random}_bmsDepartment_gridtable";
 jQuery(document).ready(function() { 
 	var bmsDepartmentGrid = jQuery(bmsDepartmentGridIdString);
+	var modelId = "${modelId}";
+	if(!modelId){
+		modelId = "null";
+	}
 	bmsDepartmentGrid.jqGrid({
-		url : "bmsDepartmentGridList?1=1&filter_EQS_bmModel.modelId=${modelId}",
+		url : "bmsDepartmentGridList?1=1&filter_EQS_bmModel.modelId="+modelId,
 		editurl : "",
 		datatype : "json",
 		mtype : "GET",
@@ -18,7 +22,7 @@ jQuery(document).ready(function() {
 			{name : 'bmDepartment.name',index : 'bmDepartment.name',align : 'left',width:200,label : '<s:text name="预算责任中心名称" />',hidden : false, sortable:true,highsearch:true},
 			/* {name : 'bmDepartment.org.orgname',index : 'org.orgname',align : 'left',width:130,label : '<s:text name="department.orgCode" />',hidden : false,highsearch:true},
 			{name : 'bmDepartment.branch.branchName',index : 'branch.branchName',align : 'left',width:130,label : '<s:text name="department.branchCode" />',hidden : false,highsearch:true}, */
-			{name : 'bmDepartment.deptClass',index : 'bmDepartment.deptClass',align : 'center',width:150,label : '<s:text name="预算责任中心类别" />',hidden : false, sortable:true,highsearch:true},
+			{name : 'bmDepartment.deptClass',index : 'bmDepartment.deptClass',align : 'center',width:150,label : '<s:text name="科室类别" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'bmDepartment.outin',index : 'bmDepartment.outin',align : 'left',width:70,label : '<s:text name="department.outin" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'bmDepartment.dgroup',index : 'bmDepartment.dgroup',align : 'left',width:70,label : '<s:text name="department.dgroup" />',hidden : false, sortable:true,highsearch:true},
 			{name : 'bmDepartment.clevel',index : 'bmDepartment.clevel',align : 'center',width:50,label : '<s:text name="department.clevel" />',hidden : false, sortable:true,highsearch:true},
@@ -123,12 +127,38 @@ jQuery(document).ready(function() {
 	<div class="pageContent">
 		<div id="${random}_bmsDepartment_buttonBar" class="panelBar">
 			<ul class="toolBar">
-				<li>
-					<a id=${random}_bmsDepartment_selectDepartment class="addbutton"  href="javaScript:"><span>添加预算责任中心</span></a>
-				</li>
-				<li>
-					<a id=${random}_bmsDepartment_delDepartment class="delbutton"  href="javaScript:"><span>删除预算责任中心</span></a>
-				</li>
+				<s:if test="modelId!=null&&modelId!=''">
+					<li>
+						<a id=${random}_bmsDepartment_selectDepartment class="addbutton" href="javaScript:"><span>添加预算责任中心</span></a>
+					</li>
+				</s:if>
+				<s:else>
+					<li id="addBmsDeptLi">
+						<a id="addBmsDeptA" class="addbutton" style='color:#808080;'  href="javaScript:"><span>添加预算责任中心</span></a>
+					</li>
+					<script>
+						jQuery("#addBmsDeptLi").unbind("hover");
+						jQuery("#addBmsDeptA").hover(function(e){
+				    		e.stopPropagation();
+				    	});
+					</script>
+				</s:else>
+				<s:if test="modelId!=null&&modelId!=''">
+					<li>
+						<a id=${random}_bmsDepartment_delDepartment class="delbutton"  href="javaScript:"><span>删除预算责任中心</span></a>
+					</li>
+				</s:if>
+				<s:else>
+					<li id="delBmsDeptLi">
+						<a id="delBmsDeptA" class="addbutton" style='color:#808080;'  href="javaScript:"><span>删除预算责任中心</span></a>
+					</li>
+					<script>
+						jQuery("#delBmsDeptLi").unbind("hover");
+						jQuery("#delBmsDeptA").hover(function(e){
+				    		e.stopPropagation();
+				    	});
+					</script>
+				</s:else>
 			</ul>
 		</div>
 		<div id="${random}_bmsDepartment_gridtable_div" class="grid-wrapdiv" layoutH=100>

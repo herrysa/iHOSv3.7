@@ -8,10 +8,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.huge.dao.UtilOptDao;
 import com.huge.ihos.hql.HqlUtil;
+import com.huge.ihos.system.configuration.bdinfo.util.BdInfoUtil;
+import com.huge.webapp.pagers.JQueryPager;
+import com.huge.webapp.pagers.SortOrderEnum;
 import com.huge.webapp.util.PropertyFilter;
 
 @Repository( "utilOptDao" )
@@ -19,15 +24,25 @@ public class UtilOptDaoHibernate implements UtilOptDao{
 	
 	@Autowired
 	SessionFactory sessionFactory;
-
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
 	
+
+	protected HibernateTemplate hibernateTemplate;
+
+	/*public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}*/
+	
+	public HibernateTemplate getHibernateTemplate() {
+		if(hibernateTemplate==null){
+			hibernateTemplate = new HibernateTemplate(sessionFactory);
+		}
+		return hibernateTemplate;
+	}
+
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
+	}
+
 	public List<Map<String, String>> getByFilters(String entityName , List<PropertyFilter> filters) {
 		try {
 			String hql = "from Sourcepayin as entity where entity.sourcePayinId=6447849 group by sourcePayinId";
@@ -248,4 +263,41 @@ public class UtilOptDaoHibernate implements UtilOptDao{
 		 query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		 return query.list();
 	}
+	
+	@Override
+	public JQueryPager getBdInfoCriteriaWithSearch(JQueryPager paginatedList, BdInfoUtil bdInfoUtil,List<PropertyFilter> filters) {
+		HibernateCallback cusCallBack = new JqueryPagerHibernateBdinfoCallBack( paginatedList, bdInfoUtil, filters );
+		String orderName = paginatedList.getSortCriterion();
+		String orderDirec = "ASC";
+		if(paginatedList.getSortDirection()==SortOrderEnum.DESCENDING){
+			orderDirec = "DESC";
+		}
+		if(orderName!=null&&!"".equals(orderName)){
+			bdInfoUtil.addSort(orderName, orderDirec,false);
+		}
+		HibernateCallback callback = null;
+		if( cusCallBack != null )
+			callback = cusCallBack;
+		try {
+			Map<String, Object> resultMap = (Map<String, Object>) getHibernateTemplate().execute( callback );
+			paginatedList.setList((List)resultMap.get("list"));
+			int count = 0;
+			Integer icount = (Integer) resultMap.get("count");
+			if (icount != null)
+				count = icount.intValue();
+			paginatedList.setTotalNumberOfRows(count);
+		}catch ( Exception e ) {
+			e.printStackTrace();
+		}
+		return paginatedList;
+	}
+	
+	@Override
+	public int excuteSql(String sql)    {    
+        int result ;  
+        Query query = this.sessionFactory.getCurrentSession().createSQLQuery(sql);
+        //SQLQuery query = this.getSession().createSQLQuery(sql);    
+        result = query.executeUpdate();    
+        return result;    
+    }
 }

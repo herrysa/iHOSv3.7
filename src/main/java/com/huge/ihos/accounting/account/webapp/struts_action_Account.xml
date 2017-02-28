@@ -8,12 +8,12 @@
 	<package name="account" extends="default"	namespace="/">
 
 		<action name="accountList" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="accountListPrepare">
-			<result name="input">/WEB-INF/pages/account/accountList.jsp</result>
-			<result name="success">/WEB-INF/pages/account/accountList.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/account/accountList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/account/accountList.jsp</result>
 		</action>
 		<action name="accountTree" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="accountListPrepare">
-			<result name="input">/WEB-INF/pages/account/accountTree.jsp</result>
-			<result name="success">/WEB-INF/pages/account/accountTree.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/account/accountTree.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/account/accountTree.jsp</result>
 		</action>
 		<action name="accountGridList" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"		method="accountGridList">
 			<result type="json">
@@ -45,8 +45,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editAccount" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/account/accountForm.jsp</result>
-			<result name="input">/WEB-INF/pages/account/accountForm.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/account/accountForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/account/accountForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->
@@ -73,6 +73,13 @@
 		<action name="initAccount" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction" method="initAccount">
 		    <result name="success" type="json">
 		   		 <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<action name="getAssitTypesByAcct" class="com.huge.ihos.accounting.account.webapp.action.AccountPagedAction"			method="getAssitTypesByAcct">
+			<result name="success" type="json">
+                <param name="includeProperties">assistTypes.*,message,statusCode,callbackType,navTabId</param>
                    <param name="noCache">true</param>
 				 <param name="ignoreHierarchy">false</param>
             </result>

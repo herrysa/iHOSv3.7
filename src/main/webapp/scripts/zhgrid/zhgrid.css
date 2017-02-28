@@ -1,0 +1,151 @@
+ .zhGrid{
+ 	width:auto;
+ 	table-layout:fixed;
+ 	border: 0px !important;
+ 	border-left: solid 1px rgb(24, 127, 207) !important;
+ 	border-right: solid 1px rgb(24, 127, 207) !important;
+ 	table-layout:fixed;
+ 	margin-right: 2px;
+ 	margin-left: 2px;
+ 	border-collapse:collapse;
+ }
+ .zhGrid_head{
+ 	width:auto;
+ 	table-layout:fixed;
+ 	border-left: solid 1px rgb(24, 127, 207) !important;
+ 	border-right: solid 1px rgb(24, 127, 207) !important;
+ 	border-top: solid 1px rgb(24, 127, 207) !important;
+ 	margin-left: 2px;
+ 	margin-right: 2px;
+ 	margin-top: 2px;
+ }
+ .zhGrid_foot{
+ 	width:auto;
+ 	table-layout:fixed;
+ 	border-left: solid 1px rgb(24, 127, 207) !important;
+ 	border-right: solid 1px rgb(24, 127, 207) !important;
+ 	border-bottom: solid 1px rgb(24, 127, 207) !important;
+ 	margin-left: 2px;
+ 	margin-right: 2px;
+ 	margin-bottom: 2px;
+ }
+ .zhGrid_div{
+	border: solid 2px rgb(24, 127, 207);
+	border-width: 2px 2px 2px 2px !important;
+	margin:3px;
+	overflow-y:hidden !important;
+	position: relative;
+ }
+ .zhGrid .firstTr{
+	height:0px;
+	padding: 0 0 0 0;
+ }
+ .zhGrid .firstTr th{
+	height:0px;
+	/* padding: 1px 2px; */
+	border-top:0px;
+	border-bottom:0px;
+	border-right: solid 1px #E0D6D6; 
+	padding: 0 0 0 0;
+ }
+  .zhGrid .firstTr th div{
+	position: relative;
+ 	padding: 0 0 0 0;
+ 	display:block;
+ 	overflow:hidden;
+ 	white-space:nowrap; 
+ }
+ .zhGrid td{
+ 	border-right: solid 1px #E0D6D6 ;
+ 	border-bottom: solid 1px #E0D6D6 ;
+ 	/* padding: 1px 2px; */
+ 	padding: 0 0 0 0 !important;
+ }
+  .zhGrid td div{
+ 	position: relative;
+ 	padding: 1px 2px;
+ 	display:block;
+ 	overflow:hidden;
+ 	white-space:nowrap; 
+ }
+
+ .zhGrid_head th{
+ 	font-weight: normal !important;
+ 	font-family: 宋体 !important;
+ 	text-align: center;
+ 	padding: 0 0 0 0 !important;
+ 	/* display:block; */
+ 	overflow:hidden;
+ 	white-space:nowrap;
+ 	/* word-break:keep-all; */
+ 	
+ }
+ .zhGrid_head th div{
+	position: relative;
+ 	padding: 1px 2px;
+ 	display:block;
+ 	overflow:hidden;
+ 	white-space:nowrap;
+ 	
+ }
+ .zhGrid_head .ui-zhgrid-resize{
+ 	float: right;
+	margin: -2px -2px -2px 0px;
+ 	height: 20px !important;
+	position: relative;
+	cursor: e-resize;
+	display: inline;
+	overflow: hidden;
+ }
+ .zhGrid_foot th{
+ 	border-top : 0px !important;
+ 	border-bottom : 0px !important;
+ 	font-weight: normal !important;
+ 	padding: 0 0 0 0 !important;
+ }
+  .zhGrid_foot th div{
+	position: relative;
+ 	padding: 1px 2px;
+ 	display:block;
+ 	overflow:hidden;
+ 	white-space:nowrap;
+ 	
+ }
+ .lastTh{
+ 	border-right : 0px !important;
+ }
+ .zhGrid .selected {background-color:#7cc5e5;border-color:#b8d0d6; }
+ .zhGrid_div .resizeMarker, .zhGrid_div .resizeProxy {
+	display: block;
+	overflow: hidden;
+	width: 1px;
+	position: absolute;
+	background-color:black;
+ }
+
+ .zhGridInputHolder{
+ 	position: absolute;
+ 	top: 0;
+  	left: 0;
+  	z-index: 100;
+ }
+ .zhGridInput{
+  	border: 2px solid #5292F7;
+  	outline-width: 0;
+  	margin: 0;
+  	padding: 1px 4px 0 2px;
+  	font-family: Arial, Helvetica, sans-serif;
+  	/*repeat from .handsontable (inherit doesn't work with IE<8) */
+  	line-height: 1.3em;
+  	/*repeat from .handsontable (inherit doesn't work with IE<8) */
+  	font-size: inherit;
+  	-webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+  	box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+  	resize: none;
+  	/*below are needed to overwrite stuff added by jQuery UI Bootstrap theme*/
+  	display: inline-block;
+  	color: #000;
+  	border-radius: 0;
+ 	background-color: #FFF;
+ 	/*overwrite styles potentionally made by a framework*/
+}

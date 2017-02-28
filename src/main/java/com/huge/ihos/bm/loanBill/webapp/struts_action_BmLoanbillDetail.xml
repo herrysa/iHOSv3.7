@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bmLoanbillDetail" extends="default"	namespace="/">
+
+		<action name="bmLoanbillDetailList" class="com.huge.ihos.bm.loanBill.webapp.action.BmLoanbillDetailPagedAction">
+			<result name="input">/WEB-INF/pages/bmLoanbillDetail/bmLoanbillDetailList.jsp</result>
+			<result name="success">/WEB-INF/pages/bmLoanbillDetail/bmLoanbillDetailList.jsp</result>
+		</action>
+		<action name="bmLoanbillDetailGridList" class="com.huge.ihos.bm.loanBill.webapp.action.BmLoanbillDetailPagedAction"		method="bmLoanbillDetailGridList">
+			<result type="json">
+				<param name="includeProperties">bmLoanbillDetails.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bmLoanbillDetailGridEdit" class="com.huge.ihos.bm.loanBill.webapp.action.BmLoanbillDetailPagedAction"			method="bmLoanbillDetailGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBmLoanbillDetail" class="com.huge.ihos.bm.loanBill.webapp.action.BmLoanbillDetailPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/bmLoanbillDetail/bmLoanbillDetailForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bmLoanbillDetail/bmLoanbillDetailForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBmLoanbillDetail" class="com.huge.ihos.bm.loanBill.webapp.action.BmLoanbillDetailPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

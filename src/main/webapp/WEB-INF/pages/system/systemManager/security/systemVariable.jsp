@@ -10,11 +10,24 @@
 		jQuery("#sys_code_orgCode").treeselect({
 			dataType:"sql",
 			optType:"single",
-			sql:"select orgCode id,orgname name ,parentOrgCode parent from t_org where orgCode in ${fns:u_writeDPSql('org_dp')}",
+			sql:"select orgCode id,orgname name ,parentOrgCode parent from t_org where orgCode in ${fns:u_writeDPSql('org_dp')} and orgCode<>'XT'",
 			exceptnullparent:false,
 			lazy:false,
-			callback : {}
+			callback : {
+				afterClick : function(treeId,vi,v){
+					jQuery("#sys_code_copyCode").treeselect({
+						dataType:"sql",
+						optType:"single",
+						relateUp:"sys_code_orgCode_id",
+						sql:"SELECT copycode id,copyname name ,orgCode parent FROM T_COPY where orgCode ='"+vi+"'",
+						exceptnullparent:false,
+						lazy:false,
+						callback : {}
+					});
+				}
+			}
 		});
+		
 			
 			/* jQuery("#sys_code_copyCode").unbind("click").bind("click",function(){
 				var orgCode = jQuery("#sys_code_orgCode_id").val();
@@ -48,8 +61,17 @@
 		    success: function(data){
 		    	if(data!=null&&data.orgModel=='2'){
 		    		jQuery("#systemVariable_org").show();
+		    		jQuery("#sys_code_orgCode").addClass("required");
 		    	}else{
 		    		jQuery("#systemVariable_org").hide();
+		    		jQuery("#sys_code_orgCode").removeClass("required");
+		    	}
+		    	if(data!=null&&data.copyModel=='2'){
+		    		jQuery("#systemVariable_copy").show();
+		    		jQuery("#sys_code_copyCode").addClass("required");
+		    	}else{
+		    		jQuery("#systemVariable_copy").hide();
+		    		jQuery("#sys_code_copyCode").removeClass("required");
 		    	}
 		    }
 		});
@@ -62,6 +84,9 @@
 		}
 	}
 	function setSV(){
+		if (!jQuery("#sbForm").valid()) {
+			return ;
+		}
 		/* if(!jQuery("#sys_code_orgCode_id").val()){
 			jQuery("#sys_code_orgCode_id").val("-1");
 		}
@@ -72,6 +97,7 @@
 			alertMsg.error("期间不能为空！");
 			return ;
 		} */
+		
 		$.ajax({
 		    url: 'getPeriodByBusinessDate?businessDate='+$("#systemVariable_businessDate").val(),
 		    type: 'post',
@@ -162,6 +188,7 @@
 		    },
 		    success: function(data){
 		        if(data.currentPeriod){
+		        	getOrgModel();
 			        jQuery("#systemVariable_period").val(data.currentPeriod);
 		        }else{
 		        	//alertMsg.error("请选择已定义的期间内日期！");
@@ -189,8 +216,12 @@
 						<s:textfield   key="systemVariable.period" id="systemVariable_period" cssClass="required" readonly="true" disabled="true"/>
 					</div>
 					<div id="systemVariable_org" class="unit" style="display:none">
-						<s:textfield id="sys_code_orgCode" key="systemVariable.orgCode" name="systemVariable.orgName" cssClass="" style="width:230px"/>
+						<s:textfield id="sys_code_orgCode" key="systemVariable.orgCode" name="systemVariable.orgName" cssClass="required" style="width:230px"/>
 						<s:hidden id="sys_code_orgCode_id" name="systemVariable.orgCode"/>
+					</div>
+					<div id="systemVariable_copy" class="unit" style="display:none">
+						<s:textfield id="sys_code_copyCode" key="systemVariable.copyCode" name="systemVariable.copyName" cssClass="required" style="width:230px"/>
+						<s:hidden id="sys_code_copyCode_id" name="systemVariable.copyCode"/>
 					</div>
 					<%-- <div class="unit">
 						<s:select list="copyList"  id="systemVariable_copyCode" key="systemVariable.copyCode" listKey="copycode" listValue="copyname" headerKey="-1" headerValue="" cssClass="required" />

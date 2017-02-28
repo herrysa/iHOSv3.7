@@ -656,6 +656,9 @@ function gridSaveRow(grid){
 	try{
 		var currentPage = grid.jqGrid('getGridParam', 'page'); 
 		var editDataId = grid.jqGrid('getGridParam','selrow');
+		if(!editDataId){
+			editDataId = "new_row";
+		}
 		grid.jqGrid('saveRow',editDataId, checksave);
 		
 		grid.trigger('reloadGrid', [{page: currentPage }]);;
@@ -1821,7 +1824,7 @@ function makeUserTag(containerId,userTag,field,initValueString,title,validate,re
 		if(readOnly=="readOnly"){
 			click = "";
 		}
-		tagStr = "<input type='text' name='"+field+validate+" value='"+initValueString+"' "+click+" "+readOnly
+		tagStr = "<input type='text' name='"+field+validate+"' value='"+initValueString+"' "+click+" "+readOnly
 		             +" class='textInput "+required+" "+rules+"' size='"+size+"'/>";
 		jQuery("#"+containerId,"#"+form).append(tagStr);
 	}else if(userTag=='yearMonthDateSecond'){
@@ -1829,7 +1832,7 @@ function makeUserTag(containerId,userTag,field,initValueString,title,validate,re
 		if(length){
 			size = length;
 		}
-		tagStr = "<input type='text' name='"+field+validate+" value='"+initValueString+"' onClick=\"WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" "+readOnly
+		tagStr = "<input type='text' name='"+field+validate+"' value='"+initValueString+"' onClick=\"WdatePicker({skin:'ext',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" "+readOnly
 		             +" class='textInput "+required+" "+rules+"' size='"+size+"'/>";
 		jQuery("#"+containerId,"#"+form).append(tagStr);
 	}else if(userTag=='yearQuarter'){
@@ -2933,4 +2936,98 @@ function getTimestamp(now){
 	var milliSecond=now.getMilliseconds();
 	var dateStr = year+month+date+hour+minute+second+milliSecond;
 	return dateStr;
+}
+function exportToExcelByAction(gridId,entityName,title,outPutType){
+	var url = jQuery("#"+gridId).jqGrid('getGridParam','url');
+	var formData = jQuery("#"+gridId).jqGrid('getGridParam','formData');
+	//var param = url.split("?")[1];
+	//alert(json2str(jQuery("#sourcepayin_gridtable")[0].p.colModel));
+	//return ;
+	var colModel = jQuery("#"+gridId).jqGrid('getGridParam','colModel');
+	var colDefine = new Array();
+	var colDefineIndex = 0;
+	for(var mi=0;mi<colModel.length;mi++){
+		var col = colModel[mi];
+		if(col.name!="rn"&&col.name!="cb"&&!col.hidden){
+			var label = col.label?col.label:col.name;
+			var type = col.formatter?typeof(col.formatter)=='function'?1:col.formatter:1;
+			var align = col.align?col.align:"left";
+			var width = col.width?parseInt(col.width)*20:50*20;
+			colDefine[colDefineIndex] = {name:col.name,type:type,align:align,width:width,label:label};
+			colDefineIndex++;
+		}
+	}
+	var colDefineStr = json2str(colDefine);
+	var page=1,pageSize=20,sortname,sortorder;
+	page = jQuery("#"+gridId).jqGrid('getGridParam','page');
+	pageSize = jQuery("#"+gridId).jqGrid('getGridParam','rowNum');
+	if(outPutType=='all'){
+		pageSize = 100000;
+		page = 1;
+	}
+	sortname = jQuery("#"+gridId).jqGrid('getGridParam','sortname');
+	sortorder = jQuery("#"+gridId).jqGrid('getGridParam','sortorder');
+	var searchParam = "&rows="+pageSize+"&page="+page+"&sidx="+sortname+"&sord="+sortorder;
+	url += searchParam;
+	//var u =  'outPutExcel?'+param+"&entityName="+entityName;
+	$.ajax({
+		url: url,
+		type: 'post',
+		data:{outputExcel:true,title:title,colDefineStr:colDefineStr},
+		dataType: 'json',
+		async:false,
+		error: function(data){
+			alertMsg.error("系统错误！");
+		},
+		success: function(data){
+			var downLoadFileName = data["userdata"]["excelFullPath"];
+			var filePathAndName = downLoadFileName.split("@@");
+			var url = "${ctx}/downLoadExel?filePath="+filePathAndName[0]+"&fileName="+filePathAndName[1];
+	 		//url=encodeURI(url);
+	 		location.href=url;
+		}
+	}); 
+}
+function upDigit(n)   
+{  
+    var fraction = ['角', '分'];  
+    var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];  
+    var unit = [ ['元', '万', '亿'], ['', '拾', '佰', '仟']  ];  
+    var head = n < 0? '欠': '';  
+    n = Math.abs(n);  
+
+    var s = '';  
+
+    for (var i = 0; i < fraction.length; i++)   
+    {  
+        s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');  
+    }  
+    s = s || '整';  
+    n = Math.floor(n);  
+
+    for (var i = 0; i < unit[0].length && n > 0; i++)   
+    {  
+        var p = '';  
+        for (var j = 0; j < unit[1].length && n > 0; j++)   
+        {  
+            p = digit[n % 10] + unit[1][j] + p;  
+            n = Math.floor(n / 10);  
+        }  
+        s = p.replace(/(零.)*零$/, '').replace(/^$/, '零')  + unit[0][i] + s;  
+    }  
+    return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');  
+} 
+
+//获取混合字符串的长度
+function getMixStrlen(s) { 
+	var l = 0; 
+	var a = s.split(""); 
+	for (var i=0;i<a.length;i++) { 
+		if (a[i].charCodeAt(0)<299) { 
+			l++; 
+		} else { 
+			l+=2; 
+		} 
+	} 
+	return l; 
 }

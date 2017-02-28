@@ -4,8 +4,12 @@
 jQuery(document).ready(function() {
 	var modelProcessGridIdString = "#modelProcess_gridtable";
 	var modelProcessGrid = jQuery(modelProcessGridIdString);
+	var modelId = "${modelId}";
+	if(!modelId){
+		modelId = "null";
+	}
 	modelProcessGrid.jqGrid({
-		url : "modelProcessGridList?filter_EQS_budgetModel.modelId=${modelId}",
+		url : "modelProcessGridList?filter_EQS_budgetModel.modelId="+modelId,
 		editurl:"modelProcessGridEdit",
 		datatype : "json",
 		mtype : "GET",
@@ -18,15 +22,15 @@ jQuery(document).ready(function() {
 		{name:'noName',index:'noName',align:'left',label : '<s:text name="modelProcess.noName" />',hidden:false,width:100},
 		{name:'okStep.stepName',index:'okStep.stepName',align:'left',label : '<s:text name="modelProcess.okStep" />',hidden:false,width:100},
 		{name:'noStep.stepName',index:'noStep.stepName',align:'left',label : '<s:text name="modelProcess.noStep" />',hidden:false,width:100},
-		{name:'roleName',index:'roleName',align:'left',label : '<s:text name="modelProcess.roleName" />',hidden:false,width:100},
+		{name:'roleName',index:'roleName',align:'left',label : '<s:text name="modelProcess.roleName" />',hidden:false,width:200},
 		{name:'checkDeptName',index:'checkDeptName',align:'left',label : '<s:text name="modelProcess.checkDept" />',hidden:false,width:100},
 		{name:'checkPersonName',index:'checkPersonName',align:'left',label : '<s:text name="modelProcess.checkPerson" />',hidden:false,width:100},
 		{name:'state',index:'state',align:'right',label : '<s:text name="modelProcess.state" />',hidden:false,formatter:'integer',width:60},
 		{name:'isEnd',index:'isEnd',align:'center',label : '<s:text name="modelProcess.isEnd" />',hidden:false,formatter:'checkbox',width:70},
 		{name:'condition',index:'condition',align:'center',label : '<s:text name="modelProcess.condition" />',hidden:false,width:100},
-		{name:'bmDept',index:'bmDept',align:'center',label : '<s:text name="modelProcess.bmDept" />',hidden:false,formatter:'checkbox',width:70},
-		{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="modelProcess.unionCheck" />',hidden:false,formatter:'checkbox',width:70},
-		{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="modelProcess.stepInfo" />',hidden:false,formatter:'checkbox',width:70},
+		{name:'bmDept',index:'bmDept',align:'center',label : '<s:text name="modelProcess.bmDept" />',hidden:false,formatter:'checkbox',width:80},
+		{name:'unionCheck',index:'unionCheck',align:'center',label : '<s:text name="modelProcess.unionCheck" />',hidden:false,formatter:'checkbox',width:80},
+		{name:'stepInfo',index:'stepInfo',align:'center',label : '<s:text name="modelProcess.stepInfo" />',hidden:false,formatter:'checkbox',width:80},
 		{name:'remark',index:'remark',align:'left',label : '<s:text name="modelProcess.remark" />',hidden:false,width:200}
 		],
     	jsonReader : {
@@ -149,7 +153,7 @@ jQuery(document).ready(function() {
 			alertMsg.error("请选择一条记录！");
 			return;
 		}
-		var url = "editBmModelProcess?navTabId=modelProcess_gridtable&bmProcessId="+sid;
+		var url = "editBmModelProcess?navTabId=modelProcess_gridtable&modelId=${modelId}&bmProcessId="+sid;
 		var winTitle='修改预算审批流程';
 		$.pdialog.open(url,'editBmModelProcess',winTitle, {mask:true,width : 600,height : 500});
 		stopPropagation();
@@ -176,21 +180,91 @@ jQuery(document).ready(function() {
 	<div class="pageContent">
 		<div id="modelProcess_buttonBar" class="panelBar">
 			<ul class="toolBar">
-				<li><a id="modelProcess_gridtable_refresh" class="initbutton"  href="javaScript:"><span>初始化</span>
-				</a>
-				</li>
-				<li><a id="modelProcess_gridtable_add_c" class="addbutton" href="javaScript:" ><span>添加</span>
-				</a>
-				</li>
-				<li><a id="modelProcess_gridtable_edit_c" class="changebutton"  href="javaScript:"><span>修改</span>
-				</a>
-				</li>
-				<li><a id="modelProcess_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span>
-				</a>
-				</li>
-				<li><a id="modelProcess_gridtable_delAll_c" class="delbutton"  href="javaScript:"><span>全部删除</span>
-				</a>
-				</li>
+				<s:if test="modelId!=null&&modelId!=''">
+					<li>
+						<a id="modelProcess_gridtable_refresh" class="initbutton"  href="javaScript:"><span>初始化</span></a>
+					</li>
+				</s:if>
+				<s:else>
+					<li id="initBmsProcessLi">
+						<a id="initBmsProcessA" class="initbutton" style='color:#808080;'  href="javaScript:"><span>初始化</span></a>
+					</li>
+					<script>
+						jQuery("#initBmsProcessLi").unbind("hover");
+						jQuery("#initBmsProcessA").hover(function(e){
+				    		e.stopPropagation();
+				    	});
+					</script>
+				</s:else>
+				
+				<s:if test="modelId!=null&&modelId!=''">
+					<li>
+						<a id="modelProcess_gridtable_add_c" class="addbutton" href="javaScript:" ><span>添加</span></a>
+					</li>
+				</s:if>
+				<s:else>
+					<li id="addBmsProcessLi">
+						<a id="addBmsProcessA" class="addbutton" style='color:#808080;' href="javaScript:" ><span>添加</span></a>
+					</li>
+					<script>
+						jQuery("#addBmsProcessLi").unbind("hover");
+						jQuery("#addBmsProcessA").hover(function(e){
+				    		e.stopPropagation();
+				    	});
+					</script>
+				</s:else>
+				
+				<s:if test="modelId!=null&&modelId!=''">
+					<li>
+						<a id="modelProcess_gridtable_edit_c" class="changebutton"  href="javaScript:"><span>修改</span></a>
+					</li>
+				</s:if>
+				<s:else>
+					<li id="editBmsProcessLi">
+						<a id="editBmsProcessA" class="changebutton"  style='color:#808080;' href="javaScript:"><span>修改</span></a>
+					</li>
+					<script>
+						jQuery("#editBmsProcessLi").unbind("hover");
+						jQuery("#editBmsProcessA").hover(function(e){
+				    		e.stopPropagation();
+				    	});
+					</script>
+				</s:else>
+				
+				<s:if test="modelId!=null&&modelId!=''">
+					<li>
+						<a id="modelProcess_gridtable_del_c" class="delbutton"  href="javaScript:"><span><s:text name="button.delete" /></span></a>
+					</li>
+				</s:if>
+				<s:else>
+					<li id="delBmsProcessLi">
+						<a id="delBmsProcessA" class="delbutton" style='color:#808080;' href="javaScript:"><span><s:text name="button.delete" /></span></a>
+					</li>
+					<script>
+						jQuery("#delBmsProcessLi").unbind("hover");
+						jQuery("#delBmsProcessA").hover(function(e){
+				    		e.stopPropagation();
+				    	});
+					</script>
+				</s:else>
+				
+				<s:if test="modelId!=null&&modelId!=''">
+					<li>
+						<a id="modelProcess_gridtable_delAll_c" class="delbutton"  href="javaScript:"><span>全部删除</span></a>
+					</li>
+				</s:if>
+				<s:else>
+					<li id="delAllBmsProcessLi">
+						<a id="delAllBmsProcessA" class="delbutton" style='color:#808080;' href="javaScript:"><span>全部删除</span></a>
+					</li>
+					<script>
+						jQuery("#delAllBmsProcessLi").unbind("hover");
+						jQuery("#delAllBmsProcessA").hover(function(e){
+				    		e.stopPropagation();
+				    	});
+					</script>
+				</s:else>
+				
 				<!-- <li><a id="modelProcess_gridtable_process_check" class="delbutton"  href="javaScript:"><span>流程检查</span>
 				</a>
 				</li> -->

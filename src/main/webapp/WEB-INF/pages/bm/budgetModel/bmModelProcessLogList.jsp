@@ -20,7 +20,7 @@
 			{name:'modelId',index:'modelId',align:'left',label : '<s:text name="bmModelProcessLog.modelId" />',hidden:true,width:150,sortable:false},
 			{name:'stepName',index:'stepName',align:'left',label : '<s:text name="bmModelProcessLog.stepName" />',hidden:false,width:150,sortable:false},
 			{name:'operation',index:'operation',align:'left',label : '<s:text name="bmModelProcessLog.operation" />',hidden:false,width:80,sortable:false},
-			{name:'optTime',index:'optTime',align:'center',label : '<s:text name="bmModelProcessLog.optTime" />',hidden:false,sortable:false,formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:80},
+			{name:'optTime',index:'optTime',align:'left',label : '<s:text name="bmModelProcessLog.optTime" />',hidden:false,sortable:false,formatter:formatDate,width:120},
 			{name:'info',index:'info',align:'left',label : '<s:text name="bmModelProcessLog.info" />',hidden:false,width:200,sortable:false},
 			{name:'personId',index:'personId',align:'left',label : '<s:text name="bmModelProcessLog.personId" />',hidden:true,sortable:false},
 			{name:'state',index:'state',align:'right',label : '<s:text name="bmModelProcessLog.state" />',hidden:true,formatter:'integer',width:60,sortable:false},
@@ -64,6 +64,13 @@
     	alert("敬请期待！");
     });
   	});
+	function formatDate(cellvalue, options, rowObject) {
+		if(!cellvalue){
+			return "";
+		}
+		cellvalue = cellvalue.replaceAll("T","  ");
+		return cellvalue;
+	}
 </script>
 
 <div class="page">
@@ -121,9 +128,9 @@
 		<div class="panelBar">
 			<ul class="toolBar">
 				
-				<li><a id="bmModelProcessLog_gridtable_graph" class="previewbutton"  href="javaScript:"><span>流程图</span>
+				<!-- <li><a id="bmModelProcessLog_gridtable_graph" class="previewbutton"  href="javaScript:"><span>流程图</span>
 				</a>
-				</li>
+				</li> -->
 				
 			
 			</ul>

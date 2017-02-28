@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="payMode" extends="default"	namespace="/">
+
+		<action name="payModeList" class="com.huge.ihos.paymode.webapp.action.PayModePagedAction">
+			<result name="input">/WEB-INF/pages/payMode/payModeList.jsp</result>
+			<result name="success">/WEB-INF/pages/payMode/payModeList.jsp</result>
+		</action>
+		<action name="payModeGridList" class="com.huge.ihos.paymode.webapp.action.PayModePagedAction"		method="payModeGridList">
+			<result type="json">
+				<param name="includeProperties">payModes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="payModeGridEdit" class="com.huge.ihos.paymode.webapp.action.PayModePagedAction"			method="payModeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editPayMode" class="com.huge.ihos.paymode.webapp.action.PayModePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/payMode/payModeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/payMode/payModeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="savePayMode" class="com.huge.ihos.paymode.webapp.action.PayModePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

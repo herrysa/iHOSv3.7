@@ -14,8 +14,9 @@
         	colModel:[
 			{name:'modelXfId.xfId',index:'modelXfId.xfId',align:'center',label : '<s:text name="budgetModelHz.xfId" />',hidden:true,key:true},
 			{name:'updataId',index:'updataId',align:'center',label : '<s:text name="budgetModelHz.xfId" />',hidden:true},
-			{name:'modelXfId.modelId.modelCode',index:'modelId.modelCode',align:'left',label : '<s:text name="budgetModelHz.modelCode" />',hidden:false,width:100},
-			{name:'modelXfId.modelId.modelName',index:'modelId.modelName',align:'left',label : '<s:text name="budgetModelHz.model" />',hidden:false,width:250},
+			{name:'modelXfId.modelId.modelId',index:'modelXfId.modelId.modelId',align:'left',label : '<s:text name="budgetModelHz.modelId" />',hidden:true,width:100},
+			{name:'modelXfId.modelId.modelCode',index:'modelXfId.modelId.modelCode',align:'left',label : '<s:text name="budgetModelHz.modelCode" />',hidden:false,width:100},
+			{name:'modelXfId.modelId.modelName',index:'modelXfId.modelId.modelName',align:'left',label : '<s:text name="budgetModelHz.model" />',hidden:false,width:250},
 			{name:'periodYear',index:'periodYear',align:'center',label : '<s:text name="budgetModelHz.periodYear" />',hidden:false,width:70},
 			{name:'modelXfId.modelId.modelType',index:'modelId.modelTypeTxt',align:'left',label : '<s:text name="budgetModelHz.budgetType" />',hidden:false,width:120,formatter : 'select',	edittype : 'select',editoptions : {value : '1:科室填报(自下而上);2:预算汇总(自下而上);3:职能代编(自上而下)'}},
 			{name:'department.name',index:'department.name',align:'left',label : '汇总部门',hidden:false,width:200},
@@ -87,6 +88,10 @@
 			    	var cellText = ret[i]["stepMap.${pc.stepCode }"];
 			    	setCellText(jQuery(this)[0],id,'stepMap.${pc.stepCode }','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="bmUpdataZhuanqu(\''+hrefUrl+'&state=${pc.state }\')" target="navTab">'+cellText+"</a>")
 					</c:forEach>
+			    	var modelId = ret[i]["modelXfId.modelId.modelId"];
+			    	var hrefUrlModelName = "editBudgetModelReport?reportType=1&modelId="+modelId;
+			    	var cellTextModelName = ret[i]["modelXfId.modelId.modelName"];
+			    	setCellText(jQuery(this)[0],id,'modelXfId.modelId.modelName','<a style="color:blue;text-decoration:underline;cursor:pointer;" onclick="modelReportZhuanqu(\''+hrefUrlModelName+'\')" target="navTab">'+cellTextModelName+"</a>");
      	    	 }
      	     }
        		} 
@@ -222,6 +227,18 @@
 	function bmUpdataZhuanqu(url){
 		$.pdialog.open(url, "bmupdataList", "上报科室明细",{width:800,height:600});
 	}
+	function modelReportZhuanqu(url){
+		var fullHeight = jQuery("#container").innerHeight();
+    	var fullWidth = jQuery("#container").innerWidth();
+		url = encodeURI(url);
+    	$.pdialog.open(url, 'showBudgetReport', "查看预算模板", {
+    		mask : true,
+    		maxable : true,
+    		resizable : true,
+    		width : fullWidth,
+    		height : fullHeight
+    	});
+	}
 </script>
 
 <div class="page">
@@ -290,8 +307,8 @@
 					</span>
 				</a>
 				</li>
-				<s:if test="needBmHzCheckProcess=='1'&&state==1">
-				<li><a id="${random}_budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
+				<s:if test="needBmHzCheckProcess==1&&state==1">
+					<li><a id="${random}_budgetModelHz_gridtable_comfirm" class="submitbutton" href="javaScript:" ><span>提交审批</span></a></li>
 				</s:if>
 				<s:if test="state==0||state==3">
 				<li><a id="${random}_budgetModelHz_gridtable_del_c" class="delbutton"  href="javaScript:"

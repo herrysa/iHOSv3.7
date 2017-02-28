@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="bmLoanbill" extends="default"	namespace="/">
+
+		<action name="bmLoanbillList" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction" method="bmLoanbillList">
+			<result name="input">/WEB-INF/pages/bm/expensectrl/bmLoanbillList.jsp</result>
+			<result name="success">/WEB-INF/pages/bm/expensectrl/bmLoanbillList.jsp</result>
+		</action>
+		<action name="bmLoanbillGridList" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction"		method="bmLoanbillGridList">
+			<result type="json">
+				<param name="includeProperties">sdatas.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="bmLoanbillGridEdit" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction"			method="bmLoanbillGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBmLoanbill" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction"			method="editBmLoanbill">
+			<result name="success">/WEB-INF/pages/bm/expensectrl/bmLoanbillForm.jsp</result>
+			<result name="input">/WEB-INF/pages/bm/expensectrl/bmLoanbillForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<!-- <action name="savebmLoanbill" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action> -->
+		
+		<action name="saveBmLoanbill" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction"			method="saveBmLoanbill">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="delBmLoanbill" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction"			method="delBmLoanbill">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="changeBmLoanbillState" class="com.huge.ihos.bm.expensectrl.action.BmLoanbillAction"			method="changeBmLoanbillState">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+	</package>
+
+</struts>

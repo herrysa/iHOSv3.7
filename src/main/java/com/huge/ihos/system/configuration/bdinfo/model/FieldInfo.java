@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.apache.struts2.json.annotations.JSON;
 
 import com.huge.ihos.system.systemManager.organization.model.Person;
 import com.huge.model.BaseObject;
@@ -70,7 +73,8 @@ public class FieldInfo extends BaseObject implements Serializable{
     private String fieldDefault; //默认值
     private String remark;//备注
     private Person changer;//修改人
-    private Date changeDate;//修改时间
+    private String changerName;
+	private Date changeDate;//修改时间
     private Boolean sysField = false;//是否系统字段
     private Boolean statistics = false;//统计
     private Boolean statisticsSingle = false;//单项统计
@@ -207,6 +211,7 @@ public class FieldInfo extends BaseObject implements Serializable{
 		this.sysField = sysField;
 	}	
 	
+	@JSON(serialize=false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "changer",nullable = true)
 	public Person getChanger() {
@@ -216,6 +221,19 @@ public class FieldInfo extends BaseObject implements Serializable{
 	public void setChanger(Person changer) {
 		this.changer = changer;
 	}
+	
+	@Transient
+	public String getChangerName() {
+		if(changer!=null){
+			changerName = changer.getName();
+		}
+		return changerName;
+	}
+
+	public void setChangerName(String changerName) {
+		this.changerName = changerName;
+	}
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "changeDate", length = 19, nullable = true)
 	public Date getChangeDate() {

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="vendor" extends="default"	namespace="/">
+
+		<action name="vendorList" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorPagedAction">
+			<result name="input">/WEB-INF/pages/system/repository/vendor/vendorList.jsp</result>
+			<result name="success">/WEB-INF/pages/system/repository/vendor/vendorList.jsp</result>
+		</action>
+		<action name="vendorGridList" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorPagedAction"		method="vendorGridList">
+			<result type="json">
+				<param name="includeProperties">vendors.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="vendorGridEdit" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorPagedAction"			method="vendorGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editVendor" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorPagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/system/repository/vendor/vendorForm.jsp</result>
+			<result name="input">/WEB-INF/pages/system/repository/vendor/vendorForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveVendor" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorPagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		
+		<action name="checkVendorCode" class="com.huge.ihos.system.repository.vendor.webapp.action.VendorPagedAction"	method="checkVendorCode">
+			<result name="success" type="json">
+                <param name="includeProperties">exists</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

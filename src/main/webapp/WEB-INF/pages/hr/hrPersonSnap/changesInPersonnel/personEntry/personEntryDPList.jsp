@@ -71,7 +71,7 @@
 	       
 	       	},
 			gridComplete:function(){
-				gridContainerResize("personEntryDP","div",0,327);
+				gridContainerResize("personEntryDP","div",0,13);
 	            var dataTest = {"id":"personEntryDP_gridtable"};
 	      	    jQuery.publish("onLoadSelect",dataTest,null);
 	      	    initFlag = initColumn('personEntryDP_gridtable','com.huge.ihos.hr.hrPerson.model.HrPersonSnap',initFlag);
@@ -164,7 +164,7 @@
 	}
 	function personEntryAddDp(hrPersonSnap){
 		   jQuery("#personEntry_personFrom").val('hpsDisabled');
-		   jQuery("#personEntry_personCode").attr('readOnly',"true").removeAttr("onclick").removeAttr("onfocus");
+		   //jQuery("#personEntry_personCode").attr('readOnly',"true").removeAttr("onclick").removeAttr("onfocus");
 		   if(hrPersonSnap.personId){
     		   jQuery("#personEntry_personId").val(hrPersonSnap.personId);
     	   }
@@ -236,7 +236,7 @@
     	   }
 	}
 </script>
-<div class="page" id="personEntryDP_page">
+<div class="page" id="personEntryDP_page" style="height:100%">
 	<div id="personEntryDP_pageHeader" class="pageHeader">
 		<div class="searchBar">
 			<div class="searchContent">
@@ -298,7 +298,7 @@
 						<div class="buttonContent">
 							<button type="button" onclick="personEntryDPSearchFormReaload()"><s:text name='button.search'/></button>
 						</div>
-					</div>
+					</div> 
 				</form>
 			</div>
 			<%-- <div class="subBar">
@@ -313,7 +313,7 @@
 			</div> --%>
 		</div>
 	</div>
-	<div class="pageContent">
+	<div class="pageContent" style="height:100%">
 		<div class="panelBar" id="personEntryDP_buttonBar">
 			<ul class="toolBar">
 				<li>
@@ -321,7 +321,7 @@
 				</li>
 			</ul>
 		</div>
-				<div id="personEntryDP_gridtable_div"  class="grid-wrapdiv" class="unitBox" style="margin-left: 2px; margin-top: 2px; overflow: hidden">
+				<div id="personEntryDP_gridtable_div"  class="grid-wrapdiv" style="margin-left: 2px; margin-top: 2px; overflow: hidden">
 					<input type="hidden" id="personEntryDP_gridtable_navTabId" value="${sessionScope.navTabId}">
 					<div id="load_personEntryDP_gridtable" class='loading ui-state-default ui-state-active' style="display:none"></div>
 		 			<table id="personEntryDP_gridtable"></table>

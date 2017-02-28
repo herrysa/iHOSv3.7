@@ -68,4 +68,22 @@ public class BillNumberManagerImpl extends GenericManagerImpl<SerialNumberSet, S
 		return this.createNextBillNumber(BillNumberConstants.SUBSYSTEM_HR, businessCode, true,BillNumberConstants.SUBSYSTEM_HR, BillNumberConstants.SUBSYSTEM_HR,yearMonth);
 	}
 	
+	/*@Override
+	public boolean isLastNumber(String docNo, String code, String orgCode,String copyCode, String yearMonth) {
+		SerialNumberGenerate serialNumberGenerate = serialNumberGenerateManager.getSerialNumberGenerate("MM",docNo, true, orgCode, copyCode, yearMonth);
+		//SerialNumber sn = this.serialNumberManager.getSerialObjByCode(code, orgCode, copyCode, yearMonth, true);
+		Long curNumber = serialNumberGenerate.getSerialNumber()-1;
+		SerialNumberSet setting = this.invBillNumberSettingDao.getByCode(code, orgCode, copyCode);
+		int serialLength = setting.getSerialLenth();
+		Long curSerialNo = Long.parseLong(docNo.substring(docNo.length()-serialLength));
+		return curNumber.equals(curSerialNo);
+	}*/
+
+	/*@Override
+	public void updateSerialNumber(String code, String orgCode,String copyCode, String yearMonth) {
+		SerialNumber sn = serialNumberManager.getSerialObjByCode(code, orgCode, copyCode, yearMonth, true);
+		sn.setSerialNumber(sn.getSerialNumber()-1);
+		serialNumberManager.save(sn);
+	}*/
+	
 }

@@ -66,7 +66,8 @@
 			{name:'department.name',index:'department.name',align:'left',label : '<s:text name="budgetUpdata.department" />',hidden:false,width:150},
 			{name:'operator.name',index:'operator.name',align:'left',label : '<s:text name="budgetUpdata.operator" />',hidden:false,width:100},
 			{name:'optDate',index:'optDate',align:'left',label : '<s:text name="budgetUpdata.optDate" />',hidden:false,align:"center",
-				formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:100}
+				formatter:'date',formatoptions:{newformat : 'Y-m-d'},width:100},
+			{name:'lastState',index:'lastState',align:'left',label : '<s:text name="budgetUpdata.operator" />',hidden:true,width:100}
 			],
         	jsonReader : {
 				root : "budgetUpdatas", // (2)
@@ -105,6 +106,19 @@
            	gridContainerResize('bmUpdata','div');
            	var dataTest = {"id":"bmUpdata_gridtable"};
       	   	jQuery.publish("onLoadSelect",dataTest,null);
+      	  	var rowNum = jQuery("#bmUpdata_gridtable").getDataIDs().length;
+      	   	if(rowNum > 0){
+ 	    		var rowIds = jQuery("#bmUpdata_gridtable").getDataIDs();
+ 	    		var i=0;
+ 	    		for (i=0;i<rowNum;i++){
+ 	    			var id = rowIds[i];
+ 	    			var ret = jQuery("#bmUpdata_gridtable").jqGrid('getRowData',id);
+ 	    			var lastState = ret["lastState"];
+ 	    			if(lastState>0){
+ 	    				jQuery("#"+id+ " td").css("background-color","red");
+ 	    			}
+ 	    		}
+			}
        		} 
 
     	});
@@ -149,6 +163,16 @@
         	jQuery(this).find("span").eq(0).text("按预算部门填报");
     	}
     	
+    });
+    jQuery("#bmUpdata_gridtable_log").click(function(){
+		var sid = jQuery("#bmUpdata_gridtable").jqGrid('getGridParam','selarrrow');
+		if(sid==null|| sid.length != 1){       	
+			alertMsg.error("请选择一条记录。");
+			return;
+		}
+        var url = "bmModelProcessLogList?navTabId=bmUpdata_gridtable&updataId="+sid;
+		var winTitle='预算审批日志';
+		$.pdialog.open(url,'bmCheckLog',winTitle, {mask:true,width : 730,height : 450});
     });
   	});
 </script>
@@ -206,15 +230,18 @@
 	<div id="bmUpdata_buttonBar" class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				 <li><a id="bmUpdata_gridtable_up" class="reportbutton" href="javaScript:" ><span>填报
+				 <li><a id="bmUpdata_gridtable_up" class="editbutton" href="javaScript:" ><span>填报
 					</span>
 				</a>
 				</li>
-				<li><a id="bmUpdata_gridtable_comfirm" class="addbutton"  href="javaScript:"><span>确认</span>
+				<li><a id="bmUpdata_gridtable_comfirm" class="submitbutton"  href="javaScript:"><span>提交科主任审核</span>
 				</a>
 				</li>
 				<li><a id="bmUpdata_gridtable_groupByDept" class="openbutton"  href="javaScript:"><span>按预算部门填报</span>
 				</a>
+				</li>
+				<li><a id="bmUpdata_gridtable_log" class="openbutton"  href="javaScript:bmProcessFuction('no')"><span>审批日志</span>
+					</a>
 				</li>
 				<%-- <li><a id="bmUpdata_gridtable_edit" class="changebutton"  href="javaScript:"
 					><span><s:text name="button.edit" />

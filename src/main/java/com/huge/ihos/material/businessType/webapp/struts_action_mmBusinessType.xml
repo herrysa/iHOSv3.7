@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="mmbusinessType" extends="default"	namespace="/">
+
+		<action name="businessTypeList" class="com.huge.ihos.material.businessType.webapp.action.BusinessTypePagedAction">
+			<result name="input">/WEB-INF/pages/businessType/businessTypeList.jsp</result>
+			<result name="success">/WEB-INF/pages/businessType/businessTypeList.jsp</result>
+		</action>
+		<action name="businessTypeGridList" class="com.huge.ihos.material.businessType.webapp.action.BusinessTypePagedAction"		method="businessTypeGridList">
+			<result type="json">
+				<param name="includeProperties">businessTypes.*,records,total,page</param>
+				<param name="noCache">true</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+		<action name="businessTypeGridEdit" class="com.huge.ihos.material.businessType.webapp.action.BusinessTypePagedAction"			method="businessTypeGridEdit">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+		<!-- called when a record is clicked on the grid -->
+		<action name="editBusinessType" class="com.huge.ihos.material.businessType.webapp.action.BusinessTypePagedAction"			method="edit">
+			<result name="success">/WEB-INF/pages/businessType/businessTypeForm.jsp</result>
+			<result name="input">/WEB-INF/pages/businessType/businessTypeForm.jsp</result>
+		</action>
+
+		<!-- called when clicking save on the edit form -->
+		<action name="saveBusinessType" class="com.huge.ihos.material.businessType.webapp.action.BusinessTypePagedAction"			method="save">
+			<result name="success" type="json">
+                <param name="includeProperties">message,statusCode,callbackType,navTabId</param>
+                   <param name="noCache">true</param>
+				 <param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+	</package>
+
+</struts>

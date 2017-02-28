@@ -8,12 +8,12 @@
 	<package name="voucher" extends="default"	namespace="/">
 
 		<action name="voucherList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction">
-			<result name="input">/WEB-INF/pages/voucher/voucherList.jsp</result>
-			<result name="success">/WEB-INF/pages/voucher/voucherList.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucher/voucherList.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucher/voucherList.jsp</result>
 		</action>
 		<action name="voucherBox" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction" method="voucherBox">
-			<result name="input">/WEB-INF/pages/voucher/voucherBox.jsp</result>
-			<result name="success">/WEB-INF/pages/voucher/voucherBox.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucher/voucherBox.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucher/voucherBox.jsp</result>
 		</action>
 		<action name="voucherGridList" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction"		method="voucherGridList">
 			<result type="json">
@@ -23,8 +23,8 @@
 			</result>
 		</action>
 		<action name="voucherCollect" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction" method="voucherCollectPre">
-			<result name="input">/WEB-INF/pages/voucher/voucherCollect.jsp</result>
-			<result name="success">/WEB-INF/pages/voucher/voucherCollect.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucher/voucherCollect.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucher/voucherCollect.jsp</result>
 		</action>
 		<action name="voucherGridCollect" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction"		method="voucherGridCollect">
 			<result type="json">
@@ -34,8 +34,8 @@
 			</result>
 		</action>
 		<action name="voucherCollectBalance" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction" method="voucherCollectBalancePre">
-			<result name="input">/WEB-INF/pages/voucher/voucherCollectBalance.jsp</result>
-			<result name="success">/WEB-INF/pages/voucher/voucherCollectBalance.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucher/voucherCollectBalance.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucher/voucherCollectBalance.jsp</result>
 		</action>
 		<action name="voucherGridCollectBalance" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction"		method="voucherGridCollectBalance">
 			<result type="json">
@@ -53,8 +53,8 @@
 		</action>
 		<!-- called when a record is clicked on the grid -->
 		<action name="editVoucher" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction"			method="edit">
-			<result name="success">/WEB-INF/pages/voucher/voucherForm.jsp</result>
-			<result name="input">/WEB-INF/pages/voucher/voucherForm.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucher/voucherForm.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucher/voucherForm.jsp</result>
 		</action>
 
 		<!-- called when clicking save on the edit form -->
@@ -81,8 +81,8 @@
             </result>
 		</action>
 		<action name="accountBalance" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction">
-			<result name="input">/WEB-INF/pages/voucher/accountBalance.jsp</result>
-			<result name="success">/WEB-INF/pages/voucher/accountBalance.jsp</result>
+			<result name="input">/WEB-INF/pages/accounting/voucher/accountBalance.jsp</result>
+			<result name="success">/WEB-INF/pages/accounting/voucher/accountBalance.jsp</result>
 		</action>
 		<action name="accountBalanceGrid" class="com.huge.ihos.accounting.voucher.webapp.action.VoucherPagedAction"		method="accountBalanceGrid">
 			<result type="json">

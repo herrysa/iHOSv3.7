@@ -461,7 +461,7 @@
 {name:'duty',index:'duty',width:'80px',align:'left',text : '<s:text name="gzContent.duty" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'educationalLevel',index:'educationalLevel',width:'80px',align:'left',text : '<s:text name="gzContent.educationalLevel" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'salaryNumber',index:'salaryNumber',width:'80px',align:'left',text : '<s:text name="gzContent.salaryNumber" />',isHide:"absHide",editable:false,dataType:'string'},
-{name:'idNumber',index:'idNumber',width:'80px',align:'left',text : '<s:text name="gzContent.idNumber" />',isHide:"absHide",editable:false,dataType:'string'},
+/* {name:'idNumber',index:'idNumber',width:'80px',align:'left',text : '<s:text name="gzContent.idNumber" />',isHide:"absHide",editable:false,dataType:'string'}, */
 {name:'jobTitle',index:'jobTitle',width:'80px',align:'left',text : '<s:text name="gzContent.jobTitle" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'postType',index:'postType',width:'80px',align:'left',text : '<s:text name="gzContent.postType" />',isHide:"absHide",editable:false,dataType:'string'},
 {name:'ratio',index:'ratio',width:'80px',align:'left',text : '<s:text name="gzContent.ratio" />',isHide:"absHide",editable:false,dataType:'double'},
@@ -1346,6 +1346,19 @@
 				setTimeout(function(){
 					jQuery("#background").show();
 			    	gzContent_gridtable.func("GrayWindow",'1 \r\n 255');//遮罩/还原的动作
+			    	//增加执行sp_gzContent_Cal
+			    	jQuery.ajax({
+				    	url: 'executeSp',
+				        data: {taskName:"sp_gzContent_Cal",proArgsStr:gzTypeId+","+curPeriod+","+curIssueNumber},
+				        type: 'post',
+				        dataType: 'json',
+				        async:false,
+				        error: function(data){
+				        	alertMsg.error('系统错误！');
+				        },
+				        success: function(data){
+				        }
+				    });
 					var rows = gzContent_gridtable.func("getRows", "");
 					var changedCells = [],calComplete = false , calCallbackCalled = false;
 					if(rows > 0){
